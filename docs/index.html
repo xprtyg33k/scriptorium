@@ -62,7 +62,11 @@
     <div class="container">
         <div class="profile">
             <img id="profile-pic" src="https://github.com/xprtyg33k.png" alt="Profile Picture">
-            <h1 id="profile-name">Loading...</h1>
+            <div>
+                <h1 id="profile-account" style="margin:0; font-size:1.3em; color:#3a5a97; font-weight:600;">@xprtyg33k</h1>
+                <div id="profile-name" style="font-size:2em; color:#22223b; font-weight:700;">Loading...</div>
+                <div id="profile-realname" style="font-size:1.1em; color:#6c63ff; font-weight:400; margin-top:2px;">&nbsp;</div>
+            </div>
         </div>
         <div class="links">
             <div style="display: flex; align-items: center; justify-content: space-between;">
@@ -77,11 +81,61 @@
         </div>
     </div>
     <script>
+        // --- CONFIG ---
+        const githubUsername = 'xprtyg33k';
+        const cacheKey = 'docsHtmlFilesCache';
+        const cacheTimeKey = 'docsHtmlFilesCacheTime';
+        const cacheDuration = 24 * 60 * 60 * 1000; // 24 hours
+
+        // --- PROFILE NAME FETCH ---
+        async function fetchGithubProfile(username) {
+            try {
+                const res = await fetch(`https://api.github.com/users/${username}`);
+                if (!res.ok) return { account: username, name: username, realname: '' };
+                const data = await res.json();
+                return {
+                    account: username,
+                    name: data.login || username,
+                    realname: data.name || ''
+                };
+            } catch {
+                return { account: username, name: username, realname: '' };
+            }
+        }
+
+        // --- HTML FILES FETCH ---
+        async function fetchHtmlFiles() {
+            // Try cache
+            const cached = localStorage.getItem(cacheKey);
+            const cachedTime = localStorage.getItem(cacheTimeKey);
+            const now = Date.now();
+            const hardReload = window.performance && performance.navigation && performance.navigation.type === 1;
+            if (cached && cachedTime && !hardReload && (now - cachedTime < cacheDuration)) {
+                try {
+                    return JSON.parse(cached);
+                } catch {}
+            }
+            // Fetch manifest.json
+            try {
+                const res = await fetch('manifest.json');
+                if (res.ok) {
+                    const files = await res.json();
+                    localStorage.setItem(cacheKey, JSON.stringify(files));
+                    localStorage.setItem(cacheTimeKey, now);
+                    return files;
+                }
+            } catch {}
+            // Fallback
+            return ['AIDevelopmentFrameworkSlides.html', 'AIDevelopmentFramework.html'];
+        }
+
         // --- RENDER ---
         async function render(forceRefresh = false) {
-            // Profile name
-            const name = await fetchGithubName(githubUsername);
-            document.getElementById('profile-name').textContent = name;
+            // Profile info
+            const profile = await fetchGithubProfile(githubUsername);
+            document.getElementById('profile-account').textContent = '@' + profile.account;
+            document.getElementById('profile-name').textContent = profile.name;
+            document.getElementById('profile-realname').textContent = profile.realname ? profile.realname : '';
             // HTML files
             if (forceRefresh) {
                 localStorage.removeItem(cacheKey);
@@ -110,8 +164,8 @@
                     setTimeout(() => { icon.style.transform = 'rotate(0deg)'; }, 400);
                 });
             }
+            render();
         });
-        render();
     </script>
 </body>
 </html>
