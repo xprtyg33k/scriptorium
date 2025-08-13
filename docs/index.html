@@ -65,72 +65,28 @@
             <h1 id="profile-name">Loading...</h1>
         </div>
         <div class="links">
-            <h2>Available Pages</h2>
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+                <h2 style="margin: 0;">Available Pages</h2>
+                <button id="refresh-btn" class="refresh-btn" title="Refresh List">
+                    <span id="refresh-icon" style="display: inline-block; transition: transform 0.4s cubic-bezier(.68,-0.55,.27,1.55);">&#x21bb;</span> Refresh
+                </button>
+            </div>
             <ul id="html-links">
                 <!-- Links will be inserted here -->
             </ul>
         </div>
     </div>
     <script>
-        // --- CONFIG ---
-        const githubUsername = 'xprtyg33k';
-        const docsFolder = '';
-        const cacheKey = 'docsHtmlFilesCache';
-        const cacheTimeKey = 'docsHtmlFilesCacheTime';
-        const cacheDuration = 24 * 60 * 60 * 1000; // 24 hours
-
-        // --- PROFILE NAME FETCH ---
-        async function fetchGithubName(username) {
-            try {
-                const res = await fetch(`https://api.github.com/users/${username}`);
-                if (!res.ok) return username;
-                const data = await res.json();
-                return data.name || username;
-            } catch {
-                return username;
-            }
-        }
-
-        // --- HTML FILES FETCH ---
-        async function fetchHtmlFiles() {
-            // Try cache
-            const cached = localStorage.getItem(cacheKey);
-            const cachedTime = localStorage.getItem(cacheTimeKey);
-            const now = Date.now();
-            const hardReload = window.performance && performance.navigation && performance.navigation.type === 1;
-            if (cached && cachedTime && !hardReload && (now - cachedTime < cacheDuration)) {
-                try {
-                    return JSON.parse(cached);
-                } catch {}
-            }
-            // Fetch from server (using directory listing)
-            try {
-                const res = await fetch(docsFolder || '.', { method: 'GET' });
-                if (res.ok) {
-                    const text = await res.text();
-                    // Parse HTML directory listing for .html files
-                    const htmlFiles = [];
-                    const regex = /href="([^"]+\.html)"/gi;
-                    let match;
-                    while ((match = regex.exec(text)) !== null) {
-                        // Exclude index.html itself
-                        if (!match[1].endsWith('index.html')) htmlFiles.push(match[1]);
-                    }
-                    localStorage.setItem(cacheKey, JSON.stringify(htmlFiles));
-                    localStorage.setItem(cacheTimeKey, now);
-                    return htmlFiles;
-                }
-            } catch {}
-            // Fallback
-            return ['AIDevelopementFrameworkSlides.html', 'AIDevelopmentFramework.html'];
-        }
-
         // --- RENDER ---
-        async function render() {
+        async function render(forceRefresh = false) {
             // Profile name
             const name = await fetchGithubName(githubUsername);
             document.getElementById('profile-name').textContent = name;
             // HTML files
+            if (forceRefresh) {
+                localStorage.removeItem(cacheKey);
+                localStorage.removeItem(cacheTimeKey);
+            }
             const htmlFiles = await fetchHtmlFiles();
             const linksList = document.getElementById('html-links');
             linksList.innerHTML = '';
@@ -143,6 +99,18 @@
                 linksList.appendChild(li);
             });
         }
+        // Button event
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.getElementById('refresh-btn');
+            const icon = document.getElementById('refresh-icon');
+            if (btn) {
+                btn.addEventListener('click', async function() {
+                    icon.style.transform = 'rotate(360deg)';
+                    await render(true);
+                    setTimeout(() => { icon.style.transform = 'rotate(0deg)'; }, 400);
+                });
+            }
+        });
         render();
     </script>
 </body>
