@@ -4,78 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scriptorium Index</title>
-    <!-- Style copied from AIDevelopmentFramework.html -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: #f4f6fa;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 700px;
-            margin: 40px auto;
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-            padding: 32px;
-        }
-        .profile {
-            display: flex;
-            align-items: center;
-            margin-bottom: 32px;
-        }
-        .profile img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            margin-right: 24px;
-            border: 2px solid #e1e4e8;
-        }
-        .profile h1 {
-            font-size: 2.2em;
-            margin: 0;
-            color: #22223b;
-        }
-        .links {
-            margin-top: 24px;
-        }
-        .links ul {
-            list-style: none;
-            padding: 0;
-        }
-        .links li {
-            margin-bottom: 16px;
-        }
-        .links a {
-            text-decoration: none;
-            color: #3a5a97;
-            font-size: 1.15em;
-            transition: color 0.2s;
-        }
-        .links a:hover {
-            color: #22223b;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #0d1b2a; color: #e0e1dd; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="profile">
-            <img id="profile-pic" src="https://github.com/xprtyg33k.png" alt="Profile Picture">
+    <div class="max-w-3xl mx-auto p-4 md:p-8">
+        <div class="flex items-center gap-6 bg-[#1b263b] rounded-xl shadow-2xl p-6 mb-8 border-t-4 border-[#fca311]">
+            <img id="profile-pic" src="https://github.com/xprtyg33k.png" alt="Profile Picture" class="w-20 h-20 rounded-full border-2 border-[#415a77]">
             <div>
-                <h1 id="profile-account" style="margin:0; font-size:1.3em; color:#3a5a97; font-weight:600;">@xprtyg33k</h1>
-                <div id="profile-name" style="font-size:2em; color:#22223b; font-weight:700;">Loading...</div>
-                <div id="profile-realname" style="font-size:1.1em; color:#6c63ff; font-weight:400; margin-top:2px;">&nbsp;</div>
+                <h1 id="profile-account" class="text-lg font-semibold text-[#fca311]">@xprtyg33k</h1>
+                <div id="profile-name" class="text-2xl font-bold text-white">Loading...</div>
+                <div id="profile-realname" class="text-base text-[#778da9] mt-1">&nbsp;</div>
             </div>
         </div>
-        <div class="links">
-            <div style="display: flex; align-items: center; justify-content: space-between;">
-                <h2 style="margin: 0;">Available Pages</h2>
-                <button id="refresh-btn" class="refresh-btn" title="Refresh List">
-                    <span id="refresh-icon" style="display: inline-block; transition: transform 0.4s cubic-bezier(.68,-0.55,.27,1.55);">&#x21bb;</span> Refresh
+        <div class="bg-[#1b263b] rounded-xl shadow-2xl p-6 border-t-4 border-[#fca311]">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-xl font-bold text-white m-0">Available Pages</h2>
+                <button id="refresh-btn" class="bg-gradient-to-r from-[#3a5a97] to-[#6c63ff] text-white rounded-lg px-4 py-2 font-semibold shadow hover:from-[#6c63ff] hover:to-[#3a5a97] transition-all duration-200 flex items-center gap-2" title="Refresh List">
+                    <span id="refresh-icon" class="inline-block transition-transform duration-400">&#x21bb;</span> Refresh
                 </button>
             </div>
-            <ul id="html-links">
+            <ul id="html-links" class="list-none p-0">
                 <!-- Links will be inserted here -->
             </ul>
         </div>
@@ -146,9 +98,11 @@
             linksList.innerHTML = '';
             htmlFiles.forEach(file => {
                 const li = document.createElement('li');
+                li.className = "mb-4";
                 const a = document.createElement('a');
                 a.href = file;
-                a.textContent = file;
+                a.textContent = file.replace('.html', '').replace(/_/g, ' ');
+                a.className = "block bg-[#1b263b] border-l-4 border-[#fca311] rounded-lg px-4 py-3 text-lg text-[#e0e1dd] font-semibold shadow hover:bg-[#415a77] hover:text-[#fca311] transition-all duration-200";
                 li.appendChild(a);
                 linksList.appendChild(li);
             });
