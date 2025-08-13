@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scriptorium Index</title>
+    <!-- Style copied from AIDevelopmentFramework.html -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f4f6fa;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            padding: 32px;
+        }
+        .profile {
+            display: flex;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+        .profile img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-right: 24px;
+            border: 2px solid #e1e4e8;
+        }
+        .profile h1 {
+            font-size: 2.2em;
+            margin: 0;
+            color: #22223b;
+        }
+        .links {
+            margin-top: 24px;
+        }
+        .links ul {
+            list-style: none;
+            padding: 0;
+        }
+        .links li {
+            margin-bottom: 16px;
+        }
+        .links a {
+            text-decoration: none;
+            color: #3a5a97;
+            font-size: 1.15em;
+            transition: color 0.2s;
+        }
+        .links a:hover {
+            color: #22223b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile">
+            <img id="profile-pic" src="https://github.com/xprtyg33k.png" alt="Profile Picture">
+            <h1 id="profile-name">xprtyg33k</h1>
+        </div>
+        <div class="links">
+            <h2>Available Pages</h2>
+            <ul id="html-links">
+                <!-- Links will be inserted here -->
+            </ul>
+        </div>
+    </div>
+    <script>
+        // List of .html files in docs folder
+        const htmlFiles = [
+            'AIDevelopementFrameworkSlides.html',
+            'AIDevelopmentFramework.html'
+        ];
+        const linksList = document.getElementById('html-links');
+        htmlFiles.forEach(file => {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = file;
+            a.textContent = file;
+            li.appendChild(a);
+            linksList.appendChild(li);
+        });
+    </script>
+</body>
+</html>
