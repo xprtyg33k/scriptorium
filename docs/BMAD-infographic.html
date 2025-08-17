@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The BMAD Method Infographic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* The color palette is now controlled by CSS Variables. */
+        :root {
+            --color-background: #000814;
+            --color-card-background: #001d3d;
+            --color-text-primary: #ffd60a;
+            --color-text-secondary: #ffc300;
+            --color-text-muted: rgba(255, 214, 10, 0.8);
+            --color-accent-primary: #003566;
+            --color-accent-secondary: #ffc300;
+            --color-icon-text: #000814;
+            --color-timeline-line: #003566;
+            --color-timeline-dot-border: #ffc300;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-background);
+            color: var(--color-text-primary);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .card {
+            background-color: var(--color-card-background);
+            transition: background-color 0.3s;
+        }
+        
+        #palette-select {
+            background-color: var(--color-card-background);
+            color: var(--color-text-primary);
+            border: 2px solid var(--color-accent-primary);
+        }
+
+        .text-primary { color: var(--color-text-primary); }
+        .text-secondary { color: var(--color-text-secondary); }
+        .text-muted { color: var(--color-text-muted); }
+
+        .accent-bg { background-color: var(--color-accent-primary); }
+        .accent-secondary-text { color: var(--color-accent-secondary); }
+        .icon-text { color: var(--color-icon-text); }
+
+        /* Custom styles for the timeline */
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            height: 100%;
+            background-color: var(--color-timeline-line);
+            transition: background-color 0.3s;
+        }
+        .timeline-item {
+            position: relative;
+            width: 50%;
+        }
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            padding-right: 2rem;
+        }
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            padding-left: 2rem;
+        }
+        .timeline-dot {
+            content: '';
+            position: absolute;
+            top: 1rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 9999px;
+            background-color: var(--color-background);
+            border: 4px solid var(--color-timeline-dot-border);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .timeline-item:nth-child(odd) .timeline-dot {
+            right: -0.625rem;
+        }
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -0.625rem;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .timeline-container::before { left: 10px; transform: translateX(0); }
+            .timeline-item { width: 100%; padding-left: 2.5rem; padding-right: 0; }
+            .timeline-item:nth-child(even) { left: 0%; }
+            .timeline-dot, .timeline-item:nth-child(odd) .timeline-dot, .timeline-item:nth-child(even) .timeline-dot { left: 2px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container mx-auto p-4 sm:p-8">
+        
+        <!-- Palette Switcher - Now a dropdown menu -->
+        <div class="text-center mb-12">
+            <label for="palette-select" class="text-sm font-semibold text-muted mr-2">Select Theme:</label>
+            <select id="palette-select" class="px-4 py-2 text-sm font-semibold rounded-lg shadow-md transition-colors duration-300 appearance-none">
+                <!-- Options will be inserted here by JavaScript -->
+            </select>
+        </div>
+
+        <!-- Header Section -->
+        <header class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-bold text-primary">The BMAD Method</h1>
+            <p class="mt-4 text-lg md:text-xl text-muted">An AI-Driven Framework for Agile Software Development</p>
+        </header>
+
+        <!-- Core Concepts Section -->
+        <section class="mb-20">
+            <h2 class="text-3xl font-bold text-center mb-12 text-primary">Core Concepts</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Concept Card 1 -->
+                <div class="card p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full accent-bg mb-4">
+                        <svg class="h-6 w-6 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-primary">Agentic Tools</h3>
+                    <p class="text-muted">Utilizes specialized AI agents (Analyst, PM, Architect) for each phase of development.</p>
+                </div>
+                <!-- Other cards follow the same structure -->
+                <div class="card p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full accent-bg mb-4">
+                        <svg class="h-6 w-6 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-primary">Context Engineering</h3>
+                    <p class="text-muted">Provides each AI agent with only the precise information it needs to improve efficiency and accuracy.</p>
+                </div>
+                <div class="card p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full accent-bg mb-4">
+                        <svg class="h-6 w-6 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-primary">User-AI Collaboration</h3>
+                    <p class="text-muted">The AI acts as a coach, asking questions to help the user develop their best ideas collaboratively.</p>
+                </div>
+                <div class="card p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full accent-bg mb-4">
+                        <svg class="h-6 w-6 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-primary">Document-Driven</h3>
+                    <p class="text-muted">The process revolves around creating and refining documents that serve as context for each step.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Development Process Section -->
+        <section class="mb-20">
+            <h2 class="text-3xl font-bold text-center mb-16 text-primary">The Development Process</h2>
+            <div class="relative timeline-container mx-auto">
+                <div>
+                    <!-- Timeline items -->
+                    <div class="timeline-item mb-8">
+                        <div class="timeline-dot"></div>
+                        <div class="card p-6 rounded-xl shadow-md w-full md:w-10/12 ml-auto md:text-right">
+                            <p class="accent-secondary-text font-semibold">Step 1: Ideation</p>
+                            <h3 class="text-xl font-bold mb-2 text-primary">Brainstorm with the Analyst</h3>
+                            <p class="text-muted">Flesh out the project concept and generate a brainstorming document.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item mb-8">
+                        <div class="timeline-dot"></div>
+                        <div class="card p-6 rounded-xl shadow-md w-full md:w-10/12">
+                            <p class="accent-secondary-text font-semibold">Step 2: Project Brief</p>
+                            <h3 class="text-xl font-bold mb-2 text-primary">Define with the Analyst</h3>
+                            <p class="text-muted">Create a formal project brief defining the problem, solution, and users.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item mb-8">
+                        <div class="timeline-dot"></div>
+                        <div class="card p-6 rounded-xl shadow-md w-full md:w-10/12 ml-auto md:text-right">
+                            <p class="accent-secondary-text font-semibold">Step 3: Requirements</p>
+                            <h3 class="text-xl font-bold mb-2 text-primary">Plan with the Product Manager</h3>
+                            <p class="text-muted">Create a Product Requirements Document (PRD) with epics and user stories.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item mb-8">
+                        <div class="timeline-dot"></div>
+                        <div class="card p-6 rounded-xl shadow-md w-full md:w-10/12">
+                            <p class="accent-secondary-text font-semibold">Step 4: Architecture</p>
+                            <h3 class="text-xl font-bold mb-2 text-primary">Design with the Architect</h3>
+                            <p class="text-muted">Design the technical structure, tech stack, and data models.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item mb-8">
+                        <div class="timeline-dot"></div>
+                        <div class="card p-6 rounded-xl shadow-md w-full md:w-10/12 ml-auto md:text-right">
+                            <p class="accent-secondary-text font-semibold">Step 5: Document Sharding</p>
+                            <h3 class="text-xl font-bold mb-2 text-primary">Optimize Context</h3>
+                            <p class="text-muted">Break down large documents into smaller, focused files for development agents.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item mb-8">
+                        <div class="timeline-dot"></div>
+                        <div class="card p-6 rounded-xl shadow-md w-full md:w-10/12">
+                            <p class="accent-secondary-text font-semibold">Step 6: Development</p>
+                            <h3 class="text-xl font-bold mb-2 text-primary">Build with Scrum Master & Developer</h3>
+                            <p class="text-muted">Draft a detailed developer story and implement the code.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="card p-6 rounded-xl shadow-md w-full md:w-10/12 ml-auto md:text-right">
+                            <p class="accent-secondary-text font-semibold">Step 7: Quality Assurance</p>
+                            <h3 class="text-xl font-bold mb-2 text-primary">Review with the QA Agent</h3>
+                            <p class="text-muted">Perform compliance checks and suggest improvements to ensure quality.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Framework Highlights Section -->
+        <section>
+            <h2 class="text-3xl font-bold text-center mb-12 text-primary">Framework Highlights</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Highlight 1 -->
+                <div class="card p-6 rounded-xl shadow-md flex items-start space-x-4">
+                    <div class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-lg" style="background-color: var(--color-accent-secondary)">
+                        <svg class="h-6 w-6 icon-text" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h5M20 20v-5h-5M4 20h5v-5M20 4h-5v5" /></svg>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-primary">Agile & Iterative</h3>
+                        <p class="text-muted mt-1">Breaks projects into manageable stories for continuous development.</p>
+                    </div>
+                </div>
+                <!-- Other highlights -->
+                <div class="card p-6 rounded-xl shadow-md flex items-start space-x-4">
+                    <div class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-lg" style="background-color: var(--color-accent-secondary)">
+                        <svg class="h-6 w-6 icon-text" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m12 0a2 2 0 100-4m0 4a2 2 0 110-4m-6 0a2 2 0 100-4m0 4a2 2 0 110-4" /></svg>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-primary">Flexible & Adaptive</h3>
+                        <p class="text-muted mt-1">Allows users to jump in at any stage relevant to their project's needs.</p>
+                    </div>
+                </div>
+                <div class="card p-6 rounded-xl shadow-md flex items-start space-x-4">
+                    <div class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-lg" style="background-color: var(--color-accent-secondary)">
+                        <svg class="h-6 w-6 icon-text" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-primary">"Correct Course" Feature</h3>
+                        <p class="text-muted mt-1">AI agents help analyze and adapt the project plan if significant changes are needed.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // Default palettes are embedded as a fallback.
+        const defaultPalettes = {
+          "Golden Twilight": {
+            "--color-background": "#000814",
+            "--color-card-background": "#001d3d",
+            "--color-text-primary": "#ffd60a",
+            "--color-text-secondary": "#ffc300",
+            "--color-text-muted": "rgba(255, 214, 10, 0.8)",
+            "--color-accent-primary": "#003566",
+            "--color-accent-secondary": "#ffc300",
+            "--color-icon-text": "#000814",
+            "--color-timeline-line": "#003566",
+            "--color-timeline-dot-border": "#ffc300"
+          },
+          "Fresh Greens": {
+            "--color-background": "#f2e8cf",
+            "--color-card-background": "#fcfaf5",
+            "--color-text-primary": "#386641",
+            "--color-text-secondary": "#386641",
+            "--color-text-muted": "rgba(56, 102, 65, 0.8)",
+            "--color-accent-primary": "#6a994e",
+            "--color-accent-secondary": "#bc4749",
+            "--color-icon-text": "#ffffff",
+            "--color-timeline-line": "#c2d9b5",
+            "--color-timeline-dot-border": "#bc4749"
+          },
+          "Coastal Vibes": {
+            "--color-background": "#293241",
+            "--color-card-background": "#3d5a80",
+            "--color-text-primary": "#e0fbfc",
+            "--color-text-secondary": "#98c1d9",
+            "--color-text-muted": "rgba(152, 193, 217, 0.8)",
+            "--color-accent-primary": "#3d5a80",
+            "--color-accent-secondary": "#ee6c4d",
+            "--color-icon-text": "#e0fbfc",
+            "--color-timeline-line": "#98c1d9",
+            "--color-timeline-dot-border": "#ee6c4d"
+          }
+        };
+
+        let activePalettes = {};
+
+        // Function to apply a selected palette
+        function applyPalette(name) {
+            const palette = activePalettes[name];
+            const root = document.documentElement;
+            if (palette) {
+                Object.keys(palette).forEach(key => {
+                    root.style.setProperty(key, palette[key]);
+                });
+            }
+        }
+        
+        // Function to create switcher dropdown options
+        function populateSwitcher(palettesToLoad) {
+            const select = document.getElementById('palette-select');
+            select.innerHTML = ''; // Clear existing options
+            for (const name in palettesToLoad) {
+                const option = document.createElement('option');
+                option.value = name;
+                option.textContent = name;
+                select.appendChild(option);
+            }
+        }
+
+        // Main initialization function
+        function initialize() {
+            const select = document.getElementById('palette-select');
+            
+            // Try to fetch external palettes
+            fetch('palettes.json')
+                .then(response => {
+                    if (!response.ok) {
+                        // If the file is not found or there's an error, fail gracefully
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // If fetch succeeds, merge external with default palettes
+                    console.log("Successfully loaded palettes.json");
+                    activePalettes = { ...defaultPalettes, ...data };
+                })
+                .catch(error => {
+                    // If fetch fails, use the default palettes
+                    console.warn("Could not load palettes.json. Using default themes. Error:", error.message);
+                    activePalettes = defaultPalettes;
+                })
+                .finally(() => {
+                    // This block runs whether the fetch succeeded or failed
+                    populateSwitcher(activePalettes);
+                    
+                    const defaultPaletteName = Object.keys(activePalettes)[0];
+                    if (defaultPaletteName) {
+                        select.value = defaultPaletteName;
+                        applyPalette(defaultPaletteName);
+                    }
+
+                    select.addEventListener('change', (event) => {
+                        applyPalette(event.target.value);
+                    });
+                });
+        }
+
+        document.addEventListener('DOMContentLoaded', initialize);
+    </script>
+
+</body>
+</html>

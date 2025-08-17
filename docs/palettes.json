@@ -1,0 +1,86 @@
+{
+  "Golden Twilight": {
+    "--color-background": "#000814",
+    "--color-card-background": "#001d3d",
+    "--color-text-primary": "#ffd60a",
+    "--color-text-secondary": "#ffc300",
+    "--color-text-muted": "rgba(255, 214, 10, 0.8)",
+    "--color-accent-primary": "#003566",
+    "--color-accent-secondary": "#ffc300",
+    "--color-icon-text": "#000814",
+    "--color-timeline-line": "#003566",
+    "--color-timeline-dot-border": "#ffc300"
+  },
+  "Fresh Greens": {
+    "--color-background": "#f2e8cf",
+    "--color-card-background": "#fcfaf5",
+    "--color-text-primary": "#386641",
+    "--color-text-secondary": "#386641",
+    "--color-text-muted": "rgba(56, 102, 65, 0.8)",
+    "--color-accent-primary": "#6a994e",
+    "--color-accent-secondary": "#bc4749",
+    "--color-icon-text": "#ffffff",
+    "--color-timeline-line": "#c2d9b5",
+    "--color-timeline-dot-border": "#bc4749"
+  },
+  "Coastal Vibes": {
+    "--color-background": "#293241",
+    "--color-card-background": "#3d5a80",
+    "--color-text-primary": "#e0fbfc",
+    "--color-text-secondary": "#98c1d9",
+    "--color-text-muted": "rgba(152, 193, 217, 0.8)",
+    "--color-accent-primary": "#3d5a80",
+    "--color-accent-secondary": "#ee6c4d",
+    "--color-icon-text": "#e0fbfc",
+    "--color-timeline-line": "#98c1d9",
+    "--color-timeline-dot-border": "#ee6c4d"
+  },
+  "Monochrome Harmony": {
+    "--color-background": "#242423",
+    "--color-card-background": "#333533",
+    "--color-text-primary": "#e8eddf",
+    "--color-text-secondary": "#f5cb5c",
+    "--color-text-muted": "rgba(207, 219, 213, 0.8)",
+    "--color-accent-primary": "#333533",
+    "--color-accent-secondary": "#f5cb5c",
+    "--color-icon-text": "#e8eddf",
+    "--color-timeline-line": "#333533",
+    "--color-timeline-dot-border": "#f5cb5c"
+  },
+  "Rustic Charm": {
+    "--color-background": "#252422",
+    "--color-card-background": "#403d39",
+    "--color-text-primary": "#fffcf2",
+    "--color-text-secondary": "#ccc5b9",
+    "--color-text-muted": "rgba(204, 197, 185, 0.8)",
+    "--color-accent-primary": "#403d39",
+    "--color-accent-secondary": "#ccc5b9",
+    "--color-icon-text": "#fffcf2",
+    "--color-timeline-line": "#403d39",
+    "--color-timeline-dot-border": "#ccc5b9"
+  },
+  "Sunny Beach Day": {
+    "--color-background": "#001524",
+    "--color-card-background": "#15616d",
+    "--color-text-primary": "#ffecd1",
+    "--color-text-secondary": "#001524",
+    "--color-text-muted": "rgba(255, 125, 0, 0.8)",
+    "--color-accent-primary": "#15616d",
+    "--color-accent-secondary": "#001524",
+    "--color-icon-text": "#ffecd1",
+    "--color-timeline-line": "#15616d",
+    "--color-timeline-dot-border": "#001524"
+  },
+  "Sunrise Glow": {
+    "--color-background": "#233d4d",
+    "--color-card-background": "#619b8a",
+    "--color-text-primary": "#a1c181",
+    "--color-text-secondary": "#fe7f2d",
+    "--color-text-muted": "rgba(252, 202, 70, 0.8)",
+    "--color-accent-primary": "#619b8a",
+    "--color-accent-secondary": "#fe7f2d",
+    "--color-icon-text": "#a1c181",
+    "--color-timeline-line": "#619b8a",
+    "--color-timeline-dot-border": "#fe7f2d"
+  }
+}

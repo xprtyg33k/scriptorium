@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palette Converter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Ensure main content area fills available space and allows internal scrolling */
+        main {
+            flex: 1 1 auto;
+            overflow-y: hidden; /* Prevent main from scrolling */
+        }
+        /* Simple modal styles */
+        .modal-overlay {
+            transition: opacity 0.3s ease;
+        }
+        .modal-container {
+            transition: transform 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 h-screen flex flex-col">
+
+    <!-- Top Section -->
+    <header class="bg-white shadow-md p-4 z-10">
+        <div class="container mx-auto h-full flex flex-col justify-center">
+            <h1 class="text-2xl font-bold text-gray-900 mb-4">Palette Converter</h1>
+            <div class="flex items-center space-x-4">
+                <input type="text" id="palette-name" placeholder="Enter New Palette Name (e.g., 'Sunset Bliss')" class="flex-grow p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <button id="add-palette-btn" class="bg-blue-600 text-white font-semibold px-6 py-2 rounded-md hover:bg-blue-700 transition-colors whitespace-nowrap">Add Palette</button>
+            </div>
+            <p id="error-message" class="text-red-500 text-sm mt-2 h-4"></p>
+        </div>
+    </header>
+
+    <!-- Main Content Section -->
+    <main class="container mx-auto p-4 flex md:flex-row flex-col gap-4">
+        <!-- Left Column: Input -->
+        <div class="card bg-white p-4 rounded-lg shadow-md flex flex-col md:w-1/2 w-full">
+            <h2 class="text-lg font-semibold mb-2">1. Paste Raw Palette Here</h2>
+            <textarea id="raw-palette-input" class="w-full flex-grow p-2 border border-gray-300 rounded-md resize-none" placeholder="{ 'color-name': { DEFAULT: '#RRGGBB', ... } }"></textarea>
+        </div>
+
+        <!-- Right Column: Output -->
+        <div class="card bg-white p-4 rounded-lg shadow-md flex flex-col md:w-1/2 w-full">
+            <h2 class="text-lg font-semibold mb-2">2. palettes.json Content</h2>
+            <pre id="json-output" class="w-full flex-grow p-2 border bg-gray-50 border-gray-300 rounded-md overflow-auto text-sm"><code>Loading existing palettes.json...</code></pre>
+        </div>
+    </main>
+    
+    <!-- Bottom Action Bar -->
+    <footer class="bg-white shadow-inner p-4 z-10">
+        <div class="container mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <button id="save-btn" class="bg-green-600 text-white font-semibold px-4 py-2 rounded-md hover:bg-green-700 transition-colors hidden">Download JSON</button>
+                <button id="revert-btn" class="bg-yellow-500 text-white font-semibold px-4 py-2 rounded-md hover:bg-yellow-600 transition-colors hidden">Revert</button>
+            </div>
+            <div class="flex items-center space-x-2">
+                <button id="clear-all-btn" class="bg-gray-500 text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-600 transition-colors">Clear Inputs</button>
+                <button id="reload-json-btn" class="bg-gray-500 text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-600 transition-colors">Reload JSON</button>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Modal for mapping colors -->
+    <div id="mapping-modal-overlay" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden opacity-0 z-50">
+        <div id="mapping-modal-container" class="modal-container bg-white rounded-lg shadow-xl p-6 w-full max-w-md transform -translate-y-10">
+            <h2 class="text-xl font-bold mb-4">Map Colors to Roles</h2>
+            <p class="text-sm text-gray-600 mb-4">Assign one of your new colors to each required role in the theme.</p>
+            <div id="mapping-fields" class="space-y-4">
+                <!-- Mapping fields will be generated here -->
+            </div>
+            <div class="mt-6 flex justify-end space-x-3">
+                <button id="cancel-mapping-btn" class="bg-gray-200 text-gray-800 font-semibold px-4 py-2 rounded-md hover:bg-gray-300">Cancel</button>
+                <button id="confirm-mapping-btn" class="bg-blue-600 text-white font-semibold px-4 py-2 rounded-md hover:bg-blue-700">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        let existingPalettes = {};
+        let originalPalettes = {}; // To track changes
+
+        const schemaKeys = [
+            "--color-background", "--color-card-background", "--color-text-primary",
+            "--color-text-secondary", "--color-text-muted", "--color-accent-primary",
+            "--color-accent-secondary", "--color-icon-text", "--color-timeline-line",
+            "--color-timeline-dot-border"
+        ];
+
+        // DOM Elements
+        const paletteNameInput = document.getElementById('palette-name');
+        const rawPaletteInput = document.getElementById('raw-palette-input');
+        const jsonOutput = document.querySelector('#json-output code');
+        const addPaletteBtn = document.getElementById('add-palette-btn');
+        const errorMessage = document.getElementById('error-message');
+        const modalOverlay = document.getElementById('mapping-modal-overlay');
+        const modalContainer = document.getElementById('mapping-modal-container');
+        const mappingFields = document.getElementById('mapping-fields');
+        const cancelMappingBtn = document.getElementById('cancel-mapping-btn');
+        const confirmMappingBtn = document.getElementById('confirm-mapping-btn');
+        const saveBtn = document.getElementById('save-btn');
+        const revertBtn = document.getElementById('revert-btn');
+        const clearAllBtn = document.getElementById('clear-all-btn');
+        const reloadJsonBtn = document.getElementById('reload-json-btn');
+        
+        let currentConversionData = null;
+
+        function displayError(message) {
+            errorMessage.textContent = message;
+            setTimeout(() => errorMessage.textContent = '', 4000);
+        }
+
+        function checkForChanges() {
+            const hasChanged = JSON.stringify(originalPalettes) !== JSON.stringify(existingPalettes);
+            saveBtn.classList.toggle('hidden', !hasChanged);
+            revertBtn.classList.toggle('hidden', !hasChanged);
+        }
+
+        function updateJsonOutput() {
+            jsonOutput.textContent = JSON.stringify(existingPalettes, null, 2);
+            checkForChanges();
+        }
+
+        function parseRawPalette(rawStr) {
+            try {
+                let jsonStr = rawStr.replace(/([{,]\s*)([a-zA-Z_][a-zA-Z0-9_]*|\d+)(\s*:)/g, '$1"$2"$3');
+                jsonStr = jsonStr.replace(/'/g, '"');
+                const rawPalette = JSON.parse(jsonStr);
+                const availableColors = Object.entries(rawPalette).map(([name, data]) => ({ name, hex: data['DEFAULT'] }));
+                if (availableColors.length === 0) throw new Error("No colors with a 'DEFAULT' key were found.");
+                return availableColors;
+            } catch (e) {
+                console.error("Parsing error:", e);
+                displayError("Error: Could not parse palette data. Check format.");
+                return null;
+            }
+        }
+
+        function hexToHsl(hex) {
+            let r = 0, g = 0, b = 0;
+            if (hex.length == 4) {
+                r = "0x" + hex[1] + hex[1];
+                g = "0x" + hex[2] + hex[2];
+                b = "0x" + hex[3] + hex[3];
+            } else if (hex.length == 7) {
+                r = "0x" + hex[1] + hex[2];
+                g = "0x" + hex[3] + hex[4];
+                b = "0x" + hex[5] + hex[6];
+            }
+            r /= 255; g /= 255; b /= 255;
+            let cmin = Math.min(r,g,b), cmax = Math.max(r,g,b), delta = cmax - cmin, h = 0, s = 0, l = 0;
+            if (delta == 0) h = 0;
+            else if (cmax == r) h = ((g - b) / delta) % 6;
+            else if (cmax == g) h = (b - r) / delta + 2;
+            else h = (r - g) / delta + 4;
+            h = Math.round(h * 60);
+            if (h < 0) h += 360;
+            l = (cmax + cmin) / 2;
+            s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
+            s = +(s * 100).toFixed(1);
+            l = +(l * 100).toFixed(1);
+            return { h, s, l };
+        }
+
+        function autoAssignRoles(colors) {
+            if (colors.length === 0) return {};
+
+            const colorsWithHsl = colors.map(color => ({ ...color, hsl: hexToHsl(color.hex) }));
+
+            const sortedByLightness = [...colorsWithHsl].sort((a, b) => a.hsl.l - b.hsl.l);
+            
+            const darkest = sortedByLightness[0] || colors[0];
+            const secondDarkest = sortedByLightness[1] || darkest;
+            const lightest = sortedByLightness[sortedByLightness.length - 1] || colors[0];
+            const secondLightest = sortedByLightness[sortedByLightness.length - 2] || lightest;
+
+            // Find the most saturated color
+            let accentColor = [...colorsWithHsl].sort((a, b) => b.hsl.s - a.hsl.s)[0] || colors[0];
+
+            // If the most saturated color is too light (i.e., it's a primary text color), fall back to a mid-tone for the accent.
+            if (accentColor.hex === lightest.hex || accentColor.hex === secondLightest.hex) {
+                const midToneIndex = Math.floor(sortedByLightness.length / 2);
+                accentColor = sortedByLightness[midToneIndex] || accentColor;
+            }
+
+            return {
+                '--color-background': darkest.hex,
+                '--color-card-background': secondDarkest.hex,
+                '--color-text-primary': lightest.hex,
+                '--color-text-secondary': accentColor.hex,
+                '--color-text-muted': secondLightest.hex,
+                '--color-accent-primary': secondDarkest.hex,
+                '--color-accent-secondary': accentColor.hex,
+                '--color-icon-text': lightest.hex,
+                '--color-timeline-line': secondDarkest.hex,
+                '--color-timeline-dot-border': accentColor.hex,
+            };
+        }
+
+        function applyPaletteToUI(palette) {
+            document.body.style.backgroundColor = palette['--color-background'];
+            document.body.style.color = palette['--color-text-primary'];
+            
+            document.querySelectorAll('header, footer, .card, .modal-container').forEach(el => {
+                el.style.backgroundColor = palette['--color-card-background'];
+            });
+            document.querySelectorAll('h1, h2, label').forEach(el => {
+                el.style.color = palette['--color-text-primary'];
+            });
+            document.querySelectorAll('textarea, pre, input, select').forEach(el => {
+                el.style.backgroundColor = palette['--color-card-background'];
+                el.style.borderColor = palette['--color-timeline-line'];
+                el.style.color = palette['--color-text-secondary'];
+            });
+            document.querySelectorAll('button').forEach(el => {
+                el.style.backgroundColor = palette['--color-accent-secondary'];
+                el.style.color = palette['--color-icon-text'];
+            });
+            const mutedText = document.querySelector('#mapping-modal-container p');
+            if(mutedText) {
+                mutedText.style.color = palette['--color-text-muted'];
+            }
+        }
+        
+        function openMappingModal(availableColors) {
+            const assignedRoles = autoAssignRoles(availableColors);
+            mappingFields.innerHTML = '';
+
+            schemaKeys.forEach(key => {
+                const fieldId = `map-${key}`;
+                const selectedHex = assignedRoles[key];
+
+                let optionsHtml = availableColors.map(color =>
+                    `<option value="${color.hex}" ${color.hex === selectedHex ? 'selected' : ''}>${color.name} (${color.hex})</option>`
+                ).join('');
+
+                const fieldHtml = `
+                    <div class="flex items-center justify-between">
+                        <label for="${fieldId}" class="font-semibold text-gray-700">${key.replace('--color-', '').replace(/-/g, ' ')}:</label>
+                        <div class="flex items-center w-2/3">
+                            <select id="${fieldId}" class="p-1 border border-gray-300 rounded-md w-full">
+                                ${optionsHtml}
+                            </select>
+                            <span id="swatch-${fieldId}" class="w-5 h-5 ml-2 border" style="background-color: ${selectedHex};"></span>
+                        </div>
+                    </div>`;
+                mappingFields.insertAdjacentHTML('beforeend', fieldHtml);
+            });
+
+            // Add event listeners to update swatches on change
+            schemaKeys.forEach(key => {
+                const fieldId = `map-${key}`;
+                const selectEl = document.getElementById(fieldId);
+                const swatchEl = document.getElementById(`swatch-${fieldId}`);
+                if (selectEl && swatchEl) {
+                    selectEl.addEventListener('change', (event) => {
+                        swatchEl.style.backgroundColor = event.target.value;
+                    });
+                }
+            });
+
+            modalOverlay.classList.remove('hidden');
+            setTimeout(() => {
+                modalOverlay.classList.remove('opacity-0');
+                modalContainer.classList.remove('-translate-y-10');
+            }, 10);
+        }
+
+        function closeMappingModal() {
+            modalOverlay.classList.add('opacity-0');
+            modalContainer.classList.add('-translate-y-10');
+            setTimeout(() => modalOverlay.classList.add('hidden'), 300);
+        }
+
+        function loadJson() {
+            jsonOutput.textContent = 'Loading...';
+            fetch('palettes.json')
+                .then(response => {
+                    if (!response.ok) throw new Error('File not found or network error.');
+                    return response.json();
+                })
+                .then(data => {
+                    existingPalettes = data;
+                    originalPalettes = JSON.parse(JSON.stringify(data)); // Deep copy
+                    updateJsonOutput();
+                })
+                .catch(error => {
+                    console.warn("Could not load palettes.json:", error.message);
+                    jsonOutput.textContent = "Could not load palettes.json. It will be created when you add a new palette.";
+                    existingPalettes = {};
+                    originalPalettes = {};
+                    checkForChanges();
+                });
+        }
+
+        // Event Listeners
+        addPaletteBtn.addEventListener('click', () => {
+            const name = paletteNameInput.value.trim();
+            const rawText = rawPaletteInput.value.trim();
+            if (!name) { displayError("Please enter a name for the new palette."); return; }
+            if (!rawText) { displayError("Please paste the raw palette data."); return; }
+            const availableColors = parseRawPalette(rawText);
+            if (availableColors) {
+                currentConversionData = { name, availableColors };
+                openMappingModal(availableColors);
+            }
+        });
+        
+        cancelMappingBtn.addEventListener('click', closeMappingModal);
+        
+        confirmMappingBtn.addEventListener('click', () => {
+            if (!currentConversionData) return;
+            const newPalette = {};
+            schemaKeys.forEach(key => {
+                const select = document.getElementById(`map-${key}`);
+                const hexValue = select.value;
+                if (key === "--color-text-muted") {
+                    const hex = hexValue.startsWith('#') ? hexValue.substring(1) : hexValue;
+                    const rgb = [parseInt(hex.substring(0,2), 16), parseInt(hex.substring(2,4), 16), parseInt(hex.substring(4,6), 16)];
+                    newPalette[key] = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.8)`;
+                } else {
+                    newPalette[key] = hexValue;
+                }
+            });
+            existingPalettes[currentConversionData.name] = newPalette;
+            updateJsonOutput();
+            applyPaletteToUI(newPalette);
+            paletteNameInput.value = '';
+            rawPaletteInput.value = '';
+            closeMappingModal();
+        });
+
+        clearAllBtn.addEventListener('click', () => {
+            paletteNameInput.value = '';
+            rawPaletteInput.value = '';
+        });
+
+        reloadJsonBtn.addEventListener('click', loadJson);
+
+        revertBtn.addEventListener('click', () => {
+            existingPalettes = JSON.parse(JSON.stringify(originalPalettes));
+            updateJsonOutput();
+        });
+
+        saveBtn.addEventListener('click', async () => {
+            const jsonContent = JSON.stringify(existingPalettes, null, 2);
+            
+            if (window.showSaveFilePicker) {
+                try {
+                    const handle = await window.showSaveFilePicker({
+                        suggestedName: 'palettes.json',
+                        types: [{
+                            description: 'JSON files',
+                            accept: { 'application/json': ['.json'] },
+                        }],
+                    });
+                    const writable = await handle.createWritable();
+                    await writable.write(jsonContent);
+                    await writable.close();
+                    originalPalettes = JSON.parse(JSON.stringify(existingPalettes));
+                    checkForChanges();
+                } catch (err) {
+                    if (err.name !== 'AbortError') {
+                        console.error(err.name, err.message);
+                        displayError('Error saving file.');
+                    }
+                }
+            } else {
+                const blob = new Blob([jsonContent], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'palettes.json';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                originalPalettes = JSON.parse(JSON.stringify(existingPalettes));
+                checkForChanges();
+            }
+        });
+
+        // Initial load
+        document.addEventListener('DOMContentLoaded', loadJson);
+    </script>
+</body>
+</html>
