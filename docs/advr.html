@@ -25,6 +25,7 @@
             border-radius: 1rem;
             padding: 2rem;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
         }
         .card:hover {
             transform: translateY(-5px);
@@ -39,11 +40,28 @@
             white-space: pre-wrap;
             word-wrap: break-word;
             color: #c7d2fe;
+            font-size: 0.9rem;
         }
         .cycle-arrow {
             font-size: 3rem;
             color: #415a77;
             font-weight: 900;
+        }
+        .modal-overlay {
+            background-color: rgba(13, 27, 42, 0.8);
+            backdrop-filter: blur(4px);
+        }
+        /* Custom scrollbar for webkit browsers */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1b263b;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #415a77;
+            border-radius: 10px;
+            border: 2px solid #1b263b;
         }
     </style>
 </head>
@@ -62,7 +80,7 @@
         <main class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-start">
 
             <!-- Phase 1: Architect -->
-            <div class="card">
+            <div class="card" onclick="openModal('architectModal')">
                 <div class="flex items-center mb-4">
                     <div class="text-5xl mr-4">🗺️</div>
                     <div>
@@ -70,20 +88,8 @@
                         <p class="text-sky-400 font-semibold">Create the Blueprint</p>
                     </div>
                 </div>
-                <div class="space-y-4">
-                    <div>
-                        <h3 class="font-bold text-lg text-white">Your Goal:</h3>
-                        <p class="text-[#778da9]">Create a clear, simple plan for a <span class="text-white">single feature</span>. Think in 1-2 hour chunks of work, not the whole project.</p>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-lg text-white">Your Action:</h3>
-                        <p class="text-[#778da9]">Define a micro-goal, sketch the components (functions, files, tech), and use the AI as a brainstorming partner to outline the structure.</p>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-lg text-white">Prompt Example:</h3>
-                        <div class="prompt">"Act as a senior software architect. I need to build a user registration endpoint using Node.js, Express, and PostgreSQL. Suggest a simple file structure and the main functions I'll need."</div>
-                    </div>
-                </div>
+                <p class="text-[#778da9]">Create a clear, simple plan for a single feature. Think in 1-2 hour chunks of work, not the whole project.</p>
+                <div class="text-right mt-4 font-semibold text-sky-400">View Details &rarr;</div>
             </div>
             
             <div class="flex lg:hidden items-center justify-center">
@@ -91,7 +97,7 @@
             </div>
 
             <!-- Phase 2: Direct -->
-            <div class="card">
+            <div class="card" onclick="openModal('directModal')">
                 <div class="flex items-center mb-4">
                     <div class="text-5xl mr-4">🗣️</div>
                     <div>
@@ -99,20 +105,8 @@
                         <p class="text-sky-400 font-semibold">Craft the Prompt</p>
                     </div>
                 </div>
-                <div class="space-y-4">
-                    <div>
-                        <h3 class="font-bold text-lg text-white">Your Goal:</h3>
-                        <p class="text-[#778da9]">Delegate one specific, well-defined coding task to your AI assistant. Offload the tedious, systematic work.</p>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-lg text-white">Your Action:</h3>
-                        <p class="text-[#778da9]">Pick the smallest piece from your blueprint. Craft a precise prompt with just enough context for the AI to succeed.</p>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-lg text-white">Prompt Example:</h3>
-                        <div class="prompt">"Using Node.js and Express, write the code for `server.js`. It should import express, create an app, define port 3000, and include a basic health check route at `/`. Add comments explaining each part."</div>
-                    </div>
-                </div>
+                <p class="text-[#778da9]">Delegate one specific, well-defined coding task to your AI assistant. Offload the tedious, systematic work.</p>
+                <div class="text-right mt-4 font-semibold text-sky-400">View Details &rarr;</div>
             </div>
             
             <div class="flex lg:hidden items-center justify-center">
@@ -120,7 +114,7 @@
             </div>
 
             <!-- Phase 3: Validate -->
-            <div class="card">
+            <div class="card" onclick="openModal('validateModal')">
                 <div class="flex items-center mb-4">
                     <div class="text-5xl mr-4">⚙️</div>
                     <div>
@@ -128,20 +122,8 @@
                         <p class="text-sky-400 font-semibold">Perform the Code Review</p>
                     </div>
                 </div>
-                <div class="space-y-4">
-                    <div>
-                        <h3 class="font-bold text-lg text-white">Your Goal:</h3>
-                        <p class="text-[#778da9]">Critically review, test, and integrate the AI's output. You are the <span class="text-white">quality gate</span>. Never trust AI code blindly.</p>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-lg text-white">Your Action:</h3>
-                        <p class="text-[#778da9]">Read every line to ensure it aligns with your blueprint. Test the code in isolation first, then integrate it into your project and verify it works with other components.</p>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-lg text-white">Your Motto:</h3>
-                        <div class="prompt text-center text-lg">"Trust, but verify."</div>
-                    </div>
-                </div>
+                <p class="text-[#778da9]">Critically review, test, and integrate the AI's output. You are the quality gate. Never trust AI code blindly.</p>
+                <div class="text-right mt-4 font-semibold text-sky-400">View Details &rarr;</div>
             </div>
             
             <div class="flex lg:hidden items-center justify-center">
@@ -149,7 +131,7 @@
             </div>
 
             <!-- Phase 4: Refine -->
-            <div class="card">
+            <div class="card" onclick="openModal('refineModal')">
                 <div class="flex items-center mb-4">
                     <div class="text-5xl mr-4">🔄</div>
                     <div>
@@ -157,20 +139,8 @@
                         <p class="text-sky-400 font-semibold">Iterate and Improve</p>
                     </div>
                 </div>
-                <div class="space-y-4">
-                    <div>
-                        <h3 class="font-bold text-lg text-white">Your Goal:</h3>
-                        <p class="text-[#778da9]">Based on your validation, either fix issues or move on to the next task. This is the loop that drives all progress.</p>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-lg text-white">Your Action:</h3>
-                        <p class="text-[#778da9]"><span class="text-white font-semibold">If it's broken:</span> Go back to the DIRECT phase with a new prompt to fix the specific issue. <br><span class="text-white font-semibold">If it works:</span> Go back to the ARCHITECT phase and start a new cycle on the next feature.</p>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-lg text-white">Prompt Example (Fix):</h3>
-                        <div class="prompt">"The previous code failed because the port was hardcoded. Modify it to use an environment variable `PORT` with a fallback to 3000."</div>
-                    </div>
-                </div>
+                <p class="text-[#778da9]">Based on your validation, either fix issues or move on to the next task. This is the loop that drives all progress.</p>
+                <div class="text-right mt-4 font-semibold text-sky-400">View Details &rarr;</div>
             </div>
 
         </main>
@@ -182,5 +152,152 @@
         </footer>
 
     </div>
+
+    <!-- Modals -->
+    <!-- Architect Modal -->
+    <div id="architectModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-overlay" onclick="closeModal('architectModal')">
+        <div class="bg-[#1b263b] w-full max-w-4xl rounded-2xl shadow-2xl p-8 relative flex flex-col max-h-[90vh]" onclick="event.stopPropagation()">
+            <button onclick="closeModal('architectModal')" class="absolute top-4 right-4 text-gray-400 hover:text-white text-3xl z-10">&times;</button>
+            <div class="flex items-center mb-6 flex-shrink-0">
+                <div class="text-5xl mr-4">🗺️</div>
+                <div>
+                    <h2 class="text-3xl font-bold text-white">Phase 1: Architect - The Verbose Action</h2>
+                    <p class="text-sky-400 font-semibold">Generate Your Core Documents</p>
+                </div>
+            </div>
+            <div class="space-y-4 text-[#c7d2fe] overflow-y-auto custom-scrollbar pr-4 -mr-4">
+                <p>Use a foundational LLM like Claude, Gemini, or ChatGPT for this initial, broad-stroke generation. The goal is speed and comprehensive ideation, not perfect prompt engineering.</p>
+                <h3 class="font-bold text-lg text-white pt-2">1. The "Good Enough" Prompt:</h3>
+                <p>Your prompt should be descriptive but not overly structured. Its purpose is to generate three key documents: a Product Requirements Document (PRD), an Architecture Guidance doc, and a Technical Requirements Document (TRD).</p>
+                <h3 class="font-bold text-lg text-white pt-2">2. Example Prompt:</h3>
+                
+                <!-- Collapsible Prompt Component -->
+                <div class="relative">
+                    <div id="architect-prompt-content" class="prompt max-h-36 overflow-hidden transition-all duration-500 ease-in-out relative">
+"Act as a senior software architect. I need to build a user satisfaction solution, where the implementation should adopt an API first strategy.
+
+We are an organization trying to enhance our core EMR's user experience and want to capture a simple way for providers to give feedback, with little to no friction... this is about allowing providers to communicate their sentiment and perceived value of our software. It has to be HIPAA compliant, secure scalable, distributed platform using an existing SQL database.
+
+The service objectives are adapted from... happy-or-not.com
+The API should be implemented using Node.js, Express, and PostgreSQL.
+The UI stack should be React/NextJS/Tailwind Css...
+We intend to deploy the solution to an AWS environment...
+
+I need you to generate a PRD, a first draft of an Architecture Guidance and Standards and a TRD based on the two others as markdown files. Based on these documents I want you to generate simple, separate .md files with prompts to generate the UI, the API and SQL artifacts that I can use as next steps to actually generate the code for each of those layers"
+                        <div id="architect-prompt-fade" class="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-[#0d1b2a] via-[#0d1b2a] to-transparent pointer-events-none"></div>
+                    </div>
+                    <button id="architect-prompt-toggle" class="text-sky-400 font-semibold mt-2 hover:text-sky-300">Show More...</button>
+                </div>
+                
+                <h3 class="font-bold text-lg text-white pt-2">3. Your Task After Generation:</h3>
+                <p>The AI will generate the requested documents. Your job is to <span class="text-white">review, correct, and edit them</span>. The output won't be perfect, but it will be a comprehensive starting point. Refine it until you have a "good enough," complete version of your PRD to guide the next phase.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Direct Modal -->
+    <div id="directModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-overlay" onclick="closeModal('directModal')">
+        <div class="bg-[#1b263b] w-full max-w-4xl rounded-2xl shadow-2xl p-8 relative flex flex-col max-h-[90vh]" onclick="event.stopPropagation()">
+            <button onclick="closeModal('directModal')" class="absolute top-4 right-4 text-gray-400 hover:text-white text-3xl z-10">&times;</button>
+            <div class="flex items-center mb-6 flex-shrink-0">
+                <div class="text-5xl mr-4">🗣️</div>
+                <div>
+                    <h2 class="text-3xl font-bold text-white">Phase 2: Direct - The Verbose Action</h2>
+                    <p class="text-sky-400 font-semibold">Execute with a Coding Agent</p>
+                </div>
+            </div>
+            <div class="space-y-4 text-[#c7d2fe] overflow-y-auto custom-scrollbar pr-4 -mr-4">
+                <p>Now, take your refined documents from the Architect phase and use them to direct a specialized AI Agent Coding Assistant (like an IDE extension or a dedicated tool). The key is to provide focused, high-quality context.</p>
+                <h3 class="font-bold text-lg text-white pt-2">1. The Refined, Context-Rich Prompt:</h3>
+                <p>Instead of a broad request, you will now provide the specific documents you curated. This is a much more precise instruction for a tool designed to write code.</p>
+                <h3 class="font-bold text-lg text-white pt-2">2. Example Prompt:</h3>
+                <div class="prompt">"Generate the API implementation ONLY for the application described in the PRD attached. Follow and adhere to the architecture guidance and standards provided, and implement following the indications in the TRD attached. Do NOT generate any UI components. Generate all unit tests, IaC and instructions to build an initial simple CI/CD pipeline using Github Actions."</div>
+                <h3 class="font-bold text-lg text-white pt-2">3. Your Task During Generation:</h3>
+                <p>The coding agent will now generate the application code based on your precise instructions and documentation. This is where the blueprint you created in Phase 1 pays off, leading to higher quality, more consistent output.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Validate Modal -->
+    <div id="validateModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-overlay" onclick="closeModal('validateModal')">
+        <div class="bg-[#1b263b] w-full max-w-4xl rounded-2xl shadow-2xl p-8 relative flex flex-col max-h-[90vh]" onclick="event.stopPropagation()">
+            <button onclick="closeModal('validateModal')" class="absolute top-4 right-4 text-gray-400 hover:text-white text-3xl z-10">&times;</button>
+            <div class="flex items-center mb-6 flex-shrink-0">
+                <div class="text-5xl mr-4">⚙️</div>
+                <div>
+                    <h2 class="text-3xl font-bold text-white">Phase 3: Validate - Practical Steps</h2>
+                    <p class="text-sky-400 font-semibold">You Are the Quality Gate</p>
+                </div>
+            </div>
+            <div class="space-y-4 text-[#c7d2fe] overflow-y-auto custom-scrollbar pr-4 -mr-4">
+                <p>This phase is self-explanatory but critical. Never assume the AI's output is perfect. Your expertise is required to ensure quality and correctness.</p>
+                <ul class="list-disc list-inside space-y-2">
+                    <li><span class="font-bold text-white">Code Review:</span> Read through the generated code. Does it make sense? Does it follow the patterns from your architecture document? Are there obvious bugs or security flaws?</li>
+                    <li><span class="font-bold text-white">Run the Code:</span> Execute the generated files. Do they compile/run without errors?</li>
+                    <li><span class="font-bold text-white">Test the Logic:</span> Run the unit tests generated by the AI. Do they pass? Do they actually test the business logic correctly? Write your own tests if necessary.</li>
+                    <li><span class="font-bold text-white">Integrate and Verify:</span> Add the new code to your main project branch. Does it break anything? Does the application as a whole still function as expected?</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Refine Modal -->
+    <div id="refineModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-overlay" onclick="closeModal('refineModal')">
+        <div class="bg-[#1b263b] w-full max-w-4xl rounded-2xl shadow-2xl p-8 relative flex flex-col max-h-[90vh]" onclick="event.stopPropagation()">
+            <button onclick="closeModal('refineModal')" class="absolute top-4 right-4 text-gray-400 hover:text-white text-3xl z-10">&times;</button>
+            <div class="flex items-center mb-6 flex-shrink-0">
+                <div class="text-5xl mr-4">🔄</div>
+                <div>
+                    <h2 class="text-3xl font-bold text-white">Phase 4: Refine - Rinse and Repeat</h2>
+                    <p class="text-sky-400 font-semibold">The Engine of Progress</p>
+                </div>
+            </div>
+            <div class="space-y-4 text-[#c7d2fe] overflow-y-auto custom-scrollbar pr-4 -mr-4">
+                <p>This is the "Rinse and Repeat" step. Your actions here are determined by the outcome of the Validate phase.</p>
+                <h3 class="font-bold text-lg text-white pt-2">If the code is buggy or incorrect:</h3>
+                <p>Return to the <span class="font-semibold text-white">Direct</span> phase. Craft a new, more specific prompt to address the issue. Don't try to fix large chunks of bad code manually; use the AI to regenerate the problematic section with better instructions.</p>
+                <div class="prompt">Example Fix Prompt: "The database connection logic you provided doesn't handle retries. Please rewrite the connection function to retry the connection 3 times with a 5-second delay between attempts."</div>
+                
+                <h3 class="font-bold text-lg text-white pt-2">If the code works as expected:</h3>
+                <p>Congratulations! Merge it. Now, return to the <span class="font-semibold text-white">Architect</span> phase. Look at your PRD, pick the next feature or user story, and begin the A-D-V-R cycle all over again.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+            document.getElementById(modalId).classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+            document.getElementById(modalId).classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Logic for the collapsible prompt
+        const architectPromptToggle = document.getElementById('architect-prompt-toggle');
+        const architectPromptContent = document.getElementById('architect-prompt-content');
+        const architectPromptFade = document.getElementById('architect-prompt-fade');
+
+        if (architectPromptToggle) {
+            architectPromptToggle.addEventListener('click', () => {
+                const isCollapsed = architectPromptContent.classList.contains('max-h-36');
+                if (isCollapsed) {
+                    architectPromptContent.classList.remove('max-h-36');
+                    architectPromptContent.classList.add('max-h-[1000px]'); // Use a large value to ensure all content is visible
+                    architectPromptFade.classList.add('hidden');
+                    architectPromptToggle.textContent = 'Show Less...';
+                } else {
+                    architectPromptContent.classList.add('max-h-36');
+                    architectPromptContent.classList.remove('max-h-[1000px]');
+                    architectPromptFade.classList.remove('hidden');
+                    architectPromptToggle.textContent = 'Show More...';
+                }
+            });
+        }
+    </script>
 </body>
 </html>
