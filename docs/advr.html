@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The A-D-V-R Cycle: Your AI Hackathon Workflow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1b2a; /* Dark Blue BG */
+            color: #e0e1dd; /* Light Text */
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #38bdf8, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .card {
+            background-color: #1b263b; /* Card BG */
+            border: 1px solid #415a77; /* Muted Border */
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .prompt {
+            background-color: #0d1b2a;
+            border-left: 4px solid #38bdf8;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            color: #c7d2fe;
+        }
+        .cycle-arrow {
+            font-size: 3rem;
+            color: #415a77;
+            font-weight: 900;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-6xl">
+
+        <!-- Header Section -->
+        <header class="text-center mb-12 md:mb-20">
+            <h1 class="text-4xl md:text-6xl font-black text-white mb-4">The <span class="gradient-text">A-D-V-R</span> Cycle</h1>
+            <p class="text-lg md:text-xl text-[#778da9] max-w-3xl mx-auto">Your High-Speed Workflow for the AI Hackathon</p>
+            <p class="mt-4 text-base text-[#778da9]">You are the <span class="font-bold text-white">Architect</span>. The AI is your <span class="font-bold text-white">Apprentice</span>.</p>
+        </header>
+
+        <!-- Main Content Grid -->
+        <main class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-start">
+
+            <!-- Phase 1: Architect -->
+            <div class="card">
+                <div class="flex items-center mb-4">
+                    <div class="text-5xl mr-4">🗺️</div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-white">1. ARCHITECT</h2>
+                        <p class="text-sky-400 font-semibold">Create the Blueprint</p>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="font-bold text-lg text-white">Your Goal:</h3>
+                        <p class="text-[#778da9]">Create a clear, simple plan for a <span class="text-white">single feature</span>. Think in 1-2 hour chunks of work, not the whole project.</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg text-white">Your Action:</h3>
+                        <p class="text-[#778da9]">Define a micro-goal, sketch the components (functions, files, tech), and use the AI as a brainstorming partner to outline the structure.</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg text-white">Prompt Example:</h3>
+                        <div class="prompt">"Act as a senior software architect. I need to build a user registration endpoint using Node.js, Express, and PostgreSQL. Suggest a simple file structure and the main functions I'll need."</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex lg:hidden items-center justify-center">
+                 <div class="cycle-arrow transform rotate-90">&darr;</div>
+            </div>
+
+            <!-- Phase 2: Direct -->
+            <div class="card">
+                <div class="flex items-center mb-4">
+                    <div class="text-5xl mr-4">🗣️</div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-white">2. DIRECT</h2>
+                        <p class="text-sky-400 font-semibold">Craft the Prompt</p>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="font-bold text-lg text-white">Your Goal:</h3>
+                        <p class="text-[#778da9]">Delegate one specific, well-defined coding task to your AI assistant. Offload the tedious, systematic work.</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg text-white">Your Action:</h3>
+                        <p class="text-[#778da9]">Pick the smallest piece from your blueprint. Craft a precise prompt with just enough context for the AI to succeed.</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg text-white">Prompt Example:</h3>
+                        <div class="prompt">"Using Node.js and Express, write the code for `server.js`. It should import express, create an app, define port 3000, and include a basic health check route at `/`. Add comments explaining each part."</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex lg:hidden items-center justify-center">
+                 <div class="cycle-arrow transform rotate-90">&darr;</div>
+            </div>
+
+            <!-- Phase 3: Validate -->
+            <div class="card">
+                <div class="flex items-center mb-4">
+                    <div class="text-5xl mr-4">⚙️</div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-white">3. VALIDATE</h2>
+                        <p class="text-sky-400 font-semibold">Perform the Code Review</p>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="font-bold text-lg text-white">Your Goal:</h3>
+                        <p class="text-[#778da9]">Critically review, test, and integrate the AI's output. You are the <span class="text-white">quality gate</span>. Never trust AI code blindly.</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg text-white">Your Action:</h3>
+                        <p class="text-[#778da9]">Read every line to ensure it aligns with your blueprint. Test the code in isolation first, then integrate it into your project and verify it works with other components.</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg text-white">Your Motto:</h3>
+                        <div class="prompt text-center text-lg">"Trust, but verify."</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex lg:hidden items-center justify-center">
+                 <div class="cycle-arrow transform rotate-90">&darr;</div>
+            </div>
+
+            <!-- Phase 4: Refine -->
+            <div class="card">
+                <div class="flex items-center mb-4">
+                    <div class="text-5xl mr-4">🔄</div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-white">4. REFINE</h2>
+                        <p class="text-sky-400 font-semibold">Iterate and Improve</p>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="font-bold text-lg text-white">Your Goal:</h3>
+                        <p class="text-[#778da9]">Based on your validation, either fix issues or move on to the next task. This is the loop that drives all progress.</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg text-white">Your Action:</h3>
+                        <p class="text-[#778da9]"><span class="text-white font-semibold">If it's broken:</span> Go back to the DIRECT phase with a new prompt to fix the specific issue. <br><span class="text-white font-semibold">If it works:</span> Go back to the ARCHITECT phase and start a new cycle on the next feature.</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg text-white">Prompt Example (Fix):</h3>
+                        <div class="prompt">"The previous code failed because the port was hardcoded. Modify it to use an environment variable `PORT` with a fallback to 3000."</div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Footer Section -->
+        <footer class="text-center mt-16 md:mt-24 pt-8 border-t border-[#415a77]">
+            <p class="text-2xl font-bold gradient-text">Architect &rarr; Direct &rarr; Validate &rarr; Refine &rarr; Repeat</p>
+            <p class="text-[#778da9] mt-2">Use this cycle to build momentum, maintain quality, and win the hackathon.</p>
+        </footer>
+
+    </div>
+</body>
+</html>
