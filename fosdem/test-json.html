@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JSON Validator</title>
+    <style>
+        body { font-family: monospace; padding: 20px; background: #f5f5f5; }
+        .success { color: green; background: #efe; padding: 20px; border-radius: 5px; margin: 20px 0; }
+        .error { color: red; background: #fee; padding: 20px; border-radius: 5px; margin: 20px 0; }
+        .info { color: #333; background: #fff; padding: 20px; border-radius: 5px; margin: 20px 0; border-left: 4px solid #667eea; }
+    </style>
+</head>
+<body>
+    <h1>Schedule.json Validator</h1>
+    <div id="result"></div>
+    
+    <script>
+        async function validate() {
+            const resultDiv = document.getElementById('result');
+            
+            try {
+                console.log('Fetching schedule.json...');
+                const response = await fetch('./schedule.json');
+                console.log('Response status:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const text = await response.text();
+                console.log(`Received ${text.length} bytes`);
+                
+                const data = JSON.parse(text);
+                console.log('JSON parsed successfully');
+                
+                if (!data.talks || !Array.isArray(data.talks)) {
+                    throw new Error('Missing or invalid talks array');
+                }
+                
+                const talkCount = data.talks.length;
+                console.log(`Found ${talkCount} talks`);
+                
+                // Validate first talk
+                const firstTalk = data.talks[0];
+                const requiredFields = ['id', 'title', 'speakers', 'track', 'day', 'date', 'start_time', 'end_time', 'room', 'building'];
+                const missingFields = requiredFields.filter(f => !(f in firstTalk));
+                
+                let html = `<div class="success">✓ JSON is valid!</div>`;
+                html += `<div class="info">
+                    <strong>Schedule Info:</strong><br>
+                    • Conference: ${data.conference?.title || 'Unknown'}<br>
+                    • Talks loaded: ${talkCount}<br>
+                    • Date range: ${data.conference?.start_date || '?'} to ${data.conference?.end_date || '?'}
+                </div>`;
+                
+                if (missingFields.length > 0) {
+                    html += `<div class="error">⚠ First talk missing fields: ${missingFields.join(', ')}</div>`;
+                } else {
+                    html += `<div class="success">✓ First talk has all required fields</div>`;
+                }
+                
+                html += `<div class="info">
+                    <strong>First talk:</strong><br>
+                    Title: ${firstTalk.title}<br>
+                    Track: ${firstTalk.track}<br>
+                    Time: ${firstTalk.start_time} - ${firstTalk.end_time}<br>
+                    Location: ${firstTalk.building} - ${firstTalk.room}
+                </div>`;
+                
+                resultDiv.innerHTML = html;
+                
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <strong>❌ Error loading/parsing JSON:</strong><br>
+                        ${error.message}<br><br>
+                        <strong>Troubleshooting:</strong>
+                        <ul>
+                            <li>Make sure schedule.json exists in the same folder as this HTML</li>
+                            <li>Check browser console (F12) for more details</li>
+                            <li>Validate JSON syntax at jsonlint.com</li>
+                            <li>Check file encoding is UTF-8</li>
+                        </ul>
+                    </div>
+                `;
+            }
+        }
+        
+        // Run on load
+        window.addEventListener('load', validate);
+    </script>
+</body>
+</html>

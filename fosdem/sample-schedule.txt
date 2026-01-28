@@ -1,0 +1,105 @@
+FOSDEM 2026 Schedule
+=====================
+
+Saturday, January 31, 2026
+----------------------------------------
+
+09:00 - 09:45
+Opening Keynote: The State of Open Source AI
+Track: Keynotes
+Speakers: Richard "RichiH" Hartmann
+Location: K - Main Amphitheatre
+
+10:00 - 10:45
+LLMs in Production: Optimization Strategies
+Track: AI, Machine Learning & Data Science devroom
+Speakers: Alice Johnson
+Location: AW - 1.120
+
+10:00 - 10:45
+Rust in High-Performance Systems
+Track: Rust devroom
+Speakers: Bob Smith
+Location: H - 1101
+
+11:00 - 11:45
+Advanced Performance Profiling Techniques
+Track: Software Performance devroom
+Speakers: Carol Chen, David Lee
+Location: J - 2108
+
+12:00 - 12:45
+CI/CD Pipeline Automation at Scale
+Track: Testing and Continuous Delivery devroom
+Speakers: Eve Martinez
+Location: UA - 2.219
+
+13:45 - 14:30
+Agent Architectures for Autonomous Systems
+Track: AI, Machine Learning & Data Science devroom
+Speakers: Frank Williams
+Location: AW - 1.120
+
+14:45 - 15:30
+Memory Safety in Concurrent Programs
+Track: Rust devroom
+Speakers: Grace Liu
+Location: H - 1101
+
+15:45 - 16:30
+GPU Computing with CUDA and ROCm
+Track: HPC, Big Data, and Data Science devroom
+Speakers: Henry Zhang
+Location: J - 1114
+
+17:00 - 17:45
+Lightning Talks: AI & ML Edition
+Track: Lightning Talks
+Speakers: Multiple Speakers
+Location: K - Main Amphitheatre
+
+
+Sunday, February 1, 2026
+----------------------------------------
+
+09:00 - 09:45
+Async I/O Patterns in Modern Languages
+Track: Go devroom
+Speakers: Iris Newman
+Location: U - 2.218
+
+10:00 - 10:45
+Database Query Optimization Deep Dive
+Track: Databases devroom
+Speakers: Jack Robinson
+Location: H - 2301
+
+11:00 - 11:45
+Observability in Distributed Systems
+Track: Software Performance devroom
+Speakers: Karen White, Liam Brown
+Location: J - 2108
+
+12:00 - 12:45
+Open Source Compliance and Licensing
+Track: Legal & Policy
+Speakers: Maria Garcia
+Location: UA - 2.219
+
+14:00 - 14:45
+Zero-Copy Protocols in Rust
+Track: Rust devroom
+Speakers: Nathan Green
+Location: H - 1101
+
+15:00 - 15:45
+Kubernetes at the Edge
+Track: Virtualization and Cloud Infrastructure devroom
+Speakers: Olivia Johnson
+Location: U - 2.218
+
+16:00 - 16:45
+Closing Keynote: Open Source in 2026
+Track: Keynotes
+Speakers: Panel Discussion
+Location: K - Main Amphitheatre

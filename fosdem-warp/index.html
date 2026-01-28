@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOSDEM 2026 Schedule Planner</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --secondary: #8b5cf6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 30px 0;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            font-size: 1.2rem;
+            color: var(--gray-600);
+        }
+
+        .loading::after {
+            content: '...';
+            animation: dots 1.5s steps(4, end) infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--gray-200);
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--gray-600);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab:hover {
+            color: var(--primary);
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 1rem;
+            border: 2px solid var(--gray-300);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            transition: border-color 0.2s;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .filter-section {
+            margin-bottom: 20px;
+        }
+
+        .filter-section h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--gray-700);
+        }
+
+        .filter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .filter-tag {
+            padding: 6px 12px;
+            background: var(--gray-100);
+            border: 2px solid var(--gray-300);
+            border-radius: 20px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .filter-tag:hover {
+            background: var(--gray-200);
+        }
+
+        .filter-tag.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .filter-tag.priority {
+            background: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--gray-600);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-700);
+        }
+
+        .btn-success {
+            background: var(--success);
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            padding: 8px 16px;
+            background: var(--gray-100);
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .stat strong {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .talks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .talk-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s;
+            cursor: pointer;
+            border-left: 4px solid var(--gray-300);
+        }
+
+        .talk-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .talk-card.rated {
+            border-left-color: var(--primary);
+        }
+
+        .talk-card.priority-high {
+            border-left-color: var(--danger);
+        }
+
+        .talk-card.priority-medium {
+            border-left-color: var(--warning);
+        }
+
+        .talk-card.priority-low {
+            border-left-color: var(--success);
+        }
+
+        .talk-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 12px;
+        }
+
+        .talk-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 6px;
+            line-height: 1.4;
+        }
+
+        .talk-meta {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-bottom: 4px;
+        }
+
+        .talk-track {
+            display: inline-block;
+            padding: 4px 10px;
+            background: var(--gray-100);
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-top: 8px;
+            color: var(--gray-700);
+        }
+
+        .talk-description {
+            font-size: 0.9rem;
+            color: var(--gray-600);
+            margin-top: 10px;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .rating-stars {
+            display: flex;
+            gap: 4px;
+            margin-top: 12px;
+        }
+
+        .star {
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: var(--gray-300);
+            transition: all 0.2s;
+        }
+
+        .star:hover,
+        .star.active {
+            color: var(--warning);
+        }
+
+        .schedule-view {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 20px;
+        }
+
+        .day-schedule {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .day-schedule h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .time-slot {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: var(--gray-50);
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .time-slot.conflict {
+            border-left-color: var(--danger);
+            background: #fef2f2;
+        }
+
+        .time-slot-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .time-label {
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+
+        .conflict-badge {
+            padding: 4px 8px;
+            background: var(--danger);
+            color: white;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .scheduled-talk {
+            margin-bottom: 10px;
+        }
+
+        .scheduled-talk:last-child {
+            margin-bottom: 0;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray-500);
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            background: var(--gray-100);
+            color: var(--gray-900);
+        }
+
+        .recommendations {
+            margin-top: 20px;
+        }
+
+        .recommendation-card {
+            padding: 15px;
+            background: var(--gray-50);
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border-left: 3px solid var(--secondary);
+        }
+
+        .recommendation-reason {
+            font-size: 0.85rem;
+            color: var(--secondary);
+            font-weight: 500;
+            margin-top: 8px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray-500);
+        }
+
+        .empty-state svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .talks-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .schedule-view {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            header, .tabs, .controls {
+                display: none;
+            }
+
+            .talk-card {
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid var(--gray-300);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🎯 FOSDEM 2026 Schedule Planner</h1>
+            <p class="subtitle">Brussels, Belgium • Plan your personalized conference experience</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div id="loading" class="loading">Loading FOSDEM 2026 schedule</div>
+
+        <div id="app" style="display: none;">
+            <div class="tabs">
+                <button class="tab active" data-tab="discover">🔍 Discover Talks</button>
+                <button class="tab" data-tab="schedule">📅 My Schedule</button>
+                <button class="tab" data-tab="recommendations">✨ Recommendations</button>
+            </div>
+
+            <!-- Discover Tab -->
+            <div id="discover-tab" class="tab-content active">
+                <div class="controls">
+                    <input type="text" id="search" class="search-bar" placeholder="Search talks by title, speaker, or keyword...">
+
+                    <div class="filter-section">
+                        <h3>🎯 Priority Tracks</h3>
+                        <div id="priority-tracks" class="filter-tags"></div>
+                    </div>
+
+                    <div class="filter-section">
+                        <h3>📚 All Tracks</h3>
+                        <div id="all-tracks" class="filter-tags"></div>
+                    </div>
+
+                    <div class="filter-section">
+                        <h3>📍 Buildings</h3>
+                        <div id="buildings" class="filter-tags"></div>
+                    </div>
+
+                    <div class="filter-section">
+                        <h3>📆 Days</h3>
+                        <div id="days" class="filter-tags"></div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn" onclick="app.clearFilters()">Clear Filters</button>
+                        <button class="btn btn-secondary" onclick="app.showOnlyRated()">Show Rated Only</button>
+                    </div>
+
+                    <div class="stats">
+                        <div class="stat">Total Talks: <strong id="total-talks">0</strong></div>
+                        <div class="stat">Filtered: <strong id="filtered-talks">0</strong></div>
+                        <div class="stat">Rated: <strong id="rated-talks">0</strong></div>
+                        <div class="stat">In Schedule: <strong id="scheduled-talks">0</strong></div>
+                    </div>
+                </div>
+
+                <div id="talks-container" class="talks-grid"></div>
+            </div>
+
+            <!-- Schedule Tab -->
+            <div id="schedule-tab" class="tab-content">
+                <div class="controls">
+                    <div class="action-buttons">
+                        <button class="btn btn-success" onclick="app.generateSchedule()">🤖 Auto-Generate Schedule</button>
+                        <button class="btn" onclick="app.exportSchedule('text')">📄 Export as Text</button>
+                        <button class="btn" onclick="app.exportSchedule('json')">📊 Export as JSON</button>
+                        <button class="btn btn-secondary" onclick="window.print()">🖨️ Print Schedule</button>
+                    </div>
+
+                    <div class="stats">
+                        <div class="stat">Scheduled: <strong id="schedule-count">0</strong></div>
+                        <div class="stat">Conflicts: <strong id="conflict-count">0</strong></div>
+                    </div>
+                </div>
+
+                <div id="schedule-container" class="schedule-view"></div>
+            </div>
+
+            <!-- Recommendations Tab -->
+            <div id="recommendations-tab" class="tab-content">
+                <div class="controls">
+                    <h2>✨ Personalized Recommendations</h2>
+                    <p style="margin-top: 10px; color: var(--gray-600);">Based on your ratings and priority topics: LLM, AI, Rust, Performance, DevOps</p>
+                </div>
+
+                <div id="recommendations-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Talk Detail Modal -->
+    <div id="talk-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="app.closeModal()">&times;</button>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+        const app = {
+            talks: [],
+            filteredTalks: [],
+            ratings: {},
+            schedule: [],
+            filters: {
+                search: '',
+                tracks: new Set(),
+                buildings: new Set(),
+                days: new Set(),
+                showRatedOnly: false
+            },
+            priorityKeywords: ['llm', 'large language model', 'agent', 'agentic', 'rust', 'performance', 'optimization', 'profiling', 'ci/cd', 'devops', 'machine learning', 'ai'],
+            priorityTracks: [],
+
+            init() {
+                this.loadFromStorage();
+                this.setupEventListeners();
+                this.loadSchedule();
+            },
+
+            async loadSchedule() {
+                try {
+                    // Load from local schedule.xml file
+                    const response = await fetch('schedule.xml');
+                    if (!response.ok) {
+                        throw new Error('Could not load schedule.xml. Make sure you\'re running the server with serve.py');
+                    }
+                    const xmlText = await response.text();
+
+                    const parser = new DOMParser();
+                    const xml = parser.parseFromString(xmlText, 'text/xml');
+
+                    // Check for XML parsing errors
+                    const parserError = xml.querySelector('parsererror');
+                    if (parserError) {
+                        throw new Error('XML parsing error: ' + parserError.textContent);
+                    }
+
+                    this.talks = this.parseXML(xml);
+                    this.filteredTalks = [...this.talks];
+                    
+                    if (this.talks.length === 0) {
+                        throw new Error('No talks found in schedule');
+                    }
+                    
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('app').style.display = 'block';
+
+                    this.renderFilters();
+                    this.renderTalks();
+                    this.updateStats();
+                } catch (error) {
+                    console.error('Error loading schedule:', error);
+                    document.getElementById('loading').innerHTML = `
+                        <div style="max-width: 600px; margin: 0 auto;">
+                            <div style="font-size: 3rem; margin-bottom: 20px;">❌</div>
+                            <h3 style="margin-bottom: 15px;">Failed to load schedule</h3>
+                            <p style="margin-bottom: 20px; color: var(--gray-600);">${error.message}</p>
+                            <div style="background: var(--gray-100); padding: 20px; border-radius: 8px; text-align: left;">
+                                <strong>How to run:</strong>
+                                <ul style="margin-top: 10px; margin-left: 20px;">
+                                    <li><strong>Easy way:</strong> Run <code style="background: white; padding: 2px 6px; border-radius: 4px;">python serve.py</code></li>
+                                    <li>This automatically downloads the full FOSDEM schedule and serves it locally</li>
+                                    <li>Then open: <code style="background: white; padding: 2px 6px; border-radius: 4px;">http://localhost:8000</code></li>
+                                    <li style="margin-top: 10px; color: var(--gray-600);">Or use demo mode for testing (10 sample talks)</li>
+                                </ul>
+                            </div>
+                            <button class="btn" onclick="location.reload()" style="margin-top: 20px;">🔄 Try Again</button>
+                            <button class="btn btn-secondary" onclick="app.loadDemoData()" style="margin-top: 20px;">📊 Load Demo Data (Testing)</button>
+                        </div>
+                    `;
+                }
+            },
+
+            parseXML(xml) {
+                const talks = [];
+                const events = xml.querySelectorAll('event');
+
+                events.forEach(event => {
+                    const talk = {
+                        id: event.getAttribute('id') || Math.random().toString(36),
+                        title: event.querySelector('title')?.textContent || 'Untitled',
+                        track: event.querySelector('track')?.textContent || 'General',
+                        type: event.querySelector('type')?.textContent || 'Talk',
+                        abstract: event.querySelector('abstract')?.textContent || '',
+                        description: event.querySelector('description')?.textContent || '',
+                        persons: Array.from(event.querySelectorAll('person')).map(p => p.textContent),
+                        day: event.querySelector('day')?.textContent || '',
+                        start: event.querySelector('start')?.textContent || '',
+                        duration: event.querySelector('duration')?.textContent || '',
+                        room: event.querySelector('room')?.textContent || '',
+                        building: this.extractBuilding(event.querySelector('room')?.textContent || ''),
+                        url: event.querySelector('url')?.textContent || '',
+                    };
+
+                    talks.push(talk);
+                });
+
+                return talks;
+            },
+
+            extractBuilding(room) {
+                // FOSDEM rooms typically start with building code (e.g., "H.2215", "K.1.105")
+                const match = room.match(/^([A-Z]+)\./);
+                return match ? `Building ${match[1]}` : 'Unknown';
+            },
+
+            setupEventListeners() {
+                document.getElementById('search').addEventListener('input', (e) => {
+                    this.filters.search = e.target.value.toLowerCase();
+                    this.applyFilters();
+                });
+
+                document.querySelectorAll('.tab').forEach(tab => {
+                    tab.addEventListener('click', (e) => {
+                        const tabName = e.target.dataset.tab;
+                        this.switchTab(tabName);
+                    });
+                });
+
+                document.getElementById('talk-modal').addEventListener('click', (e) => {
+                    if (e.target.id === 'talk-modal') {
+                        this.closeModal();
+                    }
+                });
+            },
+
+            switchTab(tabName) {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+                document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+                document.getElementById(`${tabName}-tab`).classList.add('active');
+
+                if (tabName === 'schedule') {
+                    this.renderSchedule();
+                } else if (tabName === 'recommendations') {
+                    this.renderRecommendations();
+                }
+            },
+
+            renderFilters() {
+                // Get unique tracks
+                const tracks = [...new Set(this.talks.map(t => t.track))].sort();
+                const priorityTracks = tracks.filter(t => 
+                    this.priorityTracks.some(pt => t.toLowerCase().includes(pt.toLowerCase()))
+                );
+                const otherTracks = tracks.filter(t => !priorityTracks.includes(t));
+
+                // Priority tracks
+                const priorityContainer = document.getElementById('priority-tracks');
+                priorityContainer.innerHTML = priorityTracks.length > 0
+                    ? priorityTracks.map(track => 
+                        `<div class="filter-tag priority" data-type="track" data-value="${track}" title="Click to remove from priority">${track}</div>`
+                      ).join('')
+                    : '<div style="color: var(--gray-500); font-style: italic; padding: 8px;">Double-click tracks below to add them as priority</div>';
+
+                // All tracks
+                const tracksContainer = document.getElementById('all-tracks');
+                tracksContainer.innerHTML = otherTracks.map(track => 
+                    `<div class="filter-tag" data-type="track" data-value="${track}" title="Double-click to add to priority">${track}</div>`
+                ).join('');
+
+                // Buildings
+                const buildings = [...new Set(this.talks.map(t => t.building))].sort();
+                const buildingsContainer = document.getElementById('buildings');
+                buildingsContainer.innerHTML = buildings.map(building => 
+                    `<div class="filter-tag" data-type="building" data-value="${building}">${building}</div>`
+                ).join('');
+
+                // Days
+                const days = [...new Set(this.talks.map(t => t.day))].sort();
+                const daysContainer = document.getElementById('days');
+                daysContainer.innerHTML = days.map(day => 
+                    `<div class="filter-tag" data-type="day" data-value="${day}">Day ${day}</div>`
+                ).join('');
+
+                // Add click listeners for priority tracks
+                priorityContainer.querySelectorAll('.filter-tag.priority').forEach(tag => {
+                    // Single click: toggle filter
+                    tag.addEventListener('click', () => {
+                        const value = tag.dataset.value;
+                        
+                        if (this.filters.tracks.has(value)) {
+                            this.filters.tracks.delete(value);
+                            tag.classList.remove('active');
+                        } else {
+                            this.filters.tracks.add(value);
+                            tag.classList.add('active');
+                        }
+
+                        this.applyFilters();
+                    });
+                    
+                    // Double click: remove from priority
+                    tag.addEventListener('dblclick', () => {
+                        const value = tag.dataset.value;
+                        this.removeFromPriorityTracks(value);
+                    });
+                });
+
+                // Add listeners for all tracks
+                tracksContainer.querySelectorAll('.filter-tag').forEach(tag => {
+                    // Single click: toggle filter
+                    tag.addEventListener('click', () => {
+                        const value = tag.dataset.value;
+                        
+                        if (this.filters.tracks.has(value)) {
+                            this.filters.tracks.delete(value);
+                            tag.classList.remove('active');
+                        } else {
+                            this.filters.tracks.add(value);
+                            tag.classList.add('active');
+                        }
+
+                        this.applyFilters();
+                    });
+                    
+                    // Double click: add to priority
+                    tag.addEventListener('dblclick', () => {
+                        const value = tag.dataset.value;
+                        this.addToPriorityTracks(value);
+                    });
+                });
+
+                // Add click listeners for buildings
+                buildingsContainer.querySelectorAll('.filter-tag').forEach(tag => {
+                    tag.addEventListener('click', () => {
+                        const value = tag.dataset.value;
+                        
+                        if (this.filters.buildings.has(value)) {
+                            this.filters.buildings.delete(value);
+                            tag.classList.remove('active');
+                        } else {
+                            this.filters.buildings.add(value);
+                            tag.classList.add('active');
+                        }
+
+                        this.applyFilters();
+                    });
+                });
+
+                // Add click listeners for days
+                daysContainer.querySelectorAll('.filter-tag').forEach(tag => {
+                    tag.addEventListener('click', () => {
+                        const value = tag.dataset.value;
+                        
+                        if (this.filters.days.has(value)) {
+                            this.filters.days.delete(value);
+                            tag.classList.remove('active');
+                        } else {
+                            this.filters.days.add(value);
+                            tag.classList.add('active');
+                        }
+
+                        this.applyFilters();
+                    });
+                });
+            },
+
+            applyFilters() {
+                this.filteredTalks = this.talks.filter(talk => {
+                    // Search filter
+                    if (this.filters.search) {
+                        const searchLower = this.filters.search;
+                        const matchesSearch = 
+                            talk.title.toLowerCase().includes(searchLower) ||
+                            talk.persons.some(p => p.toLowerCase().includes(searchLower)) ||
+                            talk.track.toLowerCase().includes(searchLower) ||
+                            talk.abstract.toLowerCase().includes(searchLower) ||
+                            talk.description.toLowerCase().includes(searchLower);
+                        
+                        if (!matchesSearch) return false;
+                    }
+
+                    // Track filter
+                    if (this.filters.tracks.size > 0 && !this.filters.tracks.has(talk.track)) {
+                        return false;
+                    }
+
+                    // Building filter
+                    if (this.filters.buildings.size > 0 && !this.filters.buildings.has(talk.building)) {
+                        return false;
+                    }
+
+                    // Day filter
+                    if (this.filters.days.size > 0 && !this.filters.days.has(talk.day)) {
+                        return false;
+                    }
+
+                    // Show rated only
+                    if (this.filters.showRatedOnly && !this.ratings[talk.id]) {
+                        return false;
+                    }
+
+                    return true;
+                });
+
+                this.renderTalks();
+                this.updateStats();
+            },
+
+            addToPriorityTracks(trackName) {
+                // Get the exact track name from talks
+                const exactTrack = [...new Set(this.talks.map(t => t.track))].find(t => t === trackName);
+                if (exactTrack && !this.priorityTracks.some(pt => exactTrack.toLowerCase().includes(pt.toLowerCase()))) {
+                    this.priorityTracks.push(exactTrack);
+                    this.saveToStorage();
+                    this.renderFilters();
+                }
+            },
+
+            removeFromPriorityTracks(trackName) {
+                // Find and remove the priority track entry that matches this track
+                const index = this.priorityTracks.findIndex(pt => trackName.toLowerCase().includes(pt.toLowerCase()));
+                if (index > -1) {
+                    this.priorityTracks.splice(index, 1);
+                    this.saveToStorage();
+                    this.renderFilters();
+                }
+            },
+
+            clearFilters() {
+                this.filters = {
+                    search: '',
+                    tracks: new Set(),
+                    buildings: new Set(),
+                    days: new Set(),
+                    showRatedOnly: false
+                };
+
+                document.getElementById('search').value = '';
+                document.querySelectorAll('.filter-tag').forEach(tag => tag.classList.remove('active'));
+                
+                this.applyFilters();
+            },
+
+            showOnlyRated() {
+                this.filters.showRatedOnly = !this.filters.showRatedOnly;
+                this.applyFilters();
+            },
+
+            renderTalks() {
+                const container = document.getElementById('talks-container');
+
+                if (this.filteredTalks.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <div style="font-size: 3rem;">🔍</div>
+                            <h3>No talks found</h3>
+                            <p>Try adjusting your filters or search terms</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = this.filteredTalks.map(talk => {
+                    const rating = this.ratings[talk.id] || 0;
+                    const inSchedule = this.schedule.some(s => s.id === talk.id);
+                    
+                    let priorityClass = '';
+                    if (rating === 5) priorityClass = 'priority-high';
+                    else if (rating >= 3) priorityClass = 'priority-medium';
+                    else if (rating > 0) priorityClass = 'priority-low';
+
+                    return `
+                        <div class="talk-card ${rating > 0 ? 'rated' : ''} ${priorityClass}" data-id="${talk.id}">
+                            <div class="talk-title">${talk.title}</div>
+                            <div class="talk-meta">👤 ${talk.persons.join(', ') || 'No speaker listed'}</div>
+                            <div class="talk-meta">🕐 Day ${talk.day} • ${talk.start} • ${talk.duration}</div>
+                            <div class="talk-meta">📍 ${talk.room} (${talk.building})</div>
+                            <div class="talk-track">${talk.track}</div>
+                            ${talk.abstract ? `<div class="talk-description">${talk.abstract}</div>` : ''}
+                            
+                            <div class="rating-stars">
+                                ${[1, 2, 3, 4, 5].map(star => 
+                                    `<span class="star ${star <= rating ? 'active' : ''}" data-id="${talk.id}" data-rating="${star}">★</span>`
+                                ).join('')}
+                            </div>
+
+                            ${inSchedule ? '<div style="margin-top: 10px; color: var(--success); font-weight: 500;">✓ In Schedule</div>' : ''}
+                        </div>
+                    `;
+                }).join('');
+
+                // Add event listeners
+                container.querySelectorAll('.talk-card').forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        if (!e.target.classList.contains('star')) {
+                            this.showTalkDetail(card.dataset.id);
+                        }
+                    });
+                });
+
+                container.querySelectorAll('.star').forEach(star => {
+                    star.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const talkId = star.dataset.id;
+                        const rating = parseInt(star.dataset.rating);
+                        this.rateTalk(talkId, rating);
+                    });
+                });
+            },
+
+            rateTalk(talkId, rating) {
+                // If clicking the same rating, remove it
+                if (this.ratings[talkId] === rating) {
+                    delete this.ratings[talkId];
+                } else {
+                    this.ratings[talkId] = rating;
+                }
+
+                this.saveToStorage();
+                this.renderTalks();
+                this.updateStats();
+            },
+
+            showTalkDetail(talkId) {
+                const talk = this.talks.find(t => t.id === talkId);
+                if (!talk) return;
+
+                const rating = this.ratings[talk.id] || 0;
+                const inSchedule = this.schedule.some(s => s.id === talk.id);
+
+                const modalBody = document.getElementById('modal-body');
+                modalBody.innerHTML = `
+                    <h2>${talk.title}</h2>
+                    <div class="talk-meta" style="margin-top: 15px;">👤 ${talk.persons.join(', ') || 'No speaker listed'}</div>
+                    <div class="talk-meta">🕐 Day ${talk.day} • ${talk.start} • ${talk.duration}</div>
+                    <div class="talk-meta">📍 ${talk.room} (${talk.building})</div>
+                    <div class="talk-track" style="margin-top: 10px;">${talk.track}</div>
+                    
+                    ${talk.abstract ? `<div style="margin-top: 20px;"><strong>Abstract:</strong><p>${talk.abstract}</p></div>` : ''}
+                    ${talk.description ? `<div style="margin-top: 15px;"><strong>Description:</strong><p>${talk.description}</p></div>` : ''}
+                    ${talk.url ? `<div style="margin-top: 15px;"><a href="${talk.url}" target="_blank" style="color: var(--primary);">View on FOSDEM website →</a></div>` : ''}
+
+                    <div style="margin-top: 20px;">
+                        <strong>Rate this talk:</strong>
+                        <div class="rating-stars">
+                            ${[1, 2, 3, 4, 5].map(star => 
+                                `<span class="star ${star <= rating ? 'active' : ''}" onclick="app.rateTalk('${talk.id}', ${star}); app.showTalkDetail('${talk.id}')">★</span>`
+                            ).join('')}
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                        <button class="btn ${inSchedule ? 'btn-secondary' : ''}" onclick="app.toggleSchedule('${talk.id}'); app.showTalkDetail('${talk.id}')">
+                            ${inSchedule ? '✓ Remove from Schedule' : '+ Add to Schedule'}
+                        </button>
+                    </div>
+                `;
+
+                document.getElementById('talk-modal').classList.add('active');
+            },
+
+            closeModal() {
+                document.getElementById('talk-modal').classList.remove('active');
+            },
+
+            toggleSchedule(talkId) {
+                const index = this.schedule.findIndex(s => s.id === talkId);
+                if (index > -1) {
+                    this.schedule.splice(index, 1);
+                } else {
+                    const talk = this.talks.find(t => t.id === talkId);
+                    if (talk) {
+                        this.schedule.push(talk);
+                    }
+                }
+
+                this.saveToStorage();
+                this.renderTalks();
+                this.updateStats();
+            },
+
+            generateSchedule() {
+                // Auto-generate schedule based on ratings and optimization
+                const ratedTalks = this.talks
+                    .filter(t => this.ratings[t.id])
+                    .sort((a, b) => this.ratings[b.id] - this.ratings[a.id]);
+
+                this.schedule = [];
+                const scheduled = new Set();
+
+                // Group by day
+                const days = [...new Set(ratedTalks.map(t => t.day))];
+
+                days.forEach(day => {
+                    const dayTalks = ratedTalks.filter(t => t.day === day && !scheduled.has(t.id));
+                    
+                    dayTalks.forEach(talk => {
+                        // Check for conflicts
+                        const hasConflict = this.schedule.some(s => 
+                            s.day === talk.day && 
+                            this.timesOverlap(s.start, s.duration, talk.start, talk.duration)
+                        );
+
+                        if (!hasConflict) {
+                            this.schedule.push(talk);
+                            scheduled.add(talk.id);
+                        }
+                    });
+                });
+
+                this.saveToStorage();
+                this.renderSchedule();
+                this.switchTab('schedule');
+                this.updateStats();
+
+                alert(`✨ Generated schedule with ${this.schedule.length} talks! Check the Schedule tab.`);
+            },
+
+            timesOverlap(start1, duration1, start2, duration2) {
+                const [h1, m1] = start1.split(':').map(Number);
+                const [dh1, dm1] = duration1.split(':').map(Number);
+                const [h2, m2] = start2.split(':').map(Number);
+                const [dh2, dm2] = duration2.split(':').map(Number);
+
+                const start1Min = h1 * 60 + m1;
+                const end1Min = start1Min + dh1 * 60 + dm1;
+                const start2Min = h2 * 60 + m2;
+                const end2Min = start2Min + dh2 * 60 + dm2;
+
+                return (start1Min < end2Min && end1Min > start2Min);
+            },
+
+            renderSchedule() {
+                const container = document.getElementById('schedule-container');
+
+                if (this.schedule.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <div style="font-size: 3rem;">📅</div>
+                            <h3>No talks scheduled yet</h3>
+                            <p>Rate some talks and click "Auto-Generate Schedule" or add talks manually</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const days = [...new Set(this.schedule.map(t => t.day))].sort();
+                const conflicts = this.detectConflicts();
+
+                container.innerHTML = days.map(day => {
+                    const dayTalks = this.schedule
+                        .filter(t => t.day === day)
+                        .sort((a, b) => a.start.localeCompare(b.start));
+
+                    return `
+                        <div class="day-schedule">
+                            <h2>Day ${day}</h2>
+                            ${dayTalks.map(talk => {
+                                const conflict = conflicts.find(c => c.includes(talk.id));
+                                const rating = this.ratings[talk.id] || 0;
+
+                                return `
+                                    <div class="time-slot ${conflict ? 'conflict' : ''}">
+                                        <div class="time-slot-header">
+                                            <span class="time-label">🕐 ${talk.start} (${talk.duration})</span>
+                                            ${conflict ? '<span class="conflict-badge">⚠ CONFLICT</span>' : ''}
+                                        </div>
+                                        <div class="scheduled-talk">
+                                            <strong>${talk.title}</strong>
+                                            <div class="talk-meta">👤 ${talk.persons.join(', ')}</div>
+                                            <div class="talk-meta">📍 ${talk.room} (${talk.building})</div>
+                                            <div class="talk-meta">⭐ Rating: ${'★'.repeat(rating)}</div>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    `;
+                }).join('');
+
+                document.getElementById('schedule-count').textContent = this.schedule.length;
+                document.getElementById('conflict-count').textContent = conflicts.length;
+            },
+
+            detectConflicts() {
+                const conflicts = [];
+                
+                for (let i = 0; i < this.schedule.length; i++) {
+                    for (let j = i + 1; j < this.schedule.length; j++) {
+                        const t1 = this.schedule[i];
+                        const t2 = this.schedule[j];
+
+                        if (t1.day === t2.day && this.timesOverlap(t1.start, t1.duration, t2.start, t2.duration)) {
+                            conflicts.push([t1.id, t2.id]);
+                        }
+                    }
+                }
+
+                return conflicts;
+            },
+
+            renderRecommendations() {
+                const container = document.getElementById('recommendations-container');
+
+                // Get talks with priority keywords
+                const recommendations = this.talks
+                    .filter(talk => !this.ratings[talk.id]) // Not yet rated
+                    .map(talk => {
+                        let score = 0;
+                        let reasons = [];
+
+                        // Check for priority keywords
+                        const text = `${talk.title} ${talk.abstract} ${talk.description} ${talk.track}`.toLowerCase();
+                        this.priorityKeywords.forEach(keyword => {
+                            if (text.includes(keyword)) {
+                                score += 2;
+                                reasons.push(`Contains "${keyword}"`);
+                            }
+                        });
+
+                        // Check priority tracks
+                        if (this.priorityTracks.some(pt => talk.track.toLowerCase().includes(pt.toLowerCase()))) {
+                            score += 3;
+                            reasons.push('Priority track');
+                        }
+
+                        // Similar to highly rated talks
+                        const highlyRated = Object.entries(this.ratings)
+                            .filter(([_, rating]) => rating >= 4)
+                            .map(([id, _]) => this.talks.find(t => t.id === id))
+                            .filter(t => t);
+
+                        highlyRated.forEach(rated => {
+                            if (rated.track === talk.track) {
+                                score += 1;
+                                reasons.push(`Same track as "${rated.title}"`);
+                            }
+                        });
+
+                        return { talk, score, reasons: [...new Set(reasons)] };
+                    })
+                    .filter(r => r.score > 0)
+                    .sort((a, b) => b.score - a.score)
+                    .slice(0, 20);
+
+                if (recommendations.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <div style="font-size: 3rem;">✨</div>
+                            <h3>No recommendations yet</h3>
+                            <p>Start rating talks to get personalized recommendations</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = `<div class="talks-grid">${recommendations.map(({ talk, reasons }) => `
+                    <div class="recommendation-card">
+                        <div class="talk-title">${talk.title}</div>
+                        <div class="talk-meta">👤 ${talk.persons.join(', ')}</div>
+                        <div class="talk-meta">🕐 Day ${talk.day} • ${talk.start}</div>
+                        <div class="talk-meta">📍 ${talk.room} (${talk.building})</div>
+                        <div class="talk-track">${talk.track}</div>
+                        <div class="recommendation-reason">💡 ${reasons.join(' • ')}</div>
+                        
+                        <div class="rating-stars">
+                            ${[1, 2, 3, 4, 5].map(star => 
+                                `<span class="star" onclick="app.rateTalk('${talk.id}', ${star}); app.renderRecommendations()">★</span>`
+                            ).join('')}
+                        </div>
+                    </div>
+                `).join('')}</div>`;
+            },
+
+            exportSchedule(format) {
+                if (this.schedule.length === 0) {
+                    alert('No talks in schedule to export!');
+                    return;
+                }
+
+                let content, filename, mimeType;
+
+                if (format === 'text') {
+                    content = this.generateTextExport();
+                    filename = 'fosdem-2026-schedule.txt';
+                    mimeType = 'text/plain';
+                } else if (format === 'json') {
+                    content = JSON.stringify(this.schedule, null, 2);
+                    filename = 'fosdem-2026-schedule.json';
+                    mimeType = 'application/json';
+                }
+
+                const blob = new Blob([content], { type: mimeType });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                a.click();
+                URL.revokeObjectURL(url);
+            },
+
+            generateTextExport() {
+                const days = [...new Set(this.schedule.map(t => t.day))].sort();
+                let text = '═══════════════════════════════════════════════\n';
+                text += '  FOSDEM 2026 - Personal Schedule\n';
+                text += '  Brussels, Belgium\n';
+                text += '═══════════════════════════════════════════════\n\n';
+
+                days.forEach(day => {
+                    text += `\n━━━ DAY ${day} ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+                    
+                    const dayTalks = this.schedule
+                        .filter(t => t.day === day)
+                        .sort((a, b) => a.start.localeCompare(b.start));
+
+                    dayTalks.forEach(talk => {
+                        const rating = this.ratings[talk.id] || 0;
+                        text += `${talk.start} - ${talk.room} (${talk.building})\n`;
+                        text += `${talk.title}\n`;
+                        text += `Speaker(s): ${talk.persons.join(', ')}\n`;
+                        text += `Track: ${talk.track}\n`;
+                        text += `Rating: ${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}\n`;
+                        text += `Duration: ${talk.duration}\n`;
+                        if (talk.url) text += `URL: ${talk.url}\n`;
+                        text += '\n';
+                    });
+                });
+
+                return text;
+            },
+
+            updateStats() {
+                document.getElementById('total-talks').textContent = this.talks.length;
+                document.getElementById('filtered-talks').textContent = this.filteredTalks.length;
+                document.getElementById('rated-talks').textContent = Object.keys(this.ratings).length;
+                document.getElementById('scheduled-talks').textContent = this.schedule.length;
+            },
+
+            saveToStorage() {
+                localStorage.setItem('fosdem-ratings', JSON.stringify(this.ratings));
+                localStorage.setItem('fosdem-schedule', JSON.stringify(this.schedule.map(t => t.id)));
+                localStorage.setItem('fosdem-priority-tracks', JSON.stringify(this.priorityTracks));
+            },
+
+            loadFromStorage() {
+                try {
+                    const ratings = localStorage.getItem('fosdem-ratings');
+                    if (ratings) this.ratings = JSON.parse(ratings);
+
+                    const priorityTracks = localStorage.getItem('fosdem-priority-tracks');
+                    if (priorityTracks) {
+                        this.priorityTracks = JSON.parse(priorityTracks);
+                    } else {
+                        // Default priority tracks if none saved
+                        this.priorityTracks = ['AI, Machine Learning & Data', 'Rust', 'Go', 'Continuous Integration and Continuous Deployment'];
+                    }
+
+                    const scheduleIds = localStorage.getItem('fosdem-schedule');
+                    if (scheduleIds) {
+                        const ids = JSON.parse(scheduleIds);
+                        // Will be populated after talks are loaded
+                        setTimeout(() => {
+                            this.schedule = ids.map(id => this.talks.find(t => t.id === id)).filter(t => t);
+                            this.updateStats();
+                        }, 500);
+                    }
+                } catch (e) {
+                    console.error('Error loading from storage:', e);
+                }
+            },
+
+            loadDemoData() {
+                // Demo data for testing
+                this.talks = [
+                    {
+                        id: 'demo-1',
+                        title: 'Building LLM-Powered Applications with Rust',
+                        track: 'Rust',
+                        type: 'Talk',
+                        abstract: 'Learn how to build high-performance LLM applications using Rust for maximum efficiency and safety.',
+                        description: 'This talk covers practical techniques for integrating large language models into Rust applications, including performance optimization, memory management, and API design patterns.',
+                        persons: ['Alice Chen', 'Bob Smith'],
+                        day: '1',
+                        start: '10:00',
+                        duration: '00:50',
+                        room: 'H.2215',
+                        building: 'Building H',
+                        url: 'https://fosdem.org/2026/schedule/event/demo-1'
+                    },
+                    {
+                        id: 'demo-2',
+                        title: 'Agentic AI Systems: From Theory to Practice',
+                        track: 'AI, Machine Learning & Data',
+                        type: 'Talk',
+                        abstract: 'Explore the architecture and implementation of autonomous AI agents that can plan, reason, and act.',
+                        description: 'Deep dive into agentic AI systems with real-world examples and best practices for building reliable autonomous agents.',
+                        persons: ['Dr. Jane Wilson'],
+                        day: '1',
+                        start: '11:00',
+                        duration: '00:45',
+                        room: 'H.2215',
+                        building: 'Building H',
+                        url: 'https://fosdem.org/2026/schedule/event/demo-2'
+                    },
+                    {
+                        id: 'demo-3',
+                        title: 'Performance Optimization Techniques for Modern Applications',
+                        track: 'Performance and Optimization',
+                        type: 'Talk',
+                        abstract: 'Advanced profiling and optimization strategies to make your applications blazingly fast.',
+                        description: 'Learn systematic approaches to identifying and fixing performance bottlenecks using modern profiling tools.',
+                        persons: ['Carlos Rodriguez'],
+                        day: '1',
+                        start: '14:00',
+                        duration: '00:55',
+                        room: 'K.1.105',
+                        building: 'Building K',
+                        url: 'https://fosdem.org/2026/schedule/event/demo-3'
+                    },
+                    {
+                        id: 'demo-4',
+                        title: 'CI/CD Pipelines for Machine Learning Models',
+                        track: 'Continuous Integration and Continuous Deployment',
+                        type: 'Talk',
+                        abstract: 'Implement robust CI/CD pipelines for training, testing, and deploying ML models at scale.',
+                        description: 'Best practices for automating ML workflows with comprehensive examples using modern DevOps tools.',
+                        persons: ['Emma Thompson', 'David Lee'],
+                        day: '1',
+                        start: '15:00',
+                        duration: '00:50',
+                        room: 'J.1.106',
+                        building: 'Building J',
+                        url: 'https://fosdem.org/2026/schedule/event/demo-4'
+                    },
+                    {
+                        id: 'demo-5',
+                        title: 'Rust Memory Safety in Systems Programming',
+                        track: 'Rust',
+                        type: 'Talk',
+                        abstract: 'Understanding Rust\'s ownership model and how it prevents common memory safety bugs.',
+                        description: 'A comprehensive guide to Rust\'s safety guarantees with practical examples from systems programming.',
+                        persons: ['Frank Miller'],
+                        day: '2',
+                        start: '10:00',
+                        duration: '00:45',
+                        room: 'H.2215',
+                        building: 'Building H',
+                        url: 'https://fosdem.org/2026/schedule/event/demo-5'
+                    },
+                    {
+                        id: 'demo-6',
+                        title: 'Large Language Models: Architecture and Training',
+                        track: 'AI, Machine Learning & Data',
+                        type: 'Talk',
+                        abstract: 'Dive deep into transformer architectures and the training process for large language models.',
+                        description: 'Comprehensive overview of LLM internals, from attention mechanisms to training at scale.',
+                        persons: ['Dr. Grace Park'],
+                        day: '2',
+                        start: '11:00',
+                        duration: '00:50',
+                        room: 'H.1308',
+                        building: 'Building H',
+                        url: 'https://fosdem.org/2026/schedule/event/demo-6'
+                    },
+                    {
+                        id: 'demo-7',
+                        title: 'Profiling and Benchmarking Go Applications',
+                        track: 'Go',
+                        type: 'Talk',
+                        abstract: 'Master the art of profiling Go applications to identify and fix performance issues.',
+                        description: 'Hands-on guide to using pprof, trace, and other Go profiling tools effectively.',
+                        persons: ['Henry Zhang'],
+                        day: '2',
+                        start: '14:00',
+                        duration: '00:45',
+                        room: 'K.1.105',
+                        building: 'Building K',
+                        url: 'https://fosdem.org/2026/schedule/event/demo-7'
+                    },
+                    {
+                        id: 'demo-8',
+                        title: 'Building Autonomous Agents with LangChain',
+                        track: 'AI, Machine Learning & Data',
+                        type: 'Workshop',
+                        abstract: 'Practical workshop on building autonomous AI agents using LangChain and LLMs.',
+                        description: 'Build real agentic systems that can use tools, plan actions, and interact with external APIs.',
+                        persons: ['Isabella Santos', 'Jack Brown'],
+                        day: '2',
+                        start: '15:30',
+                        duration: '01:30',
+                        room: 'AW.1.120',
+                        building: 'Building AW',
+                        url: 'https://fosdem.org/2026/schedule/event/demo-8'
+                    },
+                    {
+                        id: 'demo-9',
+                        title: 'DevOps Best Practices for 2026',
+                        track: 'Continuous Integration and Continuous Deployment',
+                        type: 'Talk',
+                        abstract: 'Latest trends and best practices in DevOps, automation, and infrastructure as code.',
+                        description: 'Comprehensive overview of modern DevOps practices with real-world case studies.',
+                        persons: ['Kevin O\'Brien'],
+                        day: '1',
+                        start: '16:00',
+                        duration: '00:45',
+                        room: 'J.1.106',
+                        building: 'Building J',
+                        url: 'https://fosdem.org/2026/schedule/event/demo-9'
+                    },
+                    {
+                        id: 'demo-10',
+                        title: 'Optimizing Database Queries for Performance',
+                        track: 'PostgreSQL',
+                        type: 'Talk',
+                        abstract: 'Advanced techniques for optimizing PostgreSQL queries and improving database performance.',
+                        description: 'Learn how to analyze query plans, create effective indexes, and tune your database for optimal performance.',
+                        persons: ['Laura Kim'],
+                        day: '2',
+                        start: '13:00',
+                        duration: '00:50',
+                        room: 'H.1301',
+                        building: 'Building H',
+                        url: 'https://fosdem.org/2026/schedule/event/demo-10'
+                    }
+                ];
+
+                this.filteredTalks = [...this.talks];
+                
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('app').style.display = 'block';
+
+                this.renderFilters();
+                this.renderTalks();
+                this.updateStats();
+
+                // Show demo mode indicator
+                const header = document.querySelector('header .container');
+                const demoIndicator = document.createElement('div');
+                demoIndicator.style.cssText = 'background: var(--warning); color: white; padding: 10px; border-radius: 8px; margin-top: 15px; font-weight: 500;';
+                demoIndicator.innerHTML = '📊 Demo Mode - Using sample data. <a href="#" onclick="location.reload()" style="color: white; text-decoration: underline;">Reload to fetch real schedule</a>';
+                header.appendChild(demoIndicator);
+            }
+        };
+
+        // Initialize app when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => app.init());
+    </script>
+</body>
+</html>
