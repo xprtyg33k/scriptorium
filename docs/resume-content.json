@@ -1,0 +1,136 @@
+{
+  "meta": {
+    "name": "Guillermo Salas",
+    "title": "EVP SOFTWARE ENGINEERING / CTO",
+    "email": "gsalast@gmail.com",
+    "phone": "+1-414-899-4450",
+    "location": "Elm Grove, Wisconsin",
+    "linkedin": "linkedin.com/in/guillermosalas",
+    "linkedinUrl": "https://linkedin.com/in/guillermosalas"
+  },
+  "summary": "Technology executive with 20+ years leading engineering organizations across Healthcare SaaS, fintech, and enterprise software. Proven track record scaling teams, modernizing platforms, and driving enterprise AI adoption while aligning technology strategy to measurable business outcomes. Builds high-performing leadership benches, improves delivery predictability and operational resilience, and translates complex decisions into clear executive direction.",
+  "experience": [
+    {
+      "company": "Experity",
+      "title": "VP, Software Engineering and Product Development",
+      "period": "Mar 2023 – Present",
+      "bullets": [
+        "Led engineering for a Healthcare SaaS platform serving urgent care and emergency medicine providers; accountable for reliability, performance, and compliance (HIPAA, HL7, FHIR) across legacy and modern distributed systems.",
+        "Led org-wide AI adoption across engineering, defined governance and security guardrails, and scaled AI-enabled workflows (delivery, code review, incident response, knowledge retrieval), producing measurable results including [X%] faster cycle time, [Y%] reduction in defects or rework, and [Z%] improvement in MTTR or on-call load across [N] teams.",
+        "Scaled AI adoption securely with governance and training, building alignment with Security, Compliance, and Product to turn tooling experiments into consistent, audited, and repeatable pipelines rather than personality-driven usage.",
+        "Standardized AI-assisted workflows seamlessly into planning, PRs, and documentation—putting quality gates around AI output, raising baseline PR quality, reducing reopen rates, and shifting engineer focus toward higher-leverage decisions.",
+        "Drove architectural modernization of mission-critical platforms, introducing CI/CD maturity, improved cloud observability, and AI-compressed incident response—decreasing initial triage times and consistently generating actionable post-incident learnings.",
+        "Built and led a multi-disciplinary engineering organization across multiple time zones (5 direct reports, 4 teams, 27 engineers); delivered 35%+ improvement in team efficiency through process redesign and turning scattered knowledge into searchable, AI-curated portals.",
+        "Partnered cross-functionally to align engineering strategy to business outcomes, actively influencing executive budgeting decisions tied to AI tooling adoption, team structure, and capacity planning."
+      ]
+    },
+    {
+      "company": "Chronicled",
+      "title": "Implementation Solutions Architect & Head of Customer Success Services",
+      "period": "Jul 2022 – May 2023",
+      "bullets": [
+        "Led enterprise blockchain solution implementations for Fortune 100 pharmaceutical customers via the MediLedger platform, addressing supply chain compliance and track-and-trace regulatory requirements.",
+        "Served as Head of Customer Success Services, managing a team of Implementation Consultants with deep Kubernetes configuration expertise and strong business acumen.",
+        "Bridged technical implementation with strategic business outcomes, ensuring alignment between platform capabilities and client objectives."
+      ]
+    },
+    {
+      "company": "SafeNet Consulting",
+      "title": "Director, Solutions Group",
+      "period": "Apr 2021 – Jul 2022",
+      "bullets": [
+        "Provided technical and executive leadership identifying opportunities to adopt emerging technologies for Fortune 500 enterprise clients.",
+        "Led a collaborative architecture team building multi-tier, cloud-native internet-facing solutions across AWS and Azure hyperscaler environments."
+      ]
+    },
+    {
+      "company": "SysLogic",
+      "title": "Cloud & Enterprise Architecture Lead",
+      "period": "May 2019 – Mar 2021",
+      "bullets": [
+        "Championed and delivered modern, cloud-first software solutions while mentoring and growing engineering talent across the organization.",
+        "Influenced, guided, and governed solution design and cloud infrastructure adoption across multiple enterprise engagements."
+      ]
+    },
+    {
+      "company": "HSA Bank",
+      "title": "Director, Enterprise Solutions Architect",
+      "period": "Jun 2016 – May 2019",
+      "bullets": [
+        "Architected enterprise integration patterns and governed technology adoption across a regulated financial services platform.",
+        "Partnered with CTO and executive leadership to communicate critical technical initiatives and scalable architectural solutions aligned to enterprise strategy."
+      ]
+    },
+    {
+      "company": "HSA Bank",
+      "title": "VP, Application Development Manager",
+      "period": "May 2014 – Jun 2016",
+      "bullets": [
+        "Reduced support incident rework by 43% YoY by establishing an intake, definition, alignment, and assignment integrated process.",
+        "Built a hiring practice anchored in curiosity and continuous improvement — resulting in engineers who consistently performed within the top 10%."
+      ]
+    },
+    {
+      "company": "CoreLogic / Marshall Swift & Boeckh",
+      "title": "Enterprise Application Architect",
+      "period": "Dec 2011 – May 2014",
+      "bullets": [
+        "Collaboratively defined roadmaps, annual planning, and feature sets impacting multiple platforms and products.",
+        "Delivered comprehensive enterprise solutions with full technical specifications, mentoring distributed remote and onsite teams."
+      ]
+    },
+    {
+      "company": "Health Payment Systems",
+      "title": "Application Architect",
+      "period": "May 2010 – Dec 2011",
+      "bullets": [
+        "Managed the software development team ensuring constant improvement, engagement, and productivity across delivery cycles."
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "category": "Executive Leadership",
+      "items": ["Org Design & Team Scaling", "Executive Stakeholder Management", "Engineering Operating Cadence", "Budget & Capacity Planning", "Leadership Development & Hiring"]
+    },
+    {
+      "category": "AI Strategy & Adoption",
+      "items": ["AI Governance & Security Guardrails", "LLM Enablement for Engineering Workflows", "AI-Assisted Delivery & Code Review", "AI-Driven Incident Response & Knowledge Retrieval"]
+    },
+    {
+      "category": "Platform & Architecture",
+      "items": ["Enterprise Architecture", "Distributed Systems Modernization", "Cloud-Native Platforms", "Microservices & Integration Patterns", "DDD / SOLID Design"]
+    },
+    {
+      "category": "Reliability, Security & Compliance",
+      "items": ["Security-First Architecture", "Observability & Incident Leadership", "HIPAA / HL7 / FHIR", "Regulated Platform Delivery"]
+    },
+    {
+      "category": "Cloud, Data & Delivery",
+      "items": ["AWS (Primary), Azure", "Kubernetes & Container Platforms", "PostgreSQL Performance Optimization", "CI/CD Maturity", "OpenAPI / OAuth 2.0 / JWT"]
+    }
+  ],
+  "certifications": [
+    {
+      "issuer": "Oracle",
+      "items": [
+        "OCI Certified — Cloud Infrastructure 2024 Generative AI Professional",
+        "OCI Foundations 2021 Associate"
+      ]
+    },
+    {
+      "issuer": "Microsoft",
+      "items": [
+        "Azure Administrator (AZ-104)",
+        "Azure Data Fundamentals (DP-900)",
+        "Azure Fundamentals (AZ-900)"
+      ]
+    },
+    {
+      "issuer": "IBM",
+      "items": [
+        "Cloud-Native and Multicloud Applications"
+      ]
+    }
+  ]
+}

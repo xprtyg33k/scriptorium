@@ -1,0 +1,143 @@
+{
+  "meta": {
+    "name": "Guillermo Salas",
+    "title": "EVP SOFTWARE ENGINEERING / CTO",
+    "email": "gsalast@gmail.com",
+    "phone": "+1-414-899-4450",
+    "location": "Elm Grove, Wisconsin",
+    "linkedin": "linkedin.com/in/guillermosalas",
+    "linkedinUrl": "https://linkedin.com/in/guillermosalas"
+  },
+  "summary": "Technology executive with 20+ years leading engineering organizations in Healthcare SaaS, fintech, and enterprise software. Proven track record scaling distributed teams, modernizing mission-critical platforms, and aligning engineering strategy with business outcomes. Deep expertise in cloud-native architecture (AWS), HIPAA-compliant systems, and HL7/FHIR interoperability. Known for building high-performing teams and translating technical complexity into executive-level clarity.",
+  "experience": [
+    {
+      "company": "Experity",
+      "title": "VP, Software Engineering and Product Development",
+      "period": "Mar 2023 – Present",
+      "bullets": [
+        "Led engineering for a Healthcare SaaS platform serving urgent care and emergency medicine providers, operating within HIPAA compliance and clinical workflow requirements including HL7 and FHIR interoperability standards.",
+        "Drove architectural overhaul of mission-critical systems, enhancing scalability and maintainability through advanced CI/CD practices and cloud-native AWS infrastructure — improving platform reliability and deployment frequency.",
+        "Built and managed a high-performing distributed engineering organization across multiple time zones: 5 direct reports, 4 teams, 27 engineers.",
+        "Delivered 35%+ improvement in team efficiency through process redesign, tooling investment, and strategic resource reallocation.",
+        "Partnered with executive leadership to align engineering deliverables with long-term business goals, bridging product strategy and engineering execution across a complex multi-product portfolio.",
+        "Championed a people-first leadership culture emphasizing mentorship, ownership, and continuous improvement — maintaining top 10% talent retention and performance outcomes."
+      ]
+    },
+    {
+      "company": "Chronicled",
+      "title": "Implementation Solutions Architect & Head of Customer Success Services",
+      "period": "Jul 2022 – May 2023",
+      "bullets": [
+        "Led enterprise blockchain solution implementations for Fortune 100 pharmaceutical customers via the MediLedger platform, addressing supply chain compliance and track-and-trace regulatory requirements.",
+        "Served as Head of Customer Success Services, managing a team of Implementation Consultants with deep Kubernetes configuration expertise and strong business acumen.",
+        "Bridged technical implementation with strategic business outcomes, ensuring alignment between platform capabilities and client objectives."
+      ]
+    },
+    {
+      "company": "SafeNet Consulting",
+      "title": "Director, Solutions Group",
+      "period": "Apr 2021 – Jul 2022",
+      "bullets": [
+        "Provided technical and executive leadership identifying opportunities to adopt emerging technologies for Fortune 500 enterprise clients.",
+        "Led a collaborative architecture team building multi-tier, cloud-native internet-facing solutions across AWS and Azure hyperscaler environments."
+      ]
+    },
+    {
+      "company": "SysLogic",
+      "title": "Cloud & Enterprise Architecture Lead",
+      "period": "May 2019 – Mar 2021",
+      "bullets": [
+        "Championed and delivered modern, cloud-first software solutions while mentoring and growing engineering talent across the organization.",
+        "Influenced, guided, and governed solution design and cloud infrastructure adoption across multiple enterprise engagements."
+      ]
+    },
+    {
+      "company": "HSA Bank",
+      "title": "Director, Enterprise Solutions Architect",
+      "period": "Jun 2016 – May 2019",
+      "bullets": [
+        "Architected enterprise integration patterns and governed technology adoption across a regulated financial services platform.",
+        "Partnered with CTO and executive leadership to communicate critical technical initiatives and scalable architectural solutions aligned to enterprise strategy."
+      ]
+    },
+    {
+      "company": "HSA Bank",
+      "title": "VP, Application Development Manager",
+      "period": "May 2014 – Jun 2016",
+      "bullets": [
+        "Reduced support incident rework by 43% YoY by establishing an intake, definition, alignment, and assignment integrated process.",
+        "Built a hiring practice anchored in curiosity and continuous improvement — resulting in engineers who consistently performed within the top 10%."
+      ]
+    },
+    {
+      "company": "CoreLogic / Marshall Swift & Boeckh",
+      "title": "Enterprise Application Architect",
+      "period": "Dec 2011 – May 2014",
+      "bullets": [
+        "Collaboratively defined roadmaps, annual planning, and feature sets impacting multiple platforms and products.",
+        "Delivered comprehensive enterprise solutions with full technical specifications, mentoring distributed remote and onsite teams."
+      ]
+    },
+    {
+      "company": "Health Payment Systems",
+      "title": "Application Architect",
+      "period": "May 2010 – Dec 2011",
+      "bullets": [
+        "Managed the software development team ensuring constant improvement, engagement, and productivity across delivery cycles."
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "category": "Cloud & Infrastructure",
+      "items": ["AWS (primary)", "Azure", "GCP", "OCI", "Docker", "Kubernetes"]
+    },
+    {
+      "category": "Languages & Frameworks",
+      "items": ["Node.js", "TypeScript", "Python", "React / Next.js", "C#"]
+    },
+    {
+      "category": "Architecture",
+      "items": ["Domain-Driven Design", "Distributed Systems", "Cloud-Native", "Microservices", "Enterprise Integration"]
+    },
+    {
+      "category": "Healthcare & Compliance",
+      "items": ["HIPAA", "HL7", "FHIR", "Pharmaceutical Supply Chain Compliance"]
+    },
+    {
+      "category": "API & Security",
+      "items": ["OAuth 2.0", "JWT", "OpenAPI / Swagger"]
+    },
+    {
+      "category": "AI & Emerging Tech",
+      "items": ["Large Language Models (LLMs)", "Generative AI APIs", "Blockchain / Distributed Ledger"]
+    },
+    {
+      "category": "Leadership",
+      "items": ["Org Design", "P&L Ownership", "Executive Stakeholder Management", "Engineering Hiring", "Mentorship & Coaching"]
+    }
+  ],
+  "certifications": [
+    {
+      "issuer": "Oracle",
+      "items": [
+        "OCI Certified — Cloud Infrastructure 2024 Generative AI Professional",
+        "OCI Foundations 2021 Associate"
+      ]
+    },
+    {
+      "issuer": "Microsoft",
+      "items": [
+        "Azure Administrator (AZ-104)",
+        "Azure Data Fundamentals (DP-900)",
+        "Azure Fundamentals (AZ-900)"
+      ]
+    },
+    {
+      "issuer": "IBM",
+      "items": [
+        "Cloud-Native and Multicloud Applications"
+      ]
+    }
+  ]
+}

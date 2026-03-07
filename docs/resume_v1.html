@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Guillermo Salas — Resume</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --ink-light: #4a4a4a;
+    --ink-muted: #888;
+    --rule: #c8b99a;
+    --accent: #8b6f47;
+    --accent-light: #f5f0e8;
+    --bg: #fdfaf5;
+    --page: #ffffff;
+    --col-left: 220px;
+    --gap: 32px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--ink);
+    font-size: 13px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── toolbar ── */
+  #toolbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 48px;
+    background: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    z-index: 100;
+    gap: 12px;
+  }
+
+  #toolbar span {
+    color: #aaa;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  #toolbar .toolbar-right {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 16px;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-primary:hover { background: #7a5f3a; }
+
+  .btn-ghost {
+    background: transparent;
+    color: #aaa;
+    border: 1px solid #444;
+  }
+  .btn-ghost:hover { border-color: #888; color: #fff; }
+
+  /* ── page wrapper ── */
+  #page-wrap {
+    padding-top: 72px;
+    padding-bottom: 48px;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* ── resume sheet ── */
+  #resume {
+    background: var(--page);
+    width: 860px;
+    box-shadow: 0 4px 40px rgba(0,0,0,0.10);
+    padding: 56px 56px 64px;
+  }
+
+  /* ── header ── */
+  #header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 24px;
+    border-bottom: 2px solid var(--rule);
+    margin-bottom: 36px;
+  }
+
+  #header-left h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  #header-left .title-tag {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  #header-right {
+    text-align: right;
+    font-size: 11.5px;
+    color: var(--ink-light);
+    line-height: 1.9;
+  }
+
+  #header-right a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  #header-right a:hover { text-decoration: underline; }
+
+  /* ── section layout ── */
+  .section {
+    display: grid;
+    grid-template-columns: var(--col-left) 1fr;
+    gap: 0 var(--gap);
+    margin-bottom: 28px;
+  }
+
+  .section-label {
+    padding-top: 2px;
+    text-align: right;
+  }
+
+  .section-label h2 {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-family: 'DM Sans', sans-serif;
+    padding-top: 4px;
+  }
+
+  .section-divider {
+    width: 32px;
+    height: 1px;
+    background: var(--rule);
+    margin: 8px 0 0 auto;
+  }
+
+  .section-body {
+    border-left: 1px solid var(--rule);
+    padding-left: var(--gap);
+  }
+
+  /* ── summary ── */
+  .summary-text {
+    font-size: 13px;
+    color: var(--ink-light);
+    line-height: 1.75;
+    font-style: italic;
+  }
+
+  /* ── experience ── */
+  .job {
+    margin-bottom: 22px;
+  }
+  .job:last-child { margin-bottom: 0; }
+
+  .job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 2px;
+  }
+
+  .job-company {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: 0.01em;
+  }
+
+  .job-period {
+    font-size: 10.5px;
+    color: var(--ink-muted);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  .job-title {
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .job-bullets {
+    list-style: none;
+    padding: 0;
+  }
+
+  .job-bullets li {
+    position: relative;
+    padding-left: 14px;
+    margin-bottom: 4px;
+    font-size: 12.5px;
+    color: var(--ink-light);
+    line-height: 1.65;
+  }
+
+  .job-bullets li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--rule);
+    font-size: 11px;
+    top: 1px;
+  }
+
+  .job + .job {
+    padding-top: 18px;
+    border-top: 1px dashed #e8e0d0;
+  }
+
+  /* ── skills ── */
+  .skills-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .skill-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 12px;
+    align-items: baseline;
+  }
+
+  .skill-cat {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .skill-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .skill-chip {
+    font-size: 11px;
+    padding: 2px 9px;
+    background: var(--accent-light);
+    color: var(--accent);
+    border-radius: 2px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  /* ── certifications ── */
+  .cert-group {
+    margin-bottom: 10px;
+  }
+  .cert-group:last-child { margin-bottom: 0; }
+
+  .cert-issuer {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 3px;
+  }
+
+  .cert-items {
+    list-style: none;
+  }
+
+  .cert-items li {
+    font-size: 12px;
+    color: var(--ink-light);
+    padding-left: 12px;
+    position: relative;
+    line-height: 1.6;
+  }
+
+  .cert-items li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 16px;
+    line-height: 1.2;
+  }
+
+  /* ── loading state ── */
+  #loading {
+    text-align: center;
+    padding: 80px;
+    color: var(--ink-muted);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── print styles ── */
+  @media print {
+    #toolbar { display: none !important; }
+    #page-wrap { padding-top: 0; }
+    #resume { box-shadow: none; }
+    body { background: white; }
+  }
+</style>
+</head>
+<body>
+
+<div id="toolbar">
+  <span>Guillermo Salas — Resume</span>
+  <div class="toolbar-right">
+    <button class="btn btn-ghost" onclick="openJSON()">✎ Edit Content</button>
+    <button class="btn btn-primary" onclick="downloadPDF()">↓ Download PDF</button>
+  </div>
+</div>
+
+<div id="page-wrap">
+  <div id="resume">
+    <div id="loading">Loading resume content…</div>
+  </div>
+</div>
+
+<script>
+// ── Load JSON and render ──────────────────────────────────────────────────────
+
+const JSON_FILE = 'resume-content.json';
+
+async function loadResume() {
+  let data;
+  try {
+    const res = await fetch(JSON_FILE);
+    if (!res.ok) throw new Error('fetch failed');
+    data = await res.json();
+  } catch(e) {
+    // Fallback: embedded data for standalone use
+    data = EMBEDDED_DATA;
+  }
+  render(data);
+}
+
+function render(d) {
+  const resume = document.getElementById('resume');
+  resume.innerHTML = `
+    ${renderHeader(d.meta)}
+    ${renderSummary(d.summary)}
+    ${renderExperience(d.experience)}
+    ${renderSkills(d.skills)}
+    ${renderCertifications(d.certifications)}
+  `;
+}
+
+function renderHeader(m) {
+  return `
+    <div id="header">
+      <div id="header-left">
+        <h1>${m.name}</h1>
+        <div class="title-tag">${m.title}</div>
+      </div>
+      <div id="header-right">
+        <div>${m.email}</div>
+        <div>${m.phone}</div>
+        <div>${m.location}</div>
+        <div><a href="${m.linkedinUrl}" target="_blank">${m.linkedin}</a></div>
+      </div>
+    </div>
+  `;
+}
+
+function renderSummary(text) {
+  return `
+    <div class="section">
+      <div class="section-label">
+        <h2>Profile</h2>
+        <div class="section-divider"></div>
+      </div>
+      <div class="section-body">
+        <p class="summary-text">${text}</p>
+      </div>
+    </div>
+  `;
+}
+
+function renderExperience(jobs) {
+  const jobsHTML = jobs.map(j => `
+    <div class="job">
+      <div class="job-header">
+        <div class="job-company">${j.company}</div>
+        <div class="job-period">${j.period}</div>
+      </div>
+      <div class="job-title">${j.title}</div>
+      <ul class="job-bullets">
+        ${j.bullets.map(b => `<li>${b}</li>`).join('')}
+      </ul>
+    </div>
+  `).join('');
+
+  return `
+    <div class="section">
+      <div class="section-label">
+        <h2>Experience</h2>
+        <div class="section-divider"></div>
+      </div>
+      <div class="section-body">
+        ${jobsHTML}
+      </div>
+    </div>
+  `;
+}
+
+function renderSkills(skills) {
+  const rows = skills.map(s => `
+    <div class="skill-row">
+      <div class="skill-cat">${s.category}</div>
+      <div class="skill-items">
+        ${s.items.map(i => `<span class="skill-chip">${i}</span>`).join('')}
+      </div>
+    </div>
+  `).join('');
+
+  return `
+    <div class="section">
+      <div class="section-label">
+        <h2>Skills</h2>
+        <div class="section-divider"></div>
+      </div>
+      <div class="section-body">
+        <div class="skills-grid">${rows}</div>
+      </div>
+    </div>
+  `;
+}
+
+function renderCertifications(certs) {
+  const groups = certs.map(c => `
+    <div class="cert-group">
+      <div class="cert-issuer">${c.issuer}</div>
+      <ul class="cert-items">
+        ${c.items.map(i => `<li>${i}</li>`).join('')}
+      </ul>
+    </div>
+  `).join('');
+
+  return `
+    <div class="section">
+      <div class="section-label">
+        <h2>Certifications</h2>
+        <div class="section-divider"></div>
+      </div>
+      <div class="section-body">
+        ${groups}
+      </div>
+    </div>
+  `;
+}
+
+// ── PDF export ────────────────────────────────────────────────────────────────
+
+function downloadPDF() {
+  const toolbar = document.getElementById('toolbar');
+  toolbar.style.display = 'none';
+
+  const element = document.getElementById('resume');
+  const opt = {
+    margin:       [10, 10, 10, 10],
+    filename:     'Guillermo_Salas_Resume.pdf',
+    image:        { type: 'jpeg', quality: 0.98 },
+    html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+  };
+
+  html2pdf().set(opt).from(element).save().then(() => {
+    toolbar.style.display = 'flex';
+  });
+}
+
+// ── Edit JSON hint ────────────────────────────────────────────────────────────
+
+function openJSON() {
+  alert(
+    'To edit resume content:\n\n' +
+    '1. Open resume-content.json in any text editor\n' +
+    '2. Edit your details (name, jobs, skills, certs)\n' +
+    '3. Save the file\n' +
+    '4. Reload this page — changes appear automatically\n\n' +
+    'Keep both files (resume.html + resume-content.json) in the same folder.'
+  );
+}
+
+// ── Embedded fallback data (mirrors resume-content.json) ─────────────────────
+// This allows the file to work standalone if JSON fetch fails.
+
+const EMBEDDED_DATA = {
+  "meta": {
+    "name": "Guillermo Salas",
+    "title": "EVP SOFTWARE ENGINEERING / CTO",
+    "email": "gsalast@gmail.com",
+    "phone": "+1-414-899-4450",
+    "location": "Elm Grove, Wisconsin",
+    "linkedin": "linkedin.com/in/guillermosalas",
+    "linkedinUrl": "https://linkedin.com/in/guillermosalas"
+  },
+  "summary": "Technology executive with 20+ years leading engineering organizations in Healthcare SaaS, fintech, and enterprise software. Proven track record scaling distributed teams, modernizing mission-critical platforms, and aligning engineering strategy with business outcomes. Deep expertise in cloud-native architecture (AWS), HIPAA-compliant systems, and HL7/FHIR interoperability. Known for building high-performing teams and translating technical complexity into executive-level clarity.",
+  "experience": [
+    {
+      "company": "Experity",
+      "title": "VP, Software Engineering and Product Development",
+      "period": "Mar 2023 – Present",
+      "bullets": [
+        "Led engineering for a Healthcare SaaS platform serving urgent care and emergency medicine providers, operating within HIPAA compliance and clinical workflow requirements including HL7 and FHIR interoperability standards.",
+        "Drove architectural overhaul of mission-critical systems, enhancing scalability and maintainability through advanced CI/CD practices and cloud-native AWS infrastructure — improving platform reliability and deployment frequency.",
+        "Built and managed a high-performing distributed engineering organization across multiple time zones: 5 direct reports, 4 teams, 27 engineers.",
+        "Delivered 35%+ improvement in team efficiency through process redesign, tooling investment, and strategic resource reallocation.",
+        "Partnered with executive leadership to align engineering deliverables with long-term business goals, bridging product strategy and engineering execution across a complex multi-product portfolio.",
+        "Championed a people-first leadership culture emphasizing mentorship, ownership, and continuous improvement — maintaining top 10% talent retention and performance outcomes."
+      ]
+    },
+    {
+      "company": "Chronicled",
+      "title": "Implementation Solutions Architect & Head of Customer Success Services",
+      "period": "Jul 2022 – May 2023",
+      "bullets": [
+        "Led enterprise blockchain solution implementations for Fortune 100 pharmaceutical customers via the MediLedger platform, addressing supply chain compliance and track-and-trace regulatory requirements.",
+        "Served as Head of Customer Success Services, managing a team of Implementation Consultants with deep Kubernetes configuration expertise and strong business acumen.",
+        "Bridged technical implementation with strategic business outcomes, ensuring alignment between platform capabilities and client objectives."
+      ]
+    },
+    {
+      "company": "SafeNet Consulting",
+      "title": "Director, Solutions Group",
+      "period": "Apr 2021 – Jul 2022",
+      "bullets": [
+        "Provided technical and executive leadership identifying opportunities to adopt emerging technologies for Fortune 500 enterprise clients.",
+        "Led a collaborative architecture team building multi-tier, cloud-native internet-facing solutions across AWS and Azure hyperscaler environments."
+      ]
+    },
+    {
+      "company": "SysLogic",
+      "title": "Cloud & Enterprise Architecture Lead",
+      "period": "May 2019 – Mar 2021",
+      "bullets": [
+        "Championed and delivered modern, cloud-first software solutions while mentoring and growing engineering talent across the organization.",
+        "Influenced, guided, and governed solution design and cloud infrastructure adoption across multiple enterprise engagements."
+      ]
+    },
+    {
+      "company": "HSA Bank",
+      "title": "Director, Enterprise Solutions Architect",
+      "period": "Jun 2016 – May 2019",
+      "bullets": [
+        "Architected enterprise integration patterns and governed technology adoption across a regulated financial services platform.",
+        "Partnered with CTO and executive leadership to communicate critical technical initiatives and scalable architectural solutions aligned to enterprise strategy."
+      ]
+    },
+    {
+      "company": "HSA Bank",
+      "title": "VP, Application Development Manager",
+      "period": "May 2014 – Jun 2016",
+      "bullets": [
+        "Reduced support incident rework by 43% YoY by establishing an intake, definition, alignment, and assignment integrated process.",
+        "Built a hiring practice anchored in curiosity and continuous improvement — resulting in engineers who consistently performed within the top 10%."
+      ]
+    },
+    {
+      "company": "CoreLogic / Marshall Swift & Boeckh",
+      "title": "Enterprise Application Architect",
+      "period": "Dec 2011 – May 2014",
+      "bullets": [
+        "Collaboratively defined roadmaps, annual planning, and feature sets impacting multiple platforms and products.",
+        "Delivered comprehensive enterprise solutions with full technical specifications, mentoring distributed remote and onsite teams."
+      ]
+    },
+    {
+      "company": "Health Payment Systems",
+      "title": "Application Architect",
+      "period": "May 2010 – Dec 2011",
+      "bullets": [
+        "Managed the software development team ensuring constant improvement, engagement, and productivity across delivery cycles."
+      ]
+    }
+  ],
+  "skills": [
+    { "category": "Cloud & Infrastructure", "items": ["AWS (primary)", "Azure", "GCP", "OCI", "Docker", "Kubernetes"] },
+    { "category": "Languages & Frameworks", "items": ["Node.js", "TypeScript", "Python", "React / Next.js", "C#"] },
+    { "category": "Architecture", "items": ["Domain-Driven Design", "Distributed Systems", "Cloud-Native", "Microservices", "Enterprise Integration"] },
+    { "category": "Healthcare & Compliance", "items": ["HIPAA", "HL7", "FHIR", "Pharmaceutical Supply Chain Compliance"] },
+    { "category": "API & Security", "items": ["OAuth 2.0", "JWT", "OpenAPI / Swagger"] },
+    { "category": "AI & Emerging Tech", "items": ["Large Language Models (LLMs)", "Generative AI APIs", "Blockchain / Distributed Ledger"] },
+    { "category": "Leadership", "items": ["Org Design", "P&L Ownership", "Executive Stakeholder Management", "Engineering Hiring", "Mentorship & Coaching"] }
+  ],
+  "certifications": [
+    {
+      "issuer": "Oracle",
+      "items": [
+        "OCI Certified — Cloud Infrastructure 2024 Generative AI Professional",
+        "OCI Foundations 2021 Associate"
+      ]
+    },
+    {
+      "issuer": "Microsoft",
+      "items": [
+        "Azure Administrator (AZ-104)",
+        "Azure Data Fundamentals (DP-900)",
+        "Azure Fundamentals (AZ-900)"
+      ]
+    },
+    {
+      "issuer": "IBM",
+      "items": [
+        "Cloud-Native and Multicloud Applications"
+      ]
+    }
+  ]
+};
+
+// ── Boot ──────────────────────────────────────────────────────────────────────
+loadResume();
+</script>
+</body>
+</html>
