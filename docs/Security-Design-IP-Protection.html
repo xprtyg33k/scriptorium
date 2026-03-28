@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architecture Proposal: Tiered IP Protection & Developer Velocity</title>
+    <style>
+        :root {
+            --primary: #00d084;
+            --primary-dark: #008a58;
+            --secondary: #004d71;
+            --bg: #0b1219;
+            --card-bg: #162431;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #2d3e50;
+            --success: #00d084;
+            --blue-accent: #38bdf8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+        body { background-color: var(--bg); color: var(--text-main); line-height: 1.6; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.8s ease-out forwards; }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 2rem; }
+        
+        header { 
+            padding: 8rem 0 4rem; 
+            text-align: center; 
+            background: radial-gradient(circle at top, rgba(0, 77, 113, 0.4) 0%, var(--bg) 80%);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: rgba(0, 208, 132, 0.1);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            border-radius: 99px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 { font-size: 3.5rem; font-weight: 800; letter-spacing: -0.05em; margin-bottom: 1.5rem; color: #fff; line-height: 1.1; }
+        .lead { font-size: 1.25rem; color: var(--text-muted); max-width: 750px; margin: 0 auto; }
+
+        nav { position: sticky; top: 0; background: rgba(11, 18, 25, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); z-index: 1000; padding: 1.25rem 0; }
+        .nav-links { display: flex; justify-content: center; gap: 3rem; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text-muted); font-weight: 600; font-size: 0.85rem; transition: all 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+
+        /* Content Sections */
+        .content-section { margin-bottom: 5rem; }
+        .section-header { margin-bottom: 2rem; }
+        .section-header h2 { font-size: 2rem; font-weight: 800; color: var(--primary); margin-bottom: 1rem; }
+        .section-header p { font-size: 1.15rem; color: #cbd5e1; max-width: 800px; line-height: 1.6; }
+
+        /* Card System */
+        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; margin-bottom: 1.5rem; overflow: hidden; }
+        .card-header { padding: 1.75rem 2rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .card-header h3 { font-size: 1.35rem; display: flex; align-items: center; gap: 0.75rem; color: #fff; }
+        .card-content { max-height: 0; overflow: hidden; transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1); padding: 0 2rem; }
+        .card.expanded .card-content { max-height: 8000px; padding: 2rem; border-top: 1px solid var(--border); padding-bottom: 3rem; }
+        .card.expanded .chevron { transform: rotate(180deg); }
+        .chevron { width: 24px; transition: transform 0.4s; color: var(--text-muted); }
+
+        /* Grids & Lists */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+        .info-box { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); padding: 1.5rem; border-radius: 12px; }
+        .info-box h4 { color: var(--blue-accent); margin-bottom: 0.75rem; font-size: 1.1rem; }
+        .info-box p { font-size: 0.95rem; color: var(--text-muted); }
+
+        .checklist li { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.25rem; font-size: 1rem; color: var(--text-main); }
+        .icon-sm { width: 20px; height: 20px; color: var(--primary); flex-shrink: 0; margin-top: 4px; }
+
+        .rules-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.9rem; }
+        .rules-table th { text-align: left; padding: 1rem; background: rgba(0, 77, 113, 0.4); color: var(--blue-accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; }
+        .rules-table td { padding: 1rem; border-bottom: 1px solid var(--border); }
+        .tag { padding: 0.25rem 0.5rem; border-radius: 4px; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; }
+        .tag-allow { background: rgba(0, 208, 132, 0.1); color: var(--primary); }
+        .tag-deny { background: rgba(239, 68, 68, 0.1); color: #f87171; }
+
+        .warning-box { background: rgba(239, 68, 68, 0.06); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; padding: 1.5rem; margin-top: 1.75rem; }
+        .warning-box h4 { color: #f87171; margin-bottom: 0.6rem; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .warning-box p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; }
+        .sub-steps { margin-top: 0.75rem; padding-left: 1.5rem; color: var(--text-muted); font-size: 0.9rem; line-height: 2; }
+        .step-list { counter-reset: steps; list-style: none; padding: 0; margin-top: 1rem; }
+        .step-list li { counter-increment: steps; display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.25rem; font-size: 0.95rem; color: var(--text-main); }
+        .step-list li::before { content: counter(steps); display: flex; align-items: center; justify-content: center; min-width: 28px; height: 28px; background: rgba(0, 208, 132, 0.1); border: 1px solid var(--primary); border-radius: 50%; color: var(--primary); font-weight: 800; font-size: 0.8rem; flex-shrink: 0; margin-top: 1px; }
+        .tag-warn { background: rgba(239, 68, 68, 0.1); color: #f87171; }
+        .settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.25rem; }
+        @media (max-width: 700px) { .settings-grid { grid-template-columns: 1fr; } }
+        .settings-box { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; }
+        .settings-box h5 { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
+        .settings-box.enable h5 { color: var(--primary); }
+        .settings-box.disable h5 { color: #f87171; }
+        .settings-box ul { list-style: none; padding: 0; }
+        .settings-box li { font-size: 0.85rem; color: var(--text-muted); padding: 0.3rem 0; border-bottom: 1px solid rgba(255,255,255,0.04); line-height: 1.5; }
+        .settings-box li:last-child { border-bottom: none; }
+        footer { text-align: center; padding: 6rem 0; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid var(--border); opacity: 0.6; }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <ul class="nav-links">
+            <li><a href="#vision">Executive Vision</a></li>
+            <li><a href="#strategy">The Strategy</a></li>
+            <li><a href="#technical">Technical Deep Dive</a></li>
+            <li><a href="#roadmap">Implementation</a></li>
+            <li><a href="#mitigation">Mitigation</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <div class="badge">Board Mandate Response v4.0</div>
+        <h1>Tiered IP Protection &<br>Developer Velocity</h1>
+        <p class="lead">Addressing Board-level directives to neutralize IP exfiltration while preserving elite engineering performance via CrowdStrike, Rapid7, and GitHub EMU.</p>
+    </header>
+
+    <main class="container">
+        
+        <!-- Executive Narrative -->
+        <section id="vision" class="content-section fade-in">
+            <div class="section-header">
+                <h2>The Executive Vision</h2>
+                <p>Following identified intellectual property breaches—specifically the duplication of repositories by external contractors—the Board has mandated a definitive security pivot. We move from <strong>User-based trust</strong> (which failed) to <strong>Environment-based control</strong>.</p>
+                <p style="margin-top: 1rem;">This is not a blanket lockdown. Our core team (FTEs, Architects) must move fast. We achieve this through a "Tiered Persona" model: an "Iron Cage" for contractors and a "Trusted Corridor" for internal staff.</p>
+            </div>
+        </section>
+
+        <!-- Tiered Strategy -->
+        <section id="strategy" class="content-section">
+            <div class="section-header">
+                <h2>The Strategy: Tiered Personas</h2>
+                <p>We move the security boundary from <strong>User-based trust</strong> (which failed) to <strong>Environment-based control</strong>. Each persona is governed by a distinct combination of identity model, working environment, and security posture.</p>
+            </div>
+
+            <div class="card expanded">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <h3>Persona Comparison Matrix</h3>
+                    <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="card-content">
+                    <table class="rules-table">
+                        <thead>
+                            <tr>
+                                <th>Tier</th>
+                                <th>Persona</th>
+                                <th>Identity Model</th>
+                                <th>Working Environment</th>
+                                <th>Security Posture</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Tier 1</strong></td>
+                                <td>Contractors</td>
+                                <td>GitHub EMU (Managed)</td>
+                                <td>Secure VDI / CDE (Coder)</td>
+                                <td><span class="tag tag-deny">Iron Cage</span> — Zero local data, blocked clipboard</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tier 2</strong></td>
+                                <td>Trusted FTEs</td>
+                                <td>SSO-Linked Personal</td>
+                                <td>Direct (Local / VPN)</td>
+                                <td><span class="tag tag-allow">Accountable Velocity</span> — Full tool flexibility + logging</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="margin-top: 2rem;">
+                        <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.7;"><strong style="color: var(--blue-accent);">Why Tiering?</strong> Senior technical resources require the ability to fork repos, contribute to Open Source, and experiment with external AI tools (e.g., Claude Code). Forcing them into a high-latency, locked-down VDI would significantly degrade velocity. By tiering, we close the "front door" for the highest-risk group (contractors) while maintaining a "monitored hallway" for employees.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Deep Dive -->
+        <section id="technical" class="content-section">
+            <div class="section-header">
+                <h2>Technical Deep Dive</h2>
+            </div>
+
+            <div class="card expanded">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <h3>Identity Layer: GitHub Enterprise Managed Users (EMU)</h3>
+                    <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="card-content">
+                    <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.5rem;">EMU is the architectural cornerstone of Tier 1 control. Unlike standard GitHub organizations where contractors use personal accounts you cannot govern, EMU means the account itself is corporate property — provisioned by us, revoked by us, and technically constrained at the platform level.</p>
+
+                    <p style="color: var(--blue-accent); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">Step-by-Step Provisioning</p>
+                    <ol class="step-list">
+                        <li><div><strong>Create a net-new GitHub Enterprise account.</strong> A GitHub Enterprise Managed Users instance <em>cannot be created by converting an existing organization</em>. This must be a brand-new enterprise account — contact your GitHub account team to initiate. The handle will be <code>experity-emu</code>.</div></li>
+                        <li><div><strong>Connect Okta as the Identity Provider via SAML + SCIM.</strong> In the EMU Enterprise settings, navigate to <em>Authentication Security → SAML Single Sign-On</em> and configure the Okta SAML application. Then enable SCIM provisioning under <em>Provisioning</em> using Okta's GitHub EMU connector app. Map the contractor Okta group to the EMU organization. From this point, contractors are auto-provisioned with usernames formatted as <code>jsmith_experity</code> — an account that exists only within our namespace.</div></li>
+                        <li><div><strong>Set Enterprise-level governance policies.</strong> In the Enterprise policy admin panel, enforce the following — these cannot be overridden at the org or repo level:
+                            <ul class="sub-steps">
+                                <li><strong>Disable Repository Forking</strong> — prevents any fork, even within the org.</li>
+                                <li><strong>Restrict Email Notifications to Verified Domains</strong> — blocks exfil via notification emails.</li>
+                                <li><strong>Disable Personal Access Token (classic) creation</strong> — force fine-grained PATs with admin approval.</li>
+                                <li><strong>Block public repository creation</strong> — all repos default to private.</li>
+                            </ul>
+                        </div></li>
+                        <li><div><strong>Mirror existing repositories into the new org.</strong> Use <code>git clone --mirror</code> to duplicate critical repos into <code>experity-emu</code>. Do not grant contractors access to the original org during this transition. After validation, revoke all legacy contractor access to the primary org.</div></li>
+                        <li><div><strong>Inject the Tenant Restriction header at the VDI network proxy.</strong> Configure the VDI's egress proxy to insert the <code>sec-GitHub-allowed-enterprise: experity-emu</code> HTTP header on all outbound requests to <code>github.com</code>. This instructs GitHub's own authentication servers to reject any login attempt for an account that does not belong to the <code>experity-emu</code> enterprise — even if the contractor knows their personal credentials.</div></li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <h3>VDI Network Security & Egress Rules</h3>
+                    <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="card-content">
+                    <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.5rem;">These rules are applied at the VDI subnet's egress firewall/proxy — not on the individual workspaces. All traffic from Coder workspace pods must traverse this layer. The GitHub IP Allowlist acts as a second, independent "geofence": only requests arriving from the VDI cluster's egress IP range are accepted by GitHub at all.</p>
+
+                    <p style="color: var(--blue-accent); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">Firewall Ruleset (VDI Subnet Egress)</p>
+                    <table class="rules-table">
+                        <thead>
+                            <tr>
+                                <th>Protocol / Port</th>
+                                <th>Destination</th>
+                                <th>Action</th>
+                                <th>Rationale</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>HTTPS (443)</td>
+                                <td><code>github.com/experity-emu/*</code></td>
+                                <td><span class="tag tag-allow">ALLOW</span></td>
+                                <td>Approved org only — all other GitHub paths denied</td>
+                            </tr>
+                            <tr>
+                                <td>HTTPS (443)</td>
+                                <td><code>*.okta.com</code></td>
+                                <td><span class="tag tag-allow">ALLOW</span></td>
+                                <td>SSO / SCIM identity provider</td>
+                            </tr>
+                            <tr>
+                                <td>HTTPS (443)</td>
+                                <td>Approved package registries (npm, PyPI, NuGet)</td>
+                                <td><span class="tag tag-allow">ALLOW</span></td>
+                                <td>Dependency resolution for build tooling</td>
+                            </tr>
+                            <tr>
+                                <td>SSH (22)</td>
+                                <td>Internet (*)</td>
+                                <td><span class="tag tag-deny">DENY</span></td>
+                                <td>Eliminates uninspectable <code>git push</code> via SSH — all git traffic must go over HTTPS where it can be inspected</td>
+                            </tr>
+                            <tr>
+                                <td>HTTPS (443)</td>
+                                <td>Personal <code>github.com</code> accounts / namespaces</td>
+                                <td><span class="tag tag-deny">DENY</span></td>
+                                <td>Blocks push to personal account even if SSH is unavailable</td>
+                            </tr>
+                            <tr>
+                                <td>HTTPS (443)</td>
+                                <td><code>gitlab.com</code>, <code>bitbucket.org</code>, <code>codeberg.org</code></td>
+                                <td><span class="tag tag-deny">DENY</span></td>
+                                <td>Closes lateral exfiltration path to competing code forges</td>
+                            </tr>
+                            <tr>
+                                <td>All other outbound</td>
+                                <td>Internet (*)</td>
+                                <td><span class="tag tag-deny">DENY</span></td>
+                                <td>Default-deny posture — unlisted destinations are blocked</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p style="color: var(--blue-accent); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 2rem; margin-bottom: 0.75rem;">VDI Protocol Lockdown (RDP / HTML5 Session Settings)</p>
+                    <ul class="checklist">
+                        <li><svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <div><strong>Disable Clipboard Redirection (Remote → Local).</strong> In the Coder/RDP session policy, set <code>DisableClipboardRedirection=true</code>. A contractor cannot copy code out of the VDI session and paste it locally, even if their own machine is running.</div></li>
+                        <li><svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <div><strong>Disable Drive / USB Mapping.</strong> Set <code>DisableDriveMapping=true</code> and block USB mass storage device class in the VDI host policy. Prevents mounting the contractor's local filesystem inside the remote session for drag-and-drop exfiltration.</div></li>
+                        <li><svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <div><strong>Disable Printing Redirection.</strong> Block the redirect of the local printer into the VDI session — a lesser-known but real exfiltration vector via PDF printing.</div></li>
+                    </ul>
+
+                    <div class="warning-box">
+                        <h4>
+                            <svg style="width:18px;height:18px;flex-shrink:0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                            Critical Bypass Scenario: Re-init & Personal Push
+                        </h4>
+                        <p>A sophisticated contractor could attempt to delete the <code>.git</code> folder within the VDI workspace, run <code>git init</code>, add their personal GitHub as a remote, and push. This circumvents EMU identity controls because git at the protocol level doesn't enforce account ownership. This architecture defeats the attack at every layer:</p>
+                        <ol class="sub-steps" style="margin-top: 0.75rem; list-style: decimal;">
+                            <li><strong>Network blocks the push destination.</strong> The DENY rule for personal <code>github.com</code> paths rejects the HTTPS push at the firewall before it reaches GitHub.</li>
+                            <li><strong>SSH is fully blocked.</strong> The attacker cannot fall back to <code>git remote add origin git@github.com:personal/repo.git</code> because Port 22 is denied to all destinations.</li>
+                            <li><strong>Tenant restriction header rejects authentication.</strong> If they attempt to authenticate via browser, the <code>sec-GitHub-allowed-enterprise</code> header causes GitHub's auth servers to reject the personal session.</li>
+                            <li><strong>CrowdStrike detects the anomalous git sequence.</strong> A custom IOA fires on <code>git init</code> followed by <code>git remote add</code> with a non-approved URL, generating an alert in real-time before the push can even be attempted.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <h3>Endpoint Protection: CrowdStrike Falcon Configuration</h3>
+                    <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="card-content">
+                    <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.5rem;">Falcon is deployed in two distinct contexts requiring separate sensor groups and prevention policies. Configuration changes are made in the <strong>Falcon Console → Endpoint Security → Prevention Policies</strong>.</p>
+
+                    <p style="color: var(--blue-accent); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">Deployment: VDI Kubernetes Nodes (Coder CDE)</p>
+                    <ul class="checklist" style="margin-bottom: 1.5rem;">
+                        <li><svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <div>Deploy the Falcon sensor as a <strong>DaemonSet on the Kubernetes nodes</strong> hosting Coder workspace pods (not inside the pods themselves). This ensures coverage at the host level regardless of which workspace is active, and survives workspace restarts.</div></li>
+                        <li><svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <div>Create a dedicated <strong>VDI Node sensor group</strong> in the Falcon console. Assign a tailored prevention policy to this group so VDI-specific rules don't bleed into other server or endpoint policies.</div></li>
+                    </ul>
+
+                    <div class="settings-grid">
+                        <div class="settings-box enable">
+                            <h5>Enable (VDI Policy)</h5>
+                            <ul>
+                                <li><strong>Suspicious Process Blocking</strong> — catches mass-clone scripts launched from a shell</li>
+                                <li><strong>Script-Based Execution Monitoring</strong> — detects bash/python/PowerShell initiating git operations</li>
+                                <li><strong>Lateral Movement Detection</strong> — flags unusual network connections originating from git processes</li>
+                                <li><strong>File Write Volume Monitoring</strong> — alerts on bulk writes to <code>/tmp</code> or home dirs (staging area for exfil)</li>
+                                <li><strong>Process Hollowing &amp; Injection Prevention</strong> — prevents malicious code injected into a trusted IDE process</li>
+                                <li><strong>Full Process Tree Logging</strong> — captures complete parent/child chain for every <code>git</code>, <code>curl</code>, <code>wget</code>, <code>scp</code>, <code>rsync</code>, <code>zip</code>, <code>tar</code> invocation</li>
+                            </ul>
+                        </div>
+                        <div class="settings-box disable">
+                            <h5>Disable / Restrict (VDI Policy)</h5>
+                            <ul>
+                                <li><strong>Do NOT allow local policy overrides</strong> — sensor config must be locked to the console-defined policy; no local config files honored</li>
+                                <li><strong>Disable USB device class</strong> — belt-and-suspenders alongside the RDP drive-mapping lockdown</li>
+                                <li><strong>Disable sensor tampering</strong> — ensure <code>cs-falconctl</code> cannot be run by the workspace user; enforce via Linux file permissions on the node</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <p style="color: var(--blue-accent); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 2rem; margin-bottom: 0.75rem;">Custom IOA (Indicator of Attack) Rules — VDI Group</p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">Navigate to <em>Endpoint Security → Custom IOA Rules</em> and create the following rules assigned to the VDI sensor group:</p>
+                    <ol class="step-list">
+                        <li><div><strong>Git invoked from non-IDE parent process.</strong> Rule: Process name = <code>git</code>, Parent process NOT IN (<code>code-server</code>, <code>node</code>, <code>java</code> [IntelliJ]). Severity: High. Action: Alert + kill process. This catches a contractor dropping to a raw shell to run git commands outside the sanctioned IDE.</div></li>
+                        <li><div><strong>Re-init followed by unauthorized remote add.</strong> Rule: Command line matches <code>git init</code> OR <code>git remote add</code> where the remote URL does not contain <code>github.com/experity-emu</code>. Severity: Critical. Action: Alert + block + isolate host.</div></li>
+                        <li><div><strong>Bulk archive creation in working directory.</strong> Rule: Process name IN (<code>zip</code>, <code>tar</code>, <code>gzip</code>) operating on paths under <code>/home/*</code> or <code>/workspace/*</code> with file count &gt; 50. Severity: High. Action: Alert.</div></li>
+                        <li><div><strong>Network connection from git process to non-approved IP.</strong> Rule: Process = <code>git</code>, outbound connection destination NOT IN the approved GitHub/Okta IP ranges. Severity: Critical. Action: Alert + block + isolate host.</div></li>
+                    </ol>
+
+                    <p style="color: var(--blue-accent); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 2rem; margin-bottom: 0.75rem;">Deployment: FTE Laptops (Tier 2)</p>
+                    <div class="settings-grid">
+                        <div class="settings-box enable">
+                            <h5>Enable (FTE Laptop Policy)</h5>
+                            <ul>
+                                <li><strong>Behavioral Threat Detection</strong> — baseline normal dev behavior, alert on deviations</li>
+                                <li><strong>Intelligence-Driven Protection</strong> — cloud-delivered IOC feeds</li>
+                                <li><strong>Full Process Tree Logging</strong> — same as VDI for audit trail parity</li>
+                                <li><strong>Device Control</strong> — log all USB mass storage events; alert on first-use of any new device</li>
+                            </ul>
+                        </div>
+                        <div class="settings-box disable">
+                            <h5>Avoid Over-restriction (FTE Policy)</h5>
+                            <ul>
+                                <li>Do NOT apply VDI's process-kill IOA rules — FTEs legitimately run git from terminal</li>
+                                <li>Do NOT block non-approved git remotes — FTEs contribute to OSS; apply alert-only posture instead</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <h3>SIEM & UEBA: Rapid7 InsightIDR Configuration</h3>
+                    <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="card-content">
+                    <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.5rem;">InsightIDR serves as the unified audit plane — the single place where every identity, network, and endpoint event is correlated. The goal is to make invisible activity visible, and make impossible-to-miss alerts unavoidable.</p>
+
+                    <p style="color: var(--blue-accent); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">Step 1: Connect Log Sources</p>
+                    <ol class="step-list">
+                        <li><div><strong>GitHub Enterprise Audit Log.</strong> Configure GitHub Audit Log Streaming (under Enterprise Settings → Audit Log → Log Streaming) to stream to an S3 bucket. In InsightIDR, add an <em>Amazon S3</em> log source pointed at that bucket with the <code>GitHub Audit Log</code> parser. This captures every <code>git.clone</code>, <code>git.push</code>, repo creation, and permission change across the org.</div></li>
+                        <li><div><strong>Okta System Log.</strong> In InsightIDR, add an <em>Okta</em> log source using the Okta System Log API (OAuth service app). This surfaces contractor authentication events, session starts/ends, MFA failures, and deprovisioning actions.</div></li>
+                        <li><div><strong>CrowdStrike Falcon Event Stream.</strong> Use the InsightIDR <em>CrowdStrike Falcon</em> native integration (Settings → Log Sources → Cloud Services). Connect via the Falcon Event Streaming API. This brings endpoint detections, IOA alerts, and process telemetry directly into InsightIDR for cross-source correlation.</div></li>
+                        <li><div><strong>VDI / Coder Infrastructure Logs.</strong> Configure the Kubernetes nodes to forward syslog (or use a Fluent Bit DaemonSet) to InsightIDR's collector. This captures VDI session start/end, pod scheduling, and any system-level events that Falcon doesn't surface.</div></li>
+                        <li><div><strong>VDI Subnet Firewall/Proxy Logs.</strong> Forward egress firewall deny logs from the VDI network boundary into InsightIDR. Every denied connection attempt — including attempted pushes to personal GitHub — will appear as a log event correlated against the contractor's Okta identity.</div></li>
+                    </ol>
+
+                    <p style="color: var(--blue-accent); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 2rem; margin-bottom: 0.75rem;">Step 2: UEBA Baseline & Settings</p>
+                    <ul class="checklist" style="margin-bottom: 1.5rem;">
+                        <li><svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <div><strong>Enable the Attacker Behavior Analytics (ABA) module.</strong> In InsightIDR Settings → Detection Rules, ensure the ABA module is active. This provides pre-built detection logic for data exfiltration, credential abuse, and lateral movement patterns that complement our custom rules.</div></li>
+                        <li><svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <div><strong>Set a 7-day UEBA baseline period.</strong> Before going live, allow 7 days of normal contractor activity to establish behavioral baselines. Anomaly detection thresholds (clone frequency, session duration, active hours) will be calibrated relative to this baseline rather than generic industry defaults.</div></li>
+                        <li><svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <div><strong>Set log retention to 90 days minimum.</strong> In InsightIDR Settings → Data Retention, configure 90 days for all log sources in scope. This satisfies most incident response investigation windows and aligns with typical contractual audit requirements.</div></li>
+                    </ul>
+
+                    <p style="color: var(--blue-accent); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">Step 3: Custom Alert Rules</p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">Create these as <em>Custom Alerts</em> under <em>Detection Rules → Custom Alerts</em> in InsightIDR. Assign all to the <strong>Critical</strong> or <strong>High</strong> priority queue and route to PagerDuty/email:</p>
+                    <ol class="step-list">
+                        <li><div><strong>High-volume clone event.</strong> Trigger when a single contractor identity generates more than <strong>5 <code>git.clone</code> events within a 1-hour window</strong> (sourced from GitHub Audit Log). This is the direct analog of the original breach behavior.</div></li>
+                        <li><div><strong>Push to unauthorized destination.</strong> Trigger on any <code>git.push</code> GitHub Audit Log event where the target repository is outside the <code>experity-emu</code> org. Severity: Critical. This should never happen by design; any instance indicates a configuration failure.</div></li>
+                        <li><div><strong>Firewall deny on git-related ports from VDI.</strong> Trigger when a contractor source IP (VDI range) generates a firewall DENY on Port 22 or a DENY to <code>gitlab.com</code> / personal GitHub paths. This means a bypass was attempted and blocked — confirm the block held and investigate.</div></li>
+                        <li><div><strong>Okta deprovisioning lag alert.</strong> Trigger when a contractor Okta account remains active more than <strong>4 hours after their engagement end date</strong> (requires Okta field for contract end date). Catches off-boarding delays before they become windows of opportunity.</div></li>
+                        <li><div><strong>First access from new IP / geolocation.</strong> Trigger on a contractor's first-ever Okta authentication from an IP outside the known VDI egress range. This flags sessions initiated from outside the expected environment.</div></li>
+                        <li><div><strong>CrowdStrike critical IOA cross-correlation.</strong> When a Falcon Critical IOA fires on a VDI node (e.g., the re-init/unauthorized remote rule), automatically correlate it against the current active Okta session to identify the specific contractor identity within seconds.</div></li>
+                    </ol>
+
+                    <p style="color: var(--blue-accent); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 2rem; margin-bottom: 0.75rem;">Step 4: Operational Dashboard</p>
+                    <ul class="checklist">
+                        <li><svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <div>Create a dedicated <strong>"Contractor Git Activity"</strong> dashboard in InsightIDR with the following cards: daily clone volume per contractor identity, active VDI sessions vs. GitHub sessions (should always be 1:1), firewall deny events over time, and a live feed of all CrowdStrike IOA detections from the VDI sensor group.</div></li>
+                        <li><svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <div>Configure a <strong>weekly automated report</strong> (InsightIDR → Reporting) covering contractor access summaries, alert counts, and any anomaly investigations. Distribute to the CISO and Engineering leadership as evidence of ongoing compliance with the Board mandate.</div></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Roadmap -->
+        <section id="roadmap" class="content-section">
+            <div class="section-header">
+                <h2>Implementation Roadmap</h2>
+                <p>Three sequential phases. Each phase must be validated before the next is activated to avoid locking out legitimate users or breaking existing workflows.</p>
+            </div>
+
+            <div class="card expanded">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <h3>Phase 1: EMU Foundation & Identity Migration</h3>
+                    <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="card-content">
+                    <ol class="step-list">
+                        <li><div><strong>Engage GitHub to provision a new EMU Enterprise account.</strong> Submit a request through your GitHub account team. Do not attempt to convert an existing organization — EMU requires a fresh enterprise instance. Estimated provisioning time: 2–3 business days.</div></li>
+                        <li><div><strong>Configure Okta SAML + SCIM for the EMU instance.</strong> Install the "GitHub Enterprise Managed User" app in Okta. Configure SAML SSO using the metadata GitHub provides. Enable SCIM provisioning and map the <em>Contractors</em> Okta group to the EMU org with the <em>Member</em> role. Validate that a test contractor is auto-provisioned with the <code>_experity</code> suffix.</div></li>
+                        <li><div><strong>Enforce Enterprise-level governance policies.</strong> In the EMU Enterprise admin panel (Settings → Policies), set: Forking → Disabled, Public repositories → Disabled, Email notifications → Verified domains only, Personal access tokens (classic) → Disabled, Fine-grained PAT approval → Admin required.</div></li>
+                        <li><div><strong>Mirror all in-scope repositories.</strong> For each repository contractors need access to, run: <code>git clone --mirror https://github.com/experity/&lt;repo&gt;.git &amp;&amp; cd &lt;repo&gt;.git &amp;&amp; git push --mirror https://github.com/experity-emu/&lt;repo&gt;.git</code>. Set up a short-term mirroring job to keep in sync during the transition period.</div></li>
+                        <li><div><strong>Revoke legacy contractor access.</strong> Once repos are mirrored and contractors have validated access via EMU, remove their legacy personal-account collaborator invitations from the primary <code>experity</code> org. Verify in the GitHub org audit log that no personal accounts retain access.</div></li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <h3>Phase 2: "Iron Cage" VDI Deployment & Hardening</h3>
+                    <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="card-content">
+                    <ol class="step-list">
+                        <li><div><strong>Deploy Coder on the internal Kubernetes cluster.</strong> Use the official Coder Helm chart. Configure workspaces to use a base image that includes the required IDE (VS Code Server) and language toolchains. Each contractor gets one workspace mapped to their Okta/EMU identity. Workspaces should be ephemeral — destroyed at session end, rebuilt at next login.</div></li>
+                        <li><div><strong>Apply the VDI egress firewall ruleset.</strong> Configure the subnet-level network policy (or Kubernetes NetworkPolicy + external firewall) with the full ruleset defined in the Technical Deep Dive section: ALLOW approved GitHub org + Okta + package registries; DENY SSH (22), personal GitHub, GitLab, Bitbucket, and all other destinations by default.</div></li>
+                        <li><div><strong>Configure GitHub IP Allowlist.</strong> In the <code>experity-emu</code> Enterprise Settings → IP Allow List, add only the static egress IP(s) of the VDI Kubernetes cluster's NAT gateway. Enable the allowlist. Verify that accessing the org from any other IP returns a 403.</div></li>
+                        <li><div><strong>Inject the tenant restriction header at the VDI proxy.</strong> Configure the egress HTTP proxy (Squid, Nginx, or cloud-native equivalent) to add <code>sec-GitHub-allowed-enterprise: experity-emu</code> to all HTTPS requests to <code>github.com</code>. Enable SSL inspection on the proxy so this header is inserted into the inner TLS request, not just the tunnel.</div></li>
+                        <li><div><strong>Lock down the VDI session protocol.</strong> In the Coder workspace template or RDP broker policy, disable: clipboard Remote→Local, drive/USB mapping, printer redirection, and audio output redirection. Test each control with a contractor-profile test account before go-live.</div></li>
+                        <li><div><strong>Deploy CrowdStrike Falcon DaemonSet.</strong> Install the Falcon sensor on Kubernetes nodes using the Falcon Operator or DaemonSet manifest provided by your CrowdStrike account team. Assign nodes to the VDI sensor group. Apply the prevention policy and custom IOA rules defined in the Technical Deep Dive. Verify detections fire correctly using a controlled test (run <code>git init</code> from a raw shell, confirm alert appears in Falcon console within 60 seconds).</div></li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <h3>Phase 3: Employee "Green Lane" & Monitoring Go-Live</h3>
+                    <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="card-content">
+                    <ol class="step-list">
+                        <li><div><strong>Route FTE GitHub traffic through the Corporate VPN.</strong> Configure split-tunnel VPN so that all traffic to <code>github.com</code> exits through a defined corporate egress node with a static IP. Add this IP to the <em>primary org's</em> GitHub IP Allowlist (separate from the EMU org's allowlist). FTEs connect to their personal SSO-linked accounts through this path with full tool flexibility.</div></li>
+                        <li><div><strong>Validate FTE velocity is unimpaired.</strong> Have a senior lead confirm that local git operations, Claude Code, CI/CD pipelines, and IDE integrations all function correctly over the VPN before enforcing the allowlist. Velocity confirmation is a go/no-go gate for activating the IP allowlist restriction on the primary org.</div></li>
+                        <li><div><strong>Connect all InsightIDR log sources.</strong> Follow the step-by-step log source configuration in the Technical Deep Dive: GitHub Audit Log streaming (S3), Okta System Log, CrowdStrike Falcon Event Stream, VDI syslog, and VDI firewall deny logs. Verify each source is receiving data in InsightIDR's log search within 15 minutes of configuration.</div></li>
+                        <li><div><strong>Run the 7-day UEBA baseline period.</strong> With all log sources connected but alert rules in <em>audit-only mode</em>, allow 7 days of normal contractor activity to flow. Review baseline metrics daily. After 7 days, promote alert rules to <em>active</em> and configure PagerDuty/email routing.</div></li>
+                        <li><div><strong>Create the Contractor Git Activity dashboard and weekly report.</strong> Build the InsightIDR operational dashboard and schedule the automated weekly compliance report for distribution to the CISO and Engineering leadership. This is the standing evidence of compliance with the Board mandate.</div></li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary of Mitigation -->
+        <section id="mitigation" class="content-section">
+            <div class="section-header">
+                <h2>Summary of Mitigation</h2>
+                <p>This architecture directly addresses the original breach vector across three dimensions. Each control maps to a specific failure mode that existed prior to this implementation.</p>
+            </div>
+            <ul class="checklist">
+                <li><svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                <div><strong>Code cannot be cloned locally.</strong> Blocked by GitHub IP Allowlist (only VPN/VDI IPs are permitted) combined with VDI lockdown — no local drive mapping means no filesystem the contractor controls.</div></li>
+                <li><svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                <div><strong>Code cannot be pushed to a personal repository.</strong> Blocked at the identity layer (EMU accounts cannot interact with repos outside <code>experity-emu</code>) and at the network layer (SSH blocked, personal GitHub HTTPS denied, tenant restriction header enforced).</div></li>
+                <li><svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                <div><strong>All activity is fully logged and alerted.</strong> Monitored end-to-end by Rapid7 InsightIDR (SIEM + UEBA) and CrowdStrike Falcon (endpoint + process behavior). No action — authorized or not — occurs outside of the audit trail.</div></li>
+            </ul>
+        </section>
+
+    </main>
+
+    <footer>
+        &copy; 2026 Enterprise Security Architecture. Confidential & Proprietary Document.
+    </footer>
+
+    <script>
+        function toggleCard(header) {
+            const card = header.parentElement;
+            const isExpanded = card.classList.contains('expanded');
+            if (isExpanded) card.classList.remove('expanded');
+            else card.classList.add('expanded');
+        }
+    </script>
+</body>
+</html>

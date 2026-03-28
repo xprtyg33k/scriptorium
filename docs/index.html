@@ -8,6 +8,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #0d1b2a; color: #e0e1dd; }
+        .accordion-content { transition: max-height 0.3s ease-out; overflow: hidden; }
+        .accordion-content.collapsed { max-height: 0; }
+        .accordion-content.expanded { max-height: 1000px; }
+        .chevron { transition: transform 0.3s; }
+        .chevron.rotated { transform: rotate(180deg); }
     </style>
 </head>
 <body>
@@ -20,24 +25,35 @@
                 <div id="profile-realname" class="text-base text-[#778da9] mt-1">&nbsp;</div>
             </div>
         </div>
+
         <div class="bg-[#1b263b] rounded-xl shadow-2xl p-6 border-t-4 border-[#fca311]">
-            <div class="flex items-center justify-between mb-4">
-                <h2 class="text-xl font-bold text-white m-0">Available Pages</h2>
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-xl font-bold text-white m-0 text-3xl">Scriptorium Pages</h2>
                 <button id="refresh-btn" class="bg-gradient-to-r from-[#3a5a97] to-[#6c63ff] text-white rounded-lg px-4 py-2 font-semibold shadow hover:from-[#6c63ff] hover:to-[#3a5a97] transition-all duration-200 flex items-center gap-2" title="Refresh List">
                     <span id="refresh-icon" class="inline-block transition-transform duration-400">&#x21bb;</span> Refresh
                 </button>
             </div>
-            <ul id="html-links" class="list-none p-0">
-                <!-- Links will be inserted here -->
-            </ul>
+
+            <div id="sections-container" class="space-y-4">
+                <!-- Sections will be inserted here -->
+            </div>
         </div>
     </div>
+
     <script>
         // --- CONFIG ---
         const githubUsername = 'xprtyg33k';
         const cacheKey = 'docsHtmlFilesCache';
         const cacheTimeKey = 'docsHtmlFilesCacheTime';
         const cacheDuration = 24 * 60 * 60 * 1000; // 24 hours
+
+        const experityFiles = [
+            'Security-Design-IP-Protection.html',
+            'advr.html',
+            'AIDevelopmentFramework.html',
+            'AIDevelopmentFrameworkSlides.html',
+            'BMAD-infographic.html'
+        ];
 
         // --- PROFILE NAME FETCH ---
         async function fetchGithubProfile(username) {
@@ -78,7 +94,79 @@
                 }
             } catch {}
             // Fallback
-            return ['AIDevelopmentFrameworkSlides.html', 'AIDevelopmentFramework.html'];
+            return [
+                'Security-Design-IP-Protection.html',
+                'AIDevelopmentFrameworkSlides.html',
+                'AIDevelopmentFramework.html',
+                'advr.html',
+                'BMAD-infographic.html',
+                'resume.html',
+                'paletteConverter.html'
+            ];
+        }
+
+        function createLink(file) {
+            const li = document.createElement('li');
+            li.className = "mb-3";
+            const a = document.createElement('a');
+            a.href = file;
+            let title = file.replace('.html', '').replace(/_/g, ' ');
+            // Custom titles if needed
+            if (file === 'AIDevelopmentFramework.html') title = 'AI Development Framework';
+            if (file === 'AIDevelopmentFrameworkSlides.html') title = 'AI Framework Presentation';
+            if (file === 'Security-Design-IP-Protection.html') title = 'Security Design & IP Protection';
+            if (file === 'advr.html') title = 'A-D-V-R Cycle';
+            if (file === 'BMAD-infographic.html') title = 'BMAD Infographic';
+            if (file === 'paletteConverter.html') title = 'Palette Converter';
+            if (file === 'resume.html') title = 'Resume / CV';
+
+            a.textContent = title;
+            a.target = "_blank";
+            a.className = "block bg-[#0d1b2a] border-l-4 border-[#fca311] rounded-lg px-4 py-3 text-lg text-[#e0e1dd] font-semibold shadow hover:bg-[#415a77] hover:text-[#fca311] transition-all duration-200";
+            li.appendChild(a);
+            return li;
+        }
+
+        function createAccordion(id, title, files, isExpanded = false) {
+            const container = document.createElement('div');
+            container.className = "border border-[#415a77] rounded-xl overflow-hidden shadow-inner";
+
+            const header = document.createElement('button');
+            header.className = "w-full flex items-center justify-between p-4 bg-[#1b263b] text-white font-bold text-xl hover:bg-[#2c3e50] transition-colors duration-200";
+            header.innerHTML = `<span>${title}</span> <span class="chevron ${isExpanded ? 'rotated' : ''}">▼</span>`;
+            
+            const content = document.createElement('div');
+            content.className = `accordion-content ${isExpanded ? 'expanded' : 'collapsed'} bg-[#1b263b]`;
+            
+            const innerWrapper = document.createElement('div');
+            innerWrapper.className = "p-4";
+
+            const ul = document.createElement('ul');
+            ul.className = "list-none p-0";
+            
+            files.forEach(file => {
+                ul.appendChild(createLink(file));
+            });
+            
+            innerWrapper.appendChild(ul);
+            content.appendChild(innerWrapper);
+            container.appendChild(header);
+            container.appendChild(content);
+
+            header.addEventListener('click', () => {
+                const chevron = header.querySelector('.chevron');
+                if (content.classList.contains('collapsed')) {
+                    content.classList.remove('collapsed');
+                    content.classList.add('expanded');
+                    chevron.classList.add('rotated');
+                } else {
+                    content.classList.remove('expanded');
+                    content.classList.add('collapsed');
+                    chevron.classList.remove('rotated');
+                }
+            });
+
+            return container;
         }
 
         // --- RENDER ---
@@ -88,26 +176,32 @@
             document.getElementById('profile-account').textContent = '@' + profile.account;
             document.getElementById('profile-name').textContent = profile.name;
             document.getElementById('profile-realname').textContent = profile.realname ? profile.realname : '';
+            
             // HTML files
             if (forceRefresh) {
                 localStorage.removeItem(cacheKey);
                 localStorage.removeItem(cacheTimeKey);
             }
             const htmlFiles = await fetchHtmlFiles();
-            const linksList = document.getElementById('html-links');
-            linksList.innerHTML = '';
-            htmlFiles.forEach(file => {
-                const li = document.createElement('li');
-                li.className = "mb-4";
-                const a = document.createElement('a');
-                a.href = file;
-                a.textContent = file.replace('.html', '').replace(/_/g, ' ');
-                a.target = "_blank";
-                a.className = "block bg-[#1b263b] border-l-4 border-[#fca311] rounded-lg px-4 py-3 text-lg text-[#e0e1dd] font-semibold shadow hover:bg-[#415a77] hover:text-[#fca311] transition-all duration-200";
-                li.appendChild(a);
-                linksList.appendChild(li);
-            });
+            
+            const sectionsContainer = document.getElementById('sections-container');
+            sectionsContainer.innerHTML = '';
+
+            // Group files
+            const experityList = experityFiles.filter(f => htmlFiles.includes(f));
+            const personalList = htmlFiles.filter(f => !experityFiles.includes(f));
+
+            // Render Experity Section
+            if (experityList.length > 0) {
+                sectionsContainer.appendChild(createAccordion('experity', 'Experity Content', experityList, true));
+            }
+
+            // Render Personal Section
+            if (personalList.length > 0) {
+                sectionsContainer.appendChild(createAccordion('personal', 'Personal Content', personalList, false));
+            }
         }
+
         // Button event
         document.addEventListener('DOMContentLoaded', function() {
             const btn = document.getElementById('refresh-btn');
