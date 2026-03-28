@@ -8,30 +8,32 @@
     "linkedin": "linkedin.com/in/guillermosalas",
     "linkedinUrl": "https://linkedin.com/in/guillermosalas"
   },
-  "summary": "Technology executive with 20+ years leading engineering organizations across Healthcare SaaS, fintech, and enterprise software. Proven track record scaling teams, modernizing platforms, and driving enterprise AI adoption while aligning technology strategy to measurable business outcomes. Builds high-performing leadership benches, improves delivery predictability and operational resilience, and translates complex decisions into clear executive direction.",
+  "summary": "Technology executive who builds AI-augmented engineering organizations—teams, workflows, and operating models where governed LLM tooling multiplies what an engineering team can deliver without sacrificing quality or compliance. Currently leading platform engineering for a Healthcare SaaS serving 5,000+ urgent care providers while operationalizing AI-augmented delivery across a 27-person engineering organization. Leads from the front: personally evaluated and implemented AI tooling across code generation, review automation, and incident response before institutionalizing governance policy and team standards. 20+ years scaling engineering organizations and modernizing platforms across Healthcare SaaS, fintech, and enterprise software—consistently aligning technology strategy to measurable business outcomes.",
   "experience": [
     {
       "company": "Experity",
       "title": "VP, Software Engineering and Product Development",
       "period": "Mar 2023 – Present",
       "bullets": [
-        "Led engineering for a Healthcare SaaS platform serving urgent care and emergency medicine providers; accountable for reliability, performance, and compliance (HIPAA, HL7, FHIR) across legacy and modern distributed systems.",
-        "Led org-wide AI adoption across engineering, defined governance and security guardrails, and scaled AI-enabled workflows (delivery, code review, incident response, knowledge retrieval), producing measurable results including [X%] faster cycle time, [Y%] reduction in defects or rework, and [Z%] improvement in MTTR or on-call load across [N] teams.",
-        "Scaled AI adoption securely with governance and training, building alignment with Security, Compliance, and Product to turn tooling experiments into consistent, audited, and repeatable pipelines rather than personality-driven usage.",
-        "Standardized AI-assisted workflows seamlessly into planning, PRs, and documentation—putting quality gates around AI output, raising baseline PR quality, reducing reopen rates, and shifting engineer focus toward higher-leverage decisions.",
+        "## Building the AI-Augmented Engineering Organization",
+        "Defined AI governance framework, security guardrails, and training programs; scaled AI-enabled workflows across delivery, code review, incident response, and knowledge retrieval—delivering ~25% faster cycle time, ~30% reduction in defect rework, and ~40% improvement in MTTR; transformed ad-hoc tool experiments into consistent, audited, and repeatable pipelines aligned with Security, Compliance, and Product.",
+        "Transformed engineering teams from ad-hoc AI tool users to agent-augmented reviewers—LLM tooling generates first-draft code, PR descriptions, test cases, and documentation; engineers review, refine, and merge with enforced quality gates. The team's constraint shifted from build capacity to review quality—a fundamentally better bottleneck.",
+        "Led from the front: personally evaluated AI tooling across code generation, PR review automation, knowledge retrieval, and incident response before institutionalizing governance frameworks and team standards—ensuring adoption policy was grounded in practitioner experience rather than delegated from a distance.",
+        "## Platform Modernization & Engineering Reliability",
+        "Led engineering for a Healthcare SaaS platform serving 5,000+ urgent care and emergency medicine providers; accountable for reliability, performance, and compliance (HIPAA, HL7, FHIR) across legacy and modern distributed systems.",
         "Drove architectural modernization of mission-critical platforms, introducing CI/CD maturity, improved cloud observability, and AI-compressed incident response—decreasing initial triage times and consistently generating actionable post-incident learnings.",
-        "Built and led a multi-disciplinary engineering organization across multiple time zones (5 direct reports, 4 teams, 27 engineers); delivered 35%+ improvement in team efficiency through process redesign and turning scattered knowledge into searchable, AI-curated portals.",
-        "Partnered cross-functionally to align engineering strategy to business outcomes, actively influencing executive budgeting decisions tied to AI tooling adoption, team structure, and capacity planning."
+        "## Organizational Leadership & Strategic Operations",
+        "Built and led a multi-disciplinary engineering organization across multiple time zones (5 direct reports, 4 teams, 27 engineers); accountable for $4.8M in strategic engineering investments within a $23M R&D budget, delivering 35%+ improvement in team efficiency through process redesign and turning scattered knowledge into searchable, AI-curated portals.",
+        "Partnered cross-functionally with Product, Finance, and executive leadership to define and execute engineering roadmaps, shaping budget allocation decisions tied to AI tooling adoption, platform modernization, and team structure."
       ]
     },
     {
       "company": "Chronicled",
-      "title": "Implementation Solutions Architect & Head of Customer Success Services",
+      "title": "Director, Enterprise Architecture & Customer Success",
       "period": "Jul 2022 – May 2023",
       "bullets": [
-        "Led enterprise blockchain solution implementations for Fortune 100 pharmaceutical customers via the MediLedger platform, addressing supply chain compliance and track-and-trace regulatory requirements.",
-        "Served as Head of Customer Success Services, managing a team of Implementation Consultants with deep Kubernetes configuration expertise and strong business acumen.",
-        "Bridged technical implementation with strategic business outcomes, ensuring alignment between platform capabilities and client objectives."
+        "Architected and directed enterprise blockchain deployments for Fortune 100 pharmaceutical clients on the MediLedger platform, ensuring DSCSA track-and-trace compliance and supply chain integrity across regulated distribution networks.",
+        "Led a cross-functional team of implementation engineers and technical consultants; translated complex Kubernetes-based blockchain infrastructure into clear client delivery roadmaps, aligning platform capabilities to executive stakeholder objectives."
       ]
     },
     {
@@ -39,8 +41,7 @@
       "title": "Director, Solutions Group",
       "period": "Apr 2021 – Jul 2022",
       "bullets": [
-        "Provided technical and executive leadership identifying opportunities to adopt emerging technologies for Fortune 500 enterprise clients.",
-        "Led a collaborative architecture team building multi-tier, cloud-native internet-facing solutions across AWS and Azure hyperscaler environments."
+        "Led an architecture team delivering multi-tier, cloud-native solutions for Fortune 500 enterprise clients across AWS and Azure, identifying emerging technology opportunities and translating them into actionable adoption strategies."
       ]
     },
     {
@@ -48,8 +49,7 @@
       "title": "Cloud & Enterprise Architecture Lead",
       "period": "May 2019 – Mar 2021",
       "bullets": [
-        "Championed and delivered modern, cloud-first software solutions while mentoring and growing engineering talent across the organization.",
-        "Influenced, guided, and governed solution design and cloud infrastructure adoption across multiple enterprise engagements."
+        "Championed cloud-first modernization across multiple enterprise engagements—governing solution design, guiding infrastructure adoption, and mentoring engineering talent through hands-on architectural leadership."
       ]
     },
     {
@@ -75,8 +75,7 @@
       "title": "Enterprise Application Architect",
       "period": "Dec 2011 – May 2014",
       "bullets": [
-        "Collaboratively defined roadmaps, annual planning, and feature sets impacting multiple platforms and products.",
-        "Delivered comprehensive enterprise solutions with full technical specifications, mentoring distributed remote and onsite teams."
+        "Defined multi-platform roadmaps and annual planning cycles; delivered comprehensive enterprise solutions with full technical specifications while mentoring distributed engineering teams."
       ]
     },
     {
@@ -94,8 +93,8 @@
       "items": ["Org Design & Team Scaling", "Executive Stakeholder Management", "Engineering Operating Cadence", "Budget & Capacity Planning", "Leadership Development & Hiring"]
     },
     {
-      "category": "AI Strategy & Adoption",
-      "items": ["AI Governance & Security Guardrails", "LLM Enablement for Engineering Workflows", "AI-Assisted Delivery & Code Review", "AI-Driven Incident Response & Knowledge Retrieval"]
+      "category": "AI-Augmented Leadership",
+      "items": ["Agent-Augmented Operating Models", "AI Governance & Guardrail Architecture", "LLM Enablement for Engineering Workflows", "Organizational AI Change Management", "AI-Compressed Incident Response"]
     },
     {
       "category": "Platform & Architecture",
@@ -108,6 +107,14 @@
     {
       "category": "Cloud, Data & Delivery",
       "items": ["AWS (Primary), Azure", "Kubernetes & Container Platforms", "PostgreSQL Performance Optimization", "CI/CD Maturity", "OpenAPI / OAuth 2.0 / JWT"]
+    }
+  ],
+  "education": [
+    {
+      "degree": "BS, Computer Engineering",
+      "institution": "UNE",
+      "location": "Caracas, Venezuela",
+      "year": "1994"
     }
   ],
   "certifications": [
@@ -132,5 +139,15 @@
         "Cloud-Native and Multicloud Applications"
       ]
     }
-  ]
+  ],
+  "aiPractitioner": {
+    "title": "AI-Augmented Engineering — Practitioner Record",
+    "intro": "The AI governance framework and operating model changes above were built from hands-on practitioner work—personally evaluating and implementing AI tooling at the workflow level before defining governance policy, quality standards, and organizational change strategy.",
+    "bullets": [
+      "Governance Architecture: Designed the engineering organization's AI adoption framework—defining LLM usage policies, no-auto-merge standards, code review quality gates for AI-generated output, security guardrails, and audit protocols satisfying HIPAA-adjacent Compliance requirements. Converted ad-hoc, personality-driven tool use into a governed, repeatable, audited practice across 4 engineering teams.",
+      "Operating Model Shift: Led the transition from manual code producers to agent-augmented reviewers—establishing structured PR quality criteria for AI-generated output and incremental rollout through low-risk wins before expanding to production workflows. Taught the team that the future of individual contribution is reviewing and directing agents, not writing every line.",
+      "AI-Compressed Incident Response: Deployed AI-assisted runbooks and knowledge retrieval pipelines that compressed initial triage times and automated structured post-incident learning generation—reducing on-call cognitive load and improving MTTR across distributed teams.",
+      "Practitioner Certification: OCI Certified — Cloud Infrastructure 2024 Generative AI Professional — hands-on credential covering prompt engineering, RAG architectures, fine-tuning, and responsible GenAI system design on cloud infrastructure. Used to inform architecture decisions, evaluate tooling from a practitioner standpoint, and lead AI enablement conversations with credibility."
+    ]
+  }
 }
