@@ -84,6 +84,9 @@ IDENTITY=$(aws sts get-caller-identity --profile "${PROFILE}" 2>&1) || fail "STS
 echo "${IDENTITY}" | json_pretty
 ok "AWS identity verified"
 
+ACTUAL_ACCOUNT=$(echo "${IDENTITY}" | json_get '.Account') || fail "Could not extract Account from STS response."
+[[ "${ACTUAL_ACCOUNT}" == "${ACCOUNT_ID}" ]] || fail "Account mismatch: expected ${ACCOUNT_ID}, got ${ACTUAL_ACCOUNT}. Check your credentials."
+
 # Derive sanitized username from the already-captured STS response
 CALLER_ARN=$(echo "${IDENTITY}" | json_get '.Arn') || fail "Could not extract ARN from STS response."
 RAW_USER=$(echo "${CALLER_ARN}" | cut -d'/' -f2)
@@ -130,6 +133,12 @@ ok "Opus 4.6 ARN:   ${OPUS_ARN}"
 # =============================================================================
 info "Writing Claude Code settings to ~/.claude/settings.json"
 mkdir -p ~/.claude
+
+if [[ -f ~/.claude/settings.json ]]; then
+    BACKUP=~/.claude/settings.json.bak.$(date +%Y%m%d%H%M%S)
+    cp ~/.claude/settings.json "${BACKUP}"
+    warn "Existing settings.json backed up to ${BACKUP}"
+fi
 
 cat > ~/.claude/settings.json <<SETTINGS_EOF
 {

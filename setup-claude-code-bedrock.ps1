@@ -64,6 +64,10 @@ $identity = $identityRaw | ConvertFrom-Json
 $identity | ConvertTo-Json -Depth 5 | Write-Host
 Write-Ok "AWS identity verified"
 
+if ($identity.Account -ne $AccountId) {
+    Write-Fail "Account mismatch: expected $AccountId, got $($identity.Account). Check your credentials."
+}
+
 # Derive sanitized username from the already-captured STS response
 $callerArn = $identity.Arn
 $rawUser = ($callerArn -split '/')[1]
@@ -163,6 +167,11 @@ $settings = [ordered]@{
 }
 
 $settingsPath = Join-Path $claudeDir 'settings.json'
+if (Test-Path $settingsPath) {
+    $backup = "${settingsPath}.bak.$(Get-Date -Format 'yyyyMMddHHmmss')"
+    Copy-Item -Path $settingsPath -Destination $backup
+    Write-Warn "Existing settings.json backed up to $backup"
+}
 $settings | ConvertTo-Json -Depth 5 | Set-Content -Path $settingsPath -Encoding UTF8
 Write-Ok "$settingsPath written"
 
