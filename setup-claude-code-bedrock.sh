@@ -5,14 +5,14 @@ set -euo pipefail
 # Claude Code + AWS Bedrock — One-Shot Setup Script
 # =============================================================================
 # Configures:
-#   1. AWS CLI profile "enterprise-dev" (us-east-1, json output)
+#   1. AWS CLI profile "experity-dev" (us-east-1, json output)
 #   2. Verifies AWS identity via STS
 #   3. Queries Bedrock inference profiles and extracts ARNs
 #   4. Writes ~/.claude/settings.json with Bedrock env vars + model config
-#   5. Appends Bedrock env block to ~/.zshrc (idempotent)
+#   5. Appends Bedrock env block to shell RC file (idempotent)
 # =============================================================================
 
-PROFILE="enterprise-dev"
+PROFILE="experity-dev"
 REGION="us-east-1"
 ACCOUNT_ID="276772386143"
 
@@ -23,6 +23,39 @@ info()  { printf "${CYAN}[INFO]${NC}  %s\n" "$*"; }
 ok()    { printf "${GREEN}[OK]${NC}    %s\n" "$*"; }
 warn()  { printf "${YELLOW}[WARN]${NC}  %s\n" "$*"; }
 fail()  { printf "${RED}[FAIL]${NC}  %s\n" "$*"; exit 1; }
+
+# -- JSON tool detection ------------------------------------------------------
+if command -v jq &>/dev/null; then
+    json_pretty() { jq .; }
+    json_get()    { jq -r "$1"; }
+    json_len()    { jq 'length'; }
+    json_extract_arn() {
+        jq -r --arg kw "$1" --arg ver "$2" '
+            [.[] | select(
+                (.inferenceProfileName | ascii_downcase | test($kw)) and
+                (.inferenceProfileName | ascii_downcase | gsub("\\.";"-") | test($ver))
+            )][0].inferenceProfileArn // empty'
+    }
+elif command -v python3 &>/dev/null; then
+    json_pretty() { python3 -m json.tool; }
+    json_get()    { python3 -c "import json,sys; print(json.load(sys.stdin)['${1#.}'])"; }
+    json_len()    { python3 -c "import json,sys; print(len(json.load(sys.stdin)))"; }
+    json_extract_arn() {
+        local kw="$1" ver="$2"
+        python3 -c "
+import json, sys
+profiles = json.load(sys.stdin)
+for p in profiles:
+    name = p.get('inferenceProfileName', '').lower().replace('.', '-')
+    if '${kw}' in name and '${ver}' in name:
+        print(p['inferenceProfileArn']); break
+else:
+    sys.exit(1)
+"
+    }
+else
+    fail "Neither 'jq' nor 'python3' found. Install one and retry."
+fi
 
 # =============================================================================
 # 1. Configure AWS CLI profile
@@ -48,61 +81,43 @@ ok "Region=${REGION}, output=json pre-set for profile ${PROFILE}"
 # =============================================================================
 info "Verifying AWS identity for profile: ${PROFILE}"
 IDENTITY=$(aws sts get-caller-identity --profile "${PROFILE}" 2>&1) || fail "STS call failed:\n${IDENTITY}"
-echo "${IDENTITY}" | python3 -m json.tool
+echo "${IDENTITY}" | json_pretty
 ok "AWS identity verified"
 
+# Derive sanitized username from the already-captured STS response
+CALLER_ARN=$(echo "${IDENTITY}" | json_get '.Arn') || fail "Could not extract ARN from STS response."
+RAW_USER=$(echo "${CALLER_ARN}" | cut -d'/' -f2)
+SANITIZED_USER=$(echo "${RAW_USER}" | sed 's/@/-at-/g; s/\./-/g')
+ok "Sanitized user identifier: ${SANITIZED_USER}"
+
 # =============================================================================
-# 3. Query Bedrock inference profiles & extract ARNs
+# 3. Query Bedrock inference profiles & extract ARNs (scoped to current user)
 # =============================================================================
-info "Querying Bedrock application inference profiles in ${REGION}..."
+info "Querying Bedrock application inference profiles for user '${SANITIZED_USER}' in ${REGION}..."
 PROFILES_JSON=$(aws bedrock list-inference-profiles \
     --type-equals APPLICATION \
     --region "${REGION}" \
     --profile "${PROFILE}" \
+    --query "inferenceProfileSummaries[?contains(inferenceProfileName, \`-${SANITIZED_USER}-profile\`)]" \
     --output json 2>&1) || fail "Failed to list inference profiles:\n${PROFILES_JSON}"
 
-# Extract just the summaries array
-PROFILES_JSON=$(echo "${PROFILES_JSON}" | python3 -c "import json,sys; print(json.dumps(json.load(sys.stdin).get('inferenceProfileSummaries',[])))")
-
 echo ""
-printf "${CYAN}Application inference profiles found:${NC}\n\n"
-echo "${PROFILES_JSON}" | python3 -m json.tool
+printf "${CYAN}Application inference profiles for ${SANITIZED_USER}:${NC}\n\n"
+echo "${PROFILES_JSON}" | json_pretty
 echo ""
 
-# Extract ARNs by matching model name patterns
-HAIKU_ARN=$(echo "${PROFILES_JSON}" | python3 -c "
-import json, sys
-profiles = json.load(sys.stdin)
-for p in profiles:
-    name = p.get('inferenceProfileName', '').lower()
-    if 'haiku' in name and '4-5' in name.replace('.', '-'):
-        print(p['inferenceProfileArn']); break
-else:
-    sys.exit(1)
-" 2>/dev/null) || fail "Could not find Haiku 4.5 application inference profile. Ensure it exists."
+NUM_PROFILES=$(echo "${PROFILES_JSON}" | json_len)
+[[ "${NUM_PROFILES}" -eq 0 ]] && fail "No inference profiles found matching '-${SANITIZED_USER}-profile'. Check your Bedrock provisioning."
 
-SONNET_ARN=$(echo "${PROFILES_JSON}" | python3 -c "
-import json, sys
-profiles = json.load(sys.stdin)
-for p in profiles:
-    name = p.get('inferenceProfileName', '').lower()
-    if 'sonnet' in name and '4-6' in name.replace('.', '-'):
-        print(p['inferenceProfileArn']); break
-else:
-    sys.exit(1)
-" 2>/dev/null) || fail "Could not find Sonnet 4.6 application inference profile. Ensure it exists."
+# Extract ARNs by matching model name patterns within user-scoped profiles
+HAIKU_ARN=$(echo "${PROFILES_JSON}" | json_extract_arn 'haiku' '4-5' 2>/dev/null) \
+    || fail "Could not find Haiku 4.5 inference profile for user '${SANITIZED_USER}'."
 
-OPUS_ARN=$(echo "${PROFILES_JSON}" | python3 -c "
-import json, sys
-profiles = json.load(sys.stdin)
-for p in profiles:
-    name = p.get('inferenceProfileName', '').lower()
-    if 'opus' in name and '4-6' in name.replace('.', '-'):
-        print(p['inferenceProfileArn']); break
-else:
-    sys.exit(1)
-" 2>/dev/null) || {
-    warn "No Opus 4.6 application inference profile found — falling back to cross-region profile ID."
+SONNET_ARN=$(echo "${PROFILES_JSON}" | json_extract_arn 'sonnet' '4-6' 2>/dev/null) \
+    || fail "Could not find Sonnet 4.6 inference profile for user '${SANITIZED_USER}'."
+
+OPUS_ARN=$(echo "${PROFILES_JSON}" | json_extract_arn 'opus' '4-6' 2>/dev/null) || {
+    warn "No Opus 4.6 inference profile found for user '${SANITIZED_USER}' — falling back to cross-region profile ID."
     OPUS_ARN="us.anthropic.claude-opus-4-6-v1"
 }
 
@@ -148,17 +163,23 @@ SETTINGS_EOF
 ok "~/.claude/settings.json written"
 
 # =============================================================================
-# 5. Append env vars to ~/.zshrc (idempotent)
+# 5. Append env vars to shell RC file (idempotent)
 # =============================================================================
-SHELL_RC="$HOME/.zshrc"
-MARKER="# >>> Claude Code Bedrock (enterprise-dev) >>>"
+case "$(basename "${SHELL:-}")" in
+    zsh)  SHELL_RC="$HOME/.zshrc"    ;;
+    bash) SHELL_RC="$HOME/.bashrc"   ;;
+    *)    SHELL_RC="$HOME/.profile"  ;;
+esac
+MARKER="# >>> Claude Code Bedrock (experity-dev) >>>"
 
-MARKER_END="# <<< Claude Code Bedrock (enterprise-dev) <<<"
+MARKER_END="# <<< Claude Code Bedrock (experity-dev) <<<"
 
 # Remove existing block if present (so re-runs always refresh)
 if grep -qF "${MARKER}" "${SHELL_RC}" 2>/dev/null; then
     warn "Removing existing Bedrock env block from ${SHELL_RC} before rewriting."
-    sed -i '' "/${MARKER}/,/${MARKER_END}/d" "${SHELL_RC}"
+    TMPFILE=$(mktemp)
+    sed "/${MARKER}/,/${MARKER_END}/d" "${SHELL_RC}" > "${TMPFILE}"
+    mv "${TMPFILE}" "${SHELL_RC}"
 fi
 
 info "Appending Bedrock environment variables to ${SHELL_RC}"
@@ -202,6 +223,6 @@ printf "    • Haiku 4.5 (Enterprise)  — ${HAIKU_ARN}\n"
 printf "    • Sonnet 4.6 (Enterprise) — ${SONNET_ARN}\n"
 printf "    • Opus 4.6 (Enterprise)   — ${OPUS_ARN}\n"
 echo ""
-printf "  To activate now:  ${YELLOW}source ~/.zshrc${NC}\n"
+printf "  To activate now:  ${YELLOW}source ${SHELL_RC}${NC}\n"
 printf "  Then launch:      ${YELLOW}claude${NC}\n"
 echo ""
