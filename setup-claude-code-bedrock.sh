@@ -151,6 +151,8 @@ cat > ~/.claude/settings.json <<SETTINGS_EOF
   },
   "env": {
     "CLAUDE_CODE_USE_BEDROCK": "1",
+    "CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS": "1",
+    "DISABLE_PROMPT_CACHING": "1",
     "AWS_REGION": "${REGION}",
     "AWS_PROFILE": "${PROFILE}",
     "ANTHROPIC_MODEL": "haiku",
@@ -161,11 +163,13 @@ cat > ~/.claude/settings.json <<SETTINGS_EOF
     "ANTHROPIC_DEFAULT_SONNET_MODEL": "${SONNET_ARN}",
     "ANTHROPIC_DEFAULT_SONNET_MODEL_NAME": "Sonnet 4.6 (Enterprise)",
     "ANTHROPIC_DEFAULT_SONNET_MODEL_DESCRIPTION": "Claude Sonnet 4.6 via AWS Bedrock — balanced performance",
-    "ANTHROPIC_DEFAULT_SONNET_MODEL_SUPPORTED_CAPABILITIES": "effort,max_effort,thinking,adaptive_thinking,interleaved_thinking",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL_SUPPORTED_CAPABILITIES": "effort,max_effort,thinking,interleaved_thinking",
     "ANTHROPIC_DEFAULT_OPUS_MODEL": "${OPUS_ARN}",
     "ANTHROPIC_DEFAULT_OPUS_MODEL_NAME": "Opus 4.6 (Enterprise)",
     "ANTHROPIC_DEFAULT_OPUS_MODEL_DESCRIPTION": "Claude Opus 4.6 via AWS Bedrock — maximum capability",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL_SUPPORTED_CAPABILITIES": "effort,max_effort,thinking,adaptive_thinking,interleaved_thinking"
+    "ANTHROPIC_DEFAULT_OPUS_MODEL_SUPPORTED_CAPABILITIES": "effort,max_effort,thinking,adaptive_thinking,interleaved_thinking",
+    "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "32000",
+    "MAX_THINKING_TOKENS": "8000"
   }
 }
 SETTINGS_EOF
@@ -196,6 +200,8 @@ cat >> "${SHELL_RC}" <<ZSHRC_EOF
 
 ${MARKER}
 export CLAUDE_CODE_USE_BEDROCK=1
+export CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1
+export DISABLE_PROMPT_CACHING=1
 export AWS_REGION=${REGION}
 export AWS_PROFILE=${PROFILE}
 export ANTHROPIC_MODEL="haiku"
@@ -206,11 +212,13 @@ export ANTHROPIC_DEFAULT_HAIKU_MODEL_SUPPORTED_CAPABILITIES=""
 export ANTHROPIC_DEFAULT_SONNET_MODEL="${SONNET_ARN}"
 export ANTHROPIC_DEFAULT_SONNET_MODEL_NAME="Sonnet 4.6 (Enterprise)"
 export ANTHROPIC_DEFAULT_SONNET_MODEL_DESCRIPTION="Claude Sonnet 4.6 via AWS Bedrock — balanced performance"
-export ANTHROPIC_DEFAULT_SONNET_MODEL_SUPPORTED_CAPABILITIES="effort,max_effort,thinking,adaptive_thinking,interleaved_thinking"
+export ANTHROPIC_DEFAULT_SONNET_MODEL_SUPPORTED_CAPABILITIES="effort,max_effort,thinking,interleaved_thinking"
 export ANTHROPIC_DEFAULT_OPUS_MODEL="${OPUS_ARN}"
 export ANTHROPIC_DEFAULT_OPUS_MODEL_NAME="Opus 4.6 (Enterprise)"
 export ANTHROPIC_DEFAULT_OPUS_MODEL_DESCRIPTION="Claude Opus 4.6 via AWS Bedrock — maximum capability"
 export ANTHROPIC_DEFAULT_OPUS_MODEL_SUPPORTED_CAPABILITIES="effort,max_effort,thinking,adaptive_thinking,interleaved_thinking"
+export CLAUDE_CODE_MAX_OUTPUT_TOKENS=32000
+export MAX_THINKING_TOKENS=8000
 ${MARKER_END}
 ZSHRC_EOF
 ok "Environment variables appended to ${SHELL_RC}"
