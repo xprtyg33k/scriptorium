@@ -75,15 +75,11 @@ check_settings_json() {
 
     # Check for required Bedrock compatibility env vars
     local has_disable_betas=false
-    local has_disable_caching=false
     local has_bedrock_flag=false
 
     if command -v jq &>/dev/null; then
         if jq -e '.env.CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS' "$settings_file" &>/dev/null; then
             has_disable_betas=true
-        fi
-        if jq -e '.env.DISABLE_PROMPT_CACHING' "$settings_file" &>/dev/null; then
-            has_disable_caching=true
         fi
         if jq -e '.env.CLAUDE_CODE_USE_BEDROCK' "$settings_file" &>/dev/null; then
             has_bedrock_flag=true
@@ -92,9 +88,6 @@ check_settings_json() {
         # Fallback to grep if jq not available
         if grep -q "CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS" "$settings_file"; then
             has_disable_betas=true
-        fi
-        if grep -q "DISABLE_PROMPT_CACHING" "$settings_file"; then
-            has_disable_caching=true
         fi
         if grep -q "CLAUDE_CODE_USE_BEDROCK" "$settings_file"; then
             has_bedrock_flag=true
@@ -122,7 +115,7 @@ check_settings_json() {
 
     if [[ "$has_bedrock_flag" == "true" ]]; then
         ok "Claude settings found with Bedrock configuration"
-        if [[ "$has_disable_betas" == "true" && "$has_disable_caching" == "true" && \
+        if [[ "$has_disable_betas" == "true" && \
               "$has_max_output" == "true" && "$has_thinking_tokens" == "true" ]]; then
             ok "Bedrock compatibility flags and token limits present in settings"
             return 0
@@ -132,7 +125,7 @@ check_settings_json() {
                 warn "  Bedrock defaults to 8192 output tokens — Opus/Sonnet need CLAUDE_CODE_MAX_OUTPUT_TOKENS=32000"
                 warn "  Without MAX_THINKING_TOKENS=8000, thinking budget may crowd out code output"
             fi
-            if [[ "$has_disable_betas" == "false" || "$has_disable_caching" == "false" ]]; then
+            if [[ "$has_disable_betas" == "false" ]]; then
                 warn "Missing Bedrock compatibility flags in settings.json"
             fi
             return 2 # Needs config fix
@@ -159,8 +152,7 @@ check_shell_env() {
 
     # Check for compatibility env vars and token limits in shell RC
     local shell_ok=true
-    if ! grep -q "CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS" "$shell_rc" || \
-       ! grep -q "DISABLE_PROMPT_CACHING" "$shell_rc"; then
+    if ! grep -q "CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS" "$shell_rc"; then
         warn "Shell environment missing Bedrock compatibility flags"
         shell_ok=false
     fi
