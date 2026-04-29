@@ -148,6 +148,7 @@ $settings = [ordered]@{
     }
     env = [ordered]@{
         CLAUDE_CODE_USE_BEDROCK                            = '1'
+        CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS             = '1'
         AWS_REGION                                         = $Region
         AWS_PROFILE                                        = $Profile_
         ANTHROPIC_MODEL                                    = 'haiku'
@@ -158,11 +159,13 @@ $settings = [ordered]@{
         ANTHROPIC_DEFAULT_SONNET_MODEL                     = $sonnetArn
         ANTHROPIC_DEFAULT_SONNET_MODEL_NAME                = 'Sonnet 4.6 (Enterprise)'
         ANTHROPIC_DEFAULT_SONNET_MODEL_DESCRIPTION         = 'Claude Sonnet 4.6 via AWS Bedrock - balanced performance'
-        ANTHROPIC_DEFAULT_SONNET_MODEL_SUPPORTED_CAPABILITIES = 'effort,max_effort,thinking,adaptive_thinking,interleaved_thinking'
+        ANTHROPIC_DEFAULT_SONNET_MODEL_SUPPORTED_CAPABILITIES = 'effort,max_effort,thinking,interleaved_thinking'
         ANTHROPIC_DEFAULT_OPUS_MODEL                       = $opusArn
         ANTHROPIC_DEFAULT_OPUS_MODEL_NAME                  = 'Opus 4.6 (Enterprise)'
         ANTHROPIC_DEFAULT_OPUS_MODEL_DESCRIPTION           = 'Claude Opus 4.6 via AWS Bedrock - maximum capability'
         ANTHROPIC_DEFAULT_OPUS_MODEL_SUPPORTED_CAPABILITIES = 'effort,max_effort,thinking,adaptive_thinking,interleaved_thinking'
+        CLAUDE_CODE_MAX_OUTPUT_TOKENS                      = '32000'
+        MAX_THINKING_TOKENS                                = '8000'
     }
 }
 
@@ -182,6 +185,7 @@ Write-Info "Setting user-level environment variables (persisted across sessions)
 
 $envVars = [ordered]@{
     CLAUDE_CODE_USE_BEDROCK                            = '1'
+    CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS             = '1'
     AWS_REGION                                         = $Region
     AWS_PROFILE                                        = $Profile_
     ANTHROPIC_MODEL                                    = 'haiku'
@@ -192,11 +196,13 @@ $envVars = [ordered]@{
     ANTHROPIC_DEFAULT_SONNET_MODEL                     = $sonnetArn
     ANTHROPIC_DEFAULT_SONNET_MODEL_NAME                = 'Sonnet 4.6 (Enterprise)'
     ANTHROPIC_DEFAULT_SONNET_MODEL_DESCRIPTION         = 'Claude Sonnet 4.6 via AWS Bedrock - balanced performance'
-    ANTHROPIC_DEFAULT_SONNET_MODEL_SUPPORTED_CAPABILITIES = 'effort,max_effort,thinking,adaptive_thinking,interleaved_thinking'
+    ANTHROPIC_DEFAULT_SONNET_MODEL_SUPPORTED_CAPABILITIES = 'effort,max_effort,thinking,interleaved_thinking'
     ANTHROPIC_DEFAULT_OPUS_MODEL                       = $opusArn
     ANTHROPIC_DEFAULT_OPUS_MODEL_NAME                  = 'Opus 4.6 (Enterprise)'
     ANTHROPIC_DEFAULT_OPUS_MODEL_DESCRIPTION           = 'Claude Opus 4.6 via AWS Bedrock - maximum capability'
     ANTHROPIC_DEFAULT_OPUS_MODEL_SUPPORTED_CAPABILITIES = 'effort,max_effort,thinking,adaptive_thinking,interleaved_thinking'
+    CLAUDE_CODE_MAX_OUTPUT_TOKENS                      = '32000'
+    MAX_THINKING_TOKENS                                = '8000'
 }
 
 foreach ($kv in $envVars.GetEnumerator()) {
