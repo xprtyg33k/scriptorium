@@ -9,10 +9,11 @@ set -euo pipefail
 #
 # Fixes:
 #   1. Adds CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1 to suppress beta headers
-#   2. Adds CLAUDE_CODE_MAX_OUTPUT_TOKENS=32000 to raise Bedrock output ceiling
-#   3. Adds MAX_THINKING_TOKENS=8000 to balance thinking vs output budget
-#   4. Updates Sonnet capabilities (removes adaptive_thinking for Bedrock)
-#   5. Updates both ~/.claude/settings.json and shell RC files
+#   2. Removes DISABLE_PROMPT_CACHING to enable prompt caching (recommended)
+#   3. Adds CLAUDE_CODE_MAX_OUTPUT_TOKENS=32000 to raise Bedrock output ceiling
+#   4. Adds MAX_THINKING_TOKENS=8000 to balance thinking vs output budget
+#   5. Updates Sonnet capabilities (removes adaptive_thinking for Bedrock)
+#   6. Updates both ~/.claude/settings.json and shell RC files
 #
 # Prerequisites: Existing Bedrock setup (run setup-claude-code-bedrock.sh first)
 # =============================================================================
@@ -60,6 +61,7 @@ if command -v jq >/dev/null 2>&1; then
     TMP_SETTINGS="$(mktemp)"
     jq '
         .env.CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS = "1" |
+        del(.env.DISABLE_PROMPT_CACHING) |
         .env.CLAUDE_CODE_MAX_OUTPUT_TOKENS = "32000" |
         .env.MAX_THINKING_TOKENS = "8000" |
         .env.ANTHROPIC_DEFAULT_SONNET_MODEL_SUPPORTED_CAPABILITIES = "effort,max_effort,thinking,interleaved_thinking"
@@ -79,6 +81,11 @@ else
         # Add after CLAUDE_CODE_USE_BEDROCK line
         sed -i.tmp '/CLAUDE_CODE_USE_BEDROCK/a\
     "CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS": "1",' "$SETTINGS_PATH"
+    fi
+
+    if grep -q "DISABLE_PROMPT_CACHING" "$SETTINGS_PATH"; then
+        # Remove DISABLE_PROMPT_CACHING line to enable prompt caching
+        sed -i.tmp '/DISABLE_PROMPT_CACHING/d' "$SETTINGS_PATH"
     fi
 
     # Add/update output token limits
@@ -122,11 +129,17 @@ fi
 
 info "Updating shell environment variables in $SHELL_RC"
 
-# Check if all required vars already exist
+# Check if all required vars already exist (excluding DISABLE_PROMPT_CACHING which should be removed)
 if grep -q "CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS" "$SHELL_RC" && \
    grep -q "CLAUDE_CODE_MAX_OUTPUT_TOKENS" "$SHELL_RC" && \
    grep -q "MAX_THINKING_TOKENS" "$SHELL_RC"; then
     ok "All compatibility and token limit environment variables already present"
+    # Clean up old DISABLE_PROMPT_CACHING if present
+    if grep -q "export DISABLE_PROMPT_CACHING" "$SHELL_RC"; then
+        sed -i.bak '/export DISABLE_PROMPT_CACHING/d' "$SHELL_RC"
+        rm -f "${SHELL_RC}.bak"
+        ok "Removed deprecated DISABLE_PROMPT_CACHING from shell environment"
+    fi
 else
     # Add the missing environment variables after CLAUDE_CODE_USE_BEDROCK
     if grep -q "export CLAUDE_CODE_USE_BEDROCK" "$SHELL_RC"; then
@@ -174,6 +187,7 @@ printf "${GREEN}========================================${NC}\n"
 echo ""
 printf "  Fixed Bedrock compatibility and token limit issues:\n"
 printf "    ✓ Added CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1\n"
+printf "    ✓ Enabled prompt caching (removed DISABLE_PROMPT_CACHING)\n"
 printf "    ✓ Added CLAUDE_CODE_MAX_OUTPUT_TOKENS=32000 (raises Bedrock output ceiling)\n"
 printf "    ✓ Added MAX_THINKING_TOKENS=8000 (balances thinking vs output budget)\n"
 printf "    ✓ Fixed Sonnet 4.6 capabilities (removed adaptive_thinking)\n"
