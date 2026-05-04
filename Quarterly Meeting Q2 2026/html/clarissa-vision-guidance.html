@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEL Q2 2026 — Clarissa Discussion & Vision Guidance</title>
+<style>
+  :root {
+    --navy: #1a2744;
+    --blue: #2c5282;
+    --light-blue: #ebf4ff;
+    --accent: #e67e22;
+    --accent-light: #fff3e6;
+    --green: #276749;
+    --light-green: #f0fff4;
+    --purple: #553c9a;
+    --purple-bg: #faf5ff;
+    --teal: #2c7a7b;
+    --teal-bg: #e6fffa;
+    --gray: #718096;
+    --light-gray: #f7fafc;
+    --white: #ffffff;
+    --border: #e2e8f0;
+    --text: #2d3748;
+    --text-light: #4a5568;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: var(--text);
+    background: var(--light-gray);
+    line-height: 1.65;
+  }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, var(--navy) 0%, #243460 60%, var(--blue) 100%);
+    color: var(--white);
+    padding: 3rem 2rem 2.5rem;
+  }
+  .header-inner { max-width: 920px; margin: 0 auto; }
+  .header-eyebrow {
+    font-size: 0.74rem; font-weight: 700; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 0.65rem;
+  }
+  .header h1 {
+    font-size: 2.05rem; font-weight: 800; line-height: 1.18;
+    margin-bottom: 0.55rem; letter-spacing: -0.01em;
+  }
+  .header .sub {
+    font-size: 0.98rem; opacity: 0.86; max-width: 720px;
+    margin-bottom: 1.35rem;
+  }
+  .header-meta {
+    display: flex; flex-wrap: wrap; gap: 1.5rem;
+    font-size: 0.82rem; opacity: 0.74;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding-top: 0.9rem;
+  }
+
+  /* Nav */
+  .nav {
+    background: var(--blue); position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.14);
+  }
+  .nav-inner { max-width: 920px; margin: 0 auto; display: flex; flex-wrap: wrap; }
+  .nav a {
+    color: rgba(255,255,255,0.9); text-decoration: none;
+    font-size: 0.78rem; font-weight: 500;
+    padding: 0.7rem 1rem; transition: background 0.16s ease;
+    white-space: nowrap;
+  }
+  .nav a:hover { background: rgba(255,255,255,0.14); color: var(--white); }
+
+  /* Container + sections */
+  .container { max-width: 920px; margin: 0 auto; padding: 2.4rem 1.5rem 4rem; }
+  .section { margin-bottom: 3rem; }
+  .section-label {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 0.45rem;
+  }
+  .section-title {
+    font-size: 1.5rem; font-weight: 800; color: var(--navy);
+    line-height: 1.2; margin-bottom: 0.9rem;
+  }
+  .section-intro {
+    font-size: 0.9rem; color: var(--text-light);
+    line-height: 1.7; max-width: 760px;
+  }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 2.7rem 0; }
+
+  /* Preamble block */
+  .preamble {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 10px; padding: 1.5rem 1.6rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  .preamble p { font-size: 0.9rem; color: var(--text-light); margin-bottom: 0.9rem; }
+  .preamble p:last-child { margin-bottom: 0; }
+  .preamble strong { color: var(--text); }
+
+  /* Quote */
+  .pull-quote {
+    border-left: 4px solid var(--blue);
+    background: var(--light-blue);
+    border-radius: 0 8px 8px 0;
+    padding: 1.3rem 1.6rem;
+    margin: 1.4rem 0 0;
+    color: var(--navy);
+    font-style: italic;
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  /* Clarissa synthesis cards */
+  .synthesis-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 1rem; margin-top: 1.25rem;
+  }
+  @media (max-width: 700px) { .synthesis-grid { grid-template-columns: 1fr; } }
+
+  .s-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 8px; padding: 1.15rem 1.25rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    border-top: 3px solid var(--blue);
+  }
+  .s-card .s-label {
+    font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--blue); margin-bottom: 0.4rem;
+  }
+  .s-card h3 { font-size: 0.92rem; color: var(--navy); margin-bottom: 0.35rem; }
+  .s-card p { font-size: 0.84rem; color: var(--text-light); line-height: 1.6; }
+
+  /* Vision themes */
+  .theme-list { list-style: none; margin-top: 1.2rem; display: flex; flex-direction: column; gap: 0.75rem; }
+  .theme-list li {
+    background: var(--white); border: 1px solid var(--border); border-radius: 6px;
+    padding: 0.95rem 1.15rem;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    font-size: 0.86rem; color: var(--text-light);
+  }
+  .theme-list li strong { color: var(--text); }
+
+  /* Guiding principles */
+  .principles-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 1rem; margin-top: 1.2rem;
+  }
+  @media (max-width: 680px) { .principles-grid { grid-template-columns: 1fr; } }
+
+  .principle {
+    background: var(--white); border: 1px solid var(--border); border-radius: 8px;
+    padding: 1.05rem 1.2rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    position: relative;
+  }
+  .principle::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 3px; background: var(--accent);
+    border-radius: 8px 8px 0 0;
+  }
+  .principle h3 {
+    font-size: 0.9rem; color: var(--navy); margin-bottom: 0.35rem;
+    padding-top: 0.15rem;
+  }
+  .principle p { font-size: 0.83rem; color: var(--text-light); line-height: 1.6; }
+
+  /* Operating agreements */
+  .agreements {
+    background: var(--purple-bg); border: 1px solid #e9d8fd;
+    border-radius: 10px; padding: 1.3rem 1.45rem; margin-top: 1rem;
+  }
+  .agreements h3 {
+    font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--purple); margin-bottom: 0.65rem;
+  }
+  .agreements ul { padding-left: 1.15rem; }
+  .agreements li {
+    font-size: 0.85rem; color: var(--text-light); margin-bottom: 0.45rem; line-height: 1.55;
+  }
+
+  /* Commitment strip */
+  .commitment-strip {
+    background: var(--navy); border-radius: 10px;
+    padding: 1.55rem 1.7rem; color: var(--white);
+    margin-top: 1.3rem;
+  }
+  .commitment-strip h3 {
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.11em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem;
+  }
+  .commitment-strip p { font-size: 0.9rem; line-height: 1.72; opacity: 0.9; }
+
+  /* Footer */
+  .footer {
+    text-align: center; padding: 2rem 1.5rem;
+    font-size: 0.78rem; color: var(--gray);
+    border-top: 1px solid var(--border); background: var(--white);
+  }
+  .footer a { color: var(--blue); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+
+  @media print {
+    body { background: white; }
+    .nav { display: none; }
+    .header { padding: 2rem; }
+    .section, .preamble, .commitment-strip, .agreements, .principle, .s-card { break-inside: avoid; }
+    .synthesis-grid, .principles-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-eyebrow">SEL Q2 2026 Onsite · Post-Day 2 Guidance</div>
+    <h1>Clarissa Discussion & Team Vision Guidance</h1>
+    <p class="sub">A preamble-style synthesis of Day 2: what we heard, what we aligned on, and the guiding principles we carry forward as one leadership team.</p>
+    <div class="header-meta">
+      <span>&#128197; April 14, 2026</span>
+      <span>&#128100; Software Engineering Leadership + Product Partnership</span>
+      <span>&#127919; General commitments and operating principles (not goal tracking)</span>
+    </div>
+  </div>
+</div>
+
+<nav class="nav" aria-label="Page sections">
+  <div class="nav-inner">
+    <a href="#preamble">Preamble</a>
+    <a href="#clarissa">Clarissa Synthesis</a>
+    <a href="#vision">Vision Themes</a>
+    <a href="#principles">Guiding Principles</a>
+    <a href="#carry-forward">Carry Forward</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <section class="section" id="preamble">
+    <div class="section-label">Preamble</div>
+    <h2 class="section-title">What This Page Is For</h2>
+    <div class="preamble">
+      <p>This page captures the <strong>shared intent</strong> that emerged from Day 2, especially from the Product conversation with Clarissa and the team’s vision-and-goals round robin.</p>
+      <p>It is intentionally principle-based: this is our <strong>north-star guidance</strong> for how we lead, decide, and partner. It does not duplicate detailed or measurable commitments already tracked elsewhere.</p>
+      <p><strong>Use this page as the team’s common preamble:</strong> the context behind our commitments, the posture we expect from each other, and the standard we agree to hold.</p>
+    </div>
+    <div class="pull-quote">“We are not leaving Day 2 with more words. We are leaving with one shared leadership posture: aligned, accountable, and focused on customer value.”</div>
+  </section>
+
+  <hr class="divider">
+
+  <section class="section" id="clarissa">
+    <div class="section-label">Product Alignment Synthesis</div>
+    <h2 class="section-title">What We Took from the Clarissa Discussion</h2>
+    <p class="section-intro">The Clarissa session reinforced that engineering and product win together or miss together. The key takeaways below define how we should work moving forward.</p>
+
+    <div class="synthesis-grid">
+      <article class="s-card">
+        <div class="s-label">Shared Understanding</div>
+        <h3>Direction Must Be Explicit</h3>
+        <p>Leaders should be able to articulate product intent clearly and consistently. Team alignment starts with shared language around outcomes, tradeoffs, and priorities.</p>
+      </article>
+
+      <article class="s-card">
+        <div class="s-label">Partnership Standard</div>
+        <h3>Engineering Is a Product Partner, Not an Intake Function</h3>
+        <p>The expectation is active collaboration: challenge assumptions early, shape options together, and avoid handoff-style behavior that fragments ownership.</p>
+      </article>
+
+      <article class="s-card">
+        <div class="s-label">Execution Posture</div>
+        <h3>Outcome Clarity Beats Feature Throughput</h3>
+        <p>Velocity only matters if it moves customer and business outcomes. We prioritize work that has a clear reason, a visible impact path, and a deliberate finish line.</p>
+      </article>
+
+      <article class="s-card">
+        <div class="s-label">Leadership Behavior</div>
+        <h3>Healthy Tension Is a Requirement</h3>
+        <p>Constructive disagreement between product and engineering is not failure. It is how quality decisions are made when assumptions, risks, and constraints are surfaced early.</p>
+      </article>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section class="section" id="vision">
+    <div class="section-label">Personal Vision Synthesis</div>
+    <h2 class="section-title">Themes Across Team Vision & Goals Statements</h2>
+    <p class="section-intro">Across the round robin, a consistent pattern emerged: leaders are aiming for higher clarity, stronger ownership, and better system-level impact. These are the cross-cutting themes that unify individual statements.</p>
+
+    <ul class="theme-list">
+      <li><strong>From intention to evidence:</strong> leaders want to demonstrate impact through observable outcomes, not narrative alone.</li>
+      <li><strong>From broad ambition to focused execution:</strong> fewer active priorities, completed with higher quality and better follow-through.</li>
+      <li><strong>From individual heroics to team enablement:</strong> grow people, distribute capability, and avoid concentration of critical ownership.</li>
+      <li><strong>From reactive pressure to deliberate leadership:</strong> protect capacity for prevention, architecture, and quality before incidents force action.</li>
+      <li><strong>From siloed progress to first-team behavior:</strong> solve cross-team issues as shared leadership work, not local optimization.</li>
+    </ul>
+  </section>
+
+  <hr class="divider">
+
+  <section class="section" id="principles">
+    <div class="section-label">General Team Commitment</div>
+    <h2 class="section-title">Guiding Principles We Commit to as a Team</h2>
+    <p class="section-intro">These principles are intended to stay stable across quarter transitions. They provide a consistent leadership standard even as specific goals evolve.</p>
+
+    <div class="principles-grid">
+      <article class="principle">
+        <h3>1) Customer and clinician value first</h3>
+        <p>We prioritize decisions that improve real user outcomes and workflow effectiveness, not just internal convenience.</p>
+      </article>
+      <article class="principle">
+        <h3>2) Clarity before speed</h3>
+        <p>We move fast when ownership, intent, and tradeoffs are explicit. Ambiguity is resolved early, not carried downstream.</p>
+      </article>
+      <article class="principle">
+        <h3>3) Evidence over narrative</h3>
+        <p>We do not rely on anecdote as proof of progress. Claims should be grounded in observable signals and repeatable learning.</p>
+      </article>
+      <article class="principle">
+        <h3>4) Shared accountability</h3>
+        <p>Leadership commitments are team commitments. We help each other close loops, not just report status.</p>
+      </article>
+      <article class="principle">
+        <h3>5) Cross-functional partnership by default</h3>
+        <p>Product, engineering, and security alignment is part of delivery work—not an afterthought or escalation-only activity.</p>
+      </article>
+      <article class="principle">
+        <h3>6) Sustainable excellence</h3>
+        <p>We reject heroics as an operating model. We build systems, habits, and environments where quality is repeatable.</p>
+      </article>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section class="section" id="carry-forward">
+    <div class="section-label">Post-Day 2 Carry Forward</div>
+    <h2 class="section-title">How We Keep This Alive in Weekly Leadership Work</h2>
+    <p class="section-intro">These are lightweight operating agreements to keep the Day 2 intent active between quarterlies, without replacing formal planning or tracking artifacts.</p>
+
+    <div class="agreements">
+      <h3>Operating Agreements</h3>
+      <ul>
+        <li>Start key alignment conversations with context and intended outcome, not status narration.</li>
+        <li>Call out tradeoffs explicitly when priorities conflict; avoid hidden assumptions.</li>
+        <li>Use peer challenge to improve decisions early, before execution hardens.</li>
+        <li>Protect focus by limiting parallel priority load and finishing what we start.</li>
+        <li>Treat post-incident and post-delivery learning as leadership responsibilities, not optional cleanup.</li>
+      </ul>
+    </div>
+
+    <div class="commitment-strip">
+      <h3>Team Commitment Statement</h3>
+      <p>As a leadership team, we commit to lead as one: aligned with product intent, accountable to each other, and grounded in evidence. We will hold a high bar with clarity and respect, develop leaders around us, and convert strategic direction into reliable execution that improves outcomes for customers and teams.</p>
+    </div>
+  </section>
+
+</div>
+
+<footer class="footer">
+  SEL Q2 2026 Onsite · Clarissa Discussion & Vision Guidance · April 14, 2026
+  &nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="commitments-board.html">Detailed commitment tracking board</a>
+</footer>
+
+</body>
+</html>

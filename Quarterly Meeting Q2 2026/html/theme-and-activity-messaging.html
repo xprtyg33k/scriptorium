@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEL Q2 2026 Onsite: Sharpen the Standard - Theme & Activity Guide</title>
+<style>
+  :root {
+    --navy: #1a2744;
+    --blue: #2c5282;
+    --light-blue: #ebf4ff;
+    --accent: #e67e22;
+    --green: #276749;
+    --light-green: #f0fff4;
+    --gray: #718096;
+    --light-gray: #f7fafc;
+    --white: #ffffff;
+    --border: #e2e8f0;
+    --text: #2d3748;
+    --text-light: #4a5568;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: var(--text); background: var(--light-gray); line-height: 1.6; }
+
+  /* Header */
+  .header { background: var(--navy); color: var(--white); padding: 2.5rem 2rem 2rem; }
+  .header-inner { max-width: 960px; margin: 0 auto; }
+  .header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem; }
+  .header .theme { font-size: 1.15rem; color: var(--accent); font-weight: 600; margin-bottom: 0.75rem; }
+  .header .meta { font-size: 0.9rem; opacity: 0.8; }
+
+  /* Sticky nav */
+  .nav { background: var(--blue); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+  .nav-inner { max-width: 960px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 0; }
+  .nav a {
+    color: var(--white); text-decoration: none; font-size: 0.8rem; font-weight: 500;
+    padding: 0.7rem 1rem; transition: background 0.2s ease;
+  }
+  .nav a:hover { background: rgba(255,255,255,0.12); }
+
+  /* Container */
+  .container { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  /* Section headings */
+  .section-heading {
+    font-size: 1.3rem; font-weight: 700; color: var(--navy);
+    border-bottom: 2px solid var(--navy); padding-bottom: 0.5rem; margin: 2.5rem 0 1.25rem;
+  }
+  .section-heading:first-child { margin-top: 0; }
+
+  /* Content blocks */
+  p { margin-bottom: 0.9rem; font-size: 0.92rem; color: var(--text-light); }
+  p strong { color: var(--text); }
+
+  /* Timeline */
+  .timeline { position: relative; padding-left: 1.75rem; margin: 1.25rem 0 1.5rem; }
+  .timeline::before {
+    content: ''; position: absolute; left: 0.45rem; top: 0.3rem; bottom: 0.3rem;
+    width: 2px; background: var(--border);
+  }
+  .timeline-item { position: relative; margin-bottom: 1rem; }
+  .timeline-item::before {
+    content: ''; position: absolute; left: -1.45rem; top: 0.55rem;
+    width: 10px; height: 10px; border-radius: 50%; background: var(--blue); border: 2px solid var(--white);
+    box-shadow: 0 0 0 2px var(--blue);
+  }
+  .timeline-item .year { font-size: 0.78rem; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 0.03em; }
+  .timeline-item .desc { font-size: 0.88rem; color: var(--text-light); margin-top: 0.15rem; }
+
+  /* Quote block */
+  .quote-block {
+    background: var(--light-blue); border-left: 4px solid var(--blue); border-radius: 0 6px 6px 0;
+    padding: 1.1rem 1.4rem; margin: 1.5rem 0; font-style: italic; font-size: 0.92rem; color: var(--text);
+  }
+
+  /* Urgency cards */
+  .urgency-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 1.25rem 0; }
+  .urgency-card {
+    background: var(--white); border-radius: 6px; border: 1px solid var(--border);
+    padding: 1.25rem 1.5rem; position: relative; padding-left: 3.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06); transition: box-shadow 0.2s ease;
+  }
+  .urgency-card:hover { box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
+  .urgency-card .number {
+    position: absolute; left: 1.25rem; top: 1.15rem;
+    width: 1.75rem; height: 1.75rem; border-radius: 50%; background: var(--accent); color: var(--white);
+    font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center;
+  }
+  .urgency-card h3 { font-size: 0.95rem; color: var(--navy); margin-bottom: 0.4rem; }
+  .urgency-card p { font-size: 0.85rem; margin-bottom: 0; }
+
+  /* Practice list */
+  .practice-list { list-style: none; margin: 1.25rem 0; }
+  .practice-list li {
+    background: var(--white); border: 1px solid var(--border); border-radius: 6px;
+    padding: 1rem 1.25rem; margin-bottom: 0.75rem; font-size: 0.88rem; color: var(--text-light);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04); transition: border-color 0.2s ease;
+  }
+  .practice-list li:hover { border-color: var(--blue); }
+  .practice-list li strong { color: var(--text); display: block; margin-bottom: 0.2rem; font-size: 0.82rem; }
+
+  /* Activity cards */
+  .activity-card {
+    background: var(--white); border-radius: 8px; border: 1px solid var(--border);
+    margin-bottom: 1.25rem; overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06); transition: box-shadow 0.2s ease;
+  }
+  .activity-card:hover { box-shadow: 0 3px 12px rgba(0,0,0,0.1); }
+  .activity-card-header {
+    padding: 1rem 1.5rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+    user-select: none;
+  }
+  .activity-card-header:hover { background: var(--light-gray); }
+  .activity-card-header h3 { font-size: 0.95rem; color: var(--navy); display: flex; align-items: center; gap: 0.75rem; }
+  .activity-card-header .session-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 1.6rem; height: 1.6rem; border-radius: 50%; background: var(--blue); color: var(--white);
+    font-size: 0.72rem; font-weight: 700; flex-shrink: 0;
+  }
+  .activity-card-header .time-tag {
+    font-size: 0.72rem; font-weight: 600; color: var(--gray); text-transform: uppercase;
+    letter-spacing: 0.03em; white-space: nowrap;
+  }
+  .activity-card-header .chevron {
+    font-size: 0.9rem; color: var(--gray); transition: transform 0.25s ease; flex-shrink: 0;
+  }
+  .activity-card.open .chevron { transform: rotate(180deg); }
+  .activity-card-body {
+    max-height: 0; overflow: hidden; transition: max-height 0.35s ease;
+  }
+  .activity-card.open .activity-card-body { max-height: 2000px; }
+  .activity-card-content { padding: 0 1.5rem 1.25rem; border-top: 1px solid var(--border); }
+  .activity-card-content h4 {
+    font-size: 0.82rem; color: var(--blue); text-transform: uppercase; letter-spacing: 0.04em;
+    margin-top: 1rem; margin-bottom: 0.35rem;
+  }
+  .activity-card-content p { font-size: 0.86rem; }
+
+  .day-label {
+    display: inline-block; font-size: 0.72rem; font-weight: 700; padding: 0.2rem 0.65rem;
+    border-radius: 3px; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 1rem;
+  }
+  .day-label.monday { background: var(--light-blue); color: var(--blue); }
+  .day-label.tuesday { background: var(--light-green); color: var(--green); }
+
+  /* Messages section */
+  .message-card {
+    background: var(--white); border-radius: 6px; border: 1px solid var(--border);
+    padding: 1.25rem 1.5rem; margin-bottom: 1rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06); transition: box-shadow 0.2s ease;
+  }
+  .message-card:hover { box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
+  .message-card .msg-quote {
+    font-size: 1rem; font-weight: 600; color: var(--navy); font-style: italic; margin-bottom: 0.5rem;
+  }
+  .message-card .msg-context { font-size: 0.85rem; color: var(--text-light); }
+
+  /* Takeaway */
+  .takeaway {
+    background: var(--navy); color: var(--white); border-radius: 8px;
+    padding: 2rem; margin-top: 2.5rem;
+  }
+  .takeaway h2 { color: var(--accent); font-size: 1.15rem; margin-bottom: 0.75rem; }
+  .takeaway p { color: rgba(255,255,255,0.85); font-size: 0.92rem; margin-bottom: 0; line-height: 1.7; }
+
+  /* Footer */
+  .footer { text-align: center; padding: 2rem; font-size: 0.8rem; color: var(--gray); }
+
+  /* Expand/collapse all */
+  .expand-toggle {
+    background: none; border: 1px solid var(--border); border-radius: 4px;
+    padding: 0.4rem 0.9rem; font-size: 0.78rem; color: var(--gray); cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .expand-toggle:hover { border-color: var(--blue); color: var(--blue); }
+
+  @media (max-width: 600px) {
+    .header { padding: 1.5rem 1rem; }
+    .header h1 { font-size: 1.5rem; }
+    .nav a { font-size: 0.72rem; padding: 0.6rem 0.65rem; }
+    .container { padding: 1.25rem 1rem; }
+    .activity-card-header { flex-wrap: wrap; gap: 0.5rem; }
+    .activity-card-header .time-tag { order: 3; width: 100%; }
+  }
+
+  @media print {
+    body { background: white; }
+    .nav { display: none; }
+    .activity-card-body { max-height: none !important; }
+    .activity-card { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    .message-card, .urgency-card { break-inside: avoid; box-shadow: none; }
+    .takeaway { break-inside: avoid; }
+    .chevron, .expand-toggle { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <h1>Theme &amp; Activity Guide</h1>
+    <div class="theme">Sharpen the Standard</div>
+    <div class="meta">SEL Q2 2026 Onsite &middot; Monday, April 13 &amp; Tuesday, April 14, 2026</div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-inner">
+    <a href="#why-theme">Why This Theme</a>
+    <a href="#why-now">Why Now</a>
+    <a href="#in-practice">In Practice</a>
+    <a href="#activities">Activities</a>
+    <a href="#messages">Messages</a>
+    <a href="#takeaway">Takeaway</a>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- WHY THIS THEME -->
+  <h2 class="section-heading" id="why-theme">Why "Sharpen the Standard"</h2>
+
+  <p>Over the past two years, this leadership team has done real work to define who it is and what it expects. The quarterly onsites tell the story:</p>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="year">Q1 2024 &mdash; Identity</div>
+      <div class="desc">We asked "who are we?" for the first time as a formal exercise. We wrote down values. We discussed vulnerability, honesty, and the idea of building a challenge network. We started talking about OKRs and architecture. It was the beginning.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="year">Q2 2024 &mdash; Excellence</div>
+      <div class="desc">We defined what excellence looks like for developers and leaders. We introduced outcomes versus output. We named hero syndrome as a problem. We started working on role clarity and the gap between the trivial many and the vital few.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="year">Q3 2024 &mdash; Focus</div>
+      <div class="desc">We zeroed in on focus and prioritization as the discipline that would make everything else work. We used The ONE Thing as a framework. We introduced VSM opportunities, the Say/Do tracker, and Disagree and Commit. We asked each leader to commit to one significant project.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="year">Q1 2025 &mdash; Forward / Growth</div>
+      <div class="desc">We moved from definition into action. Growth, together, getting uncomfortable. We pushed the question: "What have you done to make others succeed?" We introduced the Outward Mindset and challenged each leader to articulate what they uniquely contribute.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="year">Q4 2025 &mdash; Recalibration</div>
+      <div class="desc">The most mature onsite to date. We built a one-page Operating Model. We created a three-tier scorecard. We adopted the GAIN framework for feedback. We set up an Architecture contribution loop. We agreed to run a 30-day AI experiment per team. We left with five explicit success criteria.</div>
+    </div>
+  </div>
+
+  <p>Each of these built on the last. Each one raised the bar. And now the question is: <strong>did the bar hold?</strong></p>
+
+  <p>"Sharpen the Standard" is the honest next step. We are not starting over. We are not redefining ourselves again. The identity work is done. The operating model exists. The expectations have been stated clearly, repeatedly, in writing, in conversation, in performance reviews.</p>
+
+  <p><strong>The standard has been set. The question now is whether it cuts.</strong></p>
+
+  <div class="quote-block">
+    "Sharpening is not about perfection. It is about precision. The standard we set is already high. Making it sharper means making it specific enough to act on and honest enough to measure."
+  </div>
+
+  <!-- WHY NOW -->
+  <h2 class="section-heading" id="why-now">Why This Matters Right Now</h2>
+
+  <p>Three things make this theme urgent for Q2 2026 specifically:</p>
+
+  <div class="urgency-grid">
+    <div class="urgency-card">
+      <div class="number">1</div>
+      <h3>The Performance Review Feedback Is Explicit</h3>
+      <p>Guillermo's 2025 review from Saji was direct: "Impact must be measurable and visible in outcomes, not just direction and influence." The coaching is happening, but behavior change isn't consistently following. Standards are set, but enforcement is inconsistent. Root cause analyses are done but rarely closed. The growth edge is operationalizing strategy so it produces evidence. This is not a personal critique. It is the growth mandate for the entire leadership layer. If the leaders on this team cannot show measurable outcomes from their leadership, then the leadership itself is incomplete. This onsite is designed to model and practice exactly that shift.</p>
+    </div>
+    <div class="urgency-card">
+      <div class="number">2</div>
+      <h3>The 2026 OKRs Require Proof, Not Narrative</h3>
+      <p>Experity's 2026 objectives are quantified: EMR retention from 92% to 97%. AI Scribe adoption from 5% to 35% of clinics. EBITDA from $72M to $82M. ARR from $221M to $240M. Vendor spend reduction of $4M. These are not directional aspirations. They are numbers with owners and deadlines. The engineering leadership team cannot contribute to these by having good conversations. It must contribute by producing measurable results. This onsite is designed to connect every leader's personal goals and every team goal to that measurable reality.</p>
+    </div>
+    <div class="urgency-card">
+      <div class="number">3</div>
+      <h3>Q4 2025 Artifacts Need Honest Adoption Review</h3>
+      <p>The Q4 onsite was the most structured and artifact-heavy onsite this team has ever run. It produced an Operating Model, a scorecard, GAIN scripts, an Architecture contribution loop, and AI experiment commitments. If those artifacts are being used, this onsite builds on them. If they are not being used, this onsite needs to understand why and either fix the follow-through or retire the artifacts. Either answer is fine. What is not fine is pretending.</p>
+    </div>
+  </div>
+
+  <!-- IN PRACTICE -->
+  <h2 class="section-heading" id="in-practice">What "Sharpen the Standard" Means in Practice</h2>
+
+  <p>For each leader, sharpening the standard means:</p>
+
+  <ul class="practice-list">
+    <li>
+      <strong>Evidence over narrative</strong>
+      When you claim a win, you bring the evidence. Not "we improved deployment reliability" but "change failure rate went from X% to Y% between November and March."
+    </li>
+    <li>
+      <strong>Specificity over aspiration</strong>
+      When you set a goal, it has a number, an owner, and a deadline. Not "improve sprint predictability" but "sprint commitment accuracy above 80% by end of Q3, owned by me, measured weekly."
+    </li>
+    <li>
+      <strong>Accountability over intention</strong>
+      When you commit to a behavior change, you name the behavior, the trigger, and the accountability partner. Not "I'll be more proactive" but "I will send a 3-bullet status update every Friday by 4 PM, and Rafael will check whether I did."
+    </li>
+    <li>
+      <strong>Honesty over comfort</strong>
+      When you identify a gap between your intent and your behavior, you name it plainly. Not "I could be better at delegation" but "I'm still writing code that my team should be writing because I don't trust the output, and that's preventing them from growing."
+    </li>
+  </ul>
+
+  <!-- ACTIVITIES -->
+  <h2 class="section-heading" id="activities" style="display: flex; justify-content: space-between; align-items: center;">
+    Activity Breakdown
+    <button class="expand-toggle" onclick="toggleAll()">Expand All</button>
+  </h2>
+
+  <p>Each session is designed with a specific purpose, a concrete output, and a connection to the team's current moment. Click to expand the full rationale.</p>
+
+  <!-- Day 1 -->
+  <span class="day-label monday">Day 1 &mdash; Monday, April 13</span>
+
+  <div class="activity-card" data-activity>
+    <div class="activity-card-header" onclick="toggleCard(this)">
+      <h3><span class="session-num">1</span> Opening: Why "Sharpen the Standard"</h3>
+      <span class="time-tag">9:00 - 9:20</span>
+      <span class="chevron">&#9660;</span>
+    </div>
+    <div class="activity-card-body">
+      <div class="activity-card-content">
+        <h4>Why this session exists</h4>
+        <p>Every onsite needs a frame. Without one, the day feels like a disconnected series of exercises. The opening connects this onsite to the arc of the past two years and makes clear that this is not a restart. It is a continuation with higher expectations. The opening also sets three success criteria for the two days so there is a measurable bar for the onsite itself.</p>
+        <h4>What it produces</h4>
+        <p>Three onsite success criteria, written on the wall. Shared understanding of why this theme was chosen. Permission to be honest. The tone for everything that follows.</p>
+        <h4>Why it matters now</h4>
+        <p>Because the team needs to hear that the work they have done over two years is recognized, and that the next step is not more definitions but sharper execution. This prevents the onsite from feeling like yet another "we need to do better" lecture. It is instead: "we have done a lot. Now we prove it."</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="activity-card" data-activity>
+    <div class="activity-card-header" onclick="toggleCard(this)">
+      <h3><span class="session-num">2</span> Retrospective: Evidence of Progress</h3>
+      <span class="time-tag">9:20 - 10:30</span>
+      <span class="chevron">&#9660;</span>
+    </div>
+    <div class="activity-card-body">
+      <div class="activity-card-content">
+        <h4>Why this session exists</h4>
+        <p>Every prior quarterly has opened with a wins retrospective. It is a pattern that works: it sets a positive tone, surfaces real progress, and builds momentum. The difference in Q2 2026 is the evidence standard. The visible agenda frames this as "wins, growth, and progress." The facilitation pushes every claim toward proof. This is where the team begins practicing the shift from narrative to evidence. It is also where the facilitator can acknowledge real progress honestly, which matters because a team that only hears "do better" eventually stops trying.</p>
+        <h4>What it produces</h4>
+        <p>A wall of evidence-backed wins, clustered by theme. A photo-captured record of what has actually improved since Q4 2025. A shared standard for how claims are evaluated going forward.</p>
+        <h4>Why it matters now</h4>
+        <p>Because this team has been told repeatedly that impact needs to be measurable and visible. This exercise gives every leader a chance to demonstrate that they are already doing it, or to identify where they are not. It also gives the facilitator data: if most leaders struggle to produce evidence for their wins, that is the single most important signal for the rest of the onsite.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="activity-card" data-activity>
+    <div class="activity-card-header" onclick="toggleCard(this)">
+      <h3><span class="session-num">3</span> Continue / Start / Stop</h3>
+      <span class="time-tag">10:45 - 11:45</span>
+      <span class="chevron">&#9660;</span>
+    </div>
+    <div class="activity-card-body">
+      <div class="activity-card-content">
+        <h4>Why this session exists</h4>
+        <p>The Continue/Start/Stop format is a staple of team retrospectives, but most versions are lightweight: "start having more social events" or "stop going to unnecessary meetings." That level is insufficient for a leadership team. This version is scoped to leadership behaviors, operating habits, communication patterns, prioritization discipline, accountability norms, AI adoption practices, and delivery discipline. It asks leaders to evaluate themselves and each other, not their teams.</p>
+        <h4>What it produces</h4>
+        <p>A documented board with the top behavioral commitments the team will hold each other to. This board stays visible and gets referenced in monthly meetings to check whether the behaviors actually changed.</p>
+        <h4>Why it matters now</h4>
+        <p>Because culture is built from habits, and habits only change when they are named, voted on, and tracked. The Q4 2025 onsite introduced GAIN scripts for feedback and "saying no without saying no" scripts. This session checks whether those behavioral commitments stuck and adds new ones based on the last five months of experience.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="activity-card" data-activity>
+    <div class="activity-card-header" onclick="toggleCard(this)">
+      <h3><span class="session-num">4</span> Q4 Artifact Adoption Check + Metrics Reality</h3>
+      <span class="time-tag">11:45 - 12:45</span>
+      <span class="chevron">&#9660;</span>
+    </div>
+    <div class="activity-card-body">
+      <div class="activity-card-content">
+        <h4>Why this session exists</h4>
+        <p>This is the session that makes the entire quarterly onsite pattern credible. If Q4 produced five success criteria and nobody checks whether they were met, then the onsites are theater. This session grades each Q4 artifact honestly: adopted, partially adopted, or not adopted. Then it asks why. Then it shifts into the current state of metrics: what is each leader actually tracking, what baselines exist, and where are the gaps?</p>
+        <h4>What it produces</h4>
+        <p>An honest adoption scorecard for Q4 artifacts. A clear picture of the team's current metrics landscape. Identified gaps between what should be measured and what actually is.</p>
+        <h4>Why it matters now</h4>
+        <p>Because the biggest risk to this team's credibility is the gap between what it commits to and what it follows through on. Saji's review of Guillermo named this directly: "root cause analyses are done, but rarely closed and followed up." This session applies that same standard to the team's collective commitments. If the artifacts didn't stick, the team needs to understand the pattern and fix the mechanism before building new artifacts.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="activity-card" data-activity>
+    <div class="activity-card-header" onclick="toggleCard(this)">
+      <h3><span class="session-num">5</span> Personal Vision and Goals: Drafting</h3>
+      <span class="time-tag">1:45 - 2:45</span>
+      <span class="chevron">&#9660;</span>
+    </div>
+    <div class="activity-card-body">
+      <div class="activity-card-content">
+        <h4>Why this session exists</h4>
+        <p>The "Becoming Your Best" framework asks each leader to define their vision by role, then set specific goals against that vision. This is not a performance review exercise. It is a character exercise. It asks: who do you want to be as a leader? What does that leader do? Where are you falling short of that right now? The drafting is placed on Monday afternoon deliberately. The energy is lower, the cognitive demand is reflective rather than analytical, and the overnight gap before Tuesday's sharing allows refinement and courage-building.</p>
+        <h4>What it produces</h4>
+        <p>Draft personal vision and goals documents for each leader, including a named gap between intent and current behavior. These drafts become the input for Tuesday morning's sharing round robin.</p>
+        <h4>Why it matters now</h4>
+        <p>Because vision without goals is daydreaming, and goals without vision are grinding. This team has strong individual talent but uneven alignment to collective purpose. The manifesto exercise from earlier quarters gave each leader a team manifesto. This exercise asks for something more personal and more honest: what kind of leader are you trying to become, and where are you not yet that person?</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="activity-card" data-activity>
+    <div class="activity-card-header" onclick="toggleCard(this)">
+      <h3><span class="session-num">6</span> AI Adoption: From Experiments to Governance</h3>
+      <span class="time-tag">3:00 - 3:45</span>
+      <span class="chevron">&#9660;</span>
+    </div>
+    <div class="activity-card-body">
+      <div class="activity-card-content">
+        <h4>Why this session exists</h4>
+        <p>AI is discussed in nearly every weekly SEL meeting but remains fragmented. Different teams use different tools. Cost models are unclear. HIPAA constraints are real. Developer sentiment ranges from enthusiastic early adopters to people worried about their jobs. The Q4 onsite committed to one 30-day AI experiment per team. This session checks that commitment and then moves toward lightweight governance: which tools are approved, what cost guardrails apply, how wins and learnings get shared, and what the next round of experiments looks like.</p>
+        <h4>What it produces</h4>
+        <p>AI governance decisions (approved tools or criteria, cost visibility, learning-sharing mechanism). One new Q3 experiment per team.</p>
+        <h4>Why it matters now</h4>
+        <p>Because AI adoption at Experity is moving from side experiment to central strategy. The 2026 OKRs include AI Scribe at 35% of clinics and an AI Center of Excellence. Enterprise ChatGPT licenses have been distributed. The JD for Senior Engineering Manager now explicitly requires AI tool advocacy. This team cannot be fragmented on AI adoption while the company is making it a top priority.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="activity-card" data-activity>
+    <div class="activity-card-header" onclick="toggleCard(this)">
+      <h3><span class="session-num">7</span> Tech Debt and Modernization: Progress and Priorities</h3>
+      <span class="time-tag">4:00 - 4:45</span>
+      <span class="chevron">&#9660;</span>
+    </div>
+    <div class="activity-card-body">
+      <div class="activity-card-content">
+        <h4>Why this session exists</h4>
+        <p>The tech debt backlog is over 2,500 story points. At the current velocity of 5 points per sprint, clearance would take 19 years. The Tech Debt Reduction Strategy proposed quarterly dedicated sprints to accelerate this. Meanwhile, specific modernization work is in flight: Signal R replacement, iTextSharp migration, .NET upgrade, trunk-based development rollout. This session takes stock of where the team actually is and prioritizes the top 3 items for Q3.</p>
+        <h4>What it produces</h4>
+        <p>Top 3 Q3 tech debt priorities with owners. Clear-eyed assessment of the quarterly sprint cadence and whether it is happening.</p>
+        <h4>Why it matters now</h4>
+        <p>Because tech debt is the tax on every feature, every release, and every developer's morale. The CTO framed it clearly: "we need to improve our processes, reduce hand-offs, continue to improve quality, reduce technical debt." The risk assessment in the Tech Debt Strategy document lists security vulnerabilities, frequent rollbacks, and developer attrition as high-likelihood, high-impact risks. The team cannot talk about operational excellence while the codebase is accumulating 19 years of debt.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day 2 -->
+  <span class="day-label tuesday">Day 2 &mdash; Tuesday, April 14</span>
+
+  <div class="activity-card" data-activity>
+    <div class="activity-card-header" onclick="toggleCard(this)">
+      <h3><span class="session-num">8</span> Security Posture and Engineering Alignment</h3>
+      <span class="time-tag">8:45 - 9:45</span>
+      <span class="chevron">&#9660;</span>
+    </div>
+    <div class="activity-card-body">
+      <div class="activity-card-content">
+        <h4>Why this session exists</h4>
+        <p>Dan joins not as a guest speaker but as a collaborator. Security and engineering velocity are in tension in practice: the AWS contractor access revocation in April 2026 hurt productivity, pen test requirements add time to releases, HITRUST and HIPAA compliance constrain tool selection. This session is designed to surface those tensions, discuss them honestly, and produce joint commitments that serve both security and velocity.</p>
+        <h4>What it produces</h4>
+        <p>2-3 concrete security/engineering alignment commitments with owners. Shared understanding of non-negotiables versus areas where the teams can work together to find faster paths.</p>
+        <h4>Why it matters now</h4>
+        <p>Because security incidents have real consequences (the contractor access revocation disrupted multiple teams), and compliance requirements are only increasing. The team cannot treat security as someone else's problem. Engineering leaders need to understand the constraints and incorporate them into planning rather than being surprised by them.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="activity-card" data-activity>
+    <div class="activity-card-header" onclick="toggleCard(this)">
+      <h3><span class="session-num">9</span> Product Alignment and Priorities</h3>
+      <span class="time-tag">9:45 - 10:30</span>
+      <span class="chevron">&#9660;</span>
+    </div>
+    <div class="activity-card-body">
+      <div class="activity-card-content">
+        <h4>Why this session exists</h4>
+        <p>Clarissa joins to share product direction and challenge the team on partnership quality. The CTO vision document called out the need to move from feature-factory to outcome-driven. This session makes that conversation real by asking the CPO directly: where are we misaligned? What does product need from engineering leadership that it is not getting? Where can we reduce friction?</p>
+        <h4>What it produces</h4>
+        <p>2-3 product/engineering alignment commitments. Shared understanding of H2 2026 product direction. An honest signal about partnership quality from the product leader's perspective.</p>
+        <h4>Why it matters now</h4>
+        <p>Because engineering leadership that does not understand product priorities is engineering leadership operating in the dark. The 2026 OKRs tie engineering work directly to revenue, retention, and customer outcomes. This is not about getting a roadmap briefing. It is about ensuring that every leader in the room understands the business context behind the work their teams do.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="activity-card" data-activity>
+    <div class="activity-card-header" onclick="toggleCard(this)">
+      <h3><span class="session-num">10</span> Personal Vision and Goals: Round Robin Sharing</h3>
+      <span class="time-tag">10:45 - 12:00</span>
+      <span class="chevron">&#9660;</span>
+    </div>
+    <div class="activity-card-body">
+      <div class="activity-card-content">
+        <h4>Why this session exists</h4>
+        <p>The drafting on Monday produced individual documents. The sharing on Tuesday makes them collective. Each leader reads their vision, their goals, and their honest gap to the group. After each person, the group offers genuine challenge, not affirmation theater. This is where the "leader as visionary, exemplar, and mentor" message lands. It is where the Seneca quote about the pleasant and the honorable becoming the same thing earns its place.</p>
+        <h4>What it produces</h4>
+        <p>Completed personal vision and goals documents from each leader. These become living artifacts that are revisited monthly and graded at the Q3 onsite. Peer accountability. Shared vulnerability.</p>
+        <h4>Why it matters now</h4>
+        <p>Because this team talks about growth in every quarterly meeting but rarely makes personal growth commitments that are specific, public, and revisitable. The BYB framework provides the structure. The round robin provides the peer accountability. The gap identification provides the honesty. Together, they produce something that prior quarterlies have aspired to but not fully achieved: individual leaders holding themselves accountable to a vision of who they want to become, with the team as witness and support.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="activity-card" data-activity>
+    <div class="activity-card-header" onclick="toggleCard(this)">
+      <h3><span class="session-num">11</span> Team Goals: From Aspiration to Commitment</h3>
+      <span class="time-tag">12:45 - 1:45</span>
+      <span class="chevron">&#9660;</span>
+    </div>
+    <div class="activity-card-body">
+      <div class="activity-card-content">
+        <h4>Why this session exists</h4>
+        <p>This is the whiteboard goals exercise. It starts open: everyone writes goals, aspirations, objectives, and outcomes they want the team to achieve. Volume first, filtering second. Then the group clusters, prioritizes, and votes on the top 8-10. Then the facilitation naturally walks each surviving goal through refinement questions that make it specific, measurable, owned, realistic, and time-bound. The result is a set of team-level commitments that are concrete enough to track.</p>
+        <h4>What it produces</h4>
+        <p>8-10 team SMART goals with owners and deadlines. This is the team's commitment artifact for Q3 and H2 2026.</p>
+        <h4>Why it matters now</h4>
+        <p>Because prior quarterlies have produced aspirational goal lists that lacked the specificity to track. The Q3 2024 onsite asked for "commitment to ONE significant project" per leader. The Q4 2025 onsite set up a scorecard. This session takes the next step: the goals that survive the refinement process are the ones the team will actually be held to. If a goal cannot answer "how would we know if we achieved this?" then it does not belong on the commitment list.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="activity-card" data-activity>
+    <div class="activity-card-header" onclick="toggleCard(this)">
+      <h3><span class="session-num">12</span> Carry the Load: Team First</h3>
+      <span class="time-tag">1:45 - 2:30</span>
+      <span class="chevron">&#9660;</span>
+    </div>
+    <div class="activity-card-body">
+      <div class="activity-card-content">
+        <h4>Why this session exists</h4>
+        <p>After nine hours of cognitive work across two days, the team needs a physical and mental reset before closing. But this is not filler and it is not camp. Carry the Load is a walking exercise with weighted items that must be distributed across the team. The rules enforce shared burden: no one carries the same load the whole way, others must notice and offer before being asked, the pace is set by the slowest, and the team finishes together.</p>
+        <p>The metaphor is direct and does not need to be belabored: leadership teams carry real weight, and the distribution of that weight matters. Some leaders on this team carry disproportionate load. Some load is invisible. Some people carry until they break rather than asking for help. The exercise makes these dynamics physical and immediate.</p>
+        <h4>What it produces</h4>
+        <p>A mental reset. A brief debrief with prompts about load distribution, awareness, and collective responsibility. Insight that feeds into the closing commitments.</p>
+        <h4>Why it matters now</h4>
+        <p>Because this team has explicitly discussed hero culture, burnout, and the difference between heroics and health across multiple quarters. "We will not confuse heroics with health" is one of the core messages. Carry the Load makes that abstract principle concrete. It also gets the team outside, moving, and experiencing something together that is neither a lecture nor a spreadsheet. The energy shift matters for the quality of the closing session.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="activity-card" data-activity>
+    <div class="activity-card-header" onclick="toggleCard(this)">
+      <h3><span class="session-num">13</span> Commitments, Integration, and Close</h3>
+      <span class="time-tag">2:30 - 3:00</span>
+      <span class="chevron">&#9660;</span>
+    </div>
+    <div class="activity-card-body">
+      <div class="activity-card-content">
+        <h4>Why this session exists</h4>
+        <p>Every onsite must produce explicit commitments, or it is a conversation that evaporates by the following Monday. The closing round asks each leader to state one specific 30-day commitment, one behavior they will stop, and the name of their accountability partner. The accountability partner mechanism distributes follow-through across the team rather than relying on Guillermo alone. The facilitator then grades the three onsite success criteria, confirms the follow-through cadence, and delivers the closing message.</p>
+        <h4>What it produces</h4>
+        <p>Documented commitments with owners, deadlines, and accountability partners. Agreement on the weekly/monthly/quarterly follow-through cadence. A clean sense of closure and ownership.</p>
+        <h4>Why it matters now</h4>
+        <p>Because the gap between commitment and follow-through is this team's most persistent challenge. Every prior quarterly has included some form of closing commitment. The Q3 2024 onsite introduced the Say/Do tracker. The Q4 2025 onsite used GAIN and "one thing / stop doing" prompts. This closing builds on all of that but adds peer accountability partners, which create a distributed follow-through mechanism that is harder to let slip.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MESSAGES -->
+  <h2 class="section-heading" id="messages">The Messages Woven Through</h2>
+
+  <p>These are not disconnected quotes dropped onto slides. They are ideas that the facilitator weaves into specific moments where they land naturally.</p>
+
+  <div class="message-card">
+    <div class="msg-quote">"A good leader is a visionary, an exemplar, and a mentor."</div>
+    <div class="msg-context">Lands during the personal vision framing on Monday afternoon. As leaders begin drafting their vision, the question is: does your vision describe all three? Are you just setting direction (visionary), or are you also demonstrating the standard (exemplar) and growing others (mentor)?</div>
+  </div>
+
+  <div class="message-card">
+    <div class="msg-quote">"Culture is the sum total of shared habits and expectations. It has tremendous inertia. Culture strangles innovation in the crib."</div>
+    <div class="msg-context">Lands during the Continue/Start/Stop clustering. The team is literally choosing which habits to protect and which to change. The message makes the stakes of that choice concrete.</div>
+  </div>
+
+  <div class="message-card">
+    <div class="msg-quote">"Reach that destination where the things that are pleasant and the things that are honorable, finally become, for you, the same." &mdash; Seneca</div>
+    <div class="msg-context">Lands at the close of the personal vision sharing round robin on Tuesday. After every leader has shared their vision and named their gap, this quote frames the aspiration: that the work we find satisfying and the work that is right should converge. That is what sharpening the standard ultimately means.</div>
+  </div>
+
+  <div class="message-card">
+    <div class="msg-quote">"We are trying to get it right, not to be right."</div>
+    <div class="msg-context">Lands during the Q4 artifact adoption check. If artifacts didn't stick, the right response is understanding, not defensiveness. This message gives permission to be honest about what failed.</div>
+  </div>
+
+  <div class="message-card">
+    <div class="msg-quote">"We will not confuse heroics with health."</div>
+    <div class="msg-context">Lands during the Carry the Load debrief. After physically experiencing uneven load distribution, this message connects the exercise to real work patterns.</div>
+  </div>
+
+  <div class="message-card">
+    <div class="msg-quote">"We will not confuse activity with value. We will not confuse opinions with evidence."</div>
+    <div class="msg-context">Lands at the close of the retrospective, when the evidence-backed wins are on the wall. It reinforces that the evidence standard is not temporary. It is how this team will talk about its work from now on.</div>
+  </div>
+
+  <div class="message-card">
+    <div class="msg-quote">"If an individual's vision does not align with and contribute to collective goals, that is a problem."</div>
+    <div class="msg-context">Lands in the final closing statement. After every leader has shared personal vision, set team goals, and made commitments, this message makes alignment non-optional. It is not a threat. It is a statement of how healthy teams work.</div>
+  </div>
+
+  <!-- TAKEAWAY -->
+  <div class="takeaway" id="takeaway">
+    <h2>What Leaders Should Take Away</h2>
+    <p>When someone asks "what was the onsite about?" the answer should be simple: We looked at what we built over the past two years. We graded ourselves honestly on what stuck and what didn't. We set personal visions with measurable goals and named the gap between who we want to be and who we are today. We built team commitments that are specific enough to track. We agreed on how to follow through. And we left with accountability partners who will check on us.</p>
+    <p style="margin-top: 1rem; color: var(--accent); font-weight: 600; font-style: italic;">That is what "Sharpen the Standard" means. The standard was already set. We made it cut.</p>
+  </div>
+
+</div>
+
+<div class="footer">
+  SEL Q2 2026 Onsite &middot; Sharpen the Standard &middot; April 13-14, 2026
+</div>
+
+<script>
+  function toggleCard(header) {
+    var card = header.parentElement;
+    card.classList.toggle('open');
+  }
+
+  function toggleAll() {
+    var cards = document.querySelectorAll('.activity-card[data-activity]');
+    var btn = document.querySelector('.expand-toggle');
+    var anyOpen = false;
+    cards.forEach(function(c) { if (c.classList.contains('open')) anyOpen = true; });
+
+    if (anyOpen) {
+      cards.forEach(function(c) { c.classList.remove('open'); });
+      btn.textContent = 'Expand All';
+    } else {
+      cards.forEach(function(c) { c.classList.add('open'); });
+      btn.textContent = 'Collapse All';
+    }
+  }
+</script>
+
+</body>
+</html>

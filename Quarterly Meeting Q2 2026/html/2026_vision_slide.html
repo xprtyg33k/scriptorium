@@ -1,0 +1,221 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap');
+
+  .slide {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #0a0e1a;
+    overflow: hidden;
+    font-family: var(--font-sans);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  .accent-line {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: #2563eb;
+  }
+
+  .content {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    height: 100%;
+  }
+
+  .left {
+    padding: 6% 5% 6% 7%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 0.5px solid rgba(255,255,255,0.08);
+  }
+
+  .right {
+    padding: 6% 6% 6% 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3%;
+  }
+
+  .year-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: clamp(9px, 1.4vw, 13px);
+    letter-spacing: 0.2em;
+    color: #2563eb;
+    font-weight: 500;
+    margin-bottom: 4%;
+    text-transform: uppercase;
+  }
+
+  .headline {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(20px, 3.6vw, 40px);
+    color: #f0f0f0;
+    line-height: 1.15;
+    margin-bottom: 5%;
+  }
+
+  .headline em {
+    font-style: italic;
+    color: #93c5fd;
+  }
+
+  .vision-body {
+    font-size: clamp(8px, 1.3vw, 12px);
+    color: rgba(255,255,255,0.55);
+    line-height: 1.7;
+    max-width: 90%;
+  }
+
+  .pillar {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .pillar-num {
+    font-family: 'DM Mono', monospace;
+    font-size: clamp(8px, 1.1vw, 11px);
+    color: #2563eb;
+    font-weight: 500;
+    min-width: 20px;
+    padding-top: 1px;
+  }
+
+  .pillar-content {}
+
+  .pillar-title {
+    font-size: clamp(9px, 1.4vw, 13px);
+    font-weight: 500;
+    color: #e2e8f0;
+    margin-bottom: 2px;
+  }
+
+  .pillar-desc {
+    font-size: clamp(7px, 1.1vw, 10px);
+    color: rgba(255,255,255,0.42);
+    line-height: 1.5;
+  }
+
+  .divider {
+    width: 100%;
+    height: 0.5px;
+    background: rgba(255,255,255,0.07);
+  }
+
+  .bottom-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(255,255,255,0.06);
+    z-index: 3;
+  }
+
+  .standard {
+    position: absolute;
+    bottom: 4%;
+    right: 4%;
+    font-family: 'DM Mono', monospace;
+    font-size: clamp(7px, 1vw, 9px);
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.08em;
+    z-index: 3;
+    text-align: right;
+    line-height: 1.6;
+  }
+
+  .dot {
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #2563eb;
+    margin-right: 6px;
+    position: relative;
+    top: -1px;
+  }
+</style>
+
+<div class="slide">
+  <div class="bg-grid"></div>
+  <div class="accent-line"></div>
+
+  <div class="content">
+    <div class="left">
+      <div class="year-tag">Experity Engineering — 2026</div>
+      <div class="headline">
+        Predictably<br><em>excellent.</em><br>Consistently<br>stronger.
+      </div>
+      <div class="vision-body">
+        Build things that work. Keep them working.<br>
+        Do it in a way that consistently gets better.
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="pillar">
+        <div class="pillar-num">01</div>
+        <div class="pillar-content">
+          <div class="pillar-title"><span class="dot"></span>Operational rigor</div>
+          <div class="pillar-desc">Ownership is explicit. Reliability is a designed-in capability, not a reaction. Measurable targets, tighter change readiness.</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="pillar">
+        <div class="pillar-num">02</div>
+        <div class="pillar-content">
+          <div class="pillar-title"><span class="dot"></span>Strategy meets execution</div>
+          <div class="pillar-desc">Fewer priorities. Executed fully. Architecture as a force multiplier — not a gate. AI as a practical advantage in how we build.</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="pillar">
+        <div class="pillar-num">03</div>
+        <div class="pillar-content">
+          <div class="pillar-title"><span class="dot"></span>Leaders who compound</div>
+          <div class="pillar-desc">Systems thinkers. Crisp communicators. Data-grounded decisions. Right people, right seats, trusted to do meaningful work.</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="pillar">
+        <div class="pillar-num">04</div>
+        <div class="pillar-content">
+          <div class="pillar-title"><span class="dot"></span>Culture without heroics</div>
+          <div class="pillar-desc">Dependable execution. Direct communication. Every incident, delivery, and decision leaves the org stronger than before.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="standard">build it · keep it working · get better</div>
+  <div class="bottom-bar"></div>
+</div>

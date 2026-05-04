@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEL Q2 2026 Onsite Recap</title>
+<style>
+  :root {
+    --navy: #1a2744;
+    --blue: #2c5282;
+    --light-blue: #ebf4ff;
+    --accent: #e67e22;
+    --green: #276749;
+    --light-green: #f0fff4;
+    --gray: #718096;
+    --light-gray: #f7fafc;
+    --white: #fff;
+    --border: #e2e8f0;
+    --text: #2d3748;
+    --text-light: #4a5568;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; color: var(--text); background: var(--white); line-height: 1.6; }
+  .header { background: var(--navy); color: var(--white); padding: 2rem; }
+  .header h1 { font-size: 1.8rem; margin-bottom: 0.25rem; }
+  .header .theme { color: var(--accent); font-weight: 600; font-size: 1rem; }
+  .header .meta { font-size: 0.85rem; opacity: 0.7; margin-top: 0.5rem; }
+  .container { max-width: 800px; margin: 0 auto; padding: 2rem; }
+
+  .summary-box { background: var(--light-blue); border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem; }
+  .summary-box h2 { font-size: 1rem; color: var(--blue); margin-bottom: 0.75rem; }
+  .summary-box ul { padding-left: 1.25rem; }
+  .summary-box li { margin-bottom: 0.4rem; font-size: 0.92rem; }
+
+  h2 { font-size: 1.15rem; color: var(--navy); margin: 2rem 0 0.75rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--border); }
+  h3 { font-size: 0.95rem; color: var(--blue); margin: 1.25rem 0 0.5rem; }
+
+  .attendees { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+  .attendee { background: var(--light-gray); border: 1px solid var(--border); border-radius: 4px; padding: 0.3rem 0.75rem; font-size: 0.82rem; }
+  .attendee.guest { background: #fed7aa; border-color: #f6ad55; }
+
+  table { width: 100%; border-collapse: collapse; margin: 0.75rem 0 1.5rem; font-size: 0.88rem; }
+  th { background: var(--navy); color: var(--white); text-align: left; padding: 0.5rem 0.75rem; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.03em; }
+  td { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border); }
+  tr:nth-child(even) { background: var(--light-gray); }
+
+  .commitment-card { background: var(--light-gray); border-radius: 6px; padding: 0.75rem 1rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center; }
+  .commitment-card .name { font-weight: 600; font-size: 0.88rem; min-width: 140px; }
+  .commitment-card .text { font-size: 0.85rem; flex: 1; padding: 0 1rem; }
+  .commitment-card .partner { font-size: 0.78rem; color: var(--gray); white-space: nowrap; }
+
+  .follow-through { background: var(--light-green); border-radius: 8px; padding: 1.5rem; margin-top: 2rem; }
+  .follow-through h2 { border: none; margin-top: 0; color: var(--green); }
+  .follow-through table th { background: var(--green); }
+
+  .footer { text-align: center; padding: 2rem; font-size: 0.8rem; color: var(--gray); border-top: 1px solid var(--border); margin-top: 2rem; }
+
+  @media print {
+    .header { padding: 1.5rem; }
+    table { font-size: 10px; }
+    .commitment-card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>SEL Q2 2026 Onsite Recap</h1>
+  <div class="theme">Sharpen the Standard</div>
+  <div class="meta">Monday, April 13 - Tuesday, April 14, 2026</div>
+</div>
+
+<div class="container">
+
+  <div class="summary-box">
+    <h2>Key Outcomes</h2>
+    <ul>
+      <li>[Outcome 1 - to be completed post-onsite]</li>
+      <li>[Outcome 2]</li>
+      <li>[Outcome 3]</li>
+      <li>[Outcome 4]</li>
+      <li>[Outcome 5]</li>
+    </ul>
+  </div>
+
+  <h2>Attendees</h2>
+  <div class="attendees">
+    <span class="attendee">Guillermo Salas</span>
+    <span class="attendee">Henry Happ</span>
+    <span class="attendee">Scott Seely</span>
+    <span class="attendee">Rob Giordano</span>
+    <span class="attendee">Isaac Blatter</span>
+    <span class="attendee">Damien Evans</span>
+    <span class="attendee">John Thomalla</span>
+    <span class="attendee">Jason Munsch</span>
+    <span class="attendee">Scott Simonson</span>
+    <span class="attendee">Rafael Van Dyke</span>
+    <span class="attendee">Josh Malan</span>
+    <span class="attendee guest">Dan (InfoSec) - Tue AM</span>
+    <span class="attendee guest">Clarissa (CPO) - Tue AM</span>
+  </div>
+
+  <h2>Evidence-Backed Wins (Top 5)</h2>
+  <table>
+    <tr><th>#</th><th>Win</th><th>Evidence</th><th>Leader</th></tr>
+    <tr><td>1</td><td>[Win description]</td><td>[Metric or proof]</td><td>[Name]</td></tr>
+    <tr><td>2</td><td>[Win description]</td><td>[Metric or proof]</td><td>[Name]</td></tr>
+    <tr><td>3</td><td>[Win description]</td><td>[Metric or proof]</td><td>[Name]</td></tr>
+    <tr><td>4</td><td>[Win description]</td><td>[Metric or proof]</td><td>[Name]</td></tr>
+    <tr><td>5</td><td>[Win description]</td><td>[Metric or proof]</td><td>[Name]</td></tr>
+  </table>
+
+  <h2>Team SMART Goals (Q3 / H2 2026)</h2>
+  <table>
+    <tr><th>#</th><th>Goal</th><th>Measure</th><th>Owner</th><th>Deadline</th></tr>
+    <tr><td>1</td><td>[Goal]</td><td>[How measured]</td><td>[Owner]</td><td>[Date]</td></tr>
+    <tr><td>2</td><td>[Goal]</td><td>[How measured]</td><td>[Owner]</td><td>[Date]</td></tr>
+    <tr><td>3</td><td>[Goal]</td><td>[How measured]</td><td>[Owner]</td><td>[Date]</td></tr>
+    <tr><td>4</td><td>[Goal]</td><td>[How measured]</td><td>[Owner]</td><td>[Date]</td></tr>
+    <tr><td>5</td><td>[Goal]</td><td>[How measured]</td><td>[Owner]</td><td>[Date]</td></tr>
+  </table>
+
+  <h2>Key Decisions</h2>
+
+  <h3>Security / Engineering Alignment (from Dan session)</h3>
+  <table>
+    <tr><th>Decision</th><th>Owner</th><th>Deadline</th></tr>
+    <tr><td>[Decision 1]</td><td>[Owner]</td><td>[Date]</td></tr>
+    <tr><td>[Decision 2]</td><td>[Owner]</td><td>[Date]</td></tr>
+  </table>
+
+  <h3>Product / Engineering Alignment (from Clarissa session)</h3>
+  <table>
+    <tr><th>Decision</th><th>Owner</th><th>Deadline</th></tr>
+    <tr><td>[Decision 1]</td><td>[Owner]</td><td>[Date]</td></tr>
+    <tr><td>[Decision 2]</td><td>[Owner]</td><td>[Date]</td></tr>
+  </table>
+
+  <h3>AI Governance</h3>
+  <table>
+    <tr><th>Decision</th><th>Detail</th></tr>
+    <tr><td>[Decision 1]</td><td>[Detail]</td></tr>
+    <tr><td>[Decision 2]</td><td>[Detail]</td></tr>
+  </table>
+
+  <h3>Tech Debt Priorities (Q3)</h3>
+  <table>
+    <tr><th>Item</th><th>Owner</th><th>Target Quarter</th></tr>
+    <tr><td>[Priority 1]</td><td>[Owner]</td><td>Q3 2026</td></tr>
+    <tr><td>[Priority 2]</td><td>[Owner]</td><td>Q3 2026</td></tr>
+    <tr><td>[Priority 3]</td><td>[Owner]</td><td>Q3 2026</td></tr>
+  </table>
+
+  <h2>Personal Commitments</h2>
+  <div class="commitment-card"><span class="name">Guillermo</span><span class="text">[30-day commitment] | Stop: [behavior]</span><span class="partner">Partner: ___</span></div>
+  <div class="commitment-card"><span class="name">Henry</span><span class="text">[commitment] | Stop: [behavior]</span><span class="partner">Partner: ___</span></div>
+  <div class="commitment-card"><span class="name">Scott Seely</span><span class="text">[commitment] | Stop: [behavior]</span><span class="partner">Partner: ___</span></div>
+  <div class="commitment-card"><span class="name">Rob</span><span class="text">[commitment] | Stop: [behavior]</span><span class="partner">Partner: ___</span></div>
+  <div class="commitment-card"><span class="name">Isaac</span><span class="text">[commitment] | Stop: [behavior]</span><span class="partner">Partner: ___</span></div>
+  <div class="commitment-card"><span class="name">Damien</span><span class="text">[commitment] | Stop: [behavior]</span><span class="partner">Partner: ___</span></div>
+  <div class="commitment-card"><span class="name">John</span><span class="text">[commitment] | Stop: [behavior]</span><span class="partner">Partner: ___</span></div>
+  <div class="commitment-card"><span class="name">Jason</span><span class="text">[commitment] | Stop: [behavior]</span><span class="partner">Partner: ___</span></div>
+  <div class="commitment-card"><span class="name">Scott S.</span><span class="text">[commitment] | Stop: [behavior]</span><span class="partner">Partner: ___</span></div>
+  <div class="commitment-card"><span class="name">Rafael</span><span class="text">[commitment] | Stop: [behavior]</span><span class="partner">Partner: ___</span></div>
+  <div class="commitment-card"><span class="name">Josh</span><span class="text">[commitment] | Stop: [behavior]</span><span class="partner">Partner: ___</span></div>
+
+  <h2>Q4 2025 Artifact Adoption Grade</h2>
+  <table>
+    <tr><th>Q425 Artifact</th><th>Grade</th><th>Notes</th></tr>
+    <tr><td>Operating Model v1.0 in Teams</td><td>[Adopted / Partial / Not]</td><td>[Notes]</td></tr>
+    <tr><td>Scorecard v1.0 with owners</td><td>[Grade]</td><td>[Notes]</td></tr>
+    <tr><td>GAIN feedback scripts</td><td>[Grade]</td><td>[Notes]</td></tr>
+    <tr><td>Architecture contribution loop</td><td>[Grade]</td><td>[Notes]</td></tr>
+    <tr><td>30-day AI experiments</td><td>[Grade]</td><td>[Notes]</td></tr>
+  </table>
+
+  <div class="follow-through">
+    <h2>Follow-Through Cadence</h2>
+    <table>
+      <tr><th>When</th><th>What</th><th>Who</th></tr>
+      <tr><td>Within 48 hours</td><td>Upload personal vision docs to Confluence</td><td>Each leader</td></tr>
+      <tr><td>Within 48 hours</td><td>Publish commitments board and recap</td><td>Guillermo</td></tr>
+      <tr><td>Weekly (30 days)</td><td>Accountability partner check-in</td><td>Assigned pairs</td></tr>
+      <tr><td>Weekly</td><td>3-bullet metric update in Teams</td><td>Each leader</td></tr>
+      <tr><td>Monthly</td><td>Scorecard review in SEL meeting (15 min)</td><td>All</td></tr>
+      <tr><td>Q3 Onsite</td><td>Grade commitments, revisit vision/goals</td><td>All</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<div class="footer">
+  SEL Q2 2026 Onsite: Sharpen the Standard | April 13-14, 2026 | Experity Software Engineering Leadership
+</div>
+
+</body>
+</html>

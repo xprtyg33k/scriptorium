@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEL Q2 2026 — Day 2 Closing Summary</title>
+<style>
+  :root {
+    --navy: #1a2744;
+    --blue: #2c5282;
+    --light-blue: #ebf4ff;
+    --accent: #e67e22;
+    --green: #276749;
+    --light-green: #f0fff4;
+    --gray: #718096;
+    --light-gray: #f7fafc;
+    --white: #ffffff;
+    --border: #e2e8f0;
+    --text: #2d3748;
+    --text-light: #4a5568;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: var(--text); background: var(--light-gray); line-height: 1.65; }
+
+  .header { background: linear-gradient(135deg, var(--navy) 0%, var(--green) 100%); color: var(--white); padding: 2.7rem 2rem 2.2rem; }
+  .header-inner { max-width: 900px; margin: 0 auto; }
+  .header-eyebrow { font-size: 0.74rem; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; color: #81e6d9; margin-bottom: 0.55rem; }
+  .header h1 { font-size: 2rem; font-weight: 800; line-height: 1.16; margin-bottom: 0.45rem; }
+  .header .sub { font-size: 0.95rem; opacity: 0.85; max-width: 700px; }
+  .header-meta { margin-top: 1.1rem; display: flex; flex-wrap: wrap; gap: 1.2rem; font-size: 0.8rem; opacity: 0.74; border-top: 1px solid rgba(255,255,255,0.22); padding-top: 0.85rem; }
+
+  .nav { background: var(--green); position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 10px rgba(0,0,0,0.15); }
+  .nav-inner { max-width: 900px; margin: 0 auto; display: flex; flex-wrap: wrap; }
+  .nav a { color: rgba(255,255,255,0.9); text-decoration: none; font-size: 0.78rem; font-weight: 500; padding: 0.7rem 1rem; }
+  .nav a:hover { background: rgba(255,255,255,0.15); color: var(--white); }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 2.25rem 1.5rem 3.5rem; }
+  .section { margin-bottom: 2.6rem; }
+  .section-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.45rem; }
+  .section-title { font-size: 1.45rem; color: var(--navy); margin-bottom: 0.85rem; line-height: 1.2; }
+  .section-intro { font-size: 0.9rem; color: var(--text-light); max-width: 760px; }
+
+  .summary-box {
+    background: var(--white); border: 1px solid var(--border); border-radius: 10px;
+    padding: 1.35rem 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  .summary-box p { font-size: 0.9rem; color: var(--text-light); margin-bottom: 0.8rem; }
+  .summary-box p:last-child { margin-bottom: 0; }
+  .summary-box strong { color: var(--text); }
+
+  .theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1rem; }
+  @media (max-width: 680px) { .theme-grid { grid-template-columns: 1fr; } }
+  .theme-card {
+    background: var(--white); border: 1px solid var(--border); border-radius: 8px;
+    padding: 1rem 1.1rem; box-shadow: 0 1px 2px rgba(0,0,0,0.04); border-top: 3px solid var(--green);
+  }
+  .theme-card h3 { font-size: 0.88rem; color: var(--navy); margin-bottom: 0.35rem; }
+  .theme-card p { font-size: 0.83rem; color: var(--text-light); }
+
+  .quote { border-left: 4px solid var(--blue); background: var(--light-blue); border-radius: 0 8px 8px 0; padding: 1.2rem 1.4rem; margin-top: 1.2rem; font-style: italic; color: var(--navy); }
+
+  .next-step {
+    background: var(--navy); border-radius: 10px; color: var(--white);
+    padding: 1.4rem 1.55rem; margin-top: 1rem;
+  }
+  .next-step h3 { font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.6rem; }
+  .next-step p { font-size: 0.88rem; opacity: 0.9; }
+
+  .footer { text-align: center; padding: 1.8rem 1.4rem; background: var(--white); border-top: 1px solid var(--border); font-size: 0.78rem; color: var(--gray); }
+  .footer a { color: var(--blue); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+
+  @media print {
+    body { background: white; }
+    .nav { display: none; }
+    .section, .summary-box, .theme-card, .next-step { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-eyebrow">SEL Q2 2026 Onsite · Final Close</div>
+    <h1>Day 2 Closing Summary</h1>
+    <p class="sub">From conversation to commitment: shared ownership, stronger partnership language, and a clear shift toward measurable customer value.</p>
+    <div class="header-meta">
+      <span>&#128197; Tuesday, April 14, 2026</span>
+      <span>&#128100; SEL + Product + Security alignment</span>
+      <span>&#127919; Post-Day 2 leadership summary</span>
+    </div>
+  </div>
+</div>
+
+<nav class="nav" aria-label="Sections">
+  <div class="nav-inner">
+    <a href="#summary">Summary</a>
+    <a href="#signals">Key Signals</a>
+    <a href="#mindset">Leadership Mindset</a>
+    <a href="#carry-forward">Carry Forward</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <section class="section" id="summary">
+    <div class="section-label">Day 2 Summary</div>
+    <h2 class="section-title">Ownership Became the Through-Line</h2>
+    <div class="summary-box">
+      <p>Day 2 marked a visible shift from dialogue to shared accountability. Feedback was exceedingly positive, and the strongest common theme was <strong>adoption of ownership</strong>: ownership of outcomes, ownership of influence, and ownership of measurable impact.</p>
+      <p>The room aligned on the immediate priority to <strong>stabilize delivery and support product needs</strong> in order to help regain market trust. Leaders also reinforced a clear posture against feature-factory behavior, choosing priority discipline and value focus over volume.</p>
+      <p>Most importantly, SEL operated with stronger first-team behavior: improved collaboration, lower defensiveness, no victim posture, and minimal blame deflection.</p>
+    </div>
+  </section>
+
+  <section class="section" id="signals">
+    <div class="section-label">What Stood Out</div>
+    <h2 class="section-title">Key Positive Signals from the Team</h2>
+    <div class="theme-grid">
+      <article class="theme-card">
+        <h3>Cross-functional language improved</h3>
+        <p>The team called out that communication works best when it is measurable, empathetic, clear, and collaborative.</p>
+      </article>
+      <article class="theme-card">
+        <h3>Trust-building tone increased</h3>
+        <p>Leaders recognized that partnership quality improves when intent is constructive and respectful — the team chose “honey over heat.”</p>
+      </article>
+      <article class="theme-card">
+        <h3>Value must be observable</h3>
+        <p>Consensus emerged that proof requires understanding how solutions are actually used and whether they are delivering customer value.</p>
+      </article>
+      <article class="theme-card">
+        <h3>Instrumentation is now mandatory</h3>
+        <p>The team acknowledged the need to build stronger systems for instrumentation, observation, and customer-proximate learning.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="mindset">
+    <div class="section-label">Leadership Posture</div>
+    <h2 class="section-title">From Assumption to Validation</h2>
+    <div class="summary-box">
+      <p>The team acknowledged a hard truth: communication is difficult, and <strong>Alignment Decay is real</strong>. The leadership expectation going forward is to communicate frequently, evangelize consistently, listen actively, stay patient, and verify that messages actually landed.</p>
+      <p>This means replacing assumption with validation: not “we said it,” but “it was understood, adopted, and acted on.”</p>
+    </div>
+    <div class="quote">“The proof is in the pudding: we only know we are winning when customer usage and value data say we are.”</div>
+  </section>
+
+  <section class="section" id="carry-forward">
+    <div class="section-label">Immediate Carry Forward</div>
+    <h2 class="section-title">What Day 2 Leaves Behind</h2>
+    <div class="next-step">
+      <h3>Closing Statement</h3>
+      <p>Day 2 closed with strong momentum and a mature leadership signal: SEL is choosing ownership over excuse, partnership over blame, and evidence over assumption. The next stage is disciplined follow-through: stabilize, align, measure, learn, and communicate until understanding becomes shared execution.</p>
+    </div>
+  </section>
+
+</div>
+
+<footer class="footer">
+  SEL Q2 2026 Onsite · Day 2 Closing Summary · April 14, 2026
+  &nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="onsite-closing-summary.html">Whole Onsite Summary</a>
+</footer>
+
+</body>
+</html>

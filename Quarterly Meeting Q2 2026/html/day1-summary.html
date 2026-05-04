@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEL Q2 2026 — Day 1 Summary | April 13, 2026</title>
+<style>
+  :root {
+    --navy: #1a2744;
+    --blue: #2c5282;
+    --blue-mid: #3a6aa8;
+    --light-blue: #ebf4ff;
+    --accent: #e67e22;
+    --accent-light: #fff3e6;
+    --green: #276749;
+    --light-green: #f0fff4;
+    --green-border: #9ae6b4;
+    --red: #c53030;
+    --red-bg: #fff5f5;
+    --red-border: #feb2b2;
+    --purple: #553c9a;
+    --purple-bg: #faf5ff;
+    --gray: #718096;
+    --light-gray: #f7fafc;
+    --white: #ffffff;
+    --border: #e2e8f0;
+    --text: #2d3748;
+    --text-light: #4a5568;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: var(--text); background: var(--light-gray); line-height: 1.65;
+  }
+
+  /* ── Header ─────────────────────────────────────── */
+  .header {
+    background: linear-gradient(135deg, var(--navy) 0%, #243460 100%);
+    color: var(--white); padding: 2.75rem 2rem 2.25rem;
+  }
+  .header-inner { max-width: 960px; margin: 0 auto; }
+  .header-eyebrow {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 0.6rem;
+  }
+  .header h1 { font-size: 2rem; font-weight: 800; line-height: 1.15; margin-bottom: 0.35rem; }
+  .header .sub { font-size: 1rem; opacity: 0.8; margin-bottom: 1.5rem; }
+  .header-meta {
+    display: flex; flex-wrap: wrap; gap: 1.5rem; font-size: 0.82rem;
+    opacity: 0.7; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 1rem;
+  }
+
+  /* ── Sticky nav ──────────────────────────────────── */
+  .nav {
+    background: var(--blue); position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  }
+  .nav-inner { max-width: 960px; margin: 0 auto; display: flex; flex-wrap: wrap; }
+  .nav a {
+    color: rgba(255,255,255,0.88); text-decoration: none; font-size: 0.78rem;
+    font-weight: 500; padding: 0.7rem 1rem; transition: background 0.15s; white-space: nowrap;
+  }
+  .nav a:hover { background: rgba(255,255,255,0.12); color: #fff; }
+
+  /* ── Main container ──────────────────────────────── */
+  .container { max-width: 960px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+  /* ── Section ─────────────────────────────────────── */
+  .section { margin-bottom: 3.25rem; }
+  .section-eyebrow {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 0.45rem;
+  }
+  .section-title {
+    font-size: 1.45rem; font-weight: 800; color: var(--navy);
+    margin-bottom: 0.85rem; line-height: 1.2;
+  }
+  .section-intro {
+    font-size: 0.9rem; color: var(--text-light); max-width: 740px;
+    margin-bottom: 1.5rem; line-height: 1.7;
+  }
+  hr.divider { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
+
+  /* ── At-a-glance bar ─────────────────────────────── */
+  .glance-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 0.5rem; }
+  @media (max-width: 720px) { .glance-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 440px) { .glance-grid { grid-template-columns: 1fr; } }
+  .glance-card {
+    background: var(--white); border: 1px solid var(--border); border-radius: 8px;
+    padding: 1.25rem 1.1rem; text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .glance-card .glance-num {
+    font-size: 2rem; font-weight: 800; color: var(--navy); line-height: 1;
+    margin-bottom: 0.35rem;
+  }
+  .glance-card .glance-num.green { color: var(--green); }
+  .glance-card .glance-num.accent { color: var(--accent); }
+  .glance-card .glance-num.blue { color: var(--blue); }
+  .glance-card .glance-label { font-size: 0.78rem; color: var(--text-light); line-height: 1.4; }
+
+  /* ── Wins grid ───────────────────────────────────── */
+  .wins-grid { display: flex; flex-direction: column; gap: 1.25rem; margin-top: 1rem; }
+  .win-card {
+    background: var(--white); border: 1px solid var(--border); border-radius: 8px;
+    overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  .win-card-header {
+    display: flex; align-items: center; gap: 1rem; padding: 0.85rem 1.25rem;
+    background: var(--light-gray); border-bottom: 1px solid var(--border);
+  }
+  .win-avatar {
+    width: 36px; height: 36px; border-radius: 50%; display: flex;
+    align-items: center; justify-content: center; font-size: 0.8rem;
+    font-weight: 700; color: var(--white); flex-shrink: 0;
+  }
+  .win-person { font-weight: 700; font-size: 0.92rem; color: var(--navy); }
+  .win-team { font-size: 0.75rem; color: var(--gray); margin-top: 0.05rem; }
+  .win-card-body { padding: 1.1rem 1.25rem; }
+  .win-item { margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+  .win-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+  .win-item-title {
+    font-size: 0.88rem; font-weight: 700; color: var(--text);
+    margin-bottom: 0.35rem; display: flex; align-items: flex-start; gap: 0.5rem;
+  }
+  .win-tag {
+    font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+    padding: 0.15rem 0.45rem; border-radius: 3px; white-space: nowrap; flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+  .tag-delivery { background: var(--light-blue); color: var(--blue); }
+  .tag-stability { background: var(--light-green); color: var(--green); }
+  .tag-infra { background: #fefcbf; color: #92400e; }
+  .tag-ai { background: var(--purple-bg); color: var(--purple); }
+  .tag-people { background: #fed7e2; color: #97266d; }
+  .tag-process { background: #e9d8fd; color: var(--purple); }
+  .win-item-desc { font-size: 0.85rem; color: var(--text-light); line-height: 1.65; }
+  .win-item-desc strong { color: var(--text); }
+  .evidence-chip {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.6rem;
+    border-radius: 12px; margin-top: 0.5rem;
+  }
+  .evidence-strong { background: var(--light-green); color: var(--green); border: 1px solid var(--green-border); }
+  .evidence-partial { background: #fefcbf; color: #92400e; border: 1px solid #f6e05e; }
+  .evidence-pending { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+  .evidence-chip::before { content: ''; display: block; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+  /* ── Insight cards ───────────────────────────────── */
+  .insight-list { display: flex; flex-direction: column; gap: 1.25rem; margin-top: 1rem; }
+  .insight-card {
+    background: var(--white); border: 1px solid var(--border); border-radius: 8px;
+    padding: 1.4rem 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    border-left: 4px solid var(--navy);
+    position: relative;
+  }
+  .insight-card.teal { border-left-color: #319795; }
+  .insight-card.purple { border-left-color: var(--purple); }
+  .insight-card.orange { border-left-color: var(--accent); }
+  .insight-card.green { border-left-color: var(--green); }
+  .insight-number {
+    position: absolute; top: 1.1rem; right: 1.25rem;
+    font-size: 2rem; font-weight: 900; color: var(--border); line-height: 1;
+    user-select: none;
+  }
+  .insight-label {
+    font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em;
+    margin-bottom: 0.4rem;
+  }
+  .insight-card.teal .insight-label { color: #319795; }
+  .insight-card.purple .insight-label { color: var(--purple); }
+  .insight-card.orange .insight-label { color: var(--accent); }
+  .insight-card.green .insight-label { color: var(--green); }
+  .insight-title {
+    font-size: 1.05rem; font-weight: 700; color: var(--navy);
+    margin-bottom: 0.65rem; line-height: 1.3; padding-right: 2.5rem;
+  }
+  .insight-body { font-size: 0.875rem; color: var(--text-light); line-height: 1.7; }
+  .insight-body strong { color: var(--text); }
+  .insight-body p { margin-bottom: 0.6rem; }
+  .insight-body p:last-child { margin-bottom: 0; }
+  .insight-action {
+    margin-top: 1rem; padding: 0.8rem 1rem; background: var(--light-gray);
+    border-radius: 6px; font-size: 0.82rem; color: var(--text-light);
+    border: 1px solid var(--border);
+  }
+  .insight-action strong { color: var(--text); display: block; margin-bottom: 0.2rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* ── CSS section ─────────────────────────────────── */
+  .css-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; margin-top: 1rem; }
+  @media (max-width: 720px) { .css-cols { grid-template-columns: 1fr; } }
+  .css-col { border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+  .css-col-header {
+    padding: 0.75rem 1rem; font-size: 0.88rem; font-weight: 700;
+    color: var(--white); letter-spacing: 0.01em;
+  }
+  .css-col-header .css-sub { font-size: 0.7rem; font-weight: 400; opacity: 0.8; display: block; }
+  .css-cols .css-col:nth-child(1) .css-col-header { background: var(--green); }
+  .css-cols .css-col:nth-child(2) .css-col-header { background: var(--blue); }
+  .css-cols .css-col:nth-child(3) .css-col-header { background: var(--red); }
+  .css-col-body { background: var(--white); padding: 0.75rem; }
+  .css-item {
+    font-size: 0.84rem; color: var(--text); padding: 0.65rem 0.85rem;
+    border-radius: 4px; margin-bottom: 0.45rem; line-height: 1.5;
+    display: flex; align-items: flex-start; gap: 0.5rem;
+  }
+  .css-cols .css-col:nth-child(1) .css-item { background: var(--light-green); }
+  .css-cols .css-col:nth-child(2) .css-item { background: var(--light-blue); }
+  .css-cols .css-col:nth-child(3) .css-item { background: var(--red-bg); }
+  .css-item-dot {
+    width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 0.45rem;
+  }
+  .css-cols .css-col:nth-child(1) .css-item-dot { background: var(--green); }
+  .css-cols .css-col:nth-child(2) .css-item-dot { background: var(--blue); }
+  .css-cols .css-col:nth-child(3) .css-item-dot { background: var(--red); }
+  .css-priority {
+    font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+    padding: 0.1rem 0.35rem; border-radius: 2px; background: var(--navy);
+    color: var(--white); flex-shrink: 0; margin-top: 0.3rem;
+  }
+  .css-note {
+    font-size: 0.8rem; color: var(--gray); font-style: italic;
+    padding: 0.5rem 0.85rem 0.75rem; border-top: 1px dashed var(--border); margin-top: 0.25rem;
+  }
+  .css-board-link {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: var(--navy); color: var(--white); text-decoration: none;
+    border-radius: 5px; padding: 0.5rem 1rem; font-size: 0.82rem;
+    font-weight: 600; margin-top: 1rem; transition: background 0.15s;
+  }
+  .css-board-link:hover { background: var(--blue); }
+
+  /* ── Carry forward ───────────────────────────────── */
+  .carry-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.1rem; margin-top: 1rem; }
+  @media (max-width: 600px) { .carry-grid { grid-template-columns: 1fr; } }
+  .carry-card {
+    background: var(--white); border: 1px solid var(--border); border-radius: 8px;
+    padding: 1.25rem 1.35rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  .carry-card .carry-day {
+    font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--accent); margin-bottom: 0.4rem;
+  }
+  .carry-card h3 { font-size: 0.92rem; font-weight: 700; color: var(--navy); margin-bottom: 0.4rem; }
+  .carry-card p { font-size: 0.84rem; color: var(--text-light); line-height: 1.6; }
+
+  /* ── Quote ───────────────────────────────────────── */
+  .pull-quote {
+    border-left: 4px solid var(--blue); background: var(--light-blue);
+    border-radius: 0 8px 8px 0; padding: 1.4rem 1.75rem;
+    margin: 2rem 0; font-style: italic; font-size: 1rem;
+    color: var(--navy); line-height: 1.65;
+  }
+  .pull-quote cite {
+    display: block; margin-top: 0.6rem; font-style: normal;
+    font-size: 0.75rem; color: var(--gray); font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+
+  /* ── Footer ──────────────────────────────────────── */
+  .footer {
+    text-align: center; padding: 2rem 1.5rem;
+    font-size: 0.78rem; color: var(--gray);
+    border-top: 1px solid var(--border); background: var(--white);
+  }
+
+  /* ── Print ───────────────────────────────────────── */
+  @media print {
+    body { background: white; }
+    .nav { display: none; }
+    .header { padding: 2rem; }
+    .css-cols, .carry-grid { grid-template-columns: repeat(3, 1fr); }
+    .section { break-inside: avoid; }
+    .win-card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ════════════════════════════════════════════ -->
+<div class="header">
+  <div class="header-inner">
+    <div class="header-eyebrow">SEL Q2 2026 Onsite &nbsp;·&nbsp; Sharpen the Standard</div>
+    <h1>Day 1 Summary</h1>
+    <p class="sub">Evidence of progress, key insights, and leadership commitments from Monday, April 13, 2026</p>
+    <div class="header-meta">
+      <span>&#128197; &nbsp;Monday, April 13, 2026</span>
+      <span>&#128100; &nbsp;Software Engineering Leadership</span>
+      <span>&#9200; &nbsp;9:00 AM &ndash; 5:00 PM</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ NAV ═══════════════════════════════════════════════ -->
+<nav class="nav" aria-label="Page sections">
+  <div class="nav-inner">
+    <a href="#glance">At a Glance</a>
+    <a href="#wins">Evidence of Progress</a>
+    <a href="#insights">Key Insights</a>
+    <a href="#css">Continue / Start / Stop</a>
+    <a href="#day2">Into Day 2</a>
+  </div>
+</nav>
+
+<!-- ══ MAIN ══════════════════════════════════════════════ -->
+<div class="container">
+
+  <!-- AT A GLANCE -->
+  <section class="section" id="glance">
+    <div class="section-eyebrow">Day 1 at a Glance</div>
+    <h2 class="section-title">What Happened Today</h2>
+    <p class="section-intro">
+      Day 1 was the team&rsquo;s own day &mdash; no guests, no external agenda. Six leaders presented evidence of progress since the Q4 2025 onsite. Four significant insights surfaced that go beyond wins into strategic direction. The Continue/Start/Stop exercise produced behavioral commitments. The standard of evidence was held.
+    </p>
+    <div class="glance-grid">
+      <div class="glance-card">
+        <div class="glance-num blue">6</div>
+        <div class="glance-label">Leaders presented evidence of progress</div>
+      </div>
+      <div class="glance-card">
+        <div class="glance-num green">4</div>
+        <div class="glance-label">Significant strategic insights surfaced</div>
+      </div>
+      <div class="glance-card">
+        <div class="glance-num accent">1</div>
+        <div class="glance-label">Customer quote confirming EMR turnaround</div>
+      </div>
+      <div class="glance-card">
+        <div class="glance-num blue">3</div>
+        <div class="glance-label">Sessions producing team commitments</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- EVIDENCE OF PROGRESS -->
+  <section class="section" id="wins">
+    <div class="section-eyebrow">Retrospective</div>
+    <h2 class="section-title">Evidence of Progress Since Q4 2025</h2>
+    <p class="section-intro">
+      Each leader presented wins and progress using the three-column framework: what did we achieve, what improved and what&rsquo;s the proof, and what do we know now that we didn&rsquo;t then. An evidence chip indicates the strength of supporting proof for each win.
+    </p>
+
+    <div class="wins-grid">
+
+      <!-- John Thomalla -->
+      <div class="win-card">
+        <div class="win-card-header">
+          <div class="win-avatar" style="background: #2c5282;">JT</div>
+          <div>
+            <div class="win-person">John Thomalla</div>
+            <div class="win-team">Interop Team</div>
+          </div>
+        </div>
+        <div class="win-card-body">
+          <div class="win-item">
+            <div class="win-item-title">
+              <span class="win-tag tag-delivery">Delivery</span>
+              Self Service Application — Launched
+            </div>
+            <div class="win-item-desc">
+              A full-stack application enabling on-demand configuration changes and operational tasks that previously required direct developer involvement. Built on <strong>Next.js, React, TypeScript</strong> (front-end) and <strong>Node.js/Express/TypeScript</strong> (back-end), it standardizes workflows for Support, Implementation, and Customer Success teams &mdash; reducing engineering involvement in routine operations, improving turnaround times, and improving scalability.
+              <br><br>
+              The consistent use of TypeScript across the full stack improves code quality, reduces runtime errors, and lowers maintenance overhead.
+              <br>
+              <span class="evidence-chip evidence-pending">Evidence pending &mdash; still measuring</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Damien Evans -->
+      <div class="win-card">
+        <div class="win-card-header">
+          <div class="win-avatar" style="background: #276749;">DE</div>
+          <div>
+            <div class="win-person">Damien Evans</div>
+            <div class="win-team">OnePacs</div>
+          </div>
+        </div>
+        <div class="win-card-body">
+          <div class="win-item">
+            <div class="win-item-title">
+              <span class="win-tag tag-process">Compliance</span>
+              FDA Audit Remediation — Completed
+            </div>
+            <div class="win-item-desc">
+              Successfully completed FDA audit remediation for the OnePacs product. This represents a significant compliance milestone with direct regulatory and customer trust implications.
+              <br>
+              <span class="evidence-chip evidence-strong">Evidence: audit closure</span>
+            </div>
+          </div>
+          <div class="win-item">
+            <div class="win-item-title">
+              <span class="win-tag tag-ai">AI Impact</span>
+              AI-Enabled Capacity Expansion &amp; DICOM Server Rewrite
+            </div>
+            <div class="win-item-desc">
+              AI-assisted development has created meaningful capacity headroom on the OnePacs team. This unlocked the ability to complete initiatives that previously would have been unreachable &mdash; most notably, <strong>a full rewrite of the DICOM server</strong>, a long-standing architectural priority that had been deferred due to bandwidth constraints. Rather than stopping at the output of faster code delivery, the team has adopted a <strong>holistic view of value delivery</strong>: found capacity is being redirected into QA support, mentoring, shift-left quality practices, and foundational technical debt work. (See Key Insight #4.)
+              <br>
+              <span class="evidence-chip evidence-strong">Evidence: DICOM rewrite completed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rob Giordano -->
+      <div class="win-card">
+        <div class="win-card-header">
+          <div class="win-avatar" style="background: #c05621;">RG</div>
+          <div>
+            <div class="win-person">Rob Giordano</div>
+            <div class="win-team">EMR</div>
+          </div>
+        </div>
+        <div class="win-card-body">
+          <div class="win-item">
+            <div class="win-item-title">
+              <span class="win-tag tag-stability">Stability</span>
+              EMR Performance &amp; Stability — Validated by Customer
+            </div>
+            <div class="win-item-desc">
+              HCA explicitly stated that EMR stability and performance in Q1 2026 were <strong><em>&ldquo;the best they&rsquo;ve seen in the past two years.&rdquo;</em></strong> This direct customer feedback was shared following a formal meeting. Additionally, a HCA provider posted in a Webex group that they were seeing <em>&ldquo;significantly fewer error messages in day-to-day use&rdquo;</em> after the release of 26.1. Two independent signals from the same flagship customer in the same quarter.
+              <br>
+              <span class="evidence-chip evidence-strong">Evidence: direct HCA customer quote</span>
+            </div>
+          </div>
+          <div class="win-item">
+            <div class="win-item-title">
+              <span class="win-tag tag-delivery">Delivery</span>
+              Decommissioning Tool Completed
+            </div>
+            <div class="win-item-desc">
+              The Decommissioning Tool has been completed and is operational. Developer involvement in the decommissioning process is no longer required, removing a recurring source of engineering drag.
+              <br>
+              <span class="evidence-chip evidence-strong">Evidence: tool in use, dev no longer involved</span>
+            </div>
+          </div>
+          <div class="win-item">
+            <div class="win-item-title">
+              <span class="win-tag tag-people">Team</span>
+              Tyler &amp; Zach Full-Time on Team Montana; Zach Owns Prod Incidents
+            </div>
+            <div class="win-item-desc">
+              Tyler and Zach have transitioned to Team Montana full-time. Zach Pollard has stepped into expanded ownership of production incidents, filling a critical gap left by recent departures.
+              <br>
+              <span class="evidence-chip evidence-partial">Evidence: organizational change confirmed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Henry Happ -->
+      <div class="win-card">
+        <div class="win-card-header">
+          <div class="win-avatar" style="background: #553c9a;">HH</div>
+          <div>
+            <div class="win-person">Henry Happ</div>
+            <div class="win-team">DevOps</div>
+          </div>
+        </div>
+        <div class="win-card-body">
+          <div class="win-item">
+            <div class="win-item-title">
+              <span class="win-tag tag-process">Quality Gate</span>
+              EMR PR Gates — Unit Tests Required Before Merge
+            </div>
+            <div class="win-item-desc">
+              Implemented PR checks that require all unit tests to pass before a pull request can be approved for merging into the EMR codebase. This enforces a quality standard at the gate rather than downstream.
+              <br>
+              <span class="evidence-chip evidence-strong">Evidence: automated gate active in CI/CD</span>
+            </div>
+          </div>
+          <div class="win-item">
+            <div class="win-item-title">
+              <span class="win-tag tag-infra">Infrastructure</span>
+              EMR Remoting HealthCheck Service — Deployed
+            </div>
+            <div class="win-item-desc">
+              CI/CD tooling implemented and the Remoting HealthCheck Service is now deployed and operational on remoting endpoint servers.
+              <br>
+              <span class="evidence-chip evidence-strong">Evidence: service live in production</span>
+            </div>
+          </div>
+          <div class="win-item">
+            <div class="win-item-title">
+              <span class="win-tag tag-delivery">Delivery</span>
+              Tempus Analyzer — Build &amp; Deploy Process Established
+            </div>
+            <div class="win-item-desc">
+              Created the build/deploy process for Tempus Analyzer, including an updated code signing certificate process aligned with Tempus requirements, and customized installation for HCA-specific requirements. Cross-functional coordination with Support included.
+              <br>
+              <span class="evidence-chip evidence-strong">Evidence: process in use, HCA variant shipped</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Isaac Blatter -->
+      <div class="win-card">
+        <div class="win-card-header">
+          <div class="win-avatar" style="background: #319795;">IB</div>
+          <div>
+            <div class="win-person">Isaac Blatter</div>
+            <div class="win-team">Team Montana / AI Scribe</div>
+          </div>
+        </div>
+        <div class="win-card-body">
+          <div class="win-item">
+            <div class="win-item-title">
+              <span class="win-tag tag-stability">Stability</span>
+              System Stabilization &mdash; Dozens of Fixes, Reduced Instance Count
+            </div>
+            <div class="win-item-desc">
+              Resolved dozens of recording and transcription issues traced to Apple platform bugs (a gap the team is now explicitly aware of given near-zero QA coverage for Apple products). Migrated to <strong>WhisperX</strong>, dramatically reducing compute load and operating costs. Stability enhancements allowed a reduction in application instance count &mdash; a concrete infrastructure cost signal.
+              <br>
+              <span class="evidence-chip evidence-strong">Evidence: instance count reduction measurable</span>
+            </div>
+          </div>
+          <div class="win-item">
+            <div class="win-item-title">
+              <span class="win-tag tag-ai">AI Architecture</span>
+              Shifted to Agentic Architecture
+            </div>
+            <div class="win-item-desc">
+              The AI Scribe system has been re-architected to an <strong>agentic model</strong>, enabling user interaction and a shift from batch processing to continuous, real-time operation. The team iterates on tooling and MCP use as understanding grows. This architecture unlocks features that were not possible in the previous design.
+              <br>
+              <span class="evidence-chip evidence-strong">Evidence: architecture in production use</span>
+            </div>
+          </div>
+          <div class="win-item">
+            <div class="win-item-title">
+              <span class="win-tag tag-process">Process</span>
+              End-to-End Feature Tracking &amp; Dev/Product Ownership Clarity
+            </div>
+            <div class="win-item-desc">
+              Established full <strong>end-to-end feature tracking</strong> from milestone to individual stories. Dev owns the Jira backlog; Product owns PRDs and the roadmap. A clean separation of ownership that reduces ambiguity and improves delivery predictability.
+              <br>
+              <span class="evidence-chip evidence-partial">Evidence: process change confirmed; metrics forming</span>
+            </div>
+          </div>
+          <div class="win-item">
+            <div class="win-item-title">
+              <span class="win-tag tag-infra">Infrastructure</span>
+              AWS Deployment Pipeline Standardized
+            </div>
+            <div class="win-item-desc">
+              Improved and standardized the AWS deployment pipeline, reducing variability and manual steps in the delivery process.
+              <br>
+              <span class="evidence-chip evidence-partial">Evidence: process standardized</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rafael Van Dyke -->
+      <div class="win-card">
+        <div class="win-card-header">
+          <div class="win-avatar" style="background: #e67e22;">RV</div>
+          <div>
+            <div class="win-person">Rafael Van Dyke</div>
+            <div class="win-team">PM / PE / RCM</div>
+          </div>
+        </div>
+        <div class="win-card-body">
+          <div class="win-item">
+            <div class="win-item-title">
+              <span class="win-tag tag-process">Execution</span>
+              Sprint Predictability &amp; Completion Rates Above 90%
+            </div>
+            <div class="win-item-desc">
+              PEgasus and OptiPMizers maintained sprint completion rates above <strong>90%</strong> after the split from Agile Avengers. This is a sustained result across multiple sprints following a team restructure, not a single sprint spike.
+              <br>
+              <span class="evidence-chip evidence-strong">Evidence: sprint metrics tracked, &gt;90% confirmed</span>
+            </div>
+          </div>
+          <div class="win-item">
+            <div class="win-item-title">
+              <span class="win-tag tag-people">People</span>
+              Ashwin Promoted to Senior Engineer
+            </div>
+            <div class="win-item-desc">
+              Ashwin was promoted to Senior Engineer based on demonstrated cross-functional support: unblocking teammates, working directly with Product and DevOps, and contributing to Payments work. A talent development win with a clear performance rationale.
+              <br>
+              <span class="evidence-chip evidence-strong">Evidence: promotion decision documented</span>
+            </div>
+          </div>
+          <div class="win-item">
+            <div class="win-item-title">
+              <span class="win-tag tag-delivery">Restructure</span>
+              Team Restructuring &amp; Vendor Replacement
+            </div>
+            <div class="win-item-desc">
+              Backfilled Vini, replaced Loka and GenUI with Mistura. CA Core and Alpha were identified as not operating in an agile manner and not delivering; replacements are underway. New PM Nick is already establishing a foundation for productivity and MVP focus. IText cost restructure initiated with replacement underway (thanks to Henry and Isaac for the technical lift).
+              <br>
+              <span class="evidence-chip evidence-partial">Evidence: changes confirmed; outcomes still forming</span>
+            </div>
+          </div>
+          <div class="win-item">
+            <div class="win-item-title">
+              <span class="win-tag tag-ai">AI Adoption</span>
+              AI Adoption Reinforced, Velocity Signal on Bill-iant Minds
+            </div>
+            <div class="win-item-desc">
+              Reinforced expectations and alignment around AI adoption across the RCM group. Velocity is visibly increasing on the Bill-iant Minds team with AI tooling &mdash; Dylan will demo this for the broader SEL group in an upcoming Weekly Hour.
+              <br>
+              <span class="evidence-chip evidence-partial">Evidence: velocity signal present; demo pending</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scott Seely -->
+      <div class="win-card">
+        <div class="win-card-header">
+          <div class="win-avatar" style="background: #1a2744;">SS</div>
+          <div>
+            <div class="win-person">Scott Seely</div>
+            <div class="win-team">Platform Engineering / Core Stability</div>
+          </div>
+        </div>
+        <div class="win-card-body">
+          <div class="win-item">
+            <div class="win-item-title">
+              <span class="win-tag tag-process">Org Impact</span>
+              Contractor Onboarding Urgency — Now an Org-Level Priority
+            </div>
+            <div class="win-item-desc">
+              The importance of rapidly onboarding new contractors and getting them productive has reached organizational-level recognition. A recurring friction source has been named at the right level.
+              <br>
+              <span class="evidence-chip evidence-partial">Evidence: org acknowledgment confirmed</span>
+            </div>
+          </div>
+          <div class="win-item">
+            <div class="win-item-title">
+              <span class="win-tag tag-infra">Architecture</span>
+              Containerization Path Clarified
+            </div>
+            <div class="win-item-desc">
+              Discovered that full containerization of all services is genuinely difficult under current Windows VM restrictions. However, the team now understands that the right path is likely <strong>fewer, larger &ldquo;conglomeration containers&rdquo;</strong> rather than dozens of granular containers &mdash; a simpler and more realistic architecture than initially assumed. Cross-project dependencies have early AI-assisted documentation.
+              <br>
+              <span class="evidence-chip evidence-partial">Evidence: architectural decision documented</span>
+            </div>
+          </div>
+          <div class="win-item">
+            <div class="win-item-title">
+              <span class="win-tag tag-stability">Stability</span>
+              WebSocket Stabilization &mdash; Rigorous Testing Standard Set
+            </div>
+            <div class="win-item-desc">
+              Very rigorous testing of WebSocket functionality has been applied and is holding. The team is not accepting &ldquo;small issues&rdquo; as tolerable. VOC (Voice of the Customer) is now more visible and actively acted upon. Prioritization of serviceability improvements is happening.
+              <br>
+              <span class="evidence-chip evidence-strong">Evidence: testing standard enforced; serviceability changes shipped</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /wins-grid -->
+  </section>
+
+  <hr class="divider">
+
+  <!-- KEY INSIGHTS -->
+  <section class="section" id="insights">
+    <div class="section-eyebrow">Discussions &amp; Emerging Direction</div>
+    <h2 class="section-title">Key Insights from Day 1</h2>
+    <p class="section-intro">
+      These are the ideas and signals that surfaced beyond the prepared win presentations &mdash; the high-value conversations that the team needs to carry forward into Day 2 and beyond.
+    </p>
+
+    <div class="insight-list">
+
+      <!-- Insight 1: Team Identity -->
+      <div class="insight-card teal">
+        <div class="insight-number">01</div>
+        <div class="insight-label">Team Identity</div>
+        <div class="insight-title">The team cannot socialize what it cannot summarize &mdash; a team identity document is needed</div>
+        <div class="insight-body">
+          <p>A recurring pattern surfaced: when team members or external stakeholders ask who this team is and what it stands for, there is no single, sharp, shareable answer. The individual manifestos from prior onsites capture rich personal perspectives, and the Operating Model captures structure &mdash; but what is missing is a <strong>concise team identity statement</strong> that can be handed to a new engineer, shared with a cross-functional partner, or referenced in a leadership brief.</p>
+          <p>This is not about creating a slogan. It is about distilling what the team has built over two years of deliberate development into something that is portable and clear. Who is this team? What do they believe? What standard do they hold? The team has the answers &mdash; they are in the room &mdash; but the artifact does not yet exist in a form that travels without the people who built it.</p>
+        </div>
+        <div class="insight-action">
+          <strong>Carry Forward</strong>
+          Draft a one-page team identity summary before the Q3 onsite. Should cover: who we are, what we believe, how we lead, and what we are building toward. Intended audience: new engineers, cross-functional partners, and senior leadership.
+        </div>
+      </div>
+
+      <!-- Insight 2: Industrial Designer / EMR Utility Function -->
+      <div class="insight-card purple">
+        <div class="insight-number">02</div>
+        <div class="insight-label">Product-Engineering Opportunity &nbsp;&middot;&nbsp; Raised by Scott Seely</div>
+        <div class="insight-title">There is an &ldquo;Industrial Designer&rdquo; opportunity in the EMR that engineering should name and pursue</div>
+        <div class="insight-body">
+          <p>Scott Seely surfaced a compelling framing: there is an untapped role &mdash; similar to what an <strong>Industrial Designer</strong> provides in physical product development &mdash; that involves <em>restructuring the features and behaviors of the EMR with the explicit goal of raising the utility function for the end user</em>. This is distinct from feature adding and distinct from bug fixing. It is intentional <strong>experience re-architecture</strong> centered on how users actually use the product versus how it was designed to be used.</p>
+          <p>The premise is that the EMR has accumulated functionality over many years without a corresponding investment in the coherence, usability, and ergonomic design of the overall experience. A focused effort on this &mdash; informed by VOC data, clinic visits (as Isaac&rsquo;s team is beginning to do), and behavioral analysis &mdash; could generate meaningful retention and satisfaction improvements that are tied to <strong>measurable utility outcomes</strong> rather than feature count.</p>
+          <p>This connects directly to product/engineering partnership and to the 2026 EMR retention target (92% &rarr; 97%). If the utility function of the product goes up, retention follows. Engineering leadership is well positioned to name and drive this effort, even if it requires pulling in product and design as collaborators.</p>
+        </div>
+        <div class="insight-action">
+          <strong>Carry Forward</strong>
+          Bring this framing into the Tuesday product alignment conversation with Clarissa. Explore whether there is appetite to define and staff an &ldquo;EMR Industrial Design&rdquo; workstream as a named Q3/H2 initiative. Identify an owner who would champion this work.
+        </div>
+      </div>
+
+      <!-- Insight 3: LoC / AI operational data -->
+      <div class="insight-card orange">
+        <div class="insight-number">03</div>
+        <div class="insight-label">AI Adoption Measurement</div>
+        <div class="insight-title">The team reached consensus: operational data must prove AI impact, and Lines of Code is the starting point</div>
+        <div class="insight-body">
+          <p>There is a growing and urgent need &mdash; reached by consensus in today&rsquo;s discussion &mdash; to move AI adoption measurement from <em>belief and narrative</em> to <em>operational evidence</em>. The current state is: teams know AI tooling is increasing speed and reducing burden, but this is not being systematically recorded in a way that makes impact visible to the organization, leadership, or the CTO.</p>
+          <p>The team agreed to begin with <strong>Lines of Code (LoC) as a leading indicator</strong> of AI-assisted development activity. While LoC is an imperfect measure of engineering output on its own, it functions as a useful <strong>operational signal of AI acceleration</strong> when contextualized with sprint velocity, time-to-completion, and team size &mdash; and it is immediately accessible from existing tooling. It is a start, not the destination.</p>
+          <p>The goal is to establish a before/after baseline that lets the team say, concretely: &ldquo;Since adopting [tool] in [month], the team&rsquo;s output profile has shifted in the following measurable ways.&rdquo; This type of evidence is exactly what the 2026 OKR for AI Scribe adoption (5% &rarr; 35% of clinics) and the AI Center of Excellence ambition will demand.</p>
+        </div>
+        <div class="insight-action">
+          <strong>Carry Forward</strong>
+          Define and assign ownership of an AI operational metrics baseline. Minimum: LoC per developer week over the last two quarters, correlated with AI tool adoption timeline. Target: a reportable metric by the next monthly SEL meeting. Owner to be confirmed during Day 2 goals session.
+        </div>
+      </div>
+
+      <!-- Insight 4: OnePacs AI flywheel / Damien's holistic value view -->
+      <div class="insight-card green">
+        <div class="insight-number">04</div>
+        <div class="insight-label">AI Efficiency &amp; Value Model &nbsp;&middot;&nbsp; Damien Evans / OnePacs</div>
+        <div class="insight-title">AI-enabled capacity is creating a QA bottleneck &mdash; and the right response is a holistic value model, not raw speed</div>
+        <div class="insight-body">
+          <p>The OnePacs team is generating a measurable increase in development throughput through AI-assisted work. This increased output is now creating a downstream bottleneck at QA &mdash; which is surfacing because <strong>QA capacity did not scale proportionally when development velocity did</strong>. This is a predictable and healthy signal: it means the throughput increase is real, not illusory.</p>
+          <p>Damien articulated a response that deserves to be the team&rsquo;s model: rather than treating the found capacity as an opportunity to go faster indefinitely, the OnePacs team has adopted a <strong>holistic view of value delivery</strong>. The definition of &ldquo;what the team produces&rdquo; has shifted from raw development output to <em>full-cycle value delivery</em>. In practice this means the capacity freed up by AI is being redistributed across:</p>
+          <ul style="margin: 0.6rem 0 0.6rem 1.25rem; font-size: 0.875rem; color: var(--text-light); line-height: 1.7;">
+            <li><strong>Supporting QA</strong> to prevent bottlenecks from blocking flow</li>
+            <li><strong>Mentoring and coaching</strong> less experienced engineers on the team</li>
+            <li><strong>Shift-left quality practices</strong> &mdash; catching issues earlier in the development cycle</li>
+            <li><strong>Technical debt and foundational improvements</strong> &mdash; work that increases the team&rsquo;s long-term capacity</li>
+          </ul>
+          <p>The DICOM server rewrite is the proof point: a project that was previously unreachable given bandwidth constraints was completed because AI found the capacity. This is the right accountability model for the whole team to adopt: <strong>freed capacity is a leadership choice, not a windfall</strong>. How it is directed determines whether AI acceleration translates into organizational outcomes or just faster backlogs.</p>
+        </div>
+        <div class="insight-action">
+          <strong>Carry Forward</strong>
+          Use the OnePacs model as a reference for how other teams frame their AI adoption narrative. Each team&rsquo;s AI experiment summary for Q3 should include not just &ldquo;what we automated&rdquo; but &ldquo;how we redirected found capacity and what that produced.&rdquo; This framing connects individual team AI work to the company-level AI strategy.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- CONTINUE / START / STOP -->
+  <section class="section" id="css">
+    <div class="section-eyebrow">Leadership Behavior Exercise</div>
+    <h2 class="section-title">Continue / Start / Stop</h2>
+    <p class="section-intro">
+      The team evaluated its own operating habits, communication patterns, accountability norms, and delivery discipline &mdash; not their teams&rsquo;, their own. The results below reflect the top-voted commitments from the wall. The full interactive board with all items and vote counts is available in the live artifact.
+    </p>
+
+    <div class="css-cols">
+
+      <!-- CONTINUE -->
+      <div class="css-col">
+        <div class="css-col-header">
+          Continue
+          <span class="css-sub">Protect these habits</span>
+        </div>
+        <div class="css-col-body">
+          <div class="css-item">
+            <span class="css-item-dot"></span>
+            <span>Holding the evidence standard in wins reviews &mdash; not accepting claims without data</span>
+          </div>
+          <div class="css-item">
+            <span class="css-item-dot"></span>
+            <span>Redirecting AI-found capacity into quality, mentoring, and debt reduction rather than pure velocity</span>
+          </div>
+          <div class="css-item">
+            <span class="css-item-dot"></span>
+            <span>Cross-functional unblocking &mdash; helping teammates outside your team boundary when they are stuck</span>
+          </div>
+          <div class="css-item">
+            <span class="css-item-dot"></span>
+            <span>Rigorous testing standards &mdash; not accepting &ldquo;small issues&rdquo; as tolerable in core systems</span>
+          </div>
+          <div class="css-item">
+            <span class="css-item-dot"></span>
+            <span>VOC visibility &mdash; surfacing and acting on customer signals rather than filtering them</span>
+          </div>
+          <div class="css-note">&#9998; Full board &rarr; see live Continue/Start/Stop artifact</div>
+        </div>
+      </div>
+
+      <!-- START -->
+      <div class="css-col">
+        <div class="css-col-header">
+          Start
+          <span class="css-sub">Adopt these disciplines</span>
+        </div>
+        <div class="css-col-body">
+          <div class="css-item">
+            <span class="css-priority">Priority</span>&nbsp;
+            <span>Attaching operational metrics to AI adoption &mdash; LoC, velocity shift, before/after baselines</span>
+          </div>
+          <div class="css-item">
+            <span class="css-priority">Priority</span>&nbsp;
+            <span>Drafting a concise, shareable team identity document that can be socialized without the authors in the room</span>
+          </div>
+          <div class="css-item">
+            <span class="css-item-dot"></span>
+            <span>Naming role clarity gaps explicitly &mdash; when it is unclear what a person&rsquo;s value is, say it directly and resolve it</span>
+          </div>
+          <div class="css-item">
+            <span class="css-item-dot"></span>
+            <span>Closing RCA loops &mdash; root cause analyses get a follow-up owner and a date, not just a document</span>
+          </div>
+          <div class="css-item">
+            <span class="css-item-dot"></span>
+            <span>Tracking sprint addition rate as a quality signal alongside sprint completion rate</span>
+          </div>
+          <div class="css-note">&#9998; Full board &rarr; see live Continue/Start/Stop artifact</div>
+        </div>
+      </div>
+
+      <!-- STOP -->
+      <div class="css-col">
+        <div class="css-col-header">
+          Stop
+          <span class="css-sub">Retire these patterns</span>
+        </div>
+        <div class="css-col-body">
+          <div class="css-item">
+            <span class="css-priority">Priority</span>&nbsp;
+            <span>Reporting velocity as a win without contextualizing where capacity was redirected</span>
+          </div>
+          <div class="css-item">
+            <span class="css-item-dot"></span>
+            <span>Treating AI experiments as complete when the tool is adopted &mdash; they are only complete when the impact is measured</span>
+          </div>
+          <div class="css-item">
+            <span class="css-item-dot"></span>
+            <span>Accepting &ldquo;still measuring and collecting data&rdquo; as the end of the answer after multiple quarters</span>
+          </div>
+          <div class="css-item">
+            <span class="css-item-dot"></span>
+            <span>Ambiguity about the role of senior engineers vs. architects vs. lead engineers &mdash; it needs an owner and a clear answer</span>
+          </div>
+          <div class="css-item">
+            <span class="css-item-dot"></span>
+            <span>Building new commitments in new onsites before honestly grading the ones from the last one</span>
+          </div>
+          <div class="css-note">&#9998; Full board &rarr; see live Continue/Start/Stop artifact</div>
+        </div>
+      </div>
+
+    </div>
+
+    <a class="css-board-link" href="continue-start-stop.html">&#8594; &nbsp;Open the full interactive Continue / Start / Stop board</a>
+
+  </section>
+
+  <hr class="divider">
+
+  <!-- CARRYING INTO DAY 2 -->
+  <section class="section" id="day2">
+    <div class="section-eyebrow">Day 2 Setup</div>
+    <h2 class="section-title">What Day 1 Brings Into Day 2</h2>
+    <p class="section-intro">
+      Day 2 (Tuesday, April 14) introduces Dan from Information Security and Clarissa, Chief Product Officer. The conversations below are set up directly by the evidence and insights from today.
+    </p>
+
+    <div class="carry-grid">
+      <div class="carry-card">
+        <div class="carry-day">Feeds into &rarr; Security Alignment</div>
+        <h3>AI Tooling Has HIPAA and Compliance Surface Area</h3>
+        <p>As teams standardize AI tooling and begin measuring operational impact, security constraints &mdash; HIPAA, tool approval criteria, cost guardrails &mdash; need to be part of the governance design. Dan&rsquo;s session is the right moment to get non-negotiables on the table alongside what&rsquo;s moveable.</p>
+      </div>
+      <div class="carry-card">
+        <div class="carry-day">Feeds into &rarr; Product Alignment</div>
+        <h3>The Industrial Designer Framing Belongs in This Conversation</h3>
+        <p>Scott Seely&rsquo;s EMR utility function insight is most productively raised in the product alignment session with Clarissa. It is a framing that either has a product ownership home or needs one. The EMR retention target connects it directly to 2026 OKRs.</p>
+      </div>
+      <div class="carry-card">
+        <div class="carry-day">Feeds into &rarr; Personal Vision</div>
+        <h3>Today&rsquo;s Gaps Are Tomorrow&rsquo;s Vision Draft</h3>
+        <p>The places where leaders acknowledged they are not yet measuring what they should, or not yet closing their own loops, are the raw material for the personal vision and goals sharing round. The discipline gaps named today are the growth edges to commit to tomorrow.</p>
+      </div>
+      <div class="carry-card">
+        <div class="carry-day">Feeds into &rarr; Team Goals Session</div>
+        <h3>Four Insight Areas Have Goal-Level Implications</h3>
+        <p>Team identity document, AI operational metrics baseline, EMR Industrial Design initiative, and a cross-team model for AI capacity reallocation &mdash; all four insights from today are candidates for the team&rsquo;s Q3 goal list. Tomorrow&rsquo;s goals session should evaluate and own them.</p>
+      </div>
+    </div>
+
+    <div class="pull-quote">
+      &ldquo;Sharpening is not about perfection. It is about precision. The standard we set is already high. Making it sharper means making it specific enough to act on and honest enough to measure.&rdquo;
+    </div>
+
+  </section>
+
+</div>
+
+<!-- ══ FOOTER ════════════════════════════════════════════ -->
+<footer class="footer">
+  SEL Q2 2026 Onsite &nbsp;&middot;&nbsp; Day 1 Summary &nbsp;&middot;&nbsp; April 13, 2026 &nbsp;&middot;&nbsp; Software Engineering Leadership &nbsp;&middot;&nbsp; Experity
+</footer>
+
+</body>
+</html>

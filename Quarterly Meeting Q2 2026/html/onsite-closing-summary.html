@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEL Q2 2026 — Whole Onsite Closing Summary</title>
+<style>
+  :root {
+    --navy: #1a2744;
+    --blue: #2c5282;
+    --light-blue: #ebf4ff;
+    --accent: #e67e22;
+    --green: #276749;
+    --light-green: #f0fff4;
+    --gray: #718096;
+    --light-gray: #f7fafc;
+    --white: #ffffff;
+    --border: #e2e8f0;
+    --text: #2d3748;
+    --text-light: #4a5568;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: var(--text); background: var(--light-gray); line-height: 1.65; }
+
+  .header { background: linear-gradient(135deg, var(--navy) 0%, #243460 100%); color: var(--white); padding: 2.85rem 2rem 2.25rem; }
+  .header-inner { max-width: 920px; margin: 0 auto; }
+  .header-eyebrow { font-size: 0.74rem; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.55rem; }
+  .header h1 { font-size: 2.05rem; font-weight: 800; line-height: 1.16; margin-bottom: 0.45rem; }
+  .header .sub { font-size: 0.96rem; opacity: 0.86; max-width: 740px; }
+  .header-meta { margin-top: 1.1rem; display: flex; flex-wrap: wrap; gap: 1.25rem; font-size: 0.8rem; opacity: 0.74; border-top: 1px solid rgba(255,255,255,0.22); padding-top: 0.85rem; }
+
+  .nav { background: var(--blue); position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 10px rgba(0,0,0,0.15); }
+  .nav-inner { max-width: 920px; margin: 0 auto; display: flex; flex-wrap: wrap; }
+  .nav a { color: rgba(255,255,255,0.9); text-decoration: none; font-size: 0.78rem; font-weight: 500; padding: 0.7rem 1rem; }
+  .nav a:hover { background: rgba(255,255,255,0.14); color: var(--white); }
+
+  .container { max-width: 920px; margin: 0 auto; padding: 2.3rem 1.5rem 3.7rem; }
+  .section { margin-bottom: 2.8rem; }
+  .section-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.45rem; }
+  .section-title { font-size: 1.5rem; color: var(--navy); margin-bottom: 0.85rem; line-height: 1.2; }
+  .section-intro { font-size: 0.9rem; color: var(--text-light); max-width: 770px; }
+
+  .panel {
+    background: var(--white); border: 1px solid var(--border); border-radius: 10px;
+    padding: 1.35rem 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  .panel p { font-size: 0.9rem; color: var(--text-light); margin-bottom: 0.82rem; }
+  .panel p:last-child { margin-bottom: 0; }
+  .panel strong { color: var(--text); }
+
+  .outcome-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1rem; }
+  @media (max-width: 700px) { .outcome-grid { grid-template-columns: 1fr; } }
+  .outcome-card {
+    background: var(--white); border: 1px solid var(--border); border-radius: 8px;
+    padding: 1rem 1.1rem; box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    border-top: 3px solid var(--blue);
+  }
+  .outcome-card h3 { font-size: 0.88rem; color: var(--navy); margin-bottom: 0.35rem; }
+  .outcome-card p { font-size: 0.83rem; color: var(--text-light); }
+
+  .quote { border-left: 4px solid var(--green); background: var(--light-green); border-radius: 0 8px 8px 0; padding: 1.2rem 1.45rem; margin-top: 1.15rem; font-style: italic; color: var(--navy); }
+
+  .close-strip {
+    background: var(--navy); border-radius: 10px; color: var(--white);
+    padding: 1.45rem 1.6rem; margin-top: 1.15rem;
+  }
+  .close-strip h3 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.6rem; }
+  .close-strip p { font-size: 0.89rem; opacity: 0.9; }
+
+  .footer { text-align: center; padding: 1.85rem 1.45rem; background: var(--white); border-top: 1px solid var(--border); font-size: 0.78rem; color: var(--gray); }
+  .footer a { color: var(--blue); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+
+  @media print {
+    body { background: white; }
+    .nav { display: none; }
+    .section, .panel, .outcome-card, .close-strip { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-eyebrow">SEL Q2 2026 Onsite · Sharpen the Standard</div>
+    <h1>Whole Onsite Closing Summary</h1>
+    <p class="sub">A two-day leadership inflection point: clearer ownership, stronger first-team behavior, and sharper focus on stability, customer value, and measurable impact.</p>
+    <div class="header-meta">
+      <span>&#128197; April 13–14, 2026</span>
+      <span>&#128100; Software Engineering Leadership (SEL)</span>
+      <span>&#127919; Final onsite closeout summary</span>
+    </div>
+  </div>
+</div>
+
+<nav class="nav" aria-label="Sections">
+  <div class="nav-inner">
+    <a href="#overall">Overall Result</a>
+    <a href="#outcomes">Core Outcomes</a>
+    <a href="#signals">Leadership Signals</a>
+    <a href="#next">What Comes Next</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <section class="section" id="overall">
+    <div class="section-label">Overall Result</div>
+    <h2 class="section-title">From Direction to Measurable Ownership</h2>
+    <div class="panel">
+      <p>The Q2 2026 onsite delivered a clear maturation step for SEL. The team moved from directional intent to explicit ownership, from isolated effort to first-team execution, and from broad aspiration to sharper operational focus.</p>
+      <p>Feedback was exceedingly positive. Across both days, leaders aligned around a practical near-term mandate: <strong>stabilize delivery, support product priorities, and regain market trust</strong> by focusing on real value instead of feature-factory throughput.</p>
+      <p>The tone was notably constructive and accountable: little defensiveness, low blame deflection, and strong commitment to influence what can be controlled and measured.</p>
+    </div>
+  </section>
+
+  <section class="section" id="outcomes">
+    <div class="section-label">Core Outcomes</div>
+    <h2 class="section-title">What Changed in the Team</h2>
+    <div class="outcome-grid">
+      <article class="outcome-card">
+        <h3>Ownership culture strengthened</h3>
+        <p>Leaders showed stronger accountability for outcomes and follow-through, with clear rejection of victim posture.</p>
+      </article>
+      <article class="outcome-card">
+        <h3>First-team behavior improved</h3>
+        <p>Collaboration quality improved across SEL, with more visible support and less siloed execution.</p>
+      </article>
+      <article class="outcome-card">
+        <h3>Priority discipline sharpened</h3>
+        <p>The team aligned around stability and customer-facing value, not output volume for its own sake.</p>
+      </article>
+      <article class="outcome-card">
+        <h3>Cross-functional language matured</h3>
+        <p>Communication was recognized as highest impact when empathetic, clear, measurable, and collaborative.</p>
+      </article>
+      <article class="outcome-card">
+        <h3>Customer-value proof became central</h3>
+        <p>The team aligned that outcome claims must be validated by usage evidence and real customer impact.</p>
+      </article>
+      <article class="outcome-card">
+        <h3>Instrumentation urgency increased</h3>
+        <p>Leaders committed to strengthening instrumentation and observational frameworks to close evidence gaps.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="signals">
+    <div class="section-label">Leadership Signal</div>
+    <h2 class="section-title">Alignment Decay Was Named — and Owned</h2>
+    <div class="panel">
+      <p>The team explicitly acknowledged that communication is hard and alignment naturally decays over time. The new standard is to communicate frequently, evangelize clearly, listen intentionally, be patient, and verify that messages were truly understood.</p>
+      <p>In other words, leadership communication is now treated as an operating responsibility: <strong>repeat, confirm, and adapt</strong> until alignment becomes shared execution.</p>
+    </div>
+    <div class="quote">“The proof is in the pudding: if customer usage and impact data do not confirm value, we are not finished.”</div>
+  </section>
+
+  <section class="section" id="next">
+    <div class="section-label">Next Immediate Stage</div>
+    <h2 class="section-title">Carry the Standard into Execution</h2>
+    <div class="close-strip">
+      <h3>Closing Statement</h3>
+      <p>The onsite closed with stronger collective leadership posture: own outcomes, support product direction, prioritize stability, communicate with clarity, and measure value where customers experience it. The team left aligned that disciplined follow-through — not inspirational language — is what proves the standard is real.</p>
+    </div>
+  </section>
+
+</div>
+
+<footer class="footer">
+  SEL Q2 2026 Onsite · Whole Onsite Closing Summary · April 14, 2026
+  &nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="executive-summary-saji-elt.html">Executive Summary (Saji/ELT)</a>
+</footer>
+
+</body>
+</html>
