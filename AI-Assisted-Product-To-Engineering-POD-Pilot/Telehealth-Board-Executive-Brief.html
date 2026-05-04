@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Experity Telehealth — Strategic Overview</title>
+  <link rel="stylesheet" href="experity-onsite-events-reports.css" />
+  <style>
+    /* ─── Document-mode overrides ─────────────────────────── */
+    .topbar, .rail, .toast { display: none !important; }
+    .layout { display: block; }
+    main {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 56px clamp(24px, 5vw, 64px) 80px;
+    }
+
+    .doc-header {
+      margin-bottom: 40px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--line);
+    }
+    .doc-header .eyebrow { margin-bottom: 18px; }
+    .doc-header h1 {
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.08;
+      margin-bottom: 14px;
+    }
+    .doc-header .lead {
+      margin: 0;
+      font-size: 17px;
+      color: var(--ink-soft);
+      max-width: 720px;
+    }
+
+    .doc-section {
+      margin-bottom: 36px;
+    }
+    .doc-section h2 {
+      font-size: 20px;
+      margin: 0 0 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--line);
+      letter-spacing: -.01em;
+    }
+    .doc-section p {
+      margin: 0 0 12px;
+      color: var(--ink-soft);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+    .doc-section p:last-child { margin-bottom: 0; }
+    .doc-section strong { color: var(--ink); }
+
+    .workstream-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 4px;
+      font-size: 14px;
+    }
+    .workstream-table th {
+      text-align: left;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--muted);
+      padding: 8px 12px;
+      border-bottom: 2px solid var(--line-strong);
+      font-weight: 800;
+    }
+    .workstream-table td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--line);
+      color: var(--ink-soft);
+      vertical-align: top;
+      line-height: 1.45;
+    }
+    .workstream-table tr:last-child td { border-bottom: none; }
+    .workstream-table .ws-name { font-weight: 740; color: var(--ink); }
+
+    .ws-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      padding: 2px 7px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .ws-new { background: #e8f7ed; color: #187838; border: 1px solid #c9ebd3; }
+    .ws-enhance { background: #edf4fa; color: var(--navy); border: 1px solid #d8e7f2; }
+    .ws-integrate { background: #fff0e8; color: #aa4814; border: 1px solid #ffd4bf; }
+
+    .callout {
+      margin: 20px 0;
+      padding: 18px 22px;
+      border-left: 5px solid var(--blue);
+      background: #f1f6fb;
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    .callout p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .callout strong { color: var(--ink); }
+    .callout.green { border-left-color: var(--green); background: #eef8f1; }
+
+    .phase-list {
+      list-style: none;
+      margin: 16px 0;
+      padding: 0;
+      display: grid;
+      gap: 10px;
+    }
+    .phase-list li {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 14px;
+      padding: 12px 14px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      align-items: start;
+    }
+    .phase-label {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--muted);
+      padding-top: 2px;
+    }
+    .phase-content {
+      font-size: 14px;
+      color: var(--ink-soft);
+      line-height: 1.5;
+    }
+    .phase-content strong { color: var(--ink); display: block; margin-bottom: 2px; }
+
+    .risk-list {
+      list-style: none;
+      margin: 14px 0;
+      padding: 0;
+      display: grid;
+      gap: 8px;
+    }
+    .risk-list li {
+      position: relative;
+      padding-left: 20px;
+      font-size: 14px;
+      color: var(--ink-soft);
+      line-height: 1.55;
+    }
+    .risk-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: .6em;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--orange);
+    }
+    .risk-list li strong { color: var(--ink); }
+
+    .ask-section {
+      margin-top: 36px;
+      padding: 24px 26px;
+      background: #eef8f1;
+      border: 1px solid #c9ebd3;
+      border-radius: var(--radius);
+    }
+    .ask-section h2 {
+      font-size: 18px;
+      color: #187838;
+      margin: 0 0 10px;
+      border: none;
+      padding: 0;
+    }
+    .ask-section p {
+      margin: 0 0 14px;
+      font-size: 15px;
+      color: var(--ink-soft);
+      line-height: 1.6;
+    }
+    .ask-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 8px;
+    }
+    .ask-list li {
+      position: relative;
+      padding-left: 22px;
+      font-size: 14px;
+      color: var(--ink-soft);
+      line-height: 1.5;
+    }
+    .ask-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #28b84f;
+      font-weight: 800;
+    }
+
+    .doc-footer {
+      margin-top: 40px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media print {
+      body { background: #fff; }
+      body::before { display: none; }
+      main { padding: 24px; }
+      .callout { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+<main>
+
+  <!-- Header -->
+  <div class="doc-header fade-in">
+    <div class="eyebrow">
+      <span class="tag">Strategic Initiative</span>
+      <span class="tag green">Product Vision</span>
+    </div>
+    <h1>Experity Telehealth</h1>
+    <p class="lead">A unified virtual care experience embedded directly into the Experity platform — connecting patients, providers, and urgent care operations through AI-powered workflows from intake to documentation.</p>
+  </div>
+
+  <!-- Opportunity -->
+  <div class="doc-section fade-in delay-1">
+    <h2>The Opportunity</h2>
+    <p>Urgent care operators are losing patient volume to standalone telehealth vendors that sit outside the clinical workflow. Patients who could be served virtually — after-hours visits, follow-ups, overflow demand — either leave the network entirely or create manual coordination overhead when staff attempt to bridge disconnected systems.</p>
+    <p>Experity is uniquely positioned to solve this. We already own the EMR, the practice management layer, the scheduling engine, and — with AI Scribe and Care Agent — the emerging AI infrastructure that makes virtual visits operationally viable. What we do not yet have is the connective tissue: a native telehealth experience that keeps patients, data, documentation, and revenue inside a single platform.</p>
+  </div>
+
+  <!-- What We Are Building -->
+  <div class="doc-section fade-in delay-2">
+    <h2>What We Are Building</h2>
+    <p>Telehealth is not a single product. It is a coordinated effort across <strong>five major product workstreams</strong>, two of which are net-new zero-to-one builds, and three of which extend existing platform capabilities to support virtual visits end-to-end.</p>
+
+    <table class="workstream-table">
+      <thead>
+        <tr>
+          <th>Workstream</th>
+          <th>Description</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="ws-name">Telehealth Connect Skill</td>
+          <td>A new Care Agent capability that orchestrates the full virtual visit lifecycle — routing, provider matching, session initiation, and post-visit handoff.</td>
+          <td><span class="ws-tag ws-new">New Product</span></td>
+        </tr>
+        <tr>
+          <td class="ws-name">Video Wrapper Service</td>
+          <td>Platform-native video infrastructure enabling real-time provider-patient sessions without requiring third-party telehealth applications.</td>
+          <td><span class="ws-tag ws-new">New Product</span></td>
+        </tr>
+        <tr>
+          <td class="ws-name">AI Scribe Extensions</td>
+          <td>Telehealth-specific documentation capabilities — virtual visit context awareness, real-time note generation during video sessions, and structured output for charting.</td>
+          <td><span class="ws-tag ws-enhance">Enhancement</span></td>
+        </tr>
+        <tr>
+          <td class="ws-name">EMR &amp; PM Integration</td>
+          <td>Scheduling, charting, and practice management workflows adapted for virtual visits — ensuring telehealth encounters flow through the same operational backbone as in-person care.</td>
+          <td><span class="ws-tag ws-integrate">Integration</span></td>
+        </tr>
+        <tr>
+          <td class="ws-name">Payments &amp; E-Registration</td>
+          <td>Patient intake, consent capture, and payment processing tailored for the telehealth flow — eliminating friction before the visit begins.</td>
+          <td><span class="ws-tag ws-integrate">Integration</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Why This Matters -->
+  <div class="doc-section fade-in delay-3">
+    <h2>Why This Matters Strategically</h2>
+    <p><strong>Market expansion without market exit.</strong> Clients gain the ability to serve patients virtually without sending them to a third-party telehealth vendor. Volume that would otherwise leave the urgent care ecosystem stays inside it — and inside Experity.</p>
+    <p><strong>AI-native differentiation.</strong> AI Scribe and Care Agent give us capabilities that standalone telehealth companies cannot replicate without deep EMR integration. Automated documentation, intelligent routing, and visit orchestration become competitive moats rather than bolt-on features.</p>
+    <p><strong>Operational efficiency for operators.</strong> By unifying telehealth inside the existing platform, we eliminate the manual coordination between intake, scheduling, charting, and billing that plagues operators using disconnected point solutions today.</p>
+    <p><strong>Recurring revenue with platform stickiness.</strong> Telehealth opens new visit volume categories — after-hours, overflow, follow-up — and creates a high-value service layer with SaaS economics that deepens client dependency on the Experity platform.</p>
+  </div>
+
+  <!-- Product Maturity -->
+  <div class="doc-section">
+    <h2>Current State of Readiness</h2>
+    <p>The telehealth initiative is <strong>mature from a product definition standpoint</strong>. The business process has been fully mapped. We know how virtual visits should interact with the EMR. The product plan is comprehensive and has been validated with field input from customers and internal stakeholders.</p>
+
+    <div class="callout">
+      <p>The remaining open questions are concentrated around <strong>dependency sequencing</strong> — how the five workstreams coordinate, how AI model readiness for Scribe and Care Agent extensions is validated before clinical use, and how we manage external dependencies such as video infrastructure and regulatory compliance across states.</p>
+    </div>
+
+    <p>The product team has invested significant effort in documentation, workflow definition, and requirements clarity. This is not an initiative where we are still searching for product-market fit — the demand signal is strong and the solution shape is well understood.</p>
+  </div>
+
+  <!-- Delivery Approach -->
+  <div class="doc-section">
+    <h2>Delivery Approach</h2>
+    <p>We are pursuing an <strong>AI-accelerated development model</strong> that compresses the build cycle through agentic coding workflows while preserving the product rigor needed for a clinical-grade offering. The delivery unfolds in four phases:</p>
+
+    <ol class="phase-list">
+      <li>
+        <span class="phase-label">Phase 1</span>
+        <div class="phase-content"><strong>Definition &amp; Alignment</strong>Finalize product requirements across all five workstreams. Resolve integration architecture. Establish the artifact set that feeds AI-assisted engineering.</div>
+      </li>
+      <li>
+        <span class="phase-label">Phase 2</span>
+        <div class="phase-content"><strong>Foundation Build</strong>Stand up the Video Service and Telehealth Connect skill as net-new products. Extend AI Scribe with telehealth-specific capabilities. Use AI-assisted coding agents to accelerate delivery.</div>
+      </li>
+      <li>
+        <span class="phase-label">Phase 3</span>
+        <div class="phase-content"><strong>Integration &amp; Validation</strong>Connect EMR/PM workflows, payments, and e-registration. End-to-end testing across the full virtual visit lifecycle. Clinical quality validation of AI outputs.</div>
+      </li>
+      <li>
+        <span class="phase-label">Phase 4</span>
+        <div class="phase-content"><strong>Pilot &amp; Scale</strong>Deploy with select clients. Gather real-world feedback. Iterate rapidly using compressed development cycles. Scale to general availability.</div>
+      </li>
+    </ol>
+  </div>
+
+  <!-- Risks -->
+  <div class="doc-section">
+    <h2>Key Risks &amp; Dependencies</h2>
+    <p>The primary risks are coordination-driven rather than conceptual. The product is well understood; the challenge is orchestrating delivery across multiple teams and external dependencies simultaneously.</p>
+
+    <ul class="risk-list">
+      <li><strong>Cross-product coordination</strong> — Five workstreams touch separate product and engineering teams. Shared interfaces and sequencing require deliberate orchestration to avoid blocking dependencies.</li>
+      <li><strong>External dependencies</strong> — Video infrastructure vendor decisions, carrier integrations, and multi-state regulatory compliance (licensing, consent) carry timeline risk that is partially outside our control.</li>
+      <li><strong>AI model readiness</strong> — AI Scribe and Care Agent extensions require new prompt engineering, telehealth-specific validation data, and clinical quality assurance before production use.</li>
+      <li><strong>Staffing across workstreams</strong> — The two net-new products require dedicated engineering capacity that must be allocated alongside existing commitments.</li>
+    </ul>
+  </div>
+
+  <!-- Footer -->
+  <div class="doc-footer">
+    Experity · Telehealth Initiative · Strategic Overview · Confidential
+  </div>
+
+</main>
+</body>
+</html>

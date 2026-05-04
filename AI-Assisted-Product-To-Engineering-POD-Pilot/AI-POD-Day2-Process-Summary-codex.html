@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI POD Day 2 Process Summary - Codex</title>
+  <link rel="stylesheet" href="experity-onsite-events-reports.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand" aria-label="Project">
+      <div class="brand-mark">AI</div>
+      <div>
+        <strong>AI POD Day 2</strong>
+        <span>Process Summary</span>
+      </div>
+    </div>
+    <div class="top-actions">
+      <div class="now-line">
+        <span class="label">Report</span>
+        <strong>Process Validation</strong>
+      </div>
+      <div class="action-row" aria-label="Report controls">
+        <button class="text-btn" id="expandAll" type="button">Expand All</button>
+        <button class="icon-btn" id="printBtn" type="button" title="Print report" aria-label="Print report">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v7H6z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="rail">
+      <div class="rail-card">
+        <h2>Day 2 Finding</h2>
+        <p>The packet was directionally actionable, but not yet cold-reader complete. The test worked because it exposed the gaps before delivery.</p>
+        <div class="status-strip">
+          <span class="status-chip status-strong">Method Validated</span>
+          <span class="status-chip status-watch">Packet Needs Refinement</span>
+        </div>
+      </div>
+
+      <div class="rail-card">
+        <h2>Primary Evidence</h2>
+        <ul class="compact-list">
+          <li>Cold readers could restate the broad ask.</li>
+          <li>Ambiguity clustered around definitions, dependencies, and technical-sounding wording.</li>
+          <li>Shorter MVP artifacts did not remove the same core questions.</li>
+        </ul>
+      </div>
+
+      <div class="rail-section-title">Sections</div>
+      <nav class="nav-list" aria-label="Report navigation">
+        <a class="nav-item active" href="#executive" style="--accent: var(--navy)"><span class="nav-time">01</span><span class="nav-title">Executive</span></a>
+        <a class="nav-item" href="#accomplished" style="--accent: var(--green)"><span class="nav-time">02</span><span class="nav-title">Accomplished</span></a>
+        <a class="nav-item" href="#findings" style="--accent: var(--orange)"><span class="nav-time">03</span><span class="nav-title">Validation Findings</span></a>
+        <a class="nav-item" href="#engineering" style="--accent: var(--blue)"><span class="nav-time">04</span><span class="nav-title">Engineering Concerns</span></a>
+        <a class="nav-item" href="#process" style="--accent: var(--purple)"><span class="nav-time">05</span><span class="nav-title">Process Definition</span></a>
+        <a class="nav-item" href="#lessons" style="--accent: var(--teal)"><span class="nav-time">06</span><span class="nav-title">Lessons</span></a>
+        <a class="nav-item" href="#actions" style="--accent: var(--gold)"><span class="nav-time">07</span><span class="nav-title">Actions</span></a>
+      </nav>
+    </aside>
+
+    <main>
+      <section class="hero fade-in" id="executive">
+        <div class="hero-copy">
+          <div class="eyebrow">
+            <span class="tag">Thursday, April 30, 2026</span>
+            <span class="tag green">Cold-Read Validation</span>
+            <span class="tag orange">Process Definition Focus</span>
+          </div>
+          <h1>Day 2 Process Summary</h1>
+          <p class="lead">
+            Day 2 confirmed that the product-to-engineering handoff pattern is valuable, but the artifact packet must become more explicit before it can reliably support new engineers, architects, JIRA generation, and AI-assisted delivery. The strongest signal was not that the documents were wrong; it was that hidden institutional context surfaced immediately when engineers read them cold.
+          </p>
+          <div class="hero-grid" aria-label="Day two outcome metrics">
+            <div class="metric" style="--accent: var(--green)">
+              <b>Yes</b>
+              <span>Engineering could understand the broad product ask without a live walkthrough.</span>
+            </div>
+            <div class="metric" style="--accent: var(--orange)">
+              <b>No</b>
+              <span>The packet was not yet self-sufficient for implementation planning without clarifying questions.</span>
+            </div>
+            <div class="metric" style="--accent: var(--blue)">
+              <b>Next</b>
+              <span>Codify artifact structure, communication channels, and TRD ownership before scaling.</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="run-card fade-in delay-1">
+          <div>
+            <h2>Executive Message</h2>
+            <p>
+              The onsite produced a usable first version of the process and proved the cold-read validation model. The immediate follow-up is to harden the packet standard: front-door README, glossary, explicit cross-links, design/workflow references, artifact review questions, and a clear PRD-to-TRD handoff.
+            </p>
+            <div class="flow">
+              <div class="flow-step" style="--accent: var(--green)">
+                <div class="flow-num">1</div>
+                <div><strong>Validated</strong><span>The process test exposed gaps early, which is exactly the point.</span></div>
+              </div>
+              <div class="flow-step" style="--accent: var(--orange)">
+                <div class="flow-num">2</div>
+                <div><strong>Refine</strong><span>Artifacts need clearer definitions, audience boundaries, and source-of-truth references.</span></div>
+              </div>
+              <div class="flow-step" style="--accent: var(--blue)">
+                <div class="flow-num">3</div>
+                <div><strong>Scale</strong><span>Turn this into a repeatable packet and review workflow before broader rollout.</span></div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="section fade-in delay-2" id="accomplished">
+        <div class="section-head">
+          <div>
+            <h2>What Was Accomplished</h2>
+            <p class="section-sub">
+              The day produced concrete learning about the packet, the review motion, and the product-to-engineering lane split.
+            </p>
+          </div>
+          <span class="small-note">Day 2 Outputs</span>
+        </div>
+
+        <div class="score-grid">
+          <article class="score-card" style="--accent: var(--green)">
+            <div class="score-label"><b>Cold-Read Test</b><span class="score-value">Run</span></div>
+            <p>Reviewers consumed the packet with limited context, then reported what they understood and where they needed clarification.</p>
+            <ul class="evidence-list">
+              <li>The handoff README became the front door for the packet.</li>
+              <li>Reading time was treated as part of the process, not a pre-work assumption.</li>
+              <li>First-pass comments became direct evidence of artifact quality.</li>
+            </ul>
+          </article>
+
+          <article class="score-card" style="--accent: var(--blue)">
+            <div class="score-label"><b>Packet Shape</b><span class="score-value">Tested</span></div>
+            <p>The team compared a more complete PRD with a condensed MVP artifact pack and learned that shorter is not automatically clearer.</p>
+            <ul class="evidence-list">
+              <li>Both formats still needed definitions and stronger boundaries.</li>
+              <li>The MVP pack is useful as an entry point, but not a substitute for needed context.</li>
+              <li>A built-in review guide should become standard.</li>
+            </ul>
+          </article>
+
+          <article class="score-card" style="--accent: var(--orange)">
+            <div class="score-label"><b>Gaps</b><span class="score-value">Found</span></div>
+            <p>Engineering surfaced the exact gaps that usually become sprint churn: unclear terms, contradictory statements, hidden dependencies, and implementation-coded phrasing.</p>
+            <ul class="evidence-list">
+              <li>State attestation was contradictory.</li>
+              <li>Payment status and registration system were under-defined.</li>
+              <li>Technical words like API, token, processed, pipeline, and writeback created ambiguity.</li>
+            </ul>
+          </article>
+
+          <article class="score-card" style="--accent: var(--purple)">
+            <div class="score-label"><b>Lanes</b><span class="score-value">Clarified</span></div>
+            <p>The team reinforced that Product owns the plain-language product ask, while Engineering and Architecture own the TRD and implementation approach.</p>
+            <ul class="evidence-list">
+              <li>Product should describe outcomes and business rules.</li>
+              <li>Engineering should decide APIs, services, events, schemas, and implementation mechanisms.</li>
+              <li>Architecture standards and system context should be referenced, not duplicated everywhere.</li>
+            </ul>
+          </article>
+
+          <article class="score-card" style="--accent: var(--teal)">
+            <div class="score-label"><b>Channels</b><span class="score-value">Exposed</span></div>
+            <p>The day showed where durable communication needs to live and where transient channels are acceptable.</p>
+            <ul class="evidence-list">
+              <li>Meeting chat can distribute the link, but not serve as memory.</li>
+              <li>Inline document comments are useful for artifact-specific feedback.</li>
+              <li>Shared folder/wiki structure and explicit cross-links are required for reuse.</li>
+            </ul>
+          </article>
+
+          <article class="score-card" style="--accent: var(--navy)">
+            <div class="score-label"><b>Follow-Up</b><span class="score-value">Queued</span></div>
+            <p>The transcript shows a need for a follow-up session after participants have processed the learning and artifact changes.</p>
+            <ul class="evidence-list">
+              <li>Capture learnings from the exercise itself.</li>
+              <li>Update the packet standard before the next pod.</li>
+              <li>Use the revised packet to run a TRD and JIRA-generation dry run.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="findings">
+        <div class="section-head">
+          <div>
+            <h2>Day 2 Validation Findings</h2>
+            <p class="section-sub">
+              The gaps were mostly process and artifact-design issues, not product-idea issues.
+            </p>
+          </div>
+        </div>
+
+        <div class="evaluation-list">
+          <article class="evaluation-item" style="--accent: var(--green)">
+            <div class="evaluation-time">
+              <b>Comprehension</b>
+              <span>Pass</span>
+              <span class="result-chip status-strong">Directional</span>
+            </div>
+            <div class="evaluation-copy">
+              <h3>The Broad Ask Was Understandable</h3>
+              <p>Cold readers could summarize the intended workflow at a high level: a patient-side preparation/check process marks a patient ready, then the patient enters a telehealth/provider flow.</p>
+              <ul class="evidence-list">
+                <li>This indicates the packet had enough product signal to orient reviewers.</li>
+                <li>The gaps emerged after the high-level understanding, mostly at decision and dependency boundaries.</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="evaluation-item" style="--accent: var(--orange)">
+            <div class="evaluation-time">
+              <b>Definitions</b>
+              <span>Fail</span>
+              <span class="result-chip status-risk">Critical</span>
+            </div>
+            <div class="evaluation-copy">
+              <h3>Implicit Vocabulary Became The Main Failure Mode</h3>
+              <p>Terms like skill, Care Agent, Telehealth Connect, registration system, payment status, token, writeback, eligible, ready, encounter, and AI Scribe were not explicit enough for a cold reader.</p>
+              <ul class="evidence-list">
+                <li>Definitions should live in the packet front matter or glossary.</li>
+                <li>Terms should link to their source artifact or canonical system reference.</li>
+                <li>Cold readers should not have to know Experity history to understand the artifact.</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="evaluation-item" style="--accent: var(--orange)">
+            <div class="evaluation-time">
+              <b>Contradiction</b>
+              <span>Fail</span>
+              <span class="result-chip status-risk">Fix</span>
+            </div>
+            <div class="evaluation-copy">
+              <h3>Conflicting Requirements Confused Both Humans And AI</h3>
+              <p>The state-attestation language gave conflicting signals about whether the patient could proceed. The team correctly recognized this would confuse an AI agent as much as a human engineer.</p>
+              <ul class="evidence-list">
+                <li>Every gate should state whether it blocks readiness, only records data, or flags an exception.</li>
+                <li>Future behavior should be labeled as future behavior, not mixed into MVP rules.</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="evaluation-item" style="--accent: var(--blue)">
+            <div class="evaluation-time">
+              <b>Artifacts</b>
+              <span>Partial</span>
+              <span class="result-chip status-partial">Improve</span>
+            </div>
+            <div class="evaluation-copy">
+              <h3>The README Was Useful, But The Packet Needs A Standard</h3>
+              <p>The front-door README helped orient the session, but reviewers still needed clearer artifact purpose, order, audience, and cross-links.</p>
+              <ul class="evidence-list">
+                <li>Each artifact should say who it is for and what decision it supports.</li>
+                <li>Open questions should be categorized by audience and implementation impact.</li>
+                <li>References should point to exact sections, not just whole documents.</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="evaluation-item" style="--accent: var(--purple)">
+            <div class="evaluation-time">
+              <b>Language</b>
+              <span>Partial</span>
+              <span class="result-chip status-watch">Guardrail</span>
+            </div>
+            <div class="evaluation-copy">
+              <h3>Product Language Must Be Plain, Precise, And Outcome-Based</h3>
+              <p>Words that sound harmless to Product can become implementation constraints to Engineering. "Processed through AI Scribe" was interpreted as a technical claim that could invalidate the current proof-of-concept path.</p>
+              <ul class="evidence-list">
+                <li>Create a "do not use" list for generated PRDs: API, Kafka, endpoint, pipeline, processed, streamed, token, table, schema, unless the technical artifact owns it.</li>
+                <li>Replace implementation wording with product outcomes and user-visible behavior.</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="evaluation-item" style="--accent: var(--teal)">
+            <div class="evaluation-time">
+              <b>Visuals</b>
+              <span>Partial</span>
+              <span class="result-chip status-partial">Needed</span>
+            </div>
+            <div class="evaluation-copy">
+              <h3>Design And Workflow References Are Part Of The Packet</h3>
+              <p>Reviewers asked for workflow diagrams, sequence-like user flows, screenshots, mocks, and Figma links. These are not implementation design; they are context that prevents engineers and agents from guessing.</p>
+              <ul class="evidence-list">
+                <li>PRDs should link to design artifacts rather than embedding every screen.</li>
+                <li>Workflows should show the user interaction and system handoff at product level.</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="engineering">
+        <div class="section-head">
+          <div>
+            <h2>Engineering Comments And Concerns</h2>
+            <p class="section-sub">
+              These are the process-relevant concerns raised by Engineering and Architecture during the cold read.
+            </p>
+          </div>
+        </div>
+
+        <div class="decision-table">
+          <div class="decision-row" style="--accent: var(--orange)">
+            <div>
+              <h3>Definitions Are Required Context</h3>
+              <p>Engineering does not need technical internals in the PRD, but it does need to know what the named systems, modules, users, and states mean.</p>
+            </div>
+            <div>
+              <h3>Concern</h3>
+              <p>Without definitions, reviewers infer from prior knowledge or make incorrect assumptions.</p>
+            </div>
+            <div>
+              <h3>Process Response</h3>
+              <p>Add a glossary, dependency map, and exact source links to the packet standard.</p>
+            </div>
+          </div>
+
+          <div class="decision-row" style="--accent: var(--blue)">
+            <div>
+              <h3>PRD Should Not Dictate The How</h3>
+              <p>Engineering pushed back on API, Kafka, pipeline, processing, token, and similar terms in product artifacts.</p>
+            </div>
+            <div>
+              <h3>Concern</h3>
+              <p>Technical wording can unintentionally constrain architecture or cause engineers to throw away valid implementation options.</p>
+            </div>
+            <div>
+              <h3>Process Response</h3>
+              <p>Move implementation details to TRD, architecture review, or implementation plan.</p>
+            </div>
+          </div>
+
+          <div class="decision-row" style="--accent: var(--purple)">
+            <div>
+              <h3>Visual Context Is Not Optional</h3>
+              <p>Workflows, Figma links, screenshots, and user flow references are useful handoff artifacts.</p>
+            </div>
+            <div>
+              <h3>Concern</h3>
+              <p>Text-only requirements can still leave too much room for a developer or AI agent to invent the experience.</p>
+            </div>
+            <div>
+              <h3>Process Response</h3>
+              <p>Make visual and workflow references part of the minimum packet when UI or workflow behavior matters.</p>
+            </div>
+          </div>
+
+          <div class="decision-row" style="--accent: var(--green)">
+            <div>
+              <h3>Success Criteria Need Tiers</h3>
+              <p>Engineering questioned whether metrics in a PRD were real, measurable, and available.</p>
+            </div>
+            <div>
+              <h3>Concern</h3>
+              <p>AI-generated metrics can be superficial or dependent on events that do not exist yet.</p>
+            </div>
+            <div>
+              <h3>Process Response</h3>
+              <p>Separate strategy metrics, functional acceptance criteria, operational telemetry, and TRD performance standards.</p>
+            </div>
+          </div>
+
+          <div class="decision-row" style="--accent: var(--teal)">
+            <div>
+              <h3>Open Questions Need Routing</h3>
+              <p>Some open questions read like product notes, some architecture notes, and some engineering blockers.</p>
+            </div>
+            <div>
+              <h3>Concern</h3>
+              <p>Engineers may ignore open questions if they are not clearly tied to implementation impact.</p>
+            </div>
+            <div>
+              <h3>Process Response</h3>
+              <p>Tag every open question by audience, owner, decision needed, and whether it blocks work.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="process">
+        <div class="section-head">
+          <div>
+            <h2>Process Definition Updates</h2>
+            <p class="section-sub">
+              Day 2 moved the process from concept to a working draft.
+            </p>
+          </div>
+        </div>
+
+        <div class="handoff-band">
+          <div class="handoff-step" style="--accent: var(--navy)">
+            <b>1. Product Packet</b>
+            <span>Product prepares strategy context, handoff README, module PRD, glossary, workflow/design links, assumptions, open questions, and acceptance criteria.</span>
+          </div>
+          <div class="handoff-step" style="--accent: var(--blue)">
+            <b>2. Cold Read</b>
+            <span>Engineering reads silently, comments in place, and records where the packet answers or fails to answer the standard review questions.</span>
+          </div>
+          <div class="handoff-step" style="--accent: var(--orange)">
+            <b>3. Gap Triage</b>
+            <span>Gaps are classified as definition, dependency, contradiction, over-prescription, acceptance criteria, design context, or TRD input.</span>
+          </div>
+          <div class="handoff-step" style="--accent: var(--purple)">
+            <b>4. TRD Path</b>
+            <span>Engineering and Architecture create the TRD from the product packet, architecture standards, Architecture Hub, and known system context.</span>
+          </div>
+          <div class="handoff-step" style="--accent: var(--green)">
+            <b>5. Delivery Artifacts</b>
+            <span>Validated packet plus TRD generates JIRA epics/stories, spikes, QA checks, agent prompts, and onboarding context.</span>
+          </div>
+        </div>
+
+        <details class="accordion" open>
+          <summary>
+            Minimum Artifact Packet For The Next Trial
+            <span class="chevron"><svg class="icon" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></span>
+          </summary>
+          <div class="accordion-body">
+            <div class="accordion-panel">
+              <h4>Product-Owned</h4>
+              <ul class="detail-list">
+                <li>Handoff README with reading order, artifact purpose, audience, and review questions.</li>
+                <li>Product or solution strategy with durable context, customer signal, roadmap intent, and business constraints.</li>
+                <li>Module PRD with plain-language outcomes, users, scope, non-goals, assumptions, business rules, dependencies, and functional acceptance criteria.</li>
+                <li>Glossary and dependency map for named systems, states, modules, and product concepts.</li>
+                <li>Workflow and design references: Figma, screenshots, user flows, workflow diagrams, sequence-like product flows.</li>
+              </ul>
+            </div>
+            <div class="accordion-panel">
+              <h4>Engineering-Owned</h4>
+              <ul class="output-list">
+                <li>TRD or architecture implementation brief.</li>
+                <li>Architecture review notes and standards references.</li>
+                <li>System contracts, interface decisions, event implementation, service boundaries, data model details, and compliance implementation approach.</li>
+                <li>JIRA delivery breakdown, spikes, QA scenarios, and AI-agent context bundle.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <details class="accordion">
+          <summary>
+            Communication Process And Channels
+            <span class="chevron"><svg class="icon" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></span>
+          </summary>
+          <div class="accordion-body">
+            <div class="accordion-panel">
+              <h4>Durable Channels</h4>
+              <ul class="detail-list">
+                <li>Shared product intelligence hub or wiki for final artifacts, glossary, and cross-links.</li>
+                <li>Inline document comments for artifact-specific review feedback and resolution history.</li>
+                <li>Architecture Hub for system context, standards, and technical references.</li>
+                <li>JIRA only after packet validation and TRD direction are ready enough to generate work.</li>
+              </ul>
+            </div>
+            <div class="accordion-panel">
+              <h4>Transient Channels</h4>
+              <ul class="output-list">
+                <li>Meeting chat can distribute the handoff README link during the session.</li>
+                <li>Teams/chat can coordinate scheduling and quick follow-up, but should not become the source of truth.</li>
+                <li>Session notes should be written back into the durable artifact location before the work moves forward.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+      </section>
+
+      <section class="section" id="lessons">
+        <div class="section-head">
+          <div>
+            <h2>Lessons Learned</h2>
+            <p class="section-sub">
+              Day 2 turned the packet into a practical test surface. The main lessons are repeatable beyond this product.
+            </p>
+          </div>
+        </div>
+
+        <div class="insight-grid">
+          <article class="insight-card" style="--accent: var(--green)">
+            <h3>Cold Read Beats Assumption Review</h3>
+            <p>Readers with limited domain context surfaced hidden vocabulary and dependency gaps that the Day 1 team could not see from inside the work.</p>
+          </article>
+
+          <article class="insight-card" style="--accent: var(--orange)">
+            <h3>Ambiguity Has A Cost</h3>
+            <p>Contradictory or under-defined statements create immediate engineering churn and can cause AI agents to choose the wrong interpretation.</p>
+          </article>
+
+          <article class="insight-card" style="--accent: var(--blue)">
+            <h3>Plain Language Is A Discipline</h3>
+            <p>Product can be precise without being technical. The right level is understandable by someone outside R&D, while still specific enough for Engineering.</p>
+          </article>
+
+          <article class="insight-card" style="--accent: var(--purple)">
+            <h3>Artifact Length Is Not The Metric</h3>
+            <p>The shorter MVP pack still carried many of the same questions. The real metric is whether the reader can answer the standard review questions.</p>
+          </article>
+
+          <article class="insight-card" style="--accent: var(--teal)">
+            <h3>TRD Is The Technical Bridge</h3>
+            <p>The PRD should not become the technical design. The TRD is where architecture, system contracts, and implementation details belong.</p>
+          </article>
+
+          <article class="insight-card" style="--accent: var(--navy)">
+            <h3>References Need Precision</h3>
+            <p>Linking to a document is not enough. The packet needs exact section references or repeated essential context where the reader needs it.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="actions">
+        <div class="section-head">
+          <div>
+            <h2>Action Items And Follow-Up Exercises</h2>
+            <p class="section-sub">
+              These are the follow-ups that move Day 2 learning into a repeatable process.
+            </p>
+          </div>
+        </div>
+
+        <div class="artifact-grid">
+          <article class="artifact-card" style="--accent: var(--green)">
+            <h3>Revise PRD Template</h3>
+            <p>Add required glossary, dependency map, plain-language outcome rules, cross-linking expectations, and review guide questions.</p>
+            <ul class="action-list">
+              <li>Remove technical trigger words from generated Product text.</li>
+              <li>Separate functional acceptance from strategic metrics and technical performance.</li>
+            </ul>
+          </article>
+
+          <article class="artifact-card" style="--accent: var(--blue)">
+            <h3>Create Handoff README Standard</h3>
+            <p>Make the README the front door for each packet: purpose, artifact order, audience, how to comment, and pass/fail questions.</p>
+            <ul class="action-list">
+              <li>Include "what should you be able to answer after reading?"</li>
+              <li>Include "what questions should be routed to Product, Architecture, or Engineering?"</li>
+            </ul>
+          </article>
+
+          <article class="artifact-card" style="--accent: var(--orange)">
+            <h3>Define TRD Handoff</h3>
+            <p>Document when the TRD is created, who owns it, and what inputs it consumes from the validated product packet.</p>
+            <ul class="action-list">
+              <li>Use architecture standards and Architecture Hub as the technical context layer.</li>
+              <li>Keep implementation details out of the PRD unless they are non-negotiable constraints.</li>
+            </ul>
+          </article>
+
+          <article class="artifact-card" style="--accent: var(--purple)">
+            <h3>Run A JIRA And Agent Dry Run</h3>
+            <p>Use the revised packet to generate sample epics, stories, spikes, QA checks, and AI-agent prompts.</p>
+            <ul class="action-list">
+              <li>Mark every generated work item with the source artifact section.</li>
+              <li>Use weak output as evidence of missing context.</li>
+            </ul>
+          </article>
+
+          <article class="artifact-card" style="--accent: var(--teal)">
+            <h3>Repeat Cold-Read Validation</h3>
+            <p>Use at least one engineer or architect with limited domain context on the next trial.</p>
+            <ul class="action-list">
+              <li>Time the read.</li>
+              <li>Capture first-pass confusion before discussion.</li>
+              <li>Classify gaps by failure mode.</li>
+            </ul>
+          </article>
+
+          <article class="artifact-card" style="--accent: var(--navy)">
+            <h3>Schedule Process Retrospective</h3>
+            <p>Hold a follow-up session after artifact updates to finalize the process standard.</p>
+            <ul class="action-list">
+              <li>Review which packet components were most useful.</li>
+              <li>Decide source-of-truth location and naming/versioning rules.</li>
+              <li>Publish the repeatable playbook.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="quote-panel" style="--accent: var(--navy)">
+          <p>
+            Recommended report-out: Day 2 proved that the process should be adopted, but not yet frozen. The next version should preserve the cold-read validation, strengthen the packet standard, and formally add Engineering-owned TRD generation as the bridge from product clarity to implementation autonomy.
+          </p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const expandButton = document.getElementById("expandAll");
+    const details = [...document.querySelectorAll("details.accordion")];
+    document.getElementById("printBtn").addEventListener("click", () => window.print());
+    expandButton.addEventListener("click", () => {
+      const shouldOpen = details.some(detail => !detail.open);
+      details.forEach(detail => detail.open = shouldOpen);
+      expandButton.textContent = shouldOpen ? "Collapse All" : "Expand All";
+    });
+
+    const sections = [...document.querySelectorAll("main section[id]")];
+    const navItems = [...document.querySelectorAll(".nav-item")];
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        navItems.forEach(item => item.classList.toggle("active", item.getAttribute("href") === `#${entry.target.id}`));
+      });
+    }, { rootMargin: "-20% 0px -70% 0px" });
+    sections.forEach(section => observer.observe(section));
+  </script>
+</body>
+</html>

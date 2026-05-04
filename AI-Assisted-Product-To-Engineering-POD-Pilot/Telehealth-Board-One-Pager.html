@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Experity Telehealth — Executive Overview</title>
+  <link rel="stylesheet" href="experity-onsite-agenda-reports.css" />
+  <style>
+    /* ─── One-Pager Overrides ─────────────────────────────── */
+    #sidenav { display: none; }
+    #main { margin-left: 0; padding: 0 48px 60px; max-width: 1100px; margin: 0 auto; }
+    header { padding: 48px 0 32px; }
+
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 24px 0 32px;
+    }
+    .kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 18px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--kc, var(--accent));
+    }
+    .kpi-card .kpi-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .kpi-card .kpi-value {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .kpi-card .kpi-sub {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    .product-map {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin: 20px 0 32px;
+    }
+    .prod-node {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px 14px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .2s;
+    }
+    .prod-node:hover { border-color: rgba(59,130,246,.4); }
+    .prod-node::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--pn-color, var(--accent));
+    }
+    .prod-node .pn-icon { font-size: 22px; margin-bottom: 8px; }
+    .prod-node .pn-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .prod-node .pn-desc {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+    .prod-node .pn-tag {
+      margin-top: 8px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .value-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin-bottom: 24px;
+    }
+    .value-section h3 {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .value-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .value-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 13px;
+      color: var(--subtext);
+      line-height: 1.55;
+    }
+    .value-item .vi-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+    .value-item strong { color: var(--text); }
+
+    .timeline-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      margin: 20px 0 32px;
+    }
+    .tl-phase {
+      padding: 16px 18px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      position: relative;
+    }
+    .tl-phase:last-child { border-right: none; }
+    .tl-phase::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--tl-c, var(--border));
+    }
+    .tl-phase .tl-label {
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .tl-phase .tl-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .tl-phase .tl-detail {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .risk-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+    .risk-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+    }
+    .risk-card h4 {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: 6px;
+    }
+    .risk-card p {
+      font-size: 12px;
+      color: var(--subtext);
+      line-height: 1.5;
+    }
+
+    .ask-box {
+      background: linear-gradient(135deg, rgba(34,197,94,.08), rgba(34,197,94,.04));
+      border: 1px solid rgba(34,197,94,.3);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin-top: 28px;
+    }
+    .ask-box h3 {
+      font-size: 16px;
+      font-weight: 800;
+      color: #4ade80;
+      margin-bottom: 8px;
+    }
+    .ask-box p {
+      font-size: 13.5px;
+      color: var(--subtext);
+      line-height: 1.6;
+    }
+    .ask-items {
+      list-style: none;
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .ask-items li {
+      font-size: 13px;
+      color: var(--subtext);
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+    .ask-items li::before {
+      content: '✓';
+      color: #4ade80;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .footer-note {
+      margin-top: 32px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media print {
+      body::before { display: none; }
+      #main { padding: 0 24px; }
+      .product-map { grid-template-columns: repeat(5, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<div id="main">
+
+  <!-- ══ Header ══════════════════════════════════════════════ -->
+  <header>
+    <div class="header-meta">
+      <span class="pill blue">Strategic Initiative</span>
+      <span class="pill purple">2026</span>
+    </div>
+    <h1>Experity Telehealth</h1>
+    <p class="subtitle">A unified virtual care experience embedded directly into the Experity platform — connecting patients, providers, and urgent care operations through AI-powered workflows from intake to documentation.</p>
+  </header>
+
+  <!-- ══ KPIs ════════════════════════════════════════════════ -->
+  <div class="kpi-row">
+    <div class="kpi-card" style="--kc: var(--accent);">
+      <div class="kpi-label">Product Workstreams</div>
+      <div class="kpi-value">5</div>
+      <div class="kpi-sub">Major product impacts across platform</div>
+    </div>
+    <div class="kpi-card" style="--kc: var(--green);">
+      <div class="kpi-label">Net-New Products</div>
+      <div class="kpi-value">2</div>
+      <div class="kpi-sub">Zero-to-one builds: Telehealth Connect &amp; Video Service</div>
+    </div>
+    <div class="kpi-card" style="--kc: var(--amber);">
+      <div class="kpi-label">Product Maturity</div>
+      <div class="kpi-value">High</div>
+      <div class="kpi-sub">Business process fully mapped; dependencies in progress</div>
+    </div>
+  </div>
+
+  <!-- ══ What We Are Building ═════════════════════════════════ -->
+  <div class="section-label"><span>What We Are Building</span></div>
+
+  <div class="product-map">
+    <div class="prod-node" style="--pn-color: #60a5fa;">
+      <div class="pn-icon">🧠</div>
+      <div class="pn-title">AI Scribe Extensions</div>
+      <div class="pn-desc">Telehealth-specific documentation, visit context, and real-time note generation</div>
+      <div class="pn-tag" style="background: rgba(59,130,246,.12); color: var(--accent2);">Enhancement</div>
+    </div>
+    <div class="prod-node" style="--pn-color: #4ade80;">
+      <div class="pn-icon">💬</div>
+      <div class="pn-title">Telehealth Connect Skill</div>
+      <div class="pn-desc">Net-new Care Agent capability enabling virtual visit orchestration</div>
+      <div class="pn-tag" style="background: rgba(34,197,94,.12); color: #4ade80;">New Product</div>
+    </div>
+    <div class="prod-node" style="--pn-color: #a78bfa;">
+      <div class="pn-icon">📹</div>
+      <div class="pn-title">Video Wrapper Service</div>
+      <div class="pn-desc">Platform-native video infrastructure for provider-patient sessions</div>
+      <div class="pn-tag" style="background: rgba(167,139,250,.12); color: #a78bfa;">New Product</div>
+    </div>
+    <div class="prod-node" style="--pn-color: #fbbf24;">
+      <div class="pn-icon">🏥</div>
+      <div class="pn-title">EMR &amp; PM Integration</div>
+      <div class="pn-desc">Scheduling, charting, and practice management workflows for virtual visits</div>
+      <div class="pn-tag" style="background: rgba(245,158,11,.12); color: #fbbf24;">Integration</div>
+    </div>
+    <div class="prod-node" style="--pn-color: #f87171;">
+      <div class="pn-icon">💳</div>
+      <div class="pn-title">Payments &amp; E-Registration</div>
+      <div class="pn-desc">Patient intake, consent, and payment capture tailored for telehealth flow</div>
+      <div class="pn-tag" style="background: rgba(239,68,68,.12); color: #f87171;">Integration</div>
+    </div>
+  </div>
+
+  <!-- ══ Strategic Value ══════════════════════════════════════ -->
+  <div class="value-section">
+    <h3>📈 Strategic Value Proposition</h3>
+    <div class="value-grid">
+      <div class="value-item">
+        <div class="vi-dot"></div>
+        <div><strong>Market expansion</strong> — Enables Experity clients to offer virtual visits without third-party telehealth vendors, keeping patients and revenue inside the urgent care ecosystem.</div>
+      </div>
+      <div class="value-item">
+        <div class="vi-dot"></div>
+        <div><strong>AI-native differentiation</strong> — AI Scribe and Care Agent deliver automated documentation and patient orchestration that competitors cannot replicate without deep EMR integration.</div>
+      </div>
+      <div class="value-item">
+        <div class="vi-dot"></div>
+        <div><strong>Operational efficiency</strong> — Reduces manual coordination between intake, scheduling, charting, and billing by unifying the telehealth workflow inside the existing platform.</div>
+      </div>
+      <div class="value-item">
+        <div class="vi-dot"></div>
+        <div><strong>Revenue opportunity</strong> — Opens new visit volume for clients (after-hours, overflow, follow-up) and creates a platform-sticky service with recurring SaaS economics.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ Delivery Timeline ════════════════════════════════════ -->
+  <div class="section-label"><span>Delivery Approach</span></div>
+
+  <div class="timeline-strip">
+    <div class="tl-phase" style="--tl-c: #4ade80;">
+      <div class="tl-label">Phase 1</div>
+      <div class="tl-name">Definition &amp; Alignment</div>
+      <div class="tl-detail">Product requirements, integration mapping, dependency resolution</div>
+    </div>
+    <div class="tl-phase" style="--tl-c: #60a5fa;">
+      <div class="tl-label">Phase 2</div>
+      <div class="tl-name">Foundation Build</div>
+      <div class="tl-detail">Video service, Care Agent skill, AI Scribe feature extensions</div>
+    </div>
+    <div class="tl-phase" style="--tl-c: #a78bfa;">
+      <div class="tl-label">Phase 3</div>
+      <div class="tl-name">Integration &amp; Test</div>
+      <div class="tl-detail">EMR/PM connections, payments, e-reg, end-to-end validation</div>
+    </div>
+    <div class="tl-phase" style="--tl-c: #fbbf24;">
+      <div class="tl-label">Phase 4</div>
+      <div class="tl-name">Pilot &amp; Scale</div>
+      <div class="tl-detail">Client pilot, feedback loops, production rollout</div>
+    </div>
+  </div>
+
+  <!-- ══ Key Risks & Dependencies ═════════════════════════════ -->
+  <div class="section-label"><span>Key Risks &amp; Dependencies</span></div>
+
+  <div class="risk-row">
+    <div class="risk-card">
+      <h4 style="color: #f87171;">Cross-Product Coordination</h4>
+      <p>Five workstreams touch separate product and engineering teams. Sequencing and shared interfaces require intentional orchestration.</p>
+    </div>
+    <div class="risk-card">
+      <h4 style="color: #fbbf24;">External Dependencies</h4>
+      <p>Video infrastructure vendor selection, carrier integrations, and regulatory compliance (state licensing, consent) carry timeline risk.</p>
+    </div>
+    <div class="risk-card">
+      <h4 style="color: var(--accent2);">AI Model Readiness</h4>
+      <p>AI Scribe and Care Agent extensions require new prompt engineering, telehealth-specific training data, and quality validation before clinical use.</p>
+    </div>
+  </div>
+
+  <!-- ══ Footer ═══════════════════════════════════════════════ -->
+  <div class="footer-note">
+    Experity · Telehealth Initiative · Strategic Overview · Confidential
+  </div>
+
+</div>
+
+</body>
+</html>

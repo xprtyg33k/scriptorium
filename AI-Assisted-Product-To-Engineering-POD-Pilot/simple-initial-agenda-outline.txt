@@ -1,0 +1,26 @@
+2-Day Onsite Exercise Overview
+Here is the the rough outline for the 2-day onsite exercise we’re planning around the telehealth work. The purpose of this session is to improve the product process and create a cleaner, more intentional handoff into engineering. This is not meant to be an engineering design session on day one. The focus is to make sure the work is clearly defined before execution begins.
+ 
+Day 1 - Wednesday: Product working session
+The first day will focus on product definition and requirements clarity. We’ll start from the existing telehealth proposal and related materials, then work toward producing the core artifacts needed to move the initiative forward. That likely includes a PRD, a clearer breakdown of the scope, and a draft plan that can serve as the foundation for execution.
+The objective on Wednesday is to make sure we are aligned on:
+what problem we are solving,
+what the goal of the initiative is,
+what artifacts need to exist,
+and what level of clarity is required before engineering picks it up.
+This session is intended to help us avoid vague handoffs, incomplete requirements, and the pattern where engineering is expected to fill in too many gaps on the fly.
+ 
+Day 2 - Thursday: Blind validation with Engineering
+The second day will focus on validating the output from Wednesday with Engineering and Architecture. The idea is to put the resulting artifacts in front of engineering leadership with limited additional context and see whether the work is understandable, actionable, and sufficiently well defined.
+The goal on Thursday is to answer questions like:
+Do the artifacts give enough clarity to move into execution?
+What questions remain unanswered?
+Where is the product definition still too ambiguous?
+What additional detail is needed before implementation begins?
+If the materials hold up under that review, then we know we have a stronger process and a better starting point for delivery. If they do not, then that gives us immediate feedback on what needs to improve.
+ 
+Intended outcome
+The intended outcome of the 2-day exercise is to establish a better working model where:
+product does the upfront definition work,
+engineering and architecture validate the inputs,
+and execution starts with better clarity and less ambiguity.

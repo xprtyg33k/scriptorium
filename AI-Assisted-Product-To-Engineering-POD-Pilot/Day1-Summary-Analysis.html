@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Day 1 — Summary, Analysis &amp; Evaluation</title>
+  <link rel="stylesheet" href="experity-onsite-agenda-reports.css" />
+  <style>
+    /* ─── Page-specific overrides ───────────────────────────── */
+    .eval-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .eval-session-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+    }
+    .eval-session-card .esc-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .eval-session-card .esc-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .eval-session-card .esc-time {
+      font-size: 10px;
+      color: var(--muted);
+    }
+    .score-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+    .score-row .sr-label {
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .overall-score-ring {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      padding: 20px 0;
+    }
+    .ring-wrap {
+      position: relative;
+      width: 90px; height: 90px;
+      flex-shrink: 0;
+    }
+    .ring-svg { transform: rotate(-90deg); }
+    .ring-bg { stroke: var(--surface2); }
+    .ring-fill { stroke: var(--green); stroke-linecap: round; transition: stroke-dashoffset .8s ease; }
+    .ring-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .ring-center .ring-val {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1;
+    }
+    .ring-center .ring-sub {
+      font-size: 9px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+    .ring-meta h3 { font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+    .ring-meta p  { font-size: 13px; color: var(--subtext); line-height: 1.6; }
+    .insight-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .retro-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .retro-col {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+    }
+    .retro-col h4 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .retro-col.went-well h4  { color: #4ade80; }
+    .retro-col.got-stuck h4  { color: #fbbf24; }
+    .retro-col.next-time h4  { color: var(--accent2); }
+    .retro-col ul { list-style: none; }
+    .retro-col ul li {
+      font-size: 12.5px;
+      color: var(--subtext);
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(255,255,255,.04);
+      line-height: 1.5;
+    }
+    .retro-col ul li:last-child { border-bottom: none; }
+  </style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<!-- Sidebar Navigation -->
+<nav id="sidenav">
+  <div class="nav-logo">
+    <div class="day-badge">Day 1 · Summary</div>
+    <h2>Wednesday · Apr 30, 2026</h2>
+  </div>
+  <a class="nav-item" href="#overview">    <span>📊</span> Overview &amp; Score    <span class="time-tag">Top</span></a>
+  <a class="nav-item" href="#prework">     <span>🗣️</span> Pre-Work Analysis    <span class="time-tag">Pre</span></a>
+  <a class="nav-item" href="#s0-eval">     <span>🎯</span> S0 · Opening          <span class="time-tag">9:30</span></a>
+  <a class="nav-item" href="#s1-eval">     <span>📋</span> S1 · Outcome Brief    <span class="time-tag">10:00</span></a>
+  <a class="nav-item" href="#s2-eval">     <span>🔍</span> S2 · MVP Scope        <span class="time-tag">11:15</span></a>
+  <a class="nav-item" href="#s3-eval">     <span>🗺️</span> S3 · Workflow         <span class="time-tag">12:45</span></a>
+  <a class="nav-item" href="#s4-eval">     <span>✂️</span> S4 · Exec Slices      <span class="time-tag">2:15</span></a>
+  <a class="nav-item" href="#s5-eval">     <span>📦</span> S5 · Cleanup          <span class="time-tag">3:15</span></a>
+  <a class="nav-item" href="#s6-eval">     <span>✅</span> S6 · Gate Decision    <span class="time-tag">4:15</span></a>
+  <a class="nav-item" href="#insights">    <span>💡</span> Key Insights          <span class="time-tag">Key</span></a>
+  <a class="nav-item" href="#openqs">      <span>❓</span> Open Questions        <span class="time-tag">OQ</span></a>
+  <a class="nav-item" href="#retro">       <span>🔁</span> Retrospective         <span class="time-tag">Retro</span></a>
+</nav>
+
+<div id="main">
+
+  <!-- ══ Header ══════════════════════════════════════════════ -->
+  <header>
+    <div class="header-meta">
+      <span class="pill blue">Wednesday · April 30, 2026</span>
+      <span class="pill green">Post-Session Analysis</span>
+      <span class="pill purple">AI-Native PDLC Phase 1</span>
+    </div>
+    <h1>Day 1 Summary,<br>Analysis &amp; Evaluation</h1>
+    <p class="subtitle">
+      Comprehensive evaluation of the Product Definition Working Session against the planned agenda.
+      This report synthesizes the pre-work transcript, session outputs, and artifact readiness
+      to produce an honest gate assessment ahead of Day 2 blind validation.
+    </p>
+  </header>
+
+  <!-- PDLC Flow -->
+  <div class="pdlc-flow">
+    <div class="pdlc-step done">
+      <div class="step-label">Step 1 · Complete</div>
+      <div class="step-name">Signal</div>
+      <div class="step-sub">VoC, telehealth proposal, stakeholder inputs</div>
+    </div>
+    <div class="pdlc-step done">
+      <div class="step-label">Step 2 · Day 1 ✓</div>
+      <div class="step-name">Context</div>
+      <div class="step-sub">Working brief drafted from live sources</div>
+    </div>
+    <div class="pdlc-step done">
+      <div class="step-label">Step 3 · Day 1 ✓</div>
+      <div class="step-name">Decision</div>
+      <div class="step-sub">Tradeoffs, rationale, and scope decisions made</div>
+    </div>
+    <div class="pdlc-step active">
+      <div class="step-label">Step 4 · Thursday</div>
+      <div class="step-name">Execution</div>
+      <div class="step-sub">PRDs, PLDs, delivery handoffs — pending Day 2</div>
+    </div>
+    <div class="pdlc-step">
+      <div class="step-label">Step 5 · Ongoing</div>
+      <div class="step-name">Memory</div>
+      <div class="step-sub">Decisions &amp; outputs written back</div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-card" style="--c: var(--green)">
+      <div class="label">Overall Readiness</div>
+      <div class="value">78%</div>
+      <div class="sub">Proceed with named risks</div>
+    </div>
+    <div class="stat-card" style="--c: var(--accent)">
+      <div class="label">Sessions Completed</div>
+      <div class="value">7 / 7</div>
+      <div class="sub">All agenda blocks covered</div>
+    </div>
+    <div class="stat-card" style="--c: var(--amber)">
+      <div class="label">Open Questions</div>
+      <div class="value">9</div>
+      <div class="sub">5 critical, 4 advisory</div>
+    </div>
+    <div class="stat-card" style="--c: #818cf8">
+      <div class="label">Gate Decision</div>
+      <div class="value">Proceed⚑</div>
+      <div class="sub">With named risks flagged</div>
+    </div>
+  </div>
+
+  <!-- ══ Overview & Score ════════════════════════════════════ -->
+  <div class="section-label" id="overview"><span>Overall Assessment</span></div>
+
+  <div class="block open">
+    <div class="block-header" onclick="toggleBlock(this)">
+      <div class="block-icon" style="background:rgba(34,197,94,.1)">📊</div>
+      <div class="block-title-group">
+        <div class="block-title">Day 1 Readiness Scorecard</div>
+        <div class="block-desc">Aggregate evaluation across all 7 agenda sessions</div>
+      </div>
+      <div class="block-tags">
+        <span class="tag" style="background:rgba(34,197,94,.1);color:#4ade80">Score: 78%</span>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div class="block-body">
+      <div class="block-inner">
+        <div class="objective-intro">
+          Day 1 achieved its primary objective: the core Context and Decision layers of the AI-Native PDLC are populated for the
+          Telehealth initiative. The pre-work session with Chris surfaced critical strategic clarity that strengthened the entire day's framing.
+          The artifact pack is substantive enough to support Thursday's blind validation, with five named risks that Engineering should probe.
+        </div>
+
+        <div class="content-grid">
+          <div>
+            <div class="overall-score-ring">
+              <div class="ring-wrap">
+                <svg class="ring-svg" width="90" height="90" viewBox="0 0 90 90">
+                  <circle class="ring-bg" cx="45" cy="45" r="38" stroke-width="7" fill="none"/>
+                  <circle class="ring-fill" cx="45" cy="45" r="38" stroke-width="7" fill="none"
+                    stroke-dasharray="238.8"
+                    stroke-dashoffset="52.5"/>
+                </svg>
+                <div class="ring-center">
+                  <span class="ring-val">78</span>
+                  <span class="ring-sub">/ 100</span>
+                </div>
+              </div>
+              <div class="ring-meta">
+                <h3>Proceed with Named Risks</h3>
+                <p>The artifact pack is ready for Thursday's blind validation. Five specific gaps are explicitly flagged for Engineering to probe — these are acknowledged risks, not hidden ones.</p>
+              </div>
+            </div>
+
+            <div style="margin-top: 16px;">
+              <div class="score-row">
+                <span class="sr-label">Problem Statement &amp; Goal Clarity</span>
+                <span class="score-label" style="--sf-color: #4ade80">88%</span>
+              </div>
+              <div class="score-bar-wrap">
+                <div class="score-bar"><div class="score-fill" style="width:88%; --sf-color: #4ade80"></div></div>
+              </div>
+
+              <div class="score-row" style="margin-top:10px">
+                <span class="sr-label">MVP Scope Boundary Definition</span>
+                <span class="score-label" style="--sf-color: #4ade80">82%</span>
+              </div>
+              <div class="score-bar-wrap">
+                <div class="score-bar"><div class="score-fill" style="width:82%; --sf-color: #4ade80"></div></div>
+              </div>
+
+              <div class="score-row" style="margin-top:10px">
+                <span class="sr-label">Workflow &amp; Integration Context</span>
+                <span class="score-label" style="--sf-color: #fbbf24">71%</span>
+              </div>
+              <div class="score-bar-wrap">
+                <div class="score-bar"><div class="score-fill" style="width:71%; --sf-color: #fbbf24"></div></div>
+              </div>
+
+              <div class="score-row" style="margin-top:10px">
+                <span class="sr-label">Execution Slice Definition</span>
+                <span class="score-label" style="--sf-color: #fbbf24">75%</span>
+              </div>
+              <div class="score-bar-wrap">
+                <div class="score-bar"><div class="score-fill" style="width:75%; --sf-color: #fbbf24"></div></div>
+              </div>
+
+              <div class="score-row" style="margin-top:10px">
+                <span class="sr-label">Artifact Pack Completeness</span>
+                <span class="score-label" style="--sf-color: var(--accent2)">80%</span>
+              </div>
+              <div class="score-bar-wrap">
+                <div class="score-bar"><div class="score-fill" style="width:80%; --sf-color: var(--accent2)"></div></div>
+              </div>
+
+              <div class="score-row" style="margin-top:10px">
+                <span class="sr-label">Blind-Test Readiness</span>
+                <span class="score-label" style="--sf-color: #fbbf24">70%</span>
+              </div>
+              <div class="score-bar-wrap">
+                <div class="score-bar"><div class="score-fill" style="width:70%; --sf-color: #fbbf24"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="eval-grid" style="grid-template-columns: 1fr; margin-top: 0;">
+              <div class="eval-session-card">
+                <div class="esc-header">
+                  <span class="esc-title">S0 · Opening &amp; Alignment</span>
+                  <span class="eval-badge eval-strong">Strong</span>
+                </div>
+                <div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:90%; --sf-color: #4ade80"></div></div><span class="score-label" style="--sf-color:#4ade80">90%</span></div>
+              </div>
+              <div class="eval-session-card">
+                <div class="esc-header">
+                  <span class="esc-title">S1 · Product Outcome Brief</span>
+                  <span class="eval-badge eval-strong">Strong</span>
+                </div>
+                <div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:85%; --sf-color: #4ade80"></div></div><span class="score-label" style="--sf-color:#4ade80">85%</span></div>
+              </div>
+              <div class="eval-session-card">
+                <div class="esc-header">
+                  <span class="esc-title">S2 · MVP Scope &amp; Exclusions</span>
+                  <span class="eval-badge eval-good">Good</span>
+                </div>
+                <div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:80%; --sf-color: var(--accent2)"></div></div><span class="score-label" style="--sf-color:var(--accent2)">80%</span></div>
+              </div>
+              <div class="eval-session-card">
+                <div class="esc-header">
+                  <span class="esc-title">S3 · Workflow &amp; Context</span>
+                  <span class="eval-badge eval-partial">Partial</span>
+                </div>
+                <div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:68%; --sf-color: #fbbf24"></div></div><span class="score-label" style="--sf-color:#fbbf24">68%</span></div>
+              </div>
+              <div class="eval-session-card">
+                <div class="esc-header">
+                  <span class="esc-title">S4 · Execution Slices</span>
+                  <span class="eval-badge eval-partial">Partial</span>
+                </div>
+                <div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:72%; --sf-color: #fbbf24"></div></div><span class="score-label" style="--sf-color:#fbbf24">72%</span></div>
+              </div>
+              <div class="eval-session-card">
+                <div class="esc-header">
+                  <span class="esc-title">S5 · Artifact Cleanup</span>
+                  <span class="eval-badge eval-good">Good</span>
+                </div>
+                <div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:78%; --sf-color: var(--accent2)"></div></div><span class="score-label" style="--sf-color:var(--accent2)">78%</span></div>
+              </div>
+              <div class="eval-session-card">
+                <div class="esc-header">
+                  <span class="esc-title">S6 · Gate Decision</span>
+                  <span class="eval-badge eval-good">Complete</span>
+                </div>
+                <div class="score-bar-wrap"><div class="score-bar"><div class="score-fill" style="width:82%; --sf-color: var(--accent2)"></div></div><span class="score-label" style="--sf-color:var(--accent2)">82%</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ Pre-Work Analysis ════════════════════════════════════ -->
+  <div class="section-label" id="prework"><span>Pre-Work</span></div>
+
+  <div class="block open">
+    <div class="block-header" onclick="toggleBlock(this)">
+      <div class="block-icon" style="background:rgba(99,102,241,.12)">🗣️</div>
+      <div class="block-title-group">
+        <div class="block-title">Pre-Work Session Analysis — Chris &amp; Guillermo (Apr 27)</div>
+        <div class="block-desc">Strategic alignment conversation that shaped Day 1 — key insights extracted from transcript</div>
+      </div>
+      <div class="block-tags">
+        <span class="tag" style="background:rgba(34,197,94,.1);color:#4ade80">High Value</span>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div class="block-body">
+      <div class="block-inner">
+        <div class="objective-intro">
+          The April 27th pre-work session with Chris was not a planning call — it was a strategic framing session that surfaced insights
+          that are foundational to the AI-Native PDLC model. These insights were directly incorporated into the Day 1 agenda and talking points.
+        </div>
+
+        <div class="insight-grid">
+          <div class="insight-card" style="--ic-color: #4ade80">
+            <div class="ic-label">🔑 Bottleneck Shift</div>
+            <p>Development is no longer the long pole in the tent. The CICD pipeline is now ~5 minutes. The constraint has moved upstream to Product definition. This reframes the urgency of the entire exercise.</p>
+          </div>
+          <div class="insight-card" style="--ic-color: var(--accent2)">
+            <div class="ic-label">🔑 Telehealth Complexity</div>
+            <p>Telehealth is not one feature — it has 5+ distinct product impacts: AI Scribe extensions, Care Agent Telehealth Connect skill (zero-to-one), video wrapper service, payments, and e-reg integration. Each requires its own definition layer.</p>
+          </div>
+          <div class="insight-card" style="--ic-color: #fbbf24">
+            <div class="ic-label">🔑 Context Funnel Lesson</div>
+            <p>In the prior POC with Lauren, the agents were ready to code integrations but the table structures weren't provided until the next day — causing a one-day stall. The lesson: load the funnel completely before agents start.</p>
+          </div>
+          <div class="insight-card" style="--ic-color: #a5b4fc">
+            <div class="ic-label">🔑 Experimentation Model</div>
+            <p>Code is cheap now. We should run two prototypes and pick the winner. Engineering should be involved earlier — not as ticket-takers, but as active contributors to early experiments. "Throwaway code" is no longer waste; it's signal.</p>
+          </div>
+          <div class="insight-card" style="--ic-color: #f87171">
+            <div class="ic-label">🔑 Process Incompressibility</div>
+            <p>The product process cannot be compressed the way code can. The fix is not to rush requirements — it is to break the front-heavy process into smaller, outcome-based slices so agile experimentation can begin earlier.</p>
+          </div>
+          <div class="insight-card" style="--ic-color: #4ade80">
+            <div class="ic-label">🔑 Engineering Autonomy</div>
+            <p>Chris and Guillermo aligned: engineers should not be waiting for tickets. Clear objectives + durable memory = autonomous action. The process should create clarity, not constraint — engineering empowerment through shared context.</p>
+          </div>
+        </div>
+
+        <div class="content-grid" style="margin-top:14px">
+          <div class="content-card">
+            <h4>✅ What the Pre-Work Validated</h4>
+            <ul>
+              <li><span class="dot"></span>The telehealth plan is mature — full spec exists top-to-bottom. Day 1 is about distilling, not inventing.</li>
+              <li><span class="dot"></span>EMR interactions are already mapped by the team — bring the existing doc, confirm scope.</li>
+              <li><span class="dot"></span>Contractors expected within weeks — artifacts must be POD-ready for handoff.</li>
+              <li><span class="dot"></span>Andrew's video wrapper POC exists — treat as input artifact, not build scope for this sprint.</li>
+              <li><span class="dot"></span>AI Scribe work: extension to an existing product — existing codebase context matters.</li>
+              <li><span class="dot"></span>Care Agent Telehealth Connect skill: zero-to-one — no existing integration baseline.</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>⚠️ Gaps the Pre-Work Exposed</h4>
+            <ul>
+              <li><span class="dot"></span>The current PDLC documentation does not account for early experimentation cycles before full product definition is complete.</li>
+              <li><span class="dot"></span>No clear model yet for how engineering contributes during the "front-heavy" product process without waiting for full PRD.</li>
+              <li><span class="dot"></span>Dependencies on payments and e-reg are known but not yet structured — risk for future sprints.</li>
+              <li><span class="dot"></span>The Care Agent skill dependencies (carrier integrations, EMR event types) have open questions that need an owner.</li>
+              <li><span class="dot"></span>Artifact location and folder taxonomy need to be set so outputs are AI-accessible, not on personal drives.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ Session Evaluations ══════════════════════════════════ -->
+  <div class="section-label"><span>Session-by-Session Evaluation</span></div>
+
+  <!-- S0 -->
+  <div class="block" id="s0-eval">
+    <div class="block-header" onclick="toggleBlock(this)">
+      <div class="time-pill">9:30 – 10:00</div>
+      <div class="block-icon" style="background:rgba(59,130,246,.12)">🎯</div>
+      <div class="block-title-group">
+        <div class="block-title">S0 · Opening &amp; Intent Alignment</div>
+        <div class="block-desc">Planned: 30 min · Actual: 30 min · Score: 90%</div>
+      </div>
+      <div class="block-tags">
+        <span class="eval-badge eval-strong">Strong — 90%</span>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div class="block-body">
+      <div class="block-inner">
+        <div class="objective-intro">
+          The opening session landed well. The room quickly aligned on shared intent and the AI-Native PDLC framing gave a clear operating model for the day. The "bottleneck has moved upstream" narrative from the Chris transcript resonated and set the right tone.
+        </div>
+        <div class="content-grid">
+          <div class="content-card">
+            <h4>✅ What Landed</h4>
+            <ul>
+              <li><span class="dot"></span>Shared understanding established: today is Product definition, not engineering solutioning.</li>
+              <li><span class="dot"></span>PDLC model (Signal → Context → Decision → Execution → Memory) adopted as the day's operating frame.</li>
+              <li><span class="dot"></span>Verbal alignment on artifact location confirmed — shared SharePoint folder over personal drives.</li>
+              <li><span class="dot"></span>Artifact owners assigned for each deliverable before moving to session 1.</li>
+              <li><span class="dot"></span>"Wood chipper" metaphor for context loading was well-received and set urgency for the artifact sessions.</li>
+              <li><span class="dot"></span>Thursday logistics confirmed: Isaac in-person, Andrew remote. Pre-read by 5:00 PM today.</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>⚠️ Gaps &amp; Risks</h4>
+            <ul>
+              <li><span class="dot"></span>The artifact storage folder naming convention was verbally confirmed but not yet written into the day's artifacts — requires cleanup in S5.</li>
+              <li><span class="dot"></span>Lauren was present but artifact quality ownership role was loosely defined; clarify in S5 who owns the cold-read gate.</li>
+              <li><span class="dot"></span>Matt joined but participation level in producing vs. reviewing wasn't explicitly set — minor process gap.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="exit-criteria">
+          <h4>✅ Exit Criteria — Status</h4>
+          <ul>
+            <li><input type="checkbox" checked> One shared objective written and visible to everyone</li>
+            <li><input type="checkbox" checked> Artifact storage location confirmed and accessible</li>
+            <li><input type="checkbox" checked> Everyone agrees: today is Product definition, not engineering solutioning</li>
+            <li><input type="checkbox" checked> Artifact owners named for each deliverable</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S1 -->
+  <div class="block" id="s1-eval">
+    <div class="block-header" onclick="toggleBlock(this)">
+      <div class="time-pill">10:00 – 11:15</div>
+      <div class="block-icon" style="background:rgba(99,102,241,.12)">📋</div>
+      <div class="block-title-group">
+        <div class="block-title">S1 · Product Outcome Brief</div>
+        <div class="block-desc">Planned: 75 min · Actual: ~80 min · Score: 85%</div>
+      </div>
+      <div class="block-tags">
+        <span class="eval-badge eval-strong">Strong — 85%</span>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div class="block-body">
+      <div class="block-inner">
+        <div class="objective-intro">
+          The Product Outcome Brief session produced the strongest single artifact of the day. The team successfully distilled the mature telehealth plan into a clear problem statement, identified target personas, and defined a measurable success metric. The telehealth complexity (5+ product impacts) was surfaced and properly decomposed.
+        </div>
+        <div class="content-grid">
+          <div class="content-card">
+            <h4>✅ What Landed</h4>
+            <ul>
+              <li><span class="dot"></span>Problem statement written in plain language — passes the cold-read test.</li>
+              <li><span class="dot"></span>Target user and workflow clearly identified: clinic staff initiating telehealth visits via Care Agent + AI Scribe.</li>
+              <li><span class="dot"></span>Business outcome articulated: reduce visit setup friction, improve Scribe coverage for telehealth encounters.</li>
+              <li><span class="dot"></span>Success metric defined — specific and measurable, not directional.</li>
+              <li><span class="dot"></span>Strategic rationale for telehealth captured: contractor-ready timeline, mature product spec, fast-follow potential.</li>
+              <li><span class="dot"></span>Ran 5 minutes over — absorbed without material disruption to the day.</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>⚠️ Gaps &amp; Risks</h4>
+            <ul>
+              <li><span class="dot"></span>The five distinct product impacts (Scribe, Care Agent skill, video, payments, e-reg) are surfaced but only the first two are fully defined in the brief — remaining three need at least a "known future" entry.</li>
+              <li><span class="dot"></span>Patient-facing persona vs. clinic-staff persona: brief leans toward clinic staff. Thursday's Engineering team should probe whether patient experience is in scope for this MVP.</li>
+              <li><span class="dot"></span>Strategic rationale could be stronger — the "why telehealth, why now" section mentions contractor readiness but doesn't capture the market timing argument that was discussed verbally.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="exit-criteria">
+          <h4>✅ Exit Criteria — Status</h4>
+          <ul>
+            <li><input type="checkbox" checked> Problem statement written in plain language</li>
+            <li><input type="checkbox" checked> Target user and workflow clearly identified</li>
+            <li><input type="checkbox" checked> Business outcome specific and agreed upon</li>
+            <li><input type="checkbox" checked> At least one measurable success metric defined</li>
+            <li><input type="checkbox"> Brief saved to shared artifact location — <em style="color:#fbbf24">verify in S5 cleanup</em></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S2 -->
+  <div class="block" id="s2-eval">
+    <div class="block-header" onclick="toggleBlock(this)">
+      <div class="time-pill">11:15 – 12:00</div>
+      <div class="block-icon" style="background:rgba(34,197,94,.1)">🔍</div>
+      <div class="block-title-group">
+        <div class="block-title">S2 · MVP Scope &amp; Explicit Exclusions</div>
+        <div class="block-desc">Planned: 45 min · Actual: 45 min · Score: 80%</div>
+      </div>
+      <div class="block-tags">
+        <span class="eval-badge eval-good">Good — 80%</span>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div class="block-body">
+      <div class="block-inner">
+        <div class="objective-intro">
+          MVP scope definition was productive. The team agreed to focus on AI Scribe extensions (Slice 1) as the primary MVP, with Care Agent skill as a parallel track. The explicit exclusions list was built — payments, e-reg, and full video integration all explicitly deferred. The "acceptance signals" section needs strengthening before Thursday.
+        </div>
+        <div class="content-grid">
+          <div class="content-card">
+            <h4>✅ What Landed</h4>
+            <ul>
+              <li><span class="dot"></span>MVP scope boundary is written and agreed — AI Scribe extensions + Care Agent Telehealth Connect skill as the primary targets.</li>
+              <li><span class="dot"></span>Explicit exclusions list built: payments, e-reg, full video integration wrapper, cross-system reporting — all explicitly deferred.</li>
+              <li><span class="dot"></span>Andrew's video wrapper acknowledged as input POC, not build scope — correctly framed.</li>
+              <li><span class="dot"></span>Assumptions documented: EMR APIs available, existing Scribe codebase accessible, contractors arrive within 2 weeks.</li>
+              <li><span class="dot"></span>The team resisted scope creep — multiple "not in scope" decisions made and held.</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>⚠️ Gaps &amp; Risks</h4>
+            <ul>
+              <li><span class="dot"></span>Acceptance signals are still directional ("clinics can initiate visits") — need to be expressed as observable, measurable outcomes before Thursday.</li>
+              <li><span class="dot"></span>Open question on slice ordering: is AI Scribe truly slice 1, or should Care Agent skill come first given the zero-to-one risk? Not explicitly resolved.</li>
+              <li><span class="dot"></span>The "minimum 3 explicit exclusions" criterion was met, but the rationale behind each exclusion was not written — Engineering may question why payments were deferred.</li>
+              <li><span class="dot"></span>Dependencies on Care Agent carrier integrations: flagged as open but no owner assigned yet.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="exit-criteria">
+          <h4>✅ Exit Criteria — Status</h4>
+          <ul>
+            <li><input type="checkbox" checked> MVP scope boundary written and agreed</li>
+            <li><input type="checkbox" checked> Explicit exclusions listed (minimum 3)</li>
+            <li><input type="checkbox" checked> Assumptions documented</li>
+            <li><input type="checkbox" checked> Open questions named with tentative owners</li>
+            <li><input type="checkbox"> Acceptance signals defined — <em style="color:#fbbf24">directional only; needs hardening</em></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S3 -->
+  <div class="block" id="s3-eval">
+    <div class="block-header" onclick="toggleBlock(this)">
+      <div class="time-pill">12:45 – 2:15</div>
+      <div class="block-icon" style="background:rgba(245,158,11,.1)">🗺️</div>
+      <div class="block-title-group">
+        <div class="block-title">S3 · Workflow Map &amp; Known Context</div>
+        <div class="block-desc">Planned: 90 min · Actual: 85 min · Score: 68%</div>
+      </div>
+      <div class="block-tags">
+        <span class="eval-badge eval-partial">Partial — 68%</span>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div class="block-body">
+      <div class="block-inner">
+        <div class="objective-intro">
+          This was the most important session for agent-readiness and it showed the largest gap. Current and desired workflows were documented, but the integration context — specifically the systems inventory and dependency map — remained partially complete at the end of the session. Chris's lesson from the prior POC ("bring integration context to kickoff") is the exact risk here.
+        </div>
+        <div class="content-grid">
+          <div class="content-card">
+            <h4>✅ What Landed</h4>
+            <ul>
+              <li><span class="dot"></span>Current workflow (as-is) documented step by step for the primary AI Scribe use case.</li>
+              <li><span class="dot"></span>Desired workflow (to-be) written for both AI Scribe and Care Agent skill at a high level.</li>
+              <li><span class="dot"></span>Key systems identified: EMR, AI Scribe codebase, Care Agent platform, video wrapper service.</li>
+              <li><span class="dot"></span>EMR interaction type clarified: read + write for encounter context, event-driven for visit initiation.</li>
+              <li><span class="dot"></span>Pain points in the current flow captured — manual steps, context-switching, lack of scribe coverage for telehealth encounters.</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>⚠️ Gaps &amp; Risks (HIGH)</h4>
+            <ul>
+              <li><span class="dot"></span><strong>Critical:</strong> The full systems integration map was not completed — Care Agent skill dependencies (carrier API specs, event schemas) are missing.</li>
+              <li><span class="dot"></span><strong>Critical:</strong> "Known dependencies with owners named" exit criterion was not fully met — 3 of 6 dependencies have no owner yet.</li>
+              <li><span class="dot"></span>The whiteboard workflow diagram was photographed but not embedded in the artifact — it is in someone's phone, not in the shared folder.</li>
+              <li><span class="dot"></span>Payment flow dependency: acknowledged but description in artifact is "TBD" — insufficient for Engineering validation.</li>
+              <li><span class="dot"></span>This is the session most likely to cause a Day 2 question that cannot be answered from the artifact alone.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="watchout">
+          <h4>⚠️ Watch-Out for Day 2</h4>
+          <ul>
+            <li>Engineering is most likely to probe integration context and surface gaps here — they should. That feedback is the intended output of the blind test for this section.</li>
+            <li>Flag to Thursday's team: the systems inventory is a known partial — Engineering feedback on what's missing will directly improve the artifact.</li>
+            <li>Whiteboard photo must be added to the artifact pack before 5:00 PM today or this section fails the blind-read test.</li>
+          </ul>
+        </div>
+        <div class="exit-criteria">
+          <h4>✅ Exit Criteria — Status</h4>
+          <ul>
+            <li><input type="checkbox" checked> Current and desired workflows documented step-by-step</li>
+            <li><input type="checkbox"> Every known system listed with interaction type — <em style="color:#f87171">PARTIAL — Care Agent skill dependencies incomplete</em></li>
+            <li><input type="checkbox"> Dependencies named with owners — <em style="color:#f87171">PARTIAL — 3 of 6 have no owner</em></li>
+            <li><input type="checkbox" checked> "We don't know" items captured as open questions</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S4 -->
+  <div class="block" id="s4-eval">
+    <div class="block-header" onclick="toggleBlock(this)">
+      <div class="time-pill">2:15 – 3:15</div>
+      <div class="block-icon" style="background:rgba(239,68,68,.1)">✂️</div>
+      <div class="block-title-group">
+        <div class="block-title">S4 · Candidate Execution Slices</div>
+        <div class="block-desc">Planned: 60 min · Actual: 65 min · Score: 72%</div>
+      </div>
+      <div class="block-tags">
+        <span class="eval-badge eval-partial">Partial — 72%</span>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div class="block-body">
+      <div class="block-inner">
+        <div class="objective-intro">
+          The execution slices session produced a solid Slice 1 definition but the validation gate and Slice 2 pre-conditions need hardening. The mindset shift from "no throwaway code" to "build to learn" was one of the strongest moments of the day — Chris's framing landed well and the team agreed to the experimentation model.
+        </div>
+        <div class="content-grid">
+          <div class="content-card">
+            <h4>✅ What Landed</h4>
+            <ul>
+              <li><span class="dot"></span>Slice 1 (AI Scribe extensions) defined as a product outcome — "clinicians can use Scribe during a telehealth encounter with the same fidelity as an in-person visit."</li>
+              <li><span class="dot"></span>Slice 2 (Care Agent Telehealth Connect skill) framed as a parallel track, not a sequential dependency.</li>
+              <li><span class="dot"></span>Slice 3 (video integration) explicitly deferred to fast-follow — parking lot entry made.</li>
+              <li><span class="dot"></span>Slice sequencing agreed and documented with rationale.</li>
+              <li><span class="dot"></span>Strong conceptual alignment on the new experimentation model: run two prototypes, get signal, pick the winner.</li>
+              <li><span class="dot"></span>Deferred items parking lot established — payments, e-reg, cross-system reporting all named.</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>⚠️ Gaps &amp; Risks</h4>
+            <ul>
+              <li><span class="dot"></span>Slice 1 validation gate is still stated as a quality indicator rather than a specific, binary observable event — Engineering will ask "how do we know when to move to Slice 2?"</li>
+              <li><span class="dot"></span>Slice 2 pre-conditions: Care Agent skill has zero-to-one risk and the pre-conditions depend on the integration context that S3 didn't fully resolve.</li>
+              <li><span class="dot"></span>The "outcome-framed" criterion is met for Slice 1 but borderline for Slice 2 — Engineering may reframe it as a technical task description.</li>
+              <li><span class="dot"></span>No engineering estimate or complexity signal requested — Thursday's blind test should surface whether these slices are sized correctly from Engineering's perspective.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="exit-criteria">
+          <h4>✅ Exit Criteria — Status</h4>
+          <ul>
+            <li><input type="checkbox" checked> Slice 1 defined as an outcome, not a task</li>
+            <li><input type="checkbox"> Slice 1 validation gate explicit — <em style="color:#fbbf24">stated as quality indicator, not binary event</em></li>
+            <li><input type="checkbox"> Slice 2 pre-conditions named — <em style="color:#fbbf24">dependent on S3 gaps</em></li>
+            <li><input type="checkbox" checked> Deferred items have parking lot entry with owner</li>
+            <li><input type="checkbox" checked> Team agrees on Slice 1 as the starting point</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S5 -->
+  <div class="block" id="s5-eval">
+    <div class="block-header" onclick="toggleBlock(this)">
+      <div class="time-pill">3:15 – 4:15</div>
+      <div class="block-icon" style="background:rgba(59,130,246,.12)">📦</div>
+      <div class="block-title-group">
+        <div class="block-title">S5 · Artifact Cleanup &amp; Pre-Read Package</div>
+        <div class="block-desc">Planned: 60 min · Actual: 60 min · Score: 78%</div>
+      </div>
+      <div class="block-tags">
+        <span class="eval-badge eval-good">Good — 78%</span>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div class="block-body">
+      <div class="block-inner">
+        <div class="objective-intro">
+          Artifact cleanup was productive. Lauren led the cleanup pass and Guillermo and Chris completed the cold-read review. Most sections passed the blind-test standard. The workflow diagram and a few open dependency entries were flagged and remain as overnight action items. Pre-read package was sent to Isaac and Andrew before 5:00 PM.
+        </div>
+        <div class="content-grid">
+          <div class="content-card">
+            <h4>✅ What Landed</h4>
+            <ul>
+              <li><span class="dot"></span>Cold read completed by Guillermo and Chris — flagged sections were fixed or marked explicitly as open questions.</li>
+              <li><span class="dot"></span>Acronyms and internal shorthand replaced with plain language on first use.</li>
+              <li><span class="dot"></span>All open questions now have a tentative owner and a due date.</li>
+              <li><span class="dot"></span>Exclusions section clearly labeled — not buried in prose.</li>
+              <li><span class="dot"></span>Success metric confirmed as measurable — directional language replaced.</li>
+              <li><span class="dot"></span>Pre-read package sent to Isaac and Andrew with the correct cover note framing Thursday's blind-test format.</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>⚠️ Gaps &amp; Risks</h4>
+            <ul>
+              <li><span class="dot"></span>Whiteboard workflow photo: confirmed captured, embed status in shared artifact TBD overnight.</li>
+              <li><span class="dot"></span>3 dependency entries in the systems inventory still have "TBD" as the owner — Isaac may probe these on Thursday.</li>
+              <li><span class="dot"></span>Folder naming convention confirmed verbally but the artifact folder path was not written into any of the artifacts — minor but real gap for AI-access.</li>
+              <li><span class="dot"></span>The Readiness &amp; Validation Log is pre-populated but the Day 1 decisions section needs final review before sharing — confirm Lauren reviewed this section.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="exit-criteria">
+          <h4>✅ Exit Criteria — Status</h4>
+          <ul>
+            <li><input type="checkbox" checked> All artifacts in shared location</li>
+            <li><input type="checkbox" checked> Cold read completed — no verbal-only sections remain</li>
+            <li><input type="checkbox" checked> Pre-read package sent to Thursday validators</li>
+            <li><input type="checkbox" checked> Cover note sets expectations for Thursday's blind session</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S6 -->
+  <div class="block open" id="s6-eval">
+    <div class="block-header" onclick="toggleBlock(this)">
+      <div class="time-pill">4:15 – 4:45</div>
+      <div class="block-icon" style="background:rgba(34,197,94,.1)">✅</div>
+      <div class="block-title-group">
+        <div class="block-title">S6 · Gate Decision &amp; Day 1 Close</div>
+        <div class="block-desc">Planned: 30 min · Actual: 30 min · Score: 82%</div>
+      </div>
+      <div class="block-tags">
+        <span class="eval-badge eval-good">Good — 82%</span>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div class="block-body">
+      <div class="block-inner">
+        <div class="gate-panel proceed-risk">
+          <h3 style="color:#fbbf24">⚑ Gate Decision: Proceed with Named Risks</h3>
+          <p>The artifact pack is ready for Thursday's blind validation. The integration context gaps in S3 and the validation gate ambiguity in S4 are explicitly flagged — Engineering should probe these directly. Thursday is ON. No pre-calls or previews with Isaac or Andrew.</p>
+        </div>
+
+        <div class="content-grid" style="margin-top:14px">
+          <div class="content-card">
+            <h4>🚦 Rationale for "Proceed with Named Risks"</h4>
+            <ul>
+              <li><span class="dot"></span>Problem statement, target user, and business outcome are clearly written and can survive a cold read.</li>
+              <li><span class="dot"></span>MVP scope and exclusions are explicit enough to support Engineering's review.</li>
+              <li><span class="dot"></span>The S3 integration gaps are known, documented, and flagged — Engineering probing these is a desired outcome of the blind test, not a failure mode.</li>
+              <li><span class="dot"></span>The packet is not perfect. A perfect packet is not the standard — a useful one is. This one is useful.</li>
+              <li><span class="dot"></span>Retro insights captured; process improvements identified for the next pod's Day 1.</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>🗓️ Thursday Confirmation</h4>
+            <ul>
+              <li><span class="dot"></span>Isaac: confirmed and available ✓</li>
+              <li><span class="dot"></span>Andrew: confirmed remote ✓</li>
+              <li><span class="dot"></span>Pre-read sent before 5:00 PM today ✓</li>
+              <li><span class="dot"></span>Thursday start time: 9:00 AM sharp ✓</li>
+              <li><span class="dot"></span>No previews or prep calls tonight ✓</li>
+              <li><span class="dot"></span>Cover note sets blind-read expectation ✓</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ Key Strategic Insights ══════════════════════════════ -->
+  <div class="section-label" id="insights"><span>Key Strategic Insights from Day 1</span></div>
+
+  <div class="principles-row">
+    <div class="principle-card" style="--pc: #3b82f6">
+      <div class="pc-num">1</div>
+      <h4>Bottleneck Has Moved</h4>
+      <p>Development time is no longer the constraint. With a 5-minute CICD pipeline and AI coding agents, the bottleneck is how fast Product can load the context funnel. Day 1 proved this in practice — sessions producing artifacts were faster than expected; integration context gathering was the limiting factor.</p>
+      <span class="pc-tag" style="background:rgba(59,130,246,.12);color:var(--accent2)">Confirmed in practice</span>
+    </div>
+    <div class="principle-card" style="--pc: #22c55e">
+      <div class="pc-num">2</div>
+      <h4>Complexity Requires Slicing</h4>
+      <p>Telehealth's 5+ product impacts make it impossible to define everything upfront without stalling. The answer is not more waterfall definition — it's disciplined slicing with explicit exclusions. Slice 1 is small enough to start while Slice 2+ are parked with rationale.</p>
+      <span class="pc-tag" style="background:rgba(34,197,94,.12);color:#4ade80">Validated on day 1</span>
+    </div>
+    <div class="principle-card" style="--pc: #818cf8">
+      <div class="pc-num">3</div>
+      <h4>Context = Agent Speed</h4>
+      <p>The prior POC lesson was replicated: the integration context gap in S3 is the exact type of blocker that stalled coding agents mid-sprint. Loading the funnel completely before agents start is not overhead — it's the critical path. S3 gaps must be resolved before Sprint 1 kickoff.</p>
+      <span class="pc-tag" style="background:rgba(129,140,248,.12);color:#a5b4fc">Critical for Sprint 1</span>
+    </div>
+  </div>
+
+  <!-- ══ Open Questions ══════════════════════════════════════ -->
+  <div class="section-label" id="openqs"><span>Open Questions — Prioritized</span></div>
+
+  <div class="block open">
+    <div class="block-header" onclick="toggleBlock(this)">
+      <div class="block-icon" style="background:rgba(245,158,11,.1)">❓</div>
+      <div class="block-title-group">
+        <div class="block-title">9 Open Questions Heading into Thursday</div>
+        <div class="block-desc">5 critical (must resolve before Sprint 1) · 4 advisory (resolve during Sprint 1)</div>
+      </div>
+      <div class="block-tags">
+        <span class="tag" style="background:rgba(239,68,68,.12);color:#f87171">5 Critical</span>
+        <span class="tag" style="background:rgba(245,158,11,.12);color:#fbbf24">4 Advisory</span>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div class="block-body">
+      <div class="block-inner">
+        <table class="oq-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Question</th>
+              <th>Owner</th>
+              <th>Priority</th>
+              <th>Blocks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>What are the Care Agent Telehealth Connect skill dependency APIs — specifically the carrier event schema and the EMR event types for visit initiation?</td>
+              <td>Chris / Andrew</td>
+              <td><span class="oq-priority oq-p1">P1 Critical</span></td>
+              <td>Slice 2 start</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>What is the specific, binary validation gate for Slice 1 completion — how will we know in a verifiable way when we can move to Slice 2?</td>
+              <td>Product Owner</td>
+              <td><span class="oq-priority oq-p1">P1 Critical</span></td>
+              <td>Sprint planning</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Does the patient-facing experience fall inside or outside the Slice 1 MVP boundary? The brief focuses on clinic staff — confirm patient UX scope.</td>
+              <td>Product Owner</td>
+              <td><span class="oq-priority oq-p1">P1 Critical</span></td>
+              <td>Engineering scope</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>What is the timeline and format of contractor onboarding? Contractors must receive the artifact pack — confirm who handles this and when.</td>
+              <td>Guillermo</td>
+              <td><span class="oq-priority oq-p1">P1 Critical</span></td>
+              <td>Contractor readiness</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>The whiteboard workflow diagram — is it embedded in the artifact folder yet, or is it still only on a phone?</td>
+              <td>Lauren</td>
+              <td><span class="oq-priority oq-p1">P1 Critical</span></td>
+              <td>Day 2 packet</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>Why is the payment integration explicitly deferred — is the rationale written in the exclusions section, or only discussed verbally?</td>
+              <td>Product Owner</td>
+              <td><span class="oq-priority oq-p2">P2 Advisory</span></td>
+              <td>Artifact quality</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>What is the artifact folder path and naming convention — is it documented anywhere so AI tools can locate and index it?</td>
+              <td>Lauren</td>
+              <td><span class="oq-priority oq-p2">P2 Advisory</span></td>
+              <td>AI access / memory</td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>Should engineering contribute to Slice 1 spec before Sprint 1 kickoff, or validate the spec cold on Thursday and then contribute in sprint?</td>
+              <td>Guillermo</td>
+              <td><span class="oq-priority oq-p2">P2 Advisory</span></td>
+              <td>Process design</td>
+            </tr>
+            <tr>
+              <td>9</td>
+              <td>Is this pilot pattern (Day 1 artifact creation + Day 2 blind validation) the right cadence for future pods, or does it need adjustment?</td>
+              <td>Guillermo + Chris</td>
+              <td><span class="oq-priority oq-p3">P3 Advisory</span></td>
+              <td>Future pods</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ Retrospective ════════════════════════════════════════ -->
+  <div class="section-label" id="retro"><span>Day 1 Retrospective</span></div>
+
+  <div class="block open">
+    <div class="block-header" onclick="toggleBlock(this)">
+      <div class="block-icon" style="background:rgba(99,102,241,.12)">🔁</div>
+      <div class="block-title-group">
+        <div class="block-title">Retro Insights — What We'd Do Differently Next Time</div>
+        <div class="block-desc">Pilot learnings to carry into future AI-enabled pod Day 1 sessions</div>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div class="block-body">
+      <div class="block-inner">
+        <div class="retro-row">
+          <div class="retro-col went-well">
+            <h4>✅ Went Well</h4>
+            <ul>
+              <li>Pre-work session with Chris surfaced insights that materially improved Day 1 framing — this pre-work format should be standard for every pod.</li>
+              <li>The "bottleneck has moved upstream" narrative landed quickly and kept Engineering solutioning off the table all day.</li>
+              <li>Slice 1 MVP definition was clean and outcome-framed — the team was rigorous about not letting features creep in.</li>
+              <li>Lauren's artifact cleanup pass caught several "verbal-only" sections — the cold-read review is a keeper.</li>
+              <li>Pre-read sent by 5:00 PM with the right cover note — Thursday validators received the packet clean.</li>
+              <li>The team held the "no waterfall" framing while still producing substantive artifacts — balance was right.</li>
+            </ul>
+          </div>
+          <div class="retro-col got-stuck">
+            <h4>⚡ Where We Got Stuck</h4>
+            <ul>
+              <li>S3 integration context: the team spent 30+ minutes on integration mapping but couldn't resolve the Care Agent skill dependencies — this is the prior POC lesson repeating. Need a pre-loaded systems inventory before Day 1 starts.</li>
+              <li>Slice validation gates: the team agreed on what each slice delivers but struggled to define a sharp binary gate. This is a new skill for Product — needs practice.</li>
+              <li>The whiteboard workflow diagram was created but not embedded — a simple process gap (photo → shared folder) that should be a Day 1 checklist item, not an afterthought.</li>
+              <li>Artifact folder path was confirmed verbally but not written anywhere — this undermines the AI-access goal of the memory layer.</li>
+            </ul>
+          </div>
+          <div class="retro-col next-time">
+            <h4>🔧 Do Differently Next Time</h4>
+            <ul>
+              <li>Add a "systems inventory pre-load" step before Day 1 — Engineering or Architecture provides a systems context document the day before, so S3 starts with a draft, not a blank page.</li>
+              <li>Add "validation gate definition" as an explicit skill-building exercise in S4 — provide a template with "observable event," "measurable signal," and "go/no-go binary" fields.</li>
+              <li>Assign a "logistics scribe" role in S0 — one person responsible for photo-to-folder, folder path documentation, and artifact naming throughout the day.</li>
+              <li>Run the pre-work session 48 hours before, not 72 hours — insights are fresher and participants have less time to drift from the framing.</li>
+              <li>For the next pod, include one Engineering representative in S3 specifically (not all day) to contribute integration context without turning Day 1 into an engineering session.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="notes-area" style="margin-top:14px">
+          <h4>📝 Additional Retro Notes</h4>
+          <textarea placeholder="Capture any additional retrospective observations, process improvement ideas, or pilot lessons to watch..."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day Summary -->
+  <div class="day-summary">
+    <h3>Day 1 Output — Ready for Thursday Blind Validation</h3>
+    <p>The following artifact pack was completed and sent to Isaac &amp; Andrew before 5:00 PM. These constitute the <strong>Context + Decision</strong> layer of the AI-Native PDLC for the Telehealth initiative. Five named risks are acknowledged and explicitly documented — Engineering should probe them directly on Thursday.</p>
+    <div class="output-grid">
+      <div class="output-item">
+        <div class="output-icon">📄</div>
+        <div class="output-text">
+          <strong>Product Outcome Brief ✓</strong>
+          Problem, target user, business outcome, success metric — passes cold read.
+        </div>
+      </div>
+      <div class="output-item">
+        <div class="output-icon">🔍</div>
+        <div class="output-text">
+          <strong>MVP / PRD Brief ✓</strong>
+          Scope, explicit exclusions (payments, e-reg, video integration), assumptions, open questions.
+        </div>
+      </div>
+      <div class="output-item">
+        <div class="output-icon">🗺️</div>
+        <div class="output-text">
+          <strong>Workflow &amp; Context Brief ⚑</strong>
+          Current + desired flows done. Systems inventory partial — Care Agent skill deps outstanding.
+        </div>
+      </div>
+      <div class="output-item">
+        <div class="output-icon">✂️</div>
+        <div class="output-text">
+          <strong>Candidate Execution Slices ⚑</strong>
+          Slice 1 outcome defined. Validation gate directional — needs binary hardening before Sprint 1.
+        </div>
+      </div>
+      <div class="output-item">
+        <div class="output-icon">📊</div>
+        <div class="output-text">
+          <strong>Readiness &amp; Validation Log ✓</strong>
+          9 open questions, all with owners. Day 1 decisions captured. 5 critical items flagged for Thursday.
+        </div>
+      </div>
+      <div class="output-item">
+        <div class="output-icon">📬</div>
+        <div class="output-text">
+          <strong>Pre-Read Sent ✓</strong>
+          Full artifact pack + blind-read cover note → Isaac &amp; Andrew. Confirmed before 5:00 PM.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /#main -->
+
+<!-- Live Clock -->
+<div id="live-clock">
+  <div class="dot-live"></div>
+  <span id="clock-time">--:-- --</span>
+</div>
+
+<script>
+  /* ─── Live Clock ─────────────────────────────────── */
+  function updateClock() {
+    const now = new Date();
+    const h = now.getHours();
+    const m = String(now.getMinutes()).padStart(2,'0');
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    const h12 = ((h + 11) % 12 + 1);
+    document.getElementById('clock-time').textContent = `${h12}:${m} ${ampm}`;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  /* ─── Scroll Progress Bar ────────────────────────── */
+  window.addEventListener('scroll', () => {
+    const el = document.documentElement;
+    const pct = (el.scrollTop / (el.scrollHeight - el.clientHeight)) * 100;
+    document.getElementById('progress-bar').style.width = pct + '%';
+  });
+
+  /* ─── Accordion ──────────────────────────────────── */
+  function toggleBlock(header) {
+    const block = header.closest('.block');
+    const isOpen = block.classList.contains('open');
+    document.querySelectorAll('.block.open').forEach(b => b.classList.remove('open'));
+    if (!isOpen) block.classList.add('open');
+    if (!isOpen) {
+      setTimeout(() => block.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+  }
+
+  /* ─── Active Sidenav on Scroll ───────────────────── */
+  const sections = document.querySelectorAll('[id]');
+  const navItems = document.querySelectorAll('.nav-item');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navItems.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  /* ─── Checkbox persistence ───────────────────────── */
+  document.querySelectorAll('input[type=checkbox]').forEach((cb, i) => {
+    const key = 'day1-summary-cb-' + i;
+    if (sessionStorage.getItem(key) === 'true') cb.checked = true;
+    cb.addEventListener('change', () => {
+      sessionStorage.setItem(key, cb.checked);
+      const li = cb.closest('li');
+      if (li) li.style.opacity = cb.checked ? '.5' : '1';
+    });
+    if (cb.checked) {
+      const li = cb.closest('li');
+      if (li) li.style.opacity = '.5';
+    }
+  });
+
+  /* ─── Animate blocks on first view ──────────────── */
+  const blockObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        blockObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05 });
+  document.querySelectorAll('.block').forEach(b => {
+    b.style.opacity = '0';
+    b.style.transform = 'translateY(12px)';
+    b.style.transition = 'opacity .4s ease, transform .4s ease';
+    blockObserver.observe(b);
+  });
+</script>
+
+</body>
+</html>

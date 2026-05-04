@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI POD Day 1 - Product Definition</title>
+  <link rel="stylesheet" href="experity-onsite-events-reports.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand" aria-label="Project">
+      <div class="brand-mark">AI</div>
+      <div>
+        <strong>AI POD Day 1</strong>
+        <span>Product-to-Engineering Pilot</span>
+      </div>
+    </div>
+    <div class="top-actions">
+      <div class="now-line">
+        <span class="label">Now</span>
+        <strong id="currentTitle">Ready to start the onsite</strong>
+      </div>
+      <div class="action-row" aria-label="Meeting controls">
+        <button class="icon-btn" id="prevBtn" type="button" title="Previous agenda block" aria-label="Previous agenda block">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="text-btn primary-btn" id="startBtn" type="button">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg>
+          Start
+        </button>
+        <button class="icon-btn" id="nextBtn" type="button" title="Next agenda block" aria-label="Next agenda block">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+        <button class="icon-btn" id="printBtn" type="button" title="Print run sheet" aria-label="Print run sheet">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v7H6z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="rail">
+      <div class="clock-panel">
+        <div class="clock-top">
+          <span>Block Timer</span>
+          <span id="clockState">Idle</span>
+        </div>
+        <div id="sessionClock">00:00</div>
+        <div class="progress-shell" aria-label="Current session progress">
+          <div id="timeProgress"></div>
+        </div>
+        <div class="clock-controls">
+          <button class="text-btn primary-btn" id="timerToggle" type="button">Run Timer</button>
+          <button class="text-btn" id="timerReset" type="button">Reset</button>
+        </div>
+      </div>
+
+      <div class="rail-section-title">Run Of Day</div>
+      <nav class="nav-list" id="agendaNav" aria-label="Agenda navigation"></nav>
+    </aside>
+
+    <main>
+      <section class="hero fade-in">
+        <div class="hero-copy">
+          <div class="eyebrow">
+            <span class="tag">Wednesday, April 29, 2026</span>
+            <span class="tag green">9:30 AM Start</span>
+            <span class="tag orange">Telehealth Product Session</span>
+          </div>
+          <h1>AI-Assisted Product-to-Engineering POD Pilot: Day 1</h1>
+          <p class="lead">
+            Today is a focused product definition working session. The goal is to convert the telehealth opportunity, existing product context, and AI acceleration strategy into a clear, durable set of artifacts that Engineering and Architecture can validate cold on Day 2.
+          </p>
+          <div class="hero-grid" aria-label="Day one outcomes">
+            <div class="metric" style="--accent: var(--blue)">
+              <b>1</b>
+              <span>Shared problem, goal, and scope narrative for telehealth.</span>
+            </div>
+            <div class="metric" style="--accent: var(--green)">
+              <b>5</b>
+              <span>Artifact families: strategy, PRD, integrations, acceptance, execution plan.</span>
+            </div>
+            <div class="metric" style="--accent: var(--orange)">
+              <b>0</b>
+              <span>Engineering design debates today unless needed to clarify inputs.</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="run-card fade-in delay-1">
+          <div>
+            <h2>Facilitator Throughline</h2>
+            <p>
+              Move the group from fragmented, manual coordination into an AI-native product process: signal, context, decision, execution, memory.
+            </p>
+            <div class="flow">
+              <div class="flow-step" style="--accent: var(--teal)">
+                <div class="flow-num">1</div>
+                <div><strong>Unify Context</strong><span>Bring the outline, transcript learning, telehealth materials, and templates into one working frame.</span></div>
+              </div>
+              <div class="flow-step" style="--accent: var(--green)">
+                <div class="flow-num">2</div>
+                <div><strong>Make Decisions Attributable</strong><span>Capture why, tradeoffs, risks, and owners as the day unfolds.</span></div>
+              </div>
+              <div class="flow-step" style="--accent: var(--blue)">
+                <div class="flow-num">3</div>
+                <div><strong>Create Durable Memory</strong><span>Leave behind a folder and artifact set that AI, Product, Engineering, and QA can reuse.</span></div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="section fade-in delay-2" id="intent">
+        <div class="section-head">
+          <div>
+            <h2>Meeting Intent</h2>
+            <p class="section-sub">
+              Day 1 is not a build session. It is the first pass at the product intelligence hub for this initiative: enough clarity to make tomorrow's blind validation meaningful, without pretending every implementation detail must be solved before experimentation can begin.
+            </p>
+          </div>
+          <span class="small-note">Anchor: AI Acceleration Strategy</span>
+        </div>
+        <div class="principles">
+          <div class="principle" style="--accent: var(--blue)">
+            <h3>Product Owns What And Why</h3>
+            <p>Define the problem, rationale, personas, market need, value proposition, scope, ROI logic, and acceptance criteria. Engineering can contribute, but Product must leave with a coherent source of truth.</p>
+          </div>
+          <div class="principle" style="--accent: var(--orange)">
+            <h3>Architecture Clarifies Interaction</h3>
+            <p>Identify known integration, data, environment, and dependency context early enough that coding agents and engineers are not blocked by missing system knowledge a day later.</p>
+          </div>
+          <div class="principle" style="--accent: var(--green)">
+            <h3>Execution Starts With Clarity</h3>
+            <p>The point is not heavyweight waterfall. The point is a clean enough handoff to support slices, spikes, prototypes, and fast feedback loops without creating avoidable churn.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section fade-in delay-3" id="model">
+        <div class="section-head">
+          <div>
+            <h2>AI-Native Operating Model For The Day</h2>
+            <p class="section-sub">
+              Use the onsite to model the PDLC flow from the strategy deck: preserve customer signal, build context, make evidence-based decisions, produce delivery-ready outputs, and write the decisions back into durable memory.
+            </p>
+          </div>
+        </div>
+        <div class="operating-model">
+          <div class="model-step" style="--accent: var(--navy)">
+            <b>Signal</b>
+            <span>Telehealth proposal, customer expectations, stakeholder input, existing Scribe and Care Agent direction.</span>
+          </div>
+          <div class="model-step" style="--accent: var(--blue)">
+            <b>Context</b>
+            <span>PRD/PSD templates, design notes, transcript decisions, PM/EMR/video wrapper dependencies, current folder structure.</span>
+          </div>
+          <div class="model-step" style="--accent: var(--green)">
+            <b>Decision</b>
+            <span>Scope boundaries, artifact minimums, ownership lanes, least-friction tool choices, Day 2 validation criteria.</span>
+          </div>
+          <div class="model-step" style="--accent: var(--orange)">
+            <b>Execution</b>
+            <span>Draft PRD, artifact map, risk register, open questions, pilot plan, and notes for Engineering validation.</span>
+          </div>
+          <div class="model-step" style="--accent: var(--teal)">
+            <b>Memory</b>
+            <span>Final outputs stored in one shared location so AI and humans can find and reuse the context later.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="agenda">
+        <div class="section-head">
+          <div>
+            <h2>Day 1 Agenda</h2>
+            <p class="section-sub">
+              Each block has a clear objective, facilitation prompts, evidence to capture, and acceptance checks. Open the accordions during the meeting to run the session and record notes.
+            </p>
+          </div>
+          <button class="text-btn" id="expandAll" type="button">Expand All</button>
+        </div>
+        <div class="agenda" id="agendaList"></div>
+      </section>
+
+      <section class="section decision-board" id="board">
+        <div class="section-head">
+          <div>
+            <h2>Decision And Readiness Board</h2>
+            <p class="section-sub">
+              Use this board as the running checkpoint before closing the day. If a cell is weak, it becomes either a working item before 5:00 PM or a named Day 2 validation risk.
+            </p>
+          </div>
+        </div>
+        <div class="board-grid">
+          <div class="board-cell" style="--accent: var(--blue)">
+            <h3>Problem And Goal</h3>
+            <p>Can every participant explain what problem telehealth is solving and what outcome matters?</p>
+            <ul class="check-list">
+              <li>Problem statement is explicit.</li>
+              <li>Target personas and users are named.</li>
+              <li>Success measures are not generic.</li>
+            </ul>
+          </div>
+          <div class="board-cell" style="--accent: var(--green)">
+            <h3>Artifact Set</h3>
+            <p>Do the documents constitute a clear handoff, without becoming big design upfront?</p>
+            <ul class="check-list">
+              <li>PRD/PSD deltas are mapped.</li>
+              <li>Integrations folder is defined.</li>
+              <li>Open questions have owners.</li>
+            </ul>
+          </div>
+          <div class="board-cell" style="--accent: var(--orange)">
+            <h3>Ownership Lanes</h3>
+            <p>Can the team describe who owns what, who validates what, and where decisions land?</p>
+            <ul class="check-list">
+              <li>Product owns what/why.</li>
+              <li>Architecture clarifies interactions.</li>
+              <li>Engineering validates actionability.</li>
+            </ul>
+          </div>
+          <div class="board-cell" style="--accent: var(--teal)">
+            <h3>Day 2 Test</h3>
+            <p>Can Engineering review the packet with limited context and understand what to do next?</p>
+            <ul class="check-list">
+              <li>Blind-read packet is ready.</li>
+              <li>Validation questions are prepared.</li>
+              <li>Feedback capture path is clear.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="notes-panel" id="notes">
+        <div class="notes-toolbar">
+          <div>
+            <h2>Facilitator Notes</h2>
+            <p class="section-sub">Notes are saved in this browser as you type. Use copy when you want a consolidated run-of-day note set.</p>
+          </div>
+          <button class="text-btn primary-btn" id="copyNotes" type="button">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M8 8h11v13H8z"/><path d="M5 16H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v1"/></svg>
+            Copy Notes
+          </button>
+        </div>
+        <textarea class="global-note" id="globalNotes" placeholder="Capture cross-cutting decisions, unresolved tensions, named owners, and Day 2 validation risks here."></textarea>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const agenda = [
+      {
+        id: "opening",
+        start: "9:30",
+        end: "9:50",
+        duration: 20,
+        accent: "var(--navy)",
+        title: "Opening Frame: Why We Are Here",
+        summary: "Set the tone: this is a product definition exercise designed to make AI-assisted delivery faster by making context better.",
+        objectives: [
+          "Anchor the day to the AI Acceleration Strategy: one AI-native product process that moves from fragmented coordination to durable memory.",
+          "Make explicit that Day 1 is Product-led, with Architecture and Engineering perspective used to sharpen inputs.",
+          "State the Day 2 validation test: can Engineering and Architecture understand and act on the artifacts with limited extra context?"
+        ],
+        performance: [
+          "Use the phrase 'signal, context, decision, execution, memory' as the day's operating model.",
+          "Remind the room that build is cheaper and faster, so weak requirements now become visible almost immediately.",
+          "Name the tension without dwelling on it: we need enough clarity to move, not perfect certainty before anyone acts."
+        ],
+        outputs: [
+          "Shared objective statement for the onsite.",
+          "Working agreement: document decisions as they happen, and park unresolved issues with owners."
+        ]
+      },
+      {
+        id: "telehealth",
+        start: "9:50",
+        end: "10:30",
+        duration: 40,
+        accent: "var(--blue)",
+        title: "Telehealth Scope Reality Check",
+        summary: "Break telehealth out of 'one thing' thinking and agree which product impacts are in scope for the Day 1 artifact packet.",
+        objectives: [
+          "List the major product impacts: AI Scribe changes, Care Agent telehealth skill, video wrapper/service, PM/EMR touchpoints, e-registration, payments, and operational dependencies.",
+          "Separate mature knowns from open questions: the transcript notes telehealth is mature in business process, but dependencies and AI-enabled delivery context still need shaping.",
+          "Define what this pilot is and is not building during the onsite."
+        ],
+        performance: [
+          "Ask: 'If this is not one product change, what are the workstreams and what does each need from Product?'",
+          "Draw a visible boundary around today's work: artifact creation and readiness, not technical design resolution.",
+          "Capture dependency questions as context requirements, not as reasons to stall the whole exercise."
+        ],
+        outputs: [
+          "Telehealth workstream map.",
+          "In-scope / out-of-scope list for Day 1.",
+          "Known dependency register."
+        ]
+      },
+      {
+        id: "break1",
+        start: "10:30",
+        end: "10:40",
+        duration: 10,
+        accent: "var(--teal)",
+        title: "Break And Context Reset",
+        summary: "Ten-minute pause. Facilitator tidies the board and confirms the workstream map is legible.",
+        objectives: [
+          "Make the visible notes usable before the group moves into artifact design.",
+          "Identify any missing stakeholder or source material that should be pulled into the room now."
+        ],
+        performance: [
+          "Do not let the break become side-channel decision making.",
+          "When people return, restate any edits made during the pause."
+        ],
+        outputs: [
+          "Clean workstream map.",
+          "Updated source-material checklist."
+        ]
+      },
+      {
+        id: "artifacts",
+        start: "10:40",
+        end: "11:45",
+        duration: 65,
+        accent: "var(--green)",
+        title: "Artifact Inventory And Minimum Viable Packet",
+        summary: "Define the core documents and folders that constitute a clear Product-to-Engineering handoff for this pilot.",
+        objectives: [
+          "Agree what artifacts need to exist: Product Strategy/PSD delta, PRD, integrations context, acceptance criteria, risks/open questions, delivery kickoff brief.",
+          "Identify which existing templates are usable as-is, which need a light redline, and which are missing from current practice.",
+          "Determine the minimum viable packet for tomorrow's blind validation."
+        ],
+        performance: [
+          "Keep challenging the room: 'Is this clarity or ceremony?'",
+          "Do not let 'we need a folder' become a tooling debate. The transcript direction was least-friction path, likely SharePoint for now.",
+          "Make each artifact earn its place by linking it to a decision, coding-agent context need, QA need, or stakeholder alignment need."
+        ],
+        outputs: [
+          "Minimum viable artifact packet.",
+          "Draft folder taxonomy with final-artifact location.",
+          "List of template redlines or missing sections."
+        ]
+      },
+      {
+        id: "lunch",
+        start: "11:45",
+        end: "12:30",
+        duration: 45,
+        accent: "var(--gold)",
+        title: "Lunch And Facilitator Synthesis",
+        summary: "Use lunch to consolidate the morning into a single artifact packet skeleton.",
+        objectives: [
+          "Group gets a break; facilitator or scribe prepares the afternoon working canvas.",
+          "Resolve only clerical issues: naming, sections, and where decisions are recorded."
+        ],
+        performance: [
+          "Avoid making substantive decisions with only part of the group present.",
+          "Queue any substantive questions for the 12:30 restart."
+        ],
+        outputs: [
+          "Afternoon working canvas.",
+          "Morning decisions summarized for review."
+        ]
+      },
+      {
+        id: "prd",
+        start: "12:30",
+        end: "13:40",
+        duration: 70,
+        accent: "var(--purple)",
+        title: "PRD And Product Definition Drafting",
+        summary: "Work through the PRD spine: problem, users, goals, non-goals, success measures, scope slices, acceptance criteria, and unresolved questions.",
+        objectives: [
+          "Define the problem and goal in plain language that Product, Engineering, Architecture, and QA can repeat.",
+          "Make product requirements detailed enough to drive the right outcome without freezing experimentation.",
+          "Identify where the product process can be broken into smaller slices, spikes, or prototypes."
+        ],
+        performance: [
+          "Ask: 'What would an AI-enabled engineer need to know to make a good first decision here?'",
+          "Capture acceptance criteria as observable outcomes, not vague intent.",
+          "Mark experimentation candidates explicitly: spikes, prototypes, data-gathering tasks, or market-signal loops."
+        ],
+        outputs: [
+          "Draft PRD spine.",
+          "MVP / slice hypothesis list.",
+          "Acceptance criteria and evidence requirements."
+        ]
+      },
+      {
+        id: "break2",
+        start: "13:40",
+        end: "13:50",
+        duration: 10,
+        accent: "var(--teal)",
+        title: "Break And Decision Sweep",
+        summary: "Short pause to mark what is settled, what is not, and what needs an owner.",
+        objectives: [
+          "Update the decision log before moving into ownership and validation.",
+          "Promote lingering ambiguity into visible open questions."
+        ],
+        performance: [
+          "Every open question needs one of three tags: answer today, validate tomorrow, or defer with rationale.",
+          "Keep the decision log attributable: who made the call and why."
+        ],
+        outputs: [
+          "Decision log update.",
+          "Open question triage."
+        ]
+      },
+      {
+        id: "ownership",
+        start: "13:50",
+        end: "14:45",
+        duration: 55,
+        accent: "var(--orange)",
+        title: "Ownership Lanes And Guardrails",
+        summary: "Clarify Product, Architecture, Engineering, and QA lanes so autonomy does not become ambiguity.",
+        objectives: [
+          "Translate the transcript's decision-lane conversation into a lightweight operating agreement.",
+          "Define how product-owned what/why, solution design, architecture context, implementation, QA, and stakeholder alignment interact.",
+          "Set guardrails for tools and workflow: use what we have, pick the least-friction path, and collect feedback for the next turn."
+        ],
+        performance: [
+          "Use real examples from SSO, Care Agent, and prior POC learnings only to clarify patterns, not to relitigate history.",
+          "Ask each lane: 'What do you own, what do you contribute, and what do you need from the other lanes?'",
+          "Make clear that self-directed teams still require objective clarity and agreed boundaries."
+        ],
+        outputs: [
+          "Draft ownership matrix.",
+          "Tooling and repository/folder guardrails.",
+          "Named owners for open decisions."
+        ]
+      },
+      {
+        id: "validation",
+        start: "14:45",
+        end: "15:35",
+        duration: 50,
+        accent: "var(--blue)",
+        title: "Day 2 Blind Validation Design",
+        summary: "Design tomorrow's test so it produces useful feedback, not vague approval or rejection.",
+        objectives: [
+          "Define what Engineering and Architecture should review with limited added context.",
+          "Create validation prompts: understandable, actionable, missing context, ambiguity, implementation readiness, and artifact sufficiency.",
+          "Decide who participates, what packet they receive, and how feedback will be captured."
+        ],
+        performance: [
+          "Frame Day 2 as a litmus test, not a defense of the work.",
+          "Ask: 'If this packet fails, what specifically do we need to learn?'",
+          "Ensure feedback can be traced back to an artifact, not a general feeling."
+        ],
+        outputs: [
+          "Day 2 review packet checklist.",
+          "Validation question set.",
+          "Feedback capture template."
+        ]
+      },
+      {
+        id: "break3",
+        start: "15:35",
+        end: "15:45",
+        duration: 10,
+        accent: "var(--teal)",
+        title: "Break And Packet Prep",
+        summary: "Prepare the final work block by identifying gaps in the Day 2 packet.",
+        objectives: [
+          "Prioritize remaining work by Day 2 risk.",
+          "Assign rapid fixes to the right people."
+        ],
+        performance: [
+          "No new scope unless it is essential to tomorrow's validation.",
+          "Keep unresolved issues visible."
+        ],
+        outputs: [
+          "Final work block task list.",
+          "Packet gap list."
+        ]
+      },
+      {
+        id: "synthesis",
+        start: "15:45",
+        end: "16:35",
+        duration: 50,
+        accent: "var(--green)",
+        title: "Synthesis: Build The Day 2 Packet",
+        summary: "Turn the day's work into a coherent packet and presentation flow.",
+        objectives: [
+          "Assemble the minimum viable artifact packet in the chosen shared location.",
+          "Make the narrative read cleanly from problem to scope to requirements to dependencies to validation questions.",
+          "Identify what must be finished before the Day 2 session begins."
+        ],
+        performance: [
+          "Do a cold read from the perspective of someone who was not in the room.",
+          "Remove duplicate or conflicting statements.",
+          "Mark every TBD with an owner, date, and whether it blocks implementation or only blocks confidence."
+        ],
+        outputs: [
+          "Day 2 packet draft.",
+          "Final decision log.",
+          "Pre-read or opening script for tomorrow."
+        ]
+      },
+      {
+        id: "close",
+        start: "16:35",
+        end: "17:00",
+        duration: 25,
+        accent: "var(--navy)",
+        title: "Close: Commitments, Risks, And Tomorrow",
+        summary: "Close with a crisp statement of what was decided, what remains open, and how tomorrow will run.",
+        objectives: [
+          "Confirm the artifact packet and validation approach.",
+          "Review readiness board: problem/goal, artifact set, ownership lanes, Day 2 test.",
+          "Name all overnight actions and owners."
+        ],
+        performance: [
+          "Ask each participant for one risk and one confidence signal.",
+          "End with one shared answer to: 'What changes because we did this onsite?'",
+          "Reinforce that this is a pilot pattern that can become reusable beyond telehealth."
+        ],
+        outputs: [
+          "Owner/action list.",
+          "Day 2 opening plan.",
+          "Pilot lessons-to-watch list."
+        ]
+      }
+    ];
+
+    const agendaList = document.getElementById("agendaList");
+    const agendaNav = document.getElementById("agendaNav");
+    const currentTitle = document.getElementById("currentTitle");
+    const sessionClock = document.getElementById("sessionClock");
+    const timeProgress = document.getElementById("timeProgress");
+    const clockState = document.getElementById("clockState");
+    const toast = document.getElementById("toast");
+    const globalNotes = document.getElementById("globalNotes");
+    let activeIndex = 0;
+    let timerRunning = false;
+    let remainingSeconds = agenda[0].duration * 60;
+    let timerId = null;
+
+    function formatRange(item) {
+      return `${to12(item.start)}-${to12(item.end).replace(" ", "")}`;
+    }
+
+    function to12(time) {
+      const [h, m] = time.split(":").map(Number);
+      const suffix = h >= 12 ? "PM" : "AM";
+      const hour = h % 12 || 12;
+      return `${hour}:${String(m).padStart(2, "0")} ${suffix}`;
+    }
+
+    function formatSeconds(total) {
+      const mins = Math.floor(total / 60);
+      const secs = total % 60;
+      return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 2400);
+    }
+
+    function renderAgenda() {
+      agendaList.innerHTML = "";
+      agendaNav.innerHTML = "";
+
+      agenda.forEach((item, index) => {
+        const nav = document.createElement("a");
+        nav.href = `#${item.id}`;
+        nav.className = "nav-item";
+        nav.style.setProperty("--accent", item.accent);
+        nav.innerHTML = `<span class="nav-time">${formatRange(item)}</span><span class="nav-title">${item.title}</span>`;
+        nav.addEventListener("click", () => setActive(index, false));
+        agendaNav.appendChild(nav);
+
+        const session = document.createElement("article");
+        session.className = "session";
+        session.id = item.id;
+        session.style.setProperty("--accent", item.accent);
+        session.dataset.index = index;
+        session.innerHTML = `
+          <div class="time-block">
+            <div class="time">${formatRange(item)}</div>
+            <div class="duration">${item.duration} min</div>
+          </div>
+          <div class="content-block">
+            <div class="content-top">
+              <div class="content-title">
+                <h3>${item.title}</h3>
+                <p>${item.summary}</p>
+              </div>
+              <button class="status-pill" type="button" data-done="${item.id}">Mark Done</button>
+            </div>
+            <details class="accordion" open>
+              <summary>
+                Objectives, Performance Points, And Outputs
+                <span class="chevron"><svg class="icon" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></span>
+              </summary>
+              <div class="accordion-body">
+                <div class="accordion-panel">
+                  <h4>Objectives</h4>
+                  <ul class="detail-list">${item.objectives.map(point => `<li>${point}</li>`).join("")}</ul>
+                  <div class="note-box">
+                    <label for="notes-${item.id}">Session Notes</label>
+                    <textarea id="notes-${item.id}" data-note="${item.id}" placeholder="Capture decisions, questions, owners, and phrasing to reuse tomorrow."></textarea>
+                  </div>
+                </div>
+                <div class="accordion-panel">
+                  <h4>Points Of Performance</h4>
+                  <ul class="output-list">${item.performance.map(point => `<li>${point}</li>`).join("")}</ul>
+                  <h4 style="margin-top:16px">Outputs</h4>
+                  <ul class="check-list">${item.outputs.map(point => `<li>${point}</li>`).join("")}</ul>
+                </div>
+              </div>
+            </details>
+          </div>
+        `;
+        agendaList.appendChild(session);
+      });
+
+      document.querySelectorAll("[data-done]").forEach(button => {
+        button.addEventListener("click", () => {
+          const article = document.getElementById(button.dataset.done);
+          article.classList.toggle("done");
+          button.textContent = article.classList.contains("done") ? "Done" : "Mark Done";
+          saveState();
+        });
+      });
+
+      document.querySelectorAll("[data-note]").forEach(area => {
+        area.value = localStorage.getItem(`ai-pod-note-${area.dataset.note}`) || "";
+        area.addEventListener("input", () => localStorage.setItem(`ai-pod-note-${area.dataset.note}`, area.value));
+      });
+
+      globalNotes.value = localStorage.getItem("ai-pod-global-notes") || "";
+      globalNotes.addEventListener("input", () => localStorage.setItem("ai-pod-global-notes", globalNotes.value));
+
+      restoreState();
+      setActive(activeIndex, false);
+    }
+
+    function setActive(index, scroll = true) {
+      activeIndex = Math.max(0, Math.min(index, agenda.length - 1));
+      const item = agenda[activeIndex];
+      document.querySelectorAll(".session").forEach((el, i) => el.classList.toggle("active", i === activeIndex));
+      document.querySelectorAll(".nav-item").forEach((el, i) => el.classList.toggle("active", i === activeIndex));
+      currentTitle.textContent = `${formatRange(item)} - ${item.title}`;
+      resetTimer(false);
+      if (scroll) document.getElementById(item.id).scrollIntoView({ behavior: "smooth", block: "start" });
+      saveState();
+    }
+
+    function startTimer() {
+      if (timerRunning) return;
+      timerRunning = true;
+      clockState.textContent = "Running";
+      document.getElementById("timerToggle").textContent = "Pause";
+      timerId = setInterval(() => {
+        remainingSeconds = Math.max(0, remainingSeconds - 1);
+        updateClock();
+        if (remainingSeconds === 0) {
+          pauseTimer();
+          showToast("Timebox complete. Move to the next block or add a deliberate extension.");
+        }
+      }, 1000);
+    }
+
+    function pauseTimer() {
+      timerRunning = false;
+      clockState.textContent = "Paused";
+      document.getElementById("timerToggle").textContent = "Run Timer";
+      clearInterval(timerId);
+    }
+
+    function resetTimer(show = true) {
+      pauseTimer();
+      remainingSeconds = agenda[activeIndex].duration * 60;
+      updateClock();
+      clockState.textContent = "Idle";
+      if (show) showToast("Timer reset for the current agenda block.");
+    }
+
+    function updateClock() {
+      const total = agenda[activeIndex].duration * 60;
+      const elapsed = total - remainingSeconds;
+      const pct = total ? Math.min(100, Math.max(0, (elapsed / total) * 100)) : 0;
+      sessionClock.textContent = formatSeconds(remainingSeconds);
+      timeProgress.style.width = `${pct}%`;
+    }
+
+    function saveState() {
+      const done = [...document.querySelectorAll(".session.done")].map(el => el.id);
+      localStorage.setItem("ai-pod-active-index", String(activeIndex));
+      localStorage.setItem("ai-pod-done", JSON.stringify(done));
+    }
+
+    function restoreState() {
+      const storedIndex = Number(localStorage.getItem("ai-pod-active-index"));
+      if (!Number.isNaN(storedIndex)) activeIndex = Math.max(0, Math.min(storedIndex, agenda.length - 1));
+      const done = JSON.parse(localStorage.getItem("ai-pod-done") || "[]");
+      done.forEach(id => {
+        const article = document.getElementById(id);
+        const button = document.querySelector(`[data-done="${id}"]`);
+        if (article) article.classList.add("done");
+        if (button) button.textContent = "Done";
+      });
+    }
+
+    function copyAllNotes() {
+      const lines = [];
+      lines.push("AI-Assisted Product-to-Engineering POD Pilot - Day 1 Notes");
+      lines.push("Wednesday, April 29, 2026");
+      lines.push("");
+      if (globalNotes.value.trim()) {
+        lines.push("Facilitator Notes");
+        lines.push(globalNotes.value.trim());
+        lines.push("");
+      }
+      agenda.forEach(item => {
+        const note = document.querySelector(`[data-note="${item.id}"]`)?.value.trim();
+        if (note) {
+          lines.push(`${formatRange(item)} - ${item.title}`);
+          lines.push(note);
+          lines.push("");
+        }
+      });
+      const text = lines.join("\n");
+      navigator.clipboard.writeText(text).then(
+        () => showToast("Notes copied to clipboard."),
+        () => showToast("Clipboard copy was blocked by the browser.")
+      );
+    }
+
+    document.getElementById("startBtn").addEventListener("click", () => {
+      setActive(0);
+      startTimer();
+      showToast("Onsite started. The first timebox is running.");
+    });
+    document.getElementById("prevBtn").addEventListener("click", () => setActive(activeIndex - 1));
+    document.getElementById("nextBtn").addEventListener("click", () => setActive(activeIndex + 1));
+    document.getElementById("printBtn").addEventListener("click", () => window.print());
+    document.getElementById("timerToggle").addEventListener("click", () => timerRunning ? pauseTimer() : startTimer());
+    document.getElementById("timerReset").addEventListener("click", () => resetTimer(true));
+    document.getElementById("copyNotes").addEventListener("click", copyAllNotes);
+    document.getElementById("expandAll").addEventListener("click", () => {
+      const details = [...document.querySelectorAll("details.accordion")];
+      const shouldOpen = details.some(detail => !detail.open);
+      details.forEach(detail => detail.open = shouldOpen);
+      document.getElementById("expandAll").textContent = shouldOpen ? "Collapse All" : "Expand All";
+    });
+
+    window.addEventListener("keydown", event => {
+      if (event.target.matches("textarea, input")) return;
+      if (event.key === "ArrowRight") setActive(activeIndex + 1);
+      if (event.key === "ArrowLeft") setActive(activeIndex - 1);
+      if (event.key === " ") {
+        event.preventDefault();
+        timerRunning ? pauseTimer() : startTimer();
+      }
+    });
+
+    renderAgenda();
+  </script>
+</body>
+</html>

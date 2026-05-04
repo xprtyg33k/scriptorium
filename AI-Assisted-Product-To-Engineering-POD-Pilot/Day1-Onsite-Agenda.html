@@ -1,0 +1,1884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Day 1 — Product Definition Working Session</title>
+  <link rel="stylesheet" href="experity-onsite-agenda-reports.css" />
+  <style>
+    /* ─── Reset & Base ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0d1117;
+      --surface:   #161b22;
+      --surface2:  #1e252f;
+      --border:    #30363d;
+      --accent:    #3b82f6;
+      --accent2:   #60a5fa;
+      --accent3:   #93c5fd;
+      --green:     #22c55e;
+      --amber:     #f59e0b;
+      --red:       #ef4444;
+      --muted:     #8b949e;
+      --text:      #e6edf3;
+      --subtext:   #adbac7;
+      --radius:    12px;
+      --radius-sm: 8px;
+      --shadow:    0 4px 24px rgba(0,0,0,.45);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ─── Animated Background ───────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 50% at 20% -10%, rgba(59,130,246,.12) 0%, transparent 60%),
+                  radial-gradient(ellipse 60% 40% at 80% 110%, rgba(99,102,241,.08) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── Scroll Progress Bar ───────────────────────────────── */
+    #progress-bar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), #818cf8);
+      width: 0%;
+      z-index: 1000;
+      transition: width .1s linear;
+      border-radius: 0 2px 2px 0;
+    }
+
+    /* ─── Sidebar nav ───────────────────────────────────────── */
+    #sidenav {
+      position: fixed;
+      left: 0; top: 0; bottom: 0;
+      width: 220px;
+      background: rgba(22,27,34,.95);
+      border-right: 1px solid var(--border);
+      padding: 28px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      transition: transform .3s ease;
+    }
+    #sidenav .nav-logo {
+      padding: 0 20px 20px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 12px;
+    }
+    #sidenav .nav-logo .day-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--accent), #818cf8);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-bottom: 6px;
+    }
+    #sidenav .nav-logo h2 { font-size: 13px; color: var(--subtext); font-weight: 500; }
+    #sidenav a.nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 20px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 12.5px;
+      font-weight: 500;
+      border-left: 2px solid transparent;
+      transition: all .2s;
+    }
+    #sidenav a.nav-item:hover, #sidenav a.nav-item.active {
+      color: var(--accent2);
+      background: rgba(59,130,246,.08);
+      border-left-color: var(--accent);
+    }
+    #sidenav a.nav-item .time-tag {
+      margin-left: auto;
+      font-size: 10px;
+      color: var(--border);
+      font-weight: 400;
+    }
+    #sidenav a.nav-item:hover .time-tag { color: var(--muted); }
+
+    /* ─── Main Layout ────────────────────────────────────────── */
+    #main {
+      margin-left: 220px;
+      padding: 0 40px 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ─── Header ─────────────────────────────────────────────── */
+    header {
+      padding: 56px 0 40px;
+      animation: fadeUp .6s ease both;
+    }
+    .header-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+    .pill.blue   { background: rgba(59,130,246,.15); color: var(--accent2); border: 1px solid rgba(59,130,246,.3); }
+    .pill.green  { background: rgba(34,197,94,.12);  color: #4ade80;       border: 1px solid rgba(34,197,94,.3); }
+    .pill.amber  { background: rgba(245,158,11,.12); color: #fbbf24;       border: 1px solid rgba(245,158,11,.3); }
+
+    header h1 {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 800;
+      letter-spacing: -.02em;
+      line-height: 1.15;
+      background: linear-gradient(135deg, var(--text) 30%, var(--accent3) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    header .subtitle {
+      margin-top: 10px;
+      color: var(--subtext);
+      font-size: 15px;
+      max-width: 680px;
+    }
+
+    /* ─── Stats Row ──────────────────────────────────────────── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin: 28px 0;
+      animation: fadeUp .7s .1s ease both;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--c, var(--accent));
+    }
+    .stat-card .label { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 6px; }
+    .stat-card .value { font-size: 20px; font-weight: 700; color: var(--text); }
+    .stat-card .sub   { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    /* ─── Command Intent ─────────────────────────────────────── */
+    .intent-box {
+      background: linear-gradient(135deg, rgba(59,130,246,.08), rgba(99,102,241,.04));
+      border: 1px solid rgba(59,130,246,.25);
+      border-radius: var(--radius);
+      padding: 22px 26px;
+      margin-bottom: 36px;
+      animation: fadeUp .7s .15s ease both;
+    }
+    .intent-box h3 {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--accent2);
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    .intent-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 20px;
+    }
+    .intent-list li {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      font-size: 13.5px;
+      color: var(--subtext);
+    }
+    .intent-list li::before {
+      content: '→';
+      color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ─── Section Label ──────────────────────────────────────── */
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 40px 0 16px;
+      animation: fadeUp .5s ease both;
+    }
+    .section-label span {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ─── Accordion Blocks ───────────────────────────────────── */
+    .block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 12px;
+      overflow: hidden;
+      transition: border-color .25s, box-shadow .25s;
+      animation: fadeUp .5s ease both;
+    }
+    .block:hover { border-color: rgba(59,130,246,.3); }
+    .block.open  {
+      border-color: rgba(59,130,246,.4);
+      box-shadow: 0 0 0 1px rgba(59,130,246,.1), var(--shadow);
+    }
+
+    .block-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 22px;
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+    }
+    .block-header:hover { background: rgba(255,255,255,.02); }
+
+    .time-pill {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+      font-variant-numeric: tabular-nums;
+      transition: background .2s, color .2s;
+    }
+    .block.open .time-pill { background: rgba(59,130,246,.12); color: var(--accent2); border-color: rgba(59,130,246,.3); }
+
+    .block-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .block-title-group { flex: 1; min-width: 0; }
+    .block-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .block-desc {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .block-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+    .tag {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .chevron {
+      width: 20px; height: 20px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted);
+      transition: transform .3s ease;
+      flex-shrink: 0;
+    }
+    .block.open .chevron { transform: rotate(180deg); color: var(--accent2); }
+    .chevron svg { width: 14px; height: 14px; }
+
+    /* Accordion body */
+    .block-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s cubic-bezier(0,1,.5,1);
+    }
+    .block.open .block-body { max-height: 2000px; transition: max-height .5s ease; }
+
+    .block-inner {
+      padding: 0 22px 22px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ─── Content Components ─────────────────────────────────── */
+    .objective-intro {
+      padding: 14px 0 10px;
+      font-size: 14px;
+      color: var(--subtext);
+      line-height: 1.7;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .content-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+
+    .content-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+    }
+    .content-card h4 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .content-card ul {
+      list-style: none;
+    }
+    .content-card ul li {
+      font-size: 13px;
+      color: var(--subtext);
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(255,255,255,.03);
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      line-height: 1.5;
+    }
+    .content-card ul li:last-child { border-bottom: none; }
+    .content-card ul li .dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+
+    /* Facilitator notes area */
+    .notes-area {
+      margin-top: 14px;
+      background: rgba(245,158,11,.04);
+      border: 1px solid rgba(245,158,11,.18);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+    }
+    .notes-area h4 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #fbbf24;
+      margin-bottom: 10px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .notes-area textarea {
+      width: 100%;
+      min-height: 80px;
+      background: transparent;
+      border: 1px solid rgba(245,158,11,.15);
+      border-radius: 6px;
+      color: var(--subtext);
+      font-size: 13px;
+      font-family: inherit;
+      padding: 10px 12px;
+      resize: vertical;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .notes-area textarea::placeholder { color: rgba(139,148,158,.4); }
+    .notes-area textarea:focus { border-color: rgba(245,158,11,.4); }
+
+    /* Exit criteria */
+    .exit-criteria {
+      margin-top: 14px;
+      background: rgba(34,197,94,.04);
+      border: 1px solid rgba(34,197,94,.18);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+    }
+    .exit-criteria h4 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #4ade80;
+      margin-bottom: 10px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .exit-criteria ul { list-style: none; }
+    .exit-criteria ul li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--subtext);
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(34,197,94,.06);
+    }
+    .exit-criteria ul li:last-child { border-bottom: none; }
+    .exit-criteria ul li input[type=checkbox] {
+      margin-top: 3px;
+      accent-color: var(--green);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* Watch-out box */
+    .watchout {
+      margin-top: 14px;
+      background: rgba(239,68,68,.04);
+      border: 1px solid rgba(239,68,68,.18);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+    }
+    .watchout h4 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #f87171;
+      margin-bottom: 10px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .watchout ul { list-style: none; }
+    .watchout ul li {
+      font-size: 13px;
+      color: var(--subtext);
+      padding: 5px 0;
+      display: flex; gap: 8px; align-items: flex-start;
+    }
+    .watchout ul li::before { content: '⚠'; font-size: 11px; color: #f87171; margin-top: 2px; flex-shrink: 0; }
+
+    /* Artifact tracker */
+    .artifact-track {
+      margin-top: 14px;
+    }
+    .artifact-track h4 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 10px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .artifact-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      margin-bottom: 6px;
+      transition: border-color .2s;
+    }
+    .artifact-item:hover { border-color: rgba(59,130,246,.3); }
+    .artifact-item input[type=checkbox] { accent-color: var(--accent); cursor: pointer; flex-shrink: 0; }
+    .artifact-item .art-name {
+      flex: 1;
+      font-size: 13px;
+      color: var(--subtext);
+    }
+    .artifact-item .art-status {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .art-pending { background: rgba(245,158,11,.12); color: #fbbf24; }
+    .art-done    { background: rgba(34,197,94,.12);  color: #4ade80; }
+
+    /* ─── Participants Bar ───────────────────────────────────── */
+    .participants {
+      margin-top: 14px;
+    }
+    .participants h4 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .participant-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 5px 12px;
+      font-size: 12px;
+      color: var(--subtext);
+    }
+    .chip .avatar {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #818cf8);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .chip.lead { border-color: rgba(59,130,246,.4); color: var(--accent3); }
+
+    /* ─── Break Block ────────────────────────────────────────── */
+    .break-block {
+      background: var(--surface2);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 14px 22px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-size: 13.5px;
+    }
+    .break-block .break-icon { font-size: 20px; }
+    .break-block strong { color: var(--subtext); }
+
+    /* ─── Non-Negotiables ────────────────────────────────────── */
+    .nonneg-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .nonneg-item {
+      background: var(--surface2);
+      border: 1px solid rgba(239,68,68,.2);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      font-size: 12.5px;
+      color: var(--subtext);
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      line-height: 1.5;
+    }
+    .nonneg-item::before {
+      content: '✕';
+      color: #f87171;
+      font-size: 11px;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ─── PDLC Flow Strip ─────────────────────────────────────── */
+    .pdlc-flow {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      margin: 28px 0 0;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      animation: fadeUp .7s .2s ease both;
+    }
+    .pdlc-step {
+      flex: 1;
+      padding: 14px 16px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      position: relative;
+      transition: background .2s;
+    }
+    .pdlc-step:last-child { border-right: none; }
+    .pdlc-step.active {
+      background: linear-gradient(135deg, rgba(59,130,246,.15), rgba(99,102,241,.08));
+    }
+    .pdlc-step.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), #818cf8);
+    }
+    .pdlc-step .step-label {
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .pdlc-step.active .step-label { color: var(--accent2); }
+    .pdlc-step .step-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--subtext);
+    }
+    .pdlc-step.active .step-name { color: var(--text); }
+    .pdlc-step .step-sub {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 3px;
+      line-height: 1.4;
+    }
+
+    /* ─── Strategic Principles ──────────────────────────────── */
+    .principles-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 20px 0 32px;
+      animation: fadeUp .7s .25s ease both;
+    }
+    .principle-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    .principle-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--pc, var(--accent));
+    }
+    .principle-card .pc-num {
+      width: 26px; height: 26px;
+      border-radius: 6px;
+      background: var(--pc, var(--accent));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 10px;
+      opacity: .85;
+    }
+    .principle-card h4 {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .principle-card p {
+      font-size: 12.5px;
+      color: var(--subtext);
+      line-height: 1.55;
+    }
+    .principle-card .pc-tag {
+      margin-top: 10px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      padding: 3px 8px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    /* ─── Day Summary / Closing ──────────────────────────────── */
+    .day-summary {
+      background: linear-gradient(135deg, rgba(59,130,246,.08), rgba(99,102,241,.06));
+      border: 1px solid rgba(59,130,246,.25);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin-top: 40px;
+      animation: fadeUp .6s ease both;
+    }
+    .day-summary h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .day-summary p { font-size: 13.5px; color: var(--subtext); margin-bottom: 16px; }
+    .output-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .output-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+    }
+    .output-item .output-icon { font-size: 16px; flex-shrink: 0; }
+    .output-item .output-text { font-size: 13px; color: var(--subtext); line-height: 1.5; }
+    .output-item .output-text strong { color: #e6edf3; display: block; margin-bottom: 2px; }
+    .content-card ul li strong, .objective-intro strong { display: inline; font-weight: 700; color: #e6edf3; }
+
+    /* ─── Animations ─────────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .block:nth-child(1) { animation-delay: .05s; }
+    .block:nth-child(2) { animation-delay: .10s; }
+    .block:nth-child(3) { animation-delay: .15s; }
+    .block:nth-child(4) { animation-delay: .20s; }
+    .block:nth-child(5) { animation-delay: .25s; }
+    .block:nth-child(6) { animation-delay: .30s; }
+    .block:nth-child(7) { animation-delay: .35s; }
+
+    /* ─── Clock Widget ───────────────────────────────────────── */
+    #live-clock {
+      position: fixed;
+      bottom: 24px; right: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--subtext);
+      font-variant-numeric: tabular-nums;
+      z-index: 200;
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    #live-clock .dot-live {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s ease infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .5; transform: scale(.8); }
+    }
+
+    /* ─── Responsive ─────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      #sidenav { transform: translateX(-100%); }
+      #main { margin-left: 0; padding: 0 20px 60px; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .content-grid, .content-grid.three { grid-template-columns: 1fr; }
+      .intent-list { grid-template-columns: 1fr; }
+      .nonneg-grid { grid-template-columns: 1fr; }
+      .output-grid { grid-template-columns: 1fr; }
+      .principles-row { grid-template-columns: 1fr; }
+      .pdlc-flow { flex-direction: column; }
+    }
+
+    /* ─── Print ──────────────────────────────────────────────── */
+    @media print {
+      #sidenav, #live-clock, #progress-bar { display: none; }
+      #main { margin-left: 0; }
+      .block-body { max-height: none !important; }
+      .block-inner { display: block !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div id="progress-bar"></div>
+
+<!-- Sidebar Navigation -->
+<nav id="sidenav">
+  <div class="nav-logo">
+    <div class="day-badge">Day 1</div>
+    <h2>Wednesday · Apr 30</h2>
+  </div>
+  <a class="nav-item" href="#s0"><span>🎯</span> Opening &amp; Alignment <span class="time-tag">9:30</span></a>
+  <a class="nav-item" href="#s1"><span>📋</span> Outcome Brief <span class="time-tag">10:00</span></a>
+  <a class="nav-item" href="#s2"><span>🔍</span> MVP Definition <span class="time-tag">11:15</span></a>
+  <a class="nav-item" href="#break"><span>🥗</span> Lunch <span class="time-tag">12:00</span></a>
+  <a class="nav-item" href="#s3"><span>🗺️</span> Workflow &amp; Context <span class="time-tag">12:45</span></a>
+  <a class="nav-item" href="#s4"><span>✂️</span> Execution Slices <span class="time-tag">2:15</span></a>
+  <a class="nav-item" href="#s5"><span>📦</span> Artifact Cleanup <span class="time-tag">3:15</span></a>
+  <a class="nav-item" href="#s6"><span>✅</span> Gate Decision <span class="time-tag">4:15</span></a>
+</nav>
+
+<!-- Main Content -->
+<div id="main">
+
+  <!-- ══ Header ══════════════════════════════════════════════ -->
+  <header>
+    <div class="header-meta">
+      <span class="pill blue">Wednesday · April 30, 2026</span>
+      <span class="pill green">9:30 AM – 4:45 PM</span>
+      <span class="pill amber">AI Acceleration Strategy · Phase 1</span>
+    </div>
+    <h1>Product Definition<br>Working Session</h1>
+    <p class="subtitle">
+      Part of our journey to becoming AI-Native. Day 1 is Product's day — we move from fragmented, manual coordination
+      to a structured, AI-native context layer. We convert Telehealth inputs into an execution-ready artifact pack
+      that Engineering can validate, and that agents can act on without guessing.
+    </p>
+  </header>
+
+  <!-- PDLC Flow Strip -->
+  <div class="pdlc-flow">
+    <div class="pdlc-step">
+      <div class="step-label">Step 1</div>
+      <div class="step-name">Signal</div>
+      <div class="step-sub">VoC, support, ideas, roadmap inputs</div>
+    </div>
+    <div class="pdlc-step active">
+      <div class="step-label">Step 2 · Today</div>
+      <div class="step-name">Context</div>
+      <div class="step-sub">Working brief from live sources</div>
+    </div>
+    <div class="pdlc-step active">
+      <div class="step-label">Step 3 · Today</div>
+      <div class="step-name">Decision</div>
+      <div class="step-sub">Tradeoffs, rationale, risk, and why</div>
+    </div>
+    <div class="pdlc-step">
+      <div class="step-label">Step 4 · Thursday</div>
+      <div class="step-name">Execution</div>
+      <div class="step-sub">PRDs, PLDs, delivery handoffs</div>
+    </div>
+    <div class="pdlc-step">
+      <div class="step-label">Step 5 · Ongoing</div>
+      <div class="step-name">Memory</div>
+      <div class="step-sub">Decisions &amp; outputs written back</div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-card" style="--c: var(--accent)">
+      <div class="label">Start Time</div>
+      <div class="value">9:30 AM</div>
+      <div class="sub">Opening alignment</div>
+    </div>
+    <div class="stat-card" style="--c: var(--green)">
+      <div class="label">Sessions</div>
+      <div class="value">6</div>
+      <div class="sub">+ lunch break</div>
+    </div>
+    <div class="stat-card" style="--c: var(--amber)">
+      <div class="label">Artifacts to Produce</div>
+      <div class="value">5</div>
+      <div class="sub">Minimum viable pack</div>
+    </div>
+    <div class="stat-card" style="--c: #818cf8">
+      <div class="label">End Target</div>
+      <div class="value">4:45 PM</div>
+      <div class="sub">Pre-read package ready</div>
+    </div>
+  </div>
+
+  <!-- Strategic Principles -->
+  <div class="principles-row">
+    <div class="principle-card" style="--pc: #3b82f6">
+      <div class="pc-num">1</div>
+      <h4>Unified Context</h4>
+      <p>AI pulls context from all the sources Product manually reviews today into one workspace. Today we build that context layer for Telehealth.</p>
+      <span class="pc-tag" style="background:rgba(59,130,246,.12);color:var(--accent2)">What we create today</span>
+    </div>
+    <div class="principle-card" style="--pc: #22c55e">
+      <div class="pc-num">2</div>
+      <h4>Better Decisions</h4>
+      <p>Decisions are structured, evidence-based, and attributable with clear rationale. Thursday's blind validation tests this directly.</p>
+      <span class="pc-tag" style="background:rgba(34,197,94,.12);color:#4ade80)">What we validate Thursday</span>
+    </div>
+    <div class="principle-card" style="--pc: #818cf8">
+      <div class="pc-num">3</div>
+      <h4>Durable Memory</h4>
+      <p>Outputs are written back to the intelligence hub so context, decisions, and assets are never lost. Artifacts go into the shared location — no personal drives.</p>
+      <span class="pc-tag" style="background:rgba(129,140,248,.12);color:#a5b4fc">Ongoing commitment</span>
+    </div>
+  </div>
+
+  <!-- Command Intent -->
+  <div class="intent-box">
+    <h3>🎯 Command Intent · AI-Native PDLC Phase 1</h3>
+    <ul class="intent-list">
+      <li>Produce the minimum viable artifact pack needed before development starts</li>
+      <li>Align on the problem, user, outcome, and MVP scope — in writing</li>
+      <li>Surface assumptions, constraints, and open questions explicitly</li>
+      <li>Frame candidate execution slices as outcomes, not engineering tasks</li>
+      <li>Create a clean pre-read package for Thursday's blind engineering review</li>
+      <li>Establish a repeatable process for future AI-enabled pods — this is Phase 1 of the AI-Native PDLC pilot</li>
+    </ul>
+  </div>
+
+  <!-- ══ Session 0: Opening ══════════════════════════════════ -->
+  <div class="section-label"><span>Agenda</span></div>
+
+  <div class="block open" id="s0">
+    <div class="block-header" onclick="toggleBlock(this)">
+      <div class="time-pill">9:30 – 10:00</div>
+      <div class="block-icon" style="background:rgba(59,130,246,.12)">🎯</div>
+      <div class="block-title-group">
+        <div class="block-title">Opening · Intent &amp; Scope Alignment</div>
+        <div class="block-desc">30 min · Guillermo leads · Everyone present</div>
+      </div>
+      <div class="block-tags">
+        <span class="tag" style="background:rgba(59,130,246,.12);color:var(--accent2)">Facilitated</span>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div class="block-body">
+      <div class="block-inner">
+        <div class="objective-intro">
+          The first 30 minutes set the tone for the entire day. We establish shared intent, confirm what "good enough" looks like today,
+          and agree on where artifacts will live. Move fast — this is alignment, not a strategy session.
+        </div>
+
+        <div class="content-grid">
+          <div class="content-card">
+            <h4>📌 Opening Talking Points</h4>
+            <ul>
+              <li><span class="dot"></span>This session is part of our AI Acceleration Strategy — our journey to becoming AI-Native. This is Phase 1 of the AI-Native PDLC pilot.</li>
+              <li><span class="dot"></span>Why we are here: development is no longer the long pole. Product definition is. The bottleneck has moved upstream.</li>
+              <li><span class="dot"></span>Today we build the <span style="font-weight:700;color:#93c5fd">Context</span> and <span style="font-weight:700;color:#93c5fd">Decision</span> layers of the PDLC model — the inputs that make execution fast and agents effective.</li>
+              <li><span class="dot"></span>Today is not an engineering solutioning day. Chris and Guillermo are process validators, not architects.</li>
+              <li><span class="dot"></span>We are building artifacts for a Thursday blind test — write for someone who wasn't in the room.</li>
+              <li><span class="dot"></span>Telehealth is the use case. This format becomes the repeatable standard for every future AI-enabled pod.</li>
+              <li><span class="dot"></span>Least-friction path: use existing tools, no new platforms introduced today.</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>⚡ Alignment Questions (get verbal yes)</h4>
+            <ul>
+              <li><span class="dot"></span>Do we all agree that Product owns the what and the why?</li>
+              <li><span class="dot"></span>Do we agree Engineering validates, not defines, on Thursday?</li>
+              <li><span class="dot"></span>Are we aligned on the artifact location? (Confirm SharePoint or agreed location)</li>
+              <li><span class="dot"></span>Is everyone clear on what "done" looks like by 4:30 PM today?</li>
+              <li><span class="dot"></span>Are we committed to writing for clarity — not to protect assumptions?</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-grid" style="margin-top:14px">
+          <div class="content-card">
+            <h4>🗣️ Context-Setting: Why This Matters Now</h4>
+            <ul>
+              <li><span class="dot"></span>The AI-Native PDLC model requires Unified Context — AI needs a single workspace of curated inputs, not fragmented docs on personal drives</li>
+              <li><span class="dot"></span>AI coding agents can only move as fast as the context we give them — "wood chipper" metaphor: whatever goes in the top gets ground through fast</li>
+              <li><span class="dot"></span>Incomplete requirements mid-sprint caused the last POC to stall — the funnel must be fully loaded before agents start</li>
+              <li><span class="dot"></span>The CICD pipeline is now down to 5 minutes — the bottleneck moved upstream to Product definition</li>
+              <li><span class="dot"></span>Agile got us lazy on requirements. This exercise is back to basics — not waterfall, but structured enough for agents to act</li>
+              <li><span class="dot"></span>This is not waterfall. It's the minimum clarity needed to experiment fast</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>📍 Logistics to Confirm</h4>
+            <ul>
+              <li><span class="dot"></span>Artifact storage location (SharePoint folder — name and path)</li>
+              <li><span class="dot"></span>Who owns each artifact today (assign right now)</li>
+              <li><span class="dot"></span>How we'll surface open questions (running doc, shared notes)</li>
+              <li><span class="dot"></span>Thursday attendees confirmed: Isaac + Andrew (remote)</li>
+              <li><span class="dot"></span>No decisions on tooling, architecture, or contractors today</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="participants" style="margin-top:14px">
+          <h4>Participants</h4>
+          <div class="participant-chips">
+            <div class="chip lead"><div class="avatar">G</div> Guillermo · Facilitator</div>
+            <div class="chip lead"><div class="avatar">C</div> Chris · Process Validator</div>
+            <div class="chip"><div class="avatar">P</div> Product Owner / Delegate</div>
+            <div class="chip"><div class="avatar">L</div> Lauren · Artifact Quality</div>
+            <div class="chip"><div class="avatar">M</div> Matt · Optional</div>
+          </div>
+        </div>
+
+        <div class="exit-criteria">
+          <h4>✅ Exit Criteria</h4>
+          <ul>
+            <li><input type="checkbox"> One shared objective is written and visible to everyone</li>
+            <li><input type="checkbox"> Artifact storage location is confirmed and accessible</li>
+            <li><input type="checkbox"> Everyone agrees: today is Product definition, not engineering solutioning</li>
+            <li><input type="checkbox"> Artifact owners are named for each deliverable</li>
+          </ul>
+        </div>
+
+        <div class="notes-area">
+          <h4>📝 Facilitator Notes</h4>
+          <textarea placeholder="Capture key decisions, blockers, or deviations from plan..."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ Session 1: Product Outcome Brief ═══════════════════ -->
+  <div class="block" id="s1">
+    <div class="block-header" onclick="toggleBlock(this)">
+      <div class="time-pill">10:00 – 11:15</div>
+      <div class="block-icon" style="background:rgba(99,102,241,.12)">📋</div>
+      <div class="block-title-group">
+        <div class="block-title">Product Outcome Brief</div>
+        <div class="block-desc">75 min · Product leads · Guillermo &amp; Chris as reviewers</div>
+      </div>
+      <div class="block-tags">
+        <span class="tag" style="background:rgba(99,102,241,.12);color:#a5b4fc">Artifact</span>
+        <span class="tag" style="background:rgba(59,130,246,.12);color:var(--accent2)">Product</span>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div class="block-body">
+      <div class="block-inner">
+        <div class="objective-intro">
+          The Product Outcome Brief is the foundation. Every other artifact today builds on it.
+          Start from the existing Telehealth proposal — do not reinvent. Distill and clarify.
+          Write for an engineer who has never been in the room.
+        </div>
+
+        <div class="content-grid">
+          <div class="content-card">
+            <h4>📝 Brief Components to Complete</h4>
+            <ul>
+              <li><span class="dot"></span><strong style="color:#e6edf3">Problem Statement</strong> — What is broken or missing for the user today? One paragraph, no jargon.</li>
+              <li><span class="dot"></span><strong style="color:#e6edf3">Target User / Workflow</strong> — Who is affected, in what context, doing what task?</li>
+              <li><span class="dot"></span><strong style="color:#e6edf3">Desired Business Outcome</strong> — What changes for the business if this is built?</li>
+              <li><span class="dot"></span><strong style="color:#e6edf3">Success Metric</strong> — How will we know it worked? Be specific.</li>
+              <li><span class="dot"></span><strong style="color:#e6edf3">Strategic Rationale</strong> — Why telehealth, why now?</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>⚙️ Telehealth Context (Pre-loaded)</h4>
+            <ul>
+              <li><span class="dot"></span>5+ distinct product impacts: AI Scribe extensions, Telehealth Connect skill for Care Agent, video wrapper service, payments, e-reg</li>
+              <li><span class="dot"></span>Telehealth plan is mature — top-to-bottom spec exists. Use it.</li>
+              <li><span class="dot"></span>Product framing: today's session covers AI Scribe extensions and the Care Agent skill as primary</li>
+              <li><span class="dot"></span>Video wrapper (Andrew) already prototyped — note as input, not scope</li>
+              <li><span class="dot"></span>Contractors expected within weeks — artifacts need to be POD-ready</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-grid" style="margin-top:14px">
+          <div class="content-card">
+            <h4>💡 Facilitation Prompts (if stuck)</h4>
+            <ul>
+              <li><span class="dot"></span>"What does a clinic experience today that this removes?"</li>
+              <li><span class="dot"></span>"If a contractor read this tomorrow, could they describe what they are building?"</li>
+              <li><span class="dot"></span>"What is the user doing differently in 6 months because of this?"</li>
+              <li><span class="dot"></span>"What is the single most important outcome from the business side?"</li>
+              <li><span class="dot"></span>"What would tell us in 30 days that we shipped the wrong thing?"</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>🚩 Common Pitfalls to Avoid</h4>
+            <ul>
+              <li><span class="dot"></span>Writing features instead of outcomes ("build X" ≠ outcome)</li>
+              <li><span class="dot"></span>Leaving the success metric vague ("improve adoption" is not a metric)</li>
+              <li><span class="dot"></span>Conflating the telehealth user (clinic/patient) with the internal stakeholder</li>
+              <li><span class="dot"></span>Letting technical constraints drive the problem framing</li>
+              <li><span class="dot"></span>Treating "we all know it" as documentation — write it out</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="artifact-track">
+          <h4>📁 Artifact Status</h4>
+          <div class="artifact-item">
+            <input type="checkbox">
+            <div class="art-name">Product Outcome Brief — Problem Statement</div>
+            <span class="art-status art-pending">In Progress</span>
+          </div>
+          <div class="artifact-item">
+            <input type="checkbox">
+            <div class="art-name">Product Outcome Brief — Target User / Workflow</div>
+            <span class="art-status art-pending">In Progress</span>
+          </div>
+          <div class="artifact-item">
+            <input type="checkbox">
+            <div class="art-name">Product Outcome Brief — Success Metric</div>
+            <span class="art-status art-pending">In Progress</span>
+          </div>
+        </div>
+
+        <div class="exit-criteria">
+          <h4>✅ Exit Criteria</h4>
+          <ul>
+            <li><input type="checkbox"> Problem statement is written in plain language</li>
+            <li><input type="checkbox"> Target user and workflow are clearly identified</li>
+            <li><input type="checkbox"> Business outcome is specific and agreed upon</li>
+            <li><input type="checkbox"> At least one measurable success metric is defined</li>
+            <li><input type="checkbox"> Brief is saved to the shared artifact location</li>
+          </ul>
+        </div>
+
+        <div class="notes-area">
+          <h4>📝 Session Notes</h4>
+          <textarea placeholder="Key decisions, open questions surfaced, people who need to be looped in..."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ Session 2: MVP Definition ══════════════════════════ -->
+  <div class="block" id="s2">
+    <div class="block-header" onclick="toggleBlock(this)">
+      <div class="time-pill">11:15 – 12:00</div>
+      <div class="block-icon" style="background:rgba(34,197,94,.1)">🔍</div>
+      <div class="block-title-group">
+        <div class="block-title">MVP Scope &amp; Explicit Exclusions</div>
+        <div class="block-desc">45 min · Product leads · Guillermo as scope enforcer</div>
+      </div>
+      <div class="block-tags">
+        <span class="tag" style="background:rgba(34,197,94,.1);color:#4ade80">Artifact</span>
+        <span class="tag" style="background:rgba(59,130,246,.12);color:var(--accent2)">Critical</span>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div class="block-body">
+      <div class="block-inner">
+        <div class="objective-intro">
+          The MVP boundary is the single most important output of this session. Explicit exclusions are as valuable as inclusions.
+          An agent given vague scope will gold-plate indefinitely. Explicit exclusions protect velocity.
+        </div>
+
+        <div class="content-grid">
+          <div class="content-card">
+            <h4>📦 MVP Brief Components</h4>
+            <ul>
+              <li><span class="dot"></span><strong style="color:#e6edf3">MVP Scope</strong> — What is the smallest thing that validates the core outcome?</li>
+              <li><span class="dot"></span><strong style="color:#e6edf3">Explicit Exclusions</strong> — What are we committing NOT to build in this slice?</li>
+              <li><span class="dot"></span><strong style="color:#e6edf3">Assumptions</strong> — What must be true for this MVP to work that we haven't verified?</li>
+              <li><span class="dot"></span><strong style="color:#e6edf3">Open Questions</strong> — What do we not know yet? Name them; don't hide them.</li>
+              <li><span class="dot"></span><strong style="color:#e6edf3">Acceptance Signals</strong> — How will we know the MVP is "done enough" to validate?</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>✂️ Scope Guard Questions</h4>
+            <ul>
+              <li><span class="dot"></span>"Is this in because it delivers value, or because it's easier to include?"</li>
+              <li><span class="dot"></span>"Could we validate the core outcome without this feature?"</li>
+              <li><span class="dot"></span>"What is the one thing that, if it fails, makes the whole thing fail?"</li>
+              <li><span class="dot"></span>"What assumptions are we making about dependencies on other systems?"</li>
+              <li><span class="dot"></span>"What are we deliberately deferring — and do we agree on that deferral?"</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-grid" style="margin-top:14px">
+          <div class="content-card">
+            <h4>🔑 Telehealth-Specific Scope Guidance</h4>
+            <ul>
+              <li><span class="dot"></span>AI Scribe extensions vs. Care Agent skill — confirm which is slice 1 vs. follow-on</li>
+              <li><span class="dot"></span>Payments and e-reg integrations: document as known future dependencies, not MVP</li>
+              <li><span class="dot"></span>Video wrapper: in scope as existing POC input, not in scope as build work today</li>
+              <li><span class="dot"></span>EMR interaction: the team has this mapped — include as known context, confirm scope</li>
+              <li><span class="dot"></span>Contractor readiness: scope must be stable enough for a new resource to act on</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>⚡ Experimentation vs. Waterfall Framing</h4>
+            <ul>
+              <li><span class="dot"></span>Engineering time is now cheap. Code is no longer the long pole. Build to learn.</li>
+              <li><span class="dot"></span>An MVP is a validated experiment, not a commitment to a final architecture</li>
+              <li><span class="dot"></span>Explicit exclusions free the team to move — "not in scope" is not "never"</li>
+              <li><span class="dot"></span>The team can run two prototypes and pick one — capture that intent in the brief</li>
+              <li><span class="dot"></span>Write the MVP brief as an input to an AI agent: it must be unambiguous</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="watchout">
+          <h4>⚠️ Watch-Outs</h4>
+          <ul>
+            <li>Telehealth has 5+ product impacts — resist the pull to define all of them today</li>
+            <li>Complexity is real, but that's not an argument for delaying the first slice</li>
+            <li>Do not let "open questions" become an excuse to defer decisions that can be made right now</li>
+            <li>Exclusions must be explicit and written — verbal agreement is not an artifact</li>
+          </ul>
+        </div>
+
+        <div class="exit-criteria">
+          <h4>✅ Exit Criteria</h4>
+          <ul>
+            <li><input type="checkbox"> MVP scope boundary is written and agreed</li>
+            <li><input type="checkbox"> Explicit exclusions are listed (minimum 3)</li>
+            <li><input type="checkbox"> Assumptions are documented</li>
+            <li><input type="checkbox"> Open questions are named with tentative owners</li>
+            <li><input type="checkbox"> Acceptance signals are defined</li>
+          </ul>
+        </div>
+
+        <div class="notes-area">
+          <h4>📝 Session Notes</h4>
+          <textarea placeholder="Scope decisions, deferred items, key debates and their outcomes..."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ Lunch Break ═════════════════════════════════════════ -->
+  <div class="break-block" id="break">
+    <div class="break-icon">🥗</div>
+    <div>
+      <strong>Lunch · 12:00 – 12:45 PM</strong>
+      <span style="margin-left:10px;font-size:12px;color:var(--muted)">45 min · No working lunch — protect the afternoon energy</span>
+    </div>
+    <div style="margin-left:auto;font-size:12px;color:var(--muted)">Reconvene 12:45 sharp</div>
+  </div>
+
+  <!-- ══ Session 3: Workflow & Context ══════════════════════ -->
+  <div class="block" id="s3">
+    <div class="block-header" onclick="toggleBlock(this)">
+      <div class="time-pill">12:45 – 2:15</div>
+      <div class="block-icon" style="background:rgba(245,158,11,.1)">🗺️</div>
+      <div class="block-title-group">
+        <div class="block-title">Workflow Map &amp; Known Context</div>
+        <div class="block-desc">90 min · Product leads · Chris contributes integration awareness</div>
+      </div>
+      <div class="block-tags">
+        <span class="tag" style="background:rgba(245,158,11,.1);color:#fbbf24">Artifact</span>
+        <span class="tag" style="background:rgba(59,130,246,.12);color:var(--accent2)">Context</span>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div class="block-body">
+      <div class="block-inner">
+        <div class="objective-intro">
+          Context is the fuel for AI agents. The last POC stalled mid-sprint because integration context wasn't surfaced at kickoff.
+          This session makes all known context explicit and places it in the artifact pack — so agents (and engineers) don't have to guess.
+        </div>
+
+        <div class="content-grid">
+          <div class="content-card">
+            <h4>🔄 Workflow Brief Components</h4>
+            <ul>
+              <li><span class="dot"></span><strong style="color:#e6edf3">Current Workflow</strong> — Step-by-step: what does the user do today to accomplish the task?</li>
+              <li><span class="dot"></span><strong style="color:#e6edf3">Desired Workflow</strong> — What does success look like end-to-end when this is live?</li>
+              <li><span class="dot"></span><strong style="color:#e6edf3">Pain Points / Gaps</strong> — Where does the current flow break down?</li>
+              <li><span class="dot"></span><strong style="color:#e6edf3">Known Systems Involved</strong> — List every system that must be touched, read from, or written to</li>
+              <li><span class="dot"></span><strong style="color:#e6edf3">Known Dependencies</strong> — What must exist or be true before a dev can act?</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>🔌 Telehealth Integration Context (Known)</h4>
+            <ul>
+              <li><span class="dot"></span>EMR integration: team has this mapped — bring the existing doc, review and confirm</li>
+              <li><span class="dot"></span>AI Scribe: feature extension, not net new — existing codebase context matters</li>
+              <li><span class="dot"></span>Care Agent Telehealth Connect skill: zero-to-one — no existing integration baseline</li>
+              <li><span class="dot"></span>Video wrapper: Andrew's POC exists — capture as input artifact, not build scope</li>
+              <li><span class="dot"></span>Payments + e-reg: flag as future integration dependencies, not MVP</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-grid" style="margin-top:14px">
+          <div class="content-card">
+            <h4>🧠 Why This Session Is Critical</h4>
+            <ul>
+              <li><span class="dot"></span>In the last POC: agents were ready to code integrations but the table structure wasn't provided until the next day — one-day stall</li>
+              <li><span class="dot"></span>AI agents act on what's written. What's not in the artifact doesn't exist to the agent</li>
+              <li><span class="dot"></span>Chris's lesson: "bring integration context to the kickoff — even if you don't think it's needed yet"</li>
+              <li><span class="dot"></span>The funnel must be fully loaded before agents start consuming it</li>
+              <li><span class="dot"></span>Unknown unknowns at sprint start become blockers at sprint midpoint</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>📌 Facilitation: Systems Inventory</h4>
+            <ul>
+              <li><span class="dot"></span>Go around the room: "Name every system this feature will touch"</li>
+              <li><span class="dot"></span>For each system: read from, write to, or event-driven?</li>
+              <li><span class="dot"></span>For each dependency: does the API/schema exist? Who owns it?</li>
+              <li><span class="dot"></span>Flag "we don't know" explicitly — that becomes an open question with an owner</li>
+              <li><span class="dot"></span>Draw the flow on a whiteboard; photograph and embed in the artifact doc</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="artifact-track">
+          <h4>📁 Artifacts to Complete This Session</h4>
+          <div class="artifact-item">
+            <input type="checkbox">
+            <div class="art-name">Current workflow (as-is) — written, step by step</div>
+            <span class="art-status art-pending">Pending</span>
+          </div>
+          <div class="artifact-item">
+            <input type="checkbox">
+            <div class="art-name">Desired workflow (to-be) — written, step by step</div>
+            <span class="art-status art-pending">Pending</span>
+          </div>
+          <div class="artifact-item">
+            <input type="checkbox">
+            <div class="art-name">Systems and integrations inventory</div>
+            <span class="art-status art-pending">Pending</span>
+          </div>
+          <div class="artifact-item">
+            <input type="checkbox">
+            <div class="art-name">Known dependencies with owners named</div>
+            <span class="art-status art-pending">Pending</span>
+          </div>
+        </div>
+
+        <div class="exit-criteria">
+          <h4>✅ Exit Criteria</h4>
+          <ul>
+            <li><input type="checkbox"> Current and desired workflows are documented step-by-step</li>
+            <li><input type="checkbox"> Every known system is listed with interaction type</li>
+            <li><input type="checkbox"> Dependencies are named with owners</li>
+            <li><input type="checkbox"> "We don't know" items are captured as open questions</li>
+          </ul>
+        </div>
+
+        <div class="notes-area">
+          <h4>📝 Session Notes</h4>
+          <textarea placeholder="Systems identified, owners confirmed, unknowns surfaced..."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ Session 4: Execution Slices ════════════════════════ -->
+  <div class="block" id="s4">
+    <div class="block-header" onclick="toggleBlock(this)">
+      <div class="time-pill">2:15 – 3:15</div>
+      <div class="block-icon" style="background:rgba(239,68,68,.1)">✂️</div>
+      <div class="block-title-group">
+        <div class="block-title">Candidate Execution Slices</div>
+        <div class="block-desc">60 min · Product + Chris + Guillermo · Frame outcomes, not tasks</div>
+      </div>
+      <div class="block-tags">
+        <span class="tag" style="background:rgba(239,68,68,.1);color:#f87171">Artifact</span>
+        <span class="tag" style="background:rgba(99,102,241,.12);color:#a5b4fc">Strategy</span>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div class="block-body">
+      <div class="block-inner">
+        <div class="objective-intro">
+          This is where we break the front-heavy product process into smaller, agile-friendly slices.
+          Each slice is a product outcome — not an engineering task. Each slice must be small enough to build, validate, and learn from before committing to the next.
+          This is where Chris's insight lands: early experimentation, market signal, and fast follows.
+        </div>
+
+        <div class="content-grid">
+          <div class="content-card">
+            <h4>✂️ What a Good Execution Slice Looks Like</h4>
+            <ul>
+              <li><span class="dot"></span>Stated as a product outcome ("clinics can initiate a telehealth visit from within the EMR"), not an engineering task</li>
+              <li><span class="dot"></span>Small enough to build, ship, and get signal from within one sprint cycle</li>
+              <li><span class="dot"></span>Has an explicit validation gate: "what must be true before we start slice 2?"</li>
+              <li><span class="dot"></span>Interdependencies with other slices are identified and sequenced</li>
+              <li><span class="dot"></span>Throwaway code is acceptable — learning is the output of early slices</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>🧩 Telehealth Candidate Slices (Starter)</h4>
+            <ul>
+              <li><span class="dot"></span><strong style="color:#e6edf3">Slice 1 (AI Scribe):</strong> Core telehealth features extension to existing scribe product</li>
+              <li><span class="dot"></span><strong style="color:#e6edf3">Slice 2 (Care Agent):</strong> Telehealth Connect skill for Care Agent — zero to one</li>
+              <li><span class="dot"></span><strong style="color:#e6edf3">Slice 3 (Video):</strong> Integrate Andrew's video wrapper into the workflow</li>
+              <li><span class="dot"></span><strong style="color:#e6edf3">Deferred:</strong> Payments, e-reg, and cross-system touch points</li>
+              <li><span class="dot"></span>Validate ordering today — does the team agree on sequencing?</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-grid" style="margin-top:14px">
+          <div class="content-card">
+            <h4>💡 Facilitation: Building the Slice Map</h4>
+            <ul>
+              <li><span class="dot"></span>Start with slice 1 only — resist defining all slices in detail upfront</li>
+              <li><span class="dot"></span>For each slice: what is the user able to do that they couldn't do before?</li>
+              <li><span class="dot"></span>"What must we validate before an AI agent or developer can safely act on this?"</li>
+              <li><span class="dot"></span>Name the validation gate for each slice — this prevents runaway scope</li>
+              <li><span class="dot"></span>Capture fast-follow candidates in a "parking lot" — don't lose them, but defer them</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>⚡ Shifting the Mindset</h4>
+            <ul>
+              <li><span class="dot"></span>Old model: don't start coding until 100% sure — throwaway code is waste</li>
+              <li><span class="dot"></span>New model: code is cheap — run experiments, get market signal, learn fast</li>
+              <li><span class="dot"></span>Two prototypes, pick the better one — that's the new norm</li>
+              <li><span class="dot"></span>Engineering joins earlier in the process precisely because iteration is cheap</li>
+              <li><span class="dot"></span>The blocker is now: how fast can Product feed requirements to the agents?</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="artifact-track">
+          <h4>📁 Slice Map Output</h4>
+          <div class="artifact-item">
+            <input type="checkbox">
+            <div class="art-name">Slice 1 — outcome statement + validation gate</div>
+            <span class="art-status art-pending">Pending</span>
+          </div>
+          <div class="artifact-item">
+            <input type="checkbox">
+            <div class="art-name">Slice 2 — outcome statement + pre-conditions</div>
+            <span class="art-status art-pending">Pending</span>
+          </div>
+          <div class="artifact-item">
+            <input type="checkbox">
+            <div class="art-name">Deferred items parking lot — named and owned</div>
+            <span class="art-status art-pending">Pending</span>
+          </div>
+          <div class="artifact-item">
+            <input type="checkbox">
+            <div class="art-name">Slice sequencing — agreed ordering with rationale</div>
+            <span class="art-status art-pending">Pending</span>
+          </div>
+        </div>
+
+        <div class="exit-criteria">
+          <h4>✅ Exit Criteria</h4>
+          <ul>
+            <li><input type="checkbox"> Slice 1 is defined as an outcome, not an engineering task</li>
+            <li><input type="checkbox"> Slice 1 validation gate is explicit</li>
+            <li><input type="checkbox"> Slice 2 pre-conditions are named</li>
+            <li><input type="checkbox"> Deferred items have a parking lot entry with owner</li>
+            <li><input type="checkbox"> The team agrees on slice 1 as the starting point</li>
+          </ul>
+        </div>
+
+        <div class="notes-area">
+          <h4>📝 Session Notes</h4>
+          <textarea placeholder="Slice map decisions, debates on sequencing, parking lot items..."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ Session 5: Artifact Cleanup ════════════════════════ -->
+  <div class="block" id="s5">
+    <div class="block-header" onclick="toggleBlock(this)">
+      <div class="time-pill">3:15 – 4:15</div>
+      <div class="block-icon" style="background:rgba(59,130,246,.12)">📦</div>
+      <div class="block-title-group">
+        <div class="block-title">Artifact Cleanup &amp; Pre-Read Package</div>
+        <div class="block-desc">60 min · Lauren leads cleanup · Guillermo &amp; Chris review for blindness</div>
+      </div>
+      <div class="block-tags">
+        <span class="tag" style="background:rgba(59,130,246,.12);color:var(--accent2)">Quality</span>
+        <span class="tag" style="background:rgba(34,197,94,.1);color:#4ade80">Final Pass</span>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div class="block-body">
+      <div class="block-inner">
+        <div class="objective-intro">
+          The artifacts produced today are the inputs for Thursday's blind validation — and the first entry in our Product Intelligence Hub.
+          This session applies the <strong style="color:#e6edf3">Durable Memory</strong> principle: outputs are written back to the intelligence hub so context, decisions, and assets are never lost.
+          The test: could someone who was not in this room today — or an AI agent tomorrow — read these artifacts and describe what is being built, for whom, and why?
+        </div>
+
+        <div class="content-grid">
+          <div class="content-card">
+            <h4>🧹 Cleanup Checklist</h4>
+            <ul>
+              <li><span class="dot"></span>Remove all references that rely on "we talked about this" — write it out</li>
+              <li><span class="dot"></span>Replace acronyms and internal shorthand with plain language on first use</li>
+              <li><span class="dot"></span>Ensure every section has a clearly named owner</li>
+              <li><span class="dot"></span>Check that all open questions have a tentative owner and a due date</li>
+              <li><span class="dot"></span>Verify that exclusions are in a clearly labeled section — not buried in prose</li>
+              <li><span class="dot"></span>Confirm success metric is measurable — not directional language</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>👁️ The Blind-Test Standard</h4>
+            <ul>
+              <li><span class="dot"></span>Isaac and Andrew will receive this package tomorrow with minimal verbal context</li>
+              <li><span class="dot"></span>If a section requires explanation to make sense, it fails the standard</li>
+              <li><span class="dot"></span>The package should answer: what, why, who, scope, what's not in scope, what we don't know</li>
+              <li><span class="dot"></span>Guillermo and Chris do a 10-min quiet read right now — flag anything that needs context</li>
+              <li><span class="dot"></span>Any flagged item: fix it now or mark it explicitly as an open question</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-grid" style="margin-top:14px">
+          <div class="content-card">
+            <h4>📁 Final Artifact Pack Contents</h4>
+            <ul>
+              <li><span class="dot"></span>Product Outcome Brief (problem, user, outcome, success metric)</li>
+              <li><span class="dot"></span>MVP / PRD Brief (scope, exclusions, assumptions, open questions, acceptance signals)</li>
+              <li><span class="dot"></span>Workflow &amp; Context Brief (current, desired, systems, dependencies)</li>
+              <li><span class="dot"></span>Candidate Execution Slices (outcomes, validation gates, sequencing)</li>
+              <li><span class="dot"></span>Readiness &amp; Validation Log (pre-populated with today's open questions)</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>📤 Distribution &amp; Memory Checklist</h4>
+            <ul>
+              <li><span class="dot"></span>All artifacts in the agreed shared location — this is the Product Intelligence Hub entry for Telehealth (no personal drives, no Confluence silos)</li>
+              <li><span class="dot"></span>Naming and folder structure must be consistent with the agreed taxonomy — assets must be searchable and AI-accessible</li>
+              <li><span class="dot"></span>Package sent to Isaac and Andrew by end of day today</li>
+              <li><span class="dot"></span>Cover note: "Please read before 9:00 AM Thursday. We will ask you to describe what we are building without us adding context."</li>
+              <li><span class="dot"></span>No pre-calls or previews with Thursday validators — the blind test must be blind</li>
+              <li><span class="dot"></span>Guillermo confirms receipt before 5:00 PM</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="artifact-track">
+          <h4>📁 Package Completeness Check</h4>
+          <div class="artifact-item">
+            <input type="checkbox">
+            <div class="art-name">Product Outcome Brief — final version in shared location</div>
+            <span class="art-status art-pending">Pending</span>
+          </div>
+          <div class="artifact-item">
+            <input type="checkbox">
+            <div class="art-name">MVP / PRD Brief — final version in shared location</div>
+            <span class="art-status art-pending">Pending</span>
+          </div>
+          <div class="artifact-item">
+            <input type="checkbox">
+            <div class="art-name">Workflow &amp; Context Brief — final version</div>
+            <span class="art-status art-pending">Pending</span>
+          </div>
+          <div class="artifact-item">
+            <input type="checkbox">
+            <div class="art-name">Execution Slice Map — final version</div>
+            <span class="art-status art-pending">Pending</span>
+          </div>
+          <div class="artifact-item">
+            <input type="checkbox">
+            <div class="art-name">Pre-read package sent to Isaac &amp; Andrew</div>
+            <span class="art-status art-pending">Pending</span>
+          </div>
+        </div>
+
+        <div class="exit-criteria">
+          <h4>✅ Exit Criteria</h4>
+          <ul>
+            <li><input type="checkbox"> All artifacts are in the shared location</li>
+            <li><input type="checkbox"> Guillermo and Chris did a quiet read — no verbal-only sections remain</li>
+            <li><input type="checkbox"> Pre-read package is sent to Thursday validators</li>
+            <li><input type="checkbox"> Cover note sets expectations for Thursday's blind session</li>
+          </ul>
+        </div>
+
+        <div class="notes-area">
+          <h4>📝 Session Notes</h4>
+          <textarea placeholder="Items that needed fixes, open questions that couldn't be closed, link to the shared artifact location..."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ Session 6: Gate Decision ═══════════════════════════ -->
+  <div class="block" id="s6">
+    <div class="block-header" onclick="toggleBlock(this)">
+      <div class="time-pill">4:15 – 4:45</div>
+      <div class="block-icon" style="background:rgba(34,197,94,.1)">✅</div>
+      <div class="block-title-group">
+        <div class="block-title">Day 1 Close &amp; Thursday Gate Check</div>
+        <div class="block-desc">30 min · Guillermo facilitates · All participants</div>
+      </div>
+      <div class="block-tags">
+        <span class="tag" style="background:rgba(34,197,94,.1);color:#4ade80">Gate</span>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div class="block-body">
+      <div class="block-inner">
+        <div class="objective-intro">
+          The closing gate is a deliberate decision moment. We do not proceed to Thursday's engineering validation unless we believe the artifact pack is strong enough to withstand a cold read.
+          If the pack is not ready, we extend tonight — not cancel Thursday.
+        </div>
+
+        <div class="content-grid">
+          <div class="content-card">
+            <h4>🚦 Gate Decision Options</h4>
+            <ul>
+              <li><span class="dot"></span><strong style="color:#4ade80">Proceed</strong> — Artifact pack is ready. Send to validators. Thursday is on.</li>
+              <li><span class="dot"></span><strong style="color:#fbbf24">Proceed with Named Risks</strong> — Pack is mostly ready; specific gaps are explicitly flagged for Thursday's team to note, not fix.</li>
+              <li><span class="dot"></span><strong style="color:#f87171">Hold</strong> — Critical gaps exist. Thursday's format needs to shift to a working session, not a blind review.</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>🔎 Gate Check Questions</h4>
+            <ul>
+              <li><span class="dot"></span>Can we clearly state the problem we are solving?</li>
+              <li><span class="dot"></span>Can we clearly state who we are solving it for?</li>
+              <li><span class="dot"></span>Is the MVP boundary explicit and agreed?</li>
+              <li><span class="dot"></span>Are the most critical open questions documented with owners?</li>
+              <li><span class="dot"></span>Would a cold reader understand this without us in the room?</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-grid" style="margin-top:14px">
+          <div class="content-card">
+            <h4>📋 Day 1 Retrospective (10 min)</h4>
+            <ul>
+              <li><span class="dot"></span>What went faster than expected?</li>
+              <li><span class="dot"></span>Where did we get stuck and why?</li>
+              <li><span class="dot"></span>What would we do differently in the next pod's Day 1?</li>
+              <li><span class="dot"></span>Was the format right? What would we add or remove?</li>
+              <li><span class="dot"></span>Who should have been in the room that wasn't?</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>🗓️ Thursday Setup Confirmation</h4>
+            <ul>
+              <li><span class="dot"></span>Isaac confirmed and available: ✓ / ✗</li>
+              <li><span class="dot"></span>Andrew confirmed remote: ✓ / ✗</li>
+              <li><span class="dot"></span>Pre-read sent by 5:00 PM today: ✓ / ✗</li>
+              <li><span class="dot"></span>Thursday start time confirmed: 9:00 AM sharp</li>
+              <li><span class="dot"></span>No previews, no prep calls with validators tonight</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Non-Negotiables Reminder -->
+        <div style="margin-top:18px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Non-Negotiables (All Day)</div>
+          <div class="nonneg-grid">
+            <div class="nonneg-item">Do not start engineering design before the artifact pack exists</div>
+            <div class="nonneg-item">Do not ask developers to figure it out from vague intent</div>
+            <div class="nonneg-item">Do not introduce a new tool without explicit approval</div>
+            <div class="nonneg-item">Do not build a broad template library during this pass</div>
+            <div class="nonneg-item">Do not let this become a committee exercise</div>
+            <div class="nonneg-item">Do not treat AI access as a substitute for Product definition</div>
+          </div>
+        </div>
+
+        <div class="exit-criteria" style="margin-top:14px">
+          <h4>✅ Day 1 Done When</h4>
+          <ul>
+            <li><input type="checkbox"> Gate decision made and documented (Proceed / Proceed with Risks / Hold)</li>
+            <li><input type="checkbox"> Retro notes captured and saved</li>
+            <li><input type="checkbox"> Pre-read package confirmed sent to Isaac &amp; Andrew</li>
+            <li><input type="checkbox"> Thursday logistics confirmed</li>
+            <li><input type="checkbox"> Team is aligned on what Thursday's session will and will not do</li>
+          </ul>
+        </div>
+
+        <div class="notes-area">
+          <h4>📝 Gate Decision &amp; Closing Notes</h4>
+          <textarea placeholder="Gate decision (Proceed / Risks / Hold), retro insights, tomorrow's pre-work..."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ Day Summary ═════════════════════════════════════════ -->
+  <div class="day-summary">
+    <h3>Day 1 Target Outputs — AI-Native PDLC Phase 1</h3>
+    <p>By 4:45 PM, the following artifacts must exist in the shared location (Product Intelligence Hub), be clean enough for a cold read, and be ready for Thursday's blind engineering validation. This is the <strong>Context + Decision</strong> layer of the AI-Native PDLC operating model — the foundation that makes execution fast.</p>
+    <div class="output-grid">
+      <div class="output-item">
+        <div class="output-icon">📄</div>
+        <div class="output-text">
+          <strong>Product Outcome Brief</strong>
+          Problem statement · Target user · Business outcome · Success metric
+        </div>
+      </div>
+      <div class="output-item">
+        <div class="output-icon">🔍</div>
+        <div class="output-text">
+          <strong>MVP / PRD Brief</strong>
+          MVP scope · Explicit exclusions · Assumptions · Open questions · Acceptance signals
+        </div>
+      </div>
+      <div class="output-item">
+        <div class="output-icon">🗺️</div>
+        <div class="output-text">
+          <strong>Workflow &amp; Context Brief</strong>
+          Current flow · Desired flow · Systems involved · Known dependencies
+        </div>
+      </div>
+      <div class="output-item">
+        <div class="output-icon">✂️</div>
+        <div class="output-text">
+          <strong>Candidate Execution Slices</strong>
+          Outcome-framed slices · Validation gates · Agreed sequencing
+        </div>
+      </div>
+      <div class="output-item">
+        <div class="output-icon">📊</div>
+        <div class="output-text">
+          <strong>Readiness &amp; Validation Log</strong>
+          Pre-populated open questions · Owners · Risks · Day 1 decisions
+        </div>
+      </div>
+      <div class="output-item">
+        <div class="output-icon">📬</div>
+        <div class="output-text">
+          <strong>Pre-Read Sent</strong>
+          Full artifact pack + cover note → Isaac &amp; Andrew before 5:00 PM
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /#main -->
+
+<!-- Live Clock -->
+<div id="live-clock">
+  <div class="dot-live"></div>
+  <span id="clock-time">--:-- --</span>
+</div>
+
+<script>
+  /* ─── Live Clock ─────────────────────────────────── */
+  function updateClock() {
+    const now = new Date();
+    const h = now.getHours();
+    const m = String(now.getMinutes()).padStart(2,'0');
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    const h12 = ((h + 11) % 12 + 1);
+    document.getElementById('clock-time').textContent = `${h12}:${m} ${ampm}`;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  /* ─── Scroll Progress Bar ────────────────────────── */
+  window.addEventListener('scroll', () => {
+    const el = document.documentElement;
+    const pct = (el.scrollTop / (el.scrollHeight - el.clientHeight)) * 100;
+    document.getElementById('progress-bar').style.width = pct + '%';
+  });
+
+  /* ─── Accordion ──────────────────────────────────── */
+  function toggleBlock(header) {
+    const block = header.closest('.block');
+    const isOpen = block.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.block.open').forEach(b => b.classList.remove('open'));
+    // Toggle current
+    if (!isOpen) block.classList.add('open');
+    // Smooth scroll
+    if (!isOpen) {
+      setTimeout(() => {
+        block.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
+    }
+  }
+
+  /* ─── Active Sidenav Item on Scroll ─────────────── */
+  const sections = document.querySelectorAll('[id]');
+  const navItems = document.querySelectorAll('.nav-item');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navItems.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  /* ─── Checkbox persistence (sessionStorage) ──────── */
+  document.querySelectorAll('input[type=checkbox]').forEach((cb, i) => {
+    const key = 'cb-' + i;
+    cb.checked = sessionStorage.getItem(key) === 'true';
+    cb.addEventListener('change', () => {
+      sessionStorage.setItem(key, cb.checked);
+      // Visual: strike through parent li text
+      const li = cb.closest('li') || cb.closest('.artifact-item');
+      if (li) li.style.opacity = cb.checked ? '.5' : '1';
+      // Update artifact status badge
+      const badge = cb.closest('.artifact-item')?.querySelector('.art-status');
+      if (badge) {
+        badge.textContent = cb.checked ? 'Done' : 'Pending';
+        badge.className = 'art-status ' + (cb.checked ? 'art-done' : 'art-pending');
+      }
+    });
+    // Apply on load
+    if (cb.checked) {
+      const li = cb.closest('li') || cb.closest('.artifact-item');
+      if (li) li.style.opacity = '.5';
+      const badge = cb.closest('.artifact-item')?.querySelector('.art-status');
+      if (badge) {
+        badge.textContent = 'Done';
+        badge.className = 'art-status art-done';
+      }
+    }
+  });
+
+  /* ─── Animate blocks on first view ──────────────── */
+  const blockObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        blockObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05 });
+
+  document.querySelectorAll('.block').forEach(b => {
+    b.style.opacity = '0';
+    b.style.transform = 'translateY(12px)';
+    b.style.transition = 'opacity .4s ease, transform .4s ease';
+    blockObserver.observe(b);
+  });
+</script>
+
+</body>
+</html>
