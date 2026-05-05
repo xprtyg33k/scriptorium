@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEL Q2 2026 - Continue / Start / Stop</title>
+<style>
+  :root {
+    --navy: #1a2744;
+    --green: #276749;
+    --green-bg: #f0fff4;
+    --green-border: #9ae6b4;
+    --blue: #2c5282;
+    --blue-bg: #ebf4ff;
+    --blue-border: #90cdf4;
+    --red: #c53030;
+    --red-bg: #fff5f5;
+    --red-border: #feb2b2;
+    --accent: #e67e22;
+    --gray: #718096;
+    --light-gray: #f7fafc;
+    --white: #fff;
+    --border: #e2e8f0;
+    --text: #2d3748;
+    --text-light: #4a5568;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; color: var(--text); background: var(--light-gray); line-height: 1.5; }
+
+  /* Header */
+  .header { background: var(--navy); color: var(--white); padding: 1.25rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; }
+  .header-left h1 { font-size: 1.4rem; }
+  .header-left .subtitle { font-size: 0.82rem; opacity: 0.7; margin-top: 0.15rem; }
+  .header-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+  .save-indicator { font-size: 0.75rem; opacity: 0.65; font-style: italic; white-space: nowrap; }
+  .btn {
+    font-size: 0.78rem; font-weight: 600; padding: 0.4rem 0.85rem; border-radius: 4px; cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.12); color: var(--white);
+    transition: background 0.15s ease; display: flex; align-items: center; gap: 0.35rem;
+  }
+  .btn:hover { background: rgba(255,255,255,0.22); }
+  .btn.danger { border-color: rgba(197,48,48,0.5); background: rgba(197,48,48,0.15); }
+  .btn.danger:hover { background: rgba(197,48,48,0.3); }
+
+  /* Quote */
+  .quote-bar { max-width: 1200px; margin: 1rem auto 0; padding: 0 1.5rem; }
+  .quote-bar blockquote {
+    background: var(--white); border-left: 4px solid var(--navy); padding: 0.9rem 1.25rem;
+    font-style: italic; font-size: 0.88rem; color: var(--text-light); border-radius: 0 6px 6px 0;
+  }
+
+  /* Scope */
+  .scope { max-width: 1200px; margin: 0.75rem auto 0; padding: 0 1.5rem; }
+  .scope-box { background: var(--white); border-radius: 6px; padding: 0.85rem 1.25rem; border: 1px solid var(--border); font-size: 0.84rem; color: var(--text-light); }
+  .scope-box strong { color: var(--text); }
+
+  /* Columns */
+  .container { max-width: 1200px; margin: 0 auto; padding: 1rem 1.5rem 2.5rem; }
+  .columns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.25rem; margin-top: 0.75rem; }
+  @media (max-width: 900px) { .columns { grid-template-columns: 1fr; } }
+
+  .column { display: flex; flex-direction: column; }
+  .column-header {
+    padding: 0.7rem 1rem; border-radius: 6px 6px 0 0; font-weight: 700; font-size: 1rem;
+    color: var(--white); display: flex; justify-content: space-between; align-items: center;
+  }
+  .column-header .label { font-size: 0.72rem; font-weight: 400; opacity: 0.8; }
+  .col-continue .column-header { background: var(--green); }
+  .col-start .column-header { background: var(--blue); }
+  .col-stop .column-header { background: var(--red); }
+
+  .column-body {
+    background: var(--white); border: 1px solid var(--border); border-top: none;
+    border-radius: 0 0 6px 6px; padding: 0.6rem; flex: 1; min-height: 320px;
+  }
+
+  /* Sticky items */
+  .sticky {
+    border-radius: 4px; padding: 0.7rem 0.85rem; margin-bottom: 0.5rem; font-size: 0.85rem;
+    position: relative; transition: box-shadow 0.15s ease;
+  }
+  .sticky:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .col-continue .sticky { background: var(--green-bg); border-left: 3px solid var(--green-border); }
+  .col-start .sticky { background: var(--blue-bg); border-left: 3px solid var(--blue-border); }
+  .col-stop .sticky { background: var(--red-bg); border-left: 3px solid var(--red-border); }
+
+  .sticky-controls {
+    position: absolute; top: 0.45rem; right: 0.45rem;
+    display: flex; gap: 0.25rem; opacity: 0; transition: opacity 0.15s ease;
+  }
+  .sticky:hover .sticky-controls { opacity: 1; }
+  .icon-btn {
+    background: none; border: none; cursor: pointer; padding: 0.15rem; border-radius: 3px;
+    font-size: 0.85rem; color: var(--gray); line-height: 1;
+    transition: background 0.1s ease, color 0.1s ease;
+  }
+  .icon-btn:hover { background: rgba(0,0,0,0.07); color: var(--text); }
+  .icon-btn.del:hover { color: var(--red); }
+
+  .sticky-top { padding-right: 3.5rem; }
+  .item-text { color: var(--text); font-size: 0.87rem; line-height: 1.45; word-break: break-word; }
+  .priority-badge {
+    display: inline-block; font-size: 0.62rem; font-weight: 700; padding: 0.1rem 0.4rem;
+    border-radius: 2px; background: var(--navy); color: var(--white); text-transform: uppercase;
+    letter-spacing: 0.04em; margin-bottom: 0.3rem;
+  }
+
+  .item-meta { font-size: 0.75rem; color: var(--gray); margin-top: 0.4rem; display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+  .vote-control { display: flex; align-items: center; gap: 0.25rem; }
+  .vote-btn {
+    background: none; border: 1px solid currentColor; border-radius: 3px; cursor: pointer;
+    width: 1.3rem; height: 1.3rem; display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem; color: var(--gray); transition: all 0.1s ease; line-height: 1;
+  }
+  .vote-btn:hover { color: var(--text); background: var(--light-gray); }
+  .vote-count { font-weight: 700; min-width: 1.2rem; text-align: center; }
+  .owner-text { font-style: italic; color: var(--gray); }
+
+  /* Add button */
+  .add-btn {
+    width: 100%; padding: 0.55rem; border: 2px dashed var(--border); border-radius: 4px;
+    background: none; cursor: pointer; font-size: 0.8rem; color: var(--gray);
+    transition: all 0.15s ease; display: flex; align-items: center; justify-content: center; gap: 0.35rem;
+    margin-top: 0.25rem;
+  }
+  .add-btn:hover { border-color: var(--gray); color: var(--text); background: var(--light-gray); }
+
+  /* Edit modal */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 500;
+    display: flex; align-items: center; justify-content: center; padding: 1rem;
+    opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: auto; }
+  .modal {
+    background: var(--white); border-radius: 8px; width: 100%; max-width: 460px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2); transform: translateY(12px);
+    transition: transform 0.2s ease;
+  }
+  .modal-overlay.open .modal { transform: translateY(0); }
+  .modal-header { padding: 1.1rem 1.4rem 0.75rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .modal-header h2 { font-size: 1rem; color: var(--navy); }
+  .modal-close { background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--gray); line-height: 1; padding: 0.1rem 0.3rem; border-radius: 3px; }
+  .modal-close:hover { background: var(--light-gray); color: var(--text); }
+  .modal-body { padding: 1.1rem 1.4rem; display: flex; flex-direction: column; gap: 0.9rem; }
+  .field label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.3rem; }
+  .field textarea, .field input[type="text"], .field input[type="number"] {
+    width: 100%; border: 1px solid var(--border); border-radius: 4px; padding: 0.5rem 0.7rem;
+    font-family: inherit; font-size: 0.88rem; color: var(--text); background: var(--white);
+    transition: border-color 0.15s ease; resize: vertical;
+  }
+  .field textarea { min-height: 72px; }
+  .field textarea:focus, .field input:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(44,82,130,0.1); }
+  .field input[type="number"] { width: 5rem; }
+  .field-row { display: flex; gap: 1rem; }
+  .field-row .field { flex: 1; }
+  .priority-toggle { display: flex; align-items: center; gap: 0.6rem; cursor: pointer; user-select: none; }
+  .priority-toggle input { width: 1rem; height: 1rem; cursor: pointer; accent-color: var(--navy); }
+  .priority-toggle span { font-size: 0.88rem; color: var(--text); }
+  .modal-footer { padding: 0.9rem 1.4rem; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 0.5rem; }
+  .btn-cancel { padding: 0.45rem 1rem; border-radius: 4px; border: 1px solid var(--border); background: var(--white); font-size: 0.85rem; cursor: pointer; color: var(--text-light); transition: background 0.15s ease; }
+  .btn-cancel:hover { background: var(--light-gray); }
+  .btn-save { padding: 0.45rem 1.1rem; border-radius: 4px; border: none; background: var(--navy); font-size: 0.85rem; cursor: pointer; color: var(--white); font-weight: 600; transition: background 0.15s ease; }
+  .btn-save:hover { background: var(--blue); }
+
+  /* Color stripe on modal header */
+  .modal.col-continue .modal-header { border-top: 3px solid var(--green); }
+  .modal.col-start .modal-header { border-top: 3px solid var(--blue); }
+  .modal.col-stop .modal-header { border-top: 3px solid var(--red); }
+
+  /* Import hidden input */
+  #import-input { display: none; }
+
+  @media print {
+    body { background: white; }
+    .columns { grid-template-columns: 1fr 1fr 1fr; }
+    .column { break-inside: avoid; }
+    .header-actions, .add-btn, .sticky-controls, .vote-btn, .modal-overlay { display: none !important; }
+    .header { padding: 1rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <h1>Continue / Start / Stop</h1>
+    <div class="subtitle">SEL Q2 2026 Onsite | Monday, April 13, 2026</div>
+  </div>
+  <div class="header-actions">
+    <span class="save-indicator" id="save-indicator">No changes yet</span>
+    <button class="btn" onclick="exportData()" title="Download board as JSON file">&#8659; Export JSON</button>
+    <button class="btn" onclick="document.getElementById('import-input').click()" title="Load board from JSON file">&#8657; Import JSON</button>
+    <button class="btn danger" onclick="confirmReset()" title="Clear all items and reset board">&#10005; Reset</button>
+    <input type="file" id="import-input" accept=".json" onchange="importData(event)">
+  </div>
+</div>
+
+<div class="quote-bar">
+  <blockquote>"Culture is the sum total of shared habits and expectations. It has tremendous inertia. Culture strangles innovation in the crib."</blockquote>
+</div>
+
+<div class="scope">
+  <div class="scope-box">
+    <strong>Scope:</strong> Leader behaviors, operating habits, communication patterns, prioritization, focus protection, modernization behaviors, accountability norms, AI adoption practices, architectural and delivery discipline. Focus on what <em>we as leaders</em> do, not what our teams do.
+  </div>
+</div>
+
+<div class="container">
+  <div class="columns">
+    <div class="column col-continue" id="col-continue">
+      <div class="column-header">Continue <span class="label">Protect these habits</span></div>
+      <div class="column-body" id="body-continue"></div>
+    </div>
+    <div class="column col-start" id="col-start">
+      <div class="column-header">Start <span class="label">Adopt these disciplines</span></div>
+      <div class="column-body" id="body-start"></div>
+    </div>
+    <div class="column col-stop" id="col-stop">
+      <div class="column-header">Stop <span class="label">Retire these patterns</span></div>
+      <div class="column-body" id="body-stop"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit / Add Modal -->
+<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <h2 id="modal-title">Add Item</h2>
+      <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label>Behavior / Commitment</label>
+        <textarea id="field-text" placeholder="Describe the behavior, habit, or commitment…" rows="3"></textarea>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Owner</label>
+          <input type="text" id="field-owner" placeholder="e.g. All, Guillermo…">
+        </div>
+        <div class="field">
+          <label>Votes</label>
+          <input type="number" id="field-votes" min="0" max="99" value="0">
+        </div>
+      </div>
+      <div class="field">
+        <label class="priority-toggle">
+          <input type="checkbox" id="field-priority">
+          <span>Mark as Priority</span>
+        </label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-save" onclick="saveItem()">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ─── Data model ────────────────────────────────────────────────────────────
+  const STORAGE_KEY = 'sel-q2-2026-css';
+
+  const DEFAULT_STATE = {
+    continue: [],
+    start: [],
+    stop: []
+  };
+
+  let state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+  let editingColumn = null;
+  let editingId = null;
+
+  // ─── Persistence ──────────────────────────────────────────────────────────
+  function loadFromStorage() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        // Merge to ensure all three columns exist
+        state = {
+          continue: parsed.continue || [],
+          start: parsed.start || [],
+          stop: parsed.stop || []
+        };
+        return true;
+      }
+    } catch (e) { console.warn('Failed to load state:', e); }
+    return false;
+  }
+
+  function saveToStorage() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      const now = new Date();
+      const ts = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      document.getElementById('save-indicator').textContent = 'Saved at ' + ts;
+    } catch (e) { console.warn('Failed to save state:', e); }
+  }
+
+  // ─── Rendering ────────────────────────────────────────────────────────────
+  function renderAll() {
+    ['continue', 'start', 'stop'].forEach(renderColumn);
+  }
+
+  function renderColumn(col) {
+    const body = document.getElementById('body-' + col);
+    body.innerHTML = '';
+
+    const sorted = [...state[col]].sort((a, b) => {
+      if (a.priority && !b.priority) return -1;
+      if (!a.priority && b.priority) return 1;
+      return (b.votes || 0) - (a.votes || 0);
+    });
+
+    sorted.forEach(item => {
+      body.appendChild(createStickyEl(col, item));
+    });
+
+    // Add button always last
+    const addBtn = document.createElement('button');
+    addBtn.className = 'add-btn';
+    addBtn.innerHTML = '&#43; Add item';
+    addBtn.onclick = () => openModal(col, null);
+    body.appendChild(addBtn);
+  }
+
+  function createStickyEl(col, item) {
+    const div = document.createElement('div');
+    div.className = 'sticky';
+    div.dataset.id = item.id;
+
+    div.innerHTML = `
+      <div class="sticky-controls">
+        <button class="icon-btn" onclick="openModal('${col}', '${item.id}')" title="Edit">&#9998;</button>
+        <button class="icon-btn del" onclick="deleteItem('${col}', '${item.id}')" title="Delete">&#128465;</button>
+      </div>
+      <div class="sticky-top">
+        ${item.priority ? '<span class="priority-badge">Priority</span><br>' : ''}
+        <span class="item-text">${escapeHtml(item.text)}</span>
+      </div>
+      <div class="item-meta">
+        <span class="owner-text">${item.owner ? escapeHtml(item.owner) : '<em>no owner</em>'}</span>
+        <span class="vote-control">
+          <button class="vote-btn" onclick="adjustVotes('${col}', '${item.id}', -1)" title="Remove vote">&#8722;</button>
+          <span class="vote-count">${item.votes || 0}</span>
+          <button class="vote-btn" onclick="adjustVotes('${col}', '${item.id}', +1)" title="Add vote">&#43;</button>
+        </span>
+      </div>
+    `;
+    return div;
+  }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  // ─── Vote adjustment (inline, no modal) ───────────────────────────────────
+  function adjustVotes(col, id, delta) {
+    const item = state[col].find(i => i.id === id);
+    if (!item) return;
+    item.votes = Math.max(0, (item.votes || 0) + delta);
+    saveToStorage();
+    renderColumn(col);
+  }
+
+  // ─── Delete ───────────────────────────────────────────────────────────────
+  function deleteItem(col, id) {
+    if (!confirm('Delete this item?')) return;
+    state[col] = state[col].filter(i => i.id !== id);
+    saveToStorage();
+    renderColumn(col);
+  }
+
+  // ─── Modal ────────────────────────────────────────────────────────────────
+  function openModal(col, id) {
+    editingColumn = col;
+    editingId = id;
+
+    const modal = document.getElementById('modal');
+    modal.className = 'modal col-' + col;
+
+    const colLabels = { continue: 'Continue', start: 'Start', stop: 'Stop' };
+    document.getElementById('modal-title').textContent = id ? 'Edit Item' : 'Add to ' + colLabels[col];
+
+    if (id) {
+      const item = state[col].find(i => i.id === id);
+      document.getElementById('field-text').value = item.text || '';
+      document.getElementById('field-owner').value = item.owner || '';
+      document.getElementById('field-votes').value = item.votes || 0;
+      document.getElementById('field-priority').checked = !!item.priority;
+    } else {
+      document.getElementById('field-text').value = '';
+      document.getElementById('field-owner').value = '';
+      document.getElementById('field-votes').value = 0;
+      document.getElementById('field-priority').checked = false;
+    }
+
+    document.getElementById('modal-overlay').classList.add('open');
+    setTimeout(() => document.getElementById('field-text').focus(), 80);
+  }
+
+  function closeModal() {
+    document.getElementById('modal-overlay').classList.remove('open');
+    editingColumn = null;
+    editingId = null;
+  }
+
+  function handleOverlayClick(e) {
+    if (e.target === document.getElementById('modal-overlay')) closeModal();
+  }
+
+  function saveItem() {
+    const text = document.getElementById('field-text').value.trim();
+    if (!text) {
+      document.getElementById('field-text').focus();
+      document.getElementById('field-text').style.borderColor = 'var(--red)';
+      setTimeout(() => document.getElementById('field-text').style.borderColor = '', 1200);
+      return;
+    }
+
+    const owner = document.getElementById('field-owner').value.trim();
+    const votes = parseInt(document.getElementById('field-votes').value, 10) || 0;
+    const priority = document.getElementById('field-priority').checked;
+
+    if (editingId) {
+      const item = state[editingColumn].find(i => i.id === editingId);
+      if (item) { item.text = text; item.owner = owner; item.votes = votes; item.priority = priority; }
+    } else {
+      state[editingColumn].push({ id: uid(), text, owner, votes, priority });
+    }
+
+    saveToStorage();
+    renderColumn(editingColumn);
+    closeModal();
+  }
+
+  // ─── Export / Import ──────────────────────────────────────────────────────
+  function exportData() {
+    const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'continue-start-stop.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  function importData(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      try {
+        const parsed = JSON.parse(ev.target.result);
+        if (!parsed.continue && !parsed.start && !parsed.stop) throw new Error('Unexpected format');
+        state = {
+          continue: parsed.continue || [],
+          start: parsed.start || [],
+          stop: parsed.stop || []
+        };
+        saveToStorage();
+        renderAll();
+        document.getElementById('save-indicator').textContent = 'Imported from file';
+      } catch (err) {
+        alert('Could not read that file. Make sure it is a valid continue-start-stop.json export.');
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = ''; // allow re-importing same file
+  }
+
+  // ─── Reset ────────────────────────────────────────────────────────────────
+  function confirmReset() {
+    if (!confirm('Reset the board? All items will be deleted. This cannot be undone.\n\nConsider exporting first.')) return;
+    state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+    saveToStorage();
+    document.getElementById('save-indicator').textContent = 'Board reset';
+    renderAll();
+  }
+
+  // ─── Keyboard shortcuts ───────────────────────────────────────────────────
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+      if (document.getElementById('modal-overlay').classList.contains('open')) saveItem();
+    }
+  });
+
+  // ─── Utilities ────────────────────────────────────────────────────────────
+  function uid() {
+    return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  }
+
+  // ─── Boot ─────────────────────────────────────────────────────────────────
+  const loaded = loadFromStorage();
+  if (loaded) {
+    document.getElementById('save-indicator').textContent = 'Loaded from storage';
+  }
+  renderAll();
+</script>
+</body>
+</html>

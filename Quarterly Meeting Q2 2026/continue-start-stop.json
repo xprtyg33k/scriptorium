@@ -1,0 +1,106 @@
+{
+  "continue": [
+    {
+      "id": "mnxhjhwhruwzh",
+      "text": "AI Tooling adoption.",
+      "owner": "Guillermo",
+      "votes": 3,
+      "priority": false
+    },
+    {
+      "id": "mnxhtck2pfzf6",
+      "text": "Invest in optimizing sprint effective (process) time",
+      "owner": "Damien",
+      "votes": 2,
+      "priority": false
+    },
+    {
+      "id": "mnxine7h7gvu0",
+      "text": "Focus on stability and performance as a high priority guiding objective",
+      "owner": "Rob",
+      "votes": 6,
+      "priority": false
+    },
+    {
+      "id": "mnxis9dimwmhi",
+      "text": "Monitor and Tweak team performance metrics",
+      "owner": "Rafael",
+      "votes": 2,
+      "priority": false
+    }
+  ],
+  "start": [
+    {
+      "id": "mnxhjzv8lnr69",
+      "text": "Track QA backlog",
+      "owner": "Rafael",
+      "votes": 1,
+      "priority": false
+    },
+    {
+      "id": "mnxhpuntkhkhs",
+      "text": "Show trends in the sprint updates",
+      "owner": "Rafael",
+      "votes": 0,
+      "priority": false
+    },
+    {
+      "id": "mnxhv5rr207eq",
+      "text": "Figure out how to contribute to other team's \"source\" without becoming the owner of such codebase. (through the completion of a PR)",
+      "owner": "Scott",
+      "votes": 2,
+      "priority": false
+    },
+    {
+      "id": "mnxilu7a8tv2t",
+      "text": "Create Team Playbook (SEL + all functional teams)",
+      "owner": "Rafael",
+      "votes": 1,
+      "priority": false
+    },
+    {
+      "id": "mnxit885hhy37",
+      "text": "Define top/real value metrics for our teams and our collective ability to demonstrate effectiveness",
+      "owner": "Damien",
+      "votes": 5,
+      "priority": false
+    },
+    {
+      "id": "mnxjzrzujz2h5",
+      "text": "Lead \"Experity Literacy\" efforts, by scheduling activities and sharing knowledge about our systems proactively.",
+      "owner": "Damien",
+      "votes": 2,
+      "priority": false
+    },
+    {
+      "id": "mnxkus253ktxt",
+      "text": "Shift left by automating quality within the development tasks",
+      "owner": "Isaac",
+      "votes": 9,
+      "priority": false
+    }
+  ],
+  "stop": [
+    {
+      "id": "mnxhiryos5mja",
+      "text": "Complaining about other departments.",
+      "owner": "Damien",
+      "votes": 1,
+      "priority": false
+    },
+    {
+      "id": "mnxhxi67opecx",
+      "text": "Waiting for explicit direction before acting on improvements, efficiencies and initiatives",
+      "owner": "Guillermo",
+      "votes": 4,
+      "priority": false
+    },
+    {
+      "id": "mnxkrpcyq8hlm",
+      "text": "Throwing the ownership of quality over the wall to QA.",
+      "owner": "Isaac",
+      "votes": 1,
+      "priority": false
+    }
+  ]
+}

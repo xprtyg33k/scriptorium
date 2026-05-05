@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEL Q2 2026 - Personal Vision and Goals Tracker</title>
+<style>
+  :root {
+    --navy: #1a2744;
+    --blue: #2c5282;
+    --light-blue: #ebf4ff;
+    --accent: #e67e22;
+    --green: #276749;
+    --gray: #718096;
+    --light-gray: #f7fafc;
+    --white: #fff;
+    --border: #e2e8f0;
+    --text: #2d3748;
+    --text-light: #4a5568;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; color: var(--text); background: var(--light-gray); line-height: 1.6; }
+
+  .header { background: var(--navy); color: var(--white); padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+  .header h1 { font-size: 1.5rem; }
+  .header .subtitle { font-size: 0.85rem; opacity: 0.7; margin-top: 0.25rem; }
+  .header-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .header-actions button { padding: 0.45rem 1rem; border: none; border-radius: 4px; font-size: 0.82rem; font-weight: 600; cursor: pointer; }
+  .btn-save { background: var(--accent); color: var(--white); }
+  .btn-save:hover { background: #cf6d17; }
+  .btn-load { background: var(--blue); color: var(--white); }
+  .btn-load:hover { background: #1e3a5f; }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 1.5rem; }
+
+  .intro { background: var(--light-blue); border-left: 4px solid var(--blue); border-radius: 6px; padding: 1rem 1.25rem; margin-bottom: 1rem; font-size: 0.88rem; color: var(--text-light); }
+  .intro em { font-style: italic; color: var(--blue); }
+
+  .toast { position: fixed; top: 1rem; right: 1rem; padding: 0.75rem 1.25rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; z-index: 1000; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+  .toast.show { opacity: 1; }
+  .toast.success { background: #c6f6d5; color: var(--green); border: 1px solid #9ae6b4; }
+  .toast.info { background: var(--light-blue); color: var(--blue); border: 1px solid #90cdf4; }
+
+  .person-card { background: var(--white); border-radius: 8px; border: 1px solid var(--border); margin-bottom: 1.5rem; overflow: hidden; }
+  .person-header { background: var(--navy); color: var(--white); padding: 0.75rem 1.25rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; }
+  .person-header h2 { font-size: 1rem; font-weight: 600; }
+  .person-header .role { font-size: 0.8rem; opacity: 0.7; }
+  .person-header .toggle { font-size: 1.2rem; transition: transform 0.2s; }
+  .person-header .toggle.collapsed { transform: rotate(-90deg); }
+  .person-body { padding: 1.25rem; }
+  .person-body.hidden { display: none; }
+  .person-actions { padding: 0 1.25rem 1rem; display: flex; gap: 0.5rem; }
+  .person-actions button { padding: 0.35rem 0.85rem; border: 1px solid var(--border); border-radius: 4px; font-size: 0.78rem; cursor: pointer; background: var(--white); color: var(--text); }
+  .person-actions .btn-save-person { background: var(--green); color: var(--white); border-color: var(--green); }
+  .person-actions .btn-save-person:hover { background: #1e5238; }
+
+  .field { margin-bottom: 1.1rem; }
+  .field-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--blue); margin-bottom: 0.3rem; }
+
+  textarea.field-input {
+    width: 100%; font-size: 0.9rem; color: var(--text); padding: 0.5rem 0.6rem;
+    background: var(--light-gray); border-radius: 4px; border: 1px solid var(--border);
+    font-family: inherit; line-height: 1.5; resize: vertical; min-height: 2.5rem;
+  }
+  textarea.field-input:focus { outline: none; border-color: var(--blue); background: var(--white); }
+  textarea.field-input.vision { min-height: 4rem; }
+  textarea.field-input.gap { background: #fff5f5; border-color: #fed7d7; }
+  textarea.field-input.gap:focus { border-color: #c53030; background: var(--white); }
+  textarea.field-input.progress { background: #f0fff4; border-color: #c6f6d5; }
+  textarea.field-input.progress:focus { border-color: var(--green); background: var(--white); }
+
+  .goal-row { display: flex; gap: 0.5rem; margin-bottom: 0.4rem; align-items: center; }
+  .goal-row input.goal-text { flex: 1; font-size: 0.88rem; padding: 0.4rem 0.6rem; border: 1px solid var(--border); border-radius: 4px; background: var(--light-gray); font-family: inherit; }
+  .goal-row input.goal-text:focus { outline: none; border-color: var(--blue); background: var(--white); }
+  .goal-row input.goal-deadline { width: 130px; font-size: 0.82rem; padding: 0.4rem 0.5rem; border: 1px solid var(--border); border-radius: 4px; background: var(--light-gray); font-family: inherit; color: var(--gray); }
+  .goal-row input.goal-deadline:focus { outline: none; border-color: var(--blue); background: var(--white); color: var(--text); }
+  .goal-row button.remove-goal { background: none; border: none; color: var(--gray); cursor: pointer; font-size: 1.1rem; padding: 0 0.3rem; }
+  .goal-row button.remove-goal:hover { color: #c53030; }
+  .add-goal-btn { font-size: 0.78rem; color: var(--blue); background: none; border: 1px dashed var(--blue); border-radius: 4px; padding: 0.3rem 0.7rem; cursor: pointer; margin-top: 0.3rem; }
+  .add-goal-btn:hover { background: var(--light-blue); }
+
+  .quote { text-align: center; padding: 1.5rem; font-style: italic; font-size: 0.9rem; color: var(--text-light); }
+
+  .file-input-hidden { display: none; }
+
+  @media print {
+    body { background: white; }
+    .person-card { break-inside: avoid; border: 1px solid #ccc; }
+    .person-header { background: var(--navy) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .header-actions, .person-actions, .add-goal-btn, .remove-goal { display: none !important; }
+    textarea.field-input { border: none; background: transparent; resize: none; }
+    .goal-row input { border: none; background: transparent; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>Personal Vision and Goals Tracker</h1>
+    <div class="subtitle">SEL Q2 2026 Onsite | Captured April 14, 2026 | Revisit at Q3 Onsite</div>
+  </div>
+  <div class="header-actions">
+    <button class="btn-load" onclick="document.getElementById('loadFiles').click()">Load from Files</button>
+    <button class="btn-save" onclick="saveAll()">Save All</button>
+    <input type="file" id="loadFiles" class="file-input-hidden" multiple accept=".md" onchange="loadFiles(event)">
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="container">
+
+  <div class="intro">
+    <em>"You will either lead a life by design or live a life by default."</em><br>
+    Each leader's vision, goals, and honest gap identification. Click into any field to edit. Use <strong>Save</strong> to download a .md file per person. Use <strong>Load from Files</strong> to reload saved .md files.
+  </div>
+
+  <div id="people-container"></div>
+
+  <div class="quote">"Reach that destination where the things that are pleasant and the things that are honorable, finally become, for you, the same." &mdash; Seneca</div>
+
+</div>
+
+<script>
+const PEOPLE = [
+  { id: "guillermo-salas", name: "Guillermo Salas", role: "VP of Engineering" },
+  { id: "henry-happ", name: "Henry Happ", role: "DevOps / Platform Lead" },
+  { id: "scott-seely", name: "Scott Seely", role: "Staff Engineer / Core Stability Lead" },
+  { id: "rob-giordano", name: "Rob Giordano", role: "EMR Lead" },
+  { id: "isaac-blatter", name: "Isaac Blatter", role: "AI Scribe / Care Agent Lead" },
+  { id: "damien-evans", name: "Damien Evans", role: "OnePACS Lead" },
+  { id: "john-thomalla", name: "John Thomalla", role: "Director of Interoperability" },
+  { id: "jason-munsch", name: "Jason Munsch", role: "RCM Lead" },
+  { id: "scott-simonson", name: "Scott Simonson", role: "DevOps / Security Lead" },
+  { id: "rafael-van-dyke", name: "Rafael Van Dyke", role: "Engineering Manager" },
+  { id: "josh-malan", name: "Josh Malan", role: "Architecture / Platform Lead" },
+];
+
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + type;
+  setTimeout(() => { t.className = 'toast'; }, 2500);
+}
+
+function buildCard(p) {
+  return `
+  <div class="person-card" data-person-id="${p.id}">
+    <div class="person-header" onclick="toggleCard('${p.id}')">
+      <div><h2>${p.name}</h2></div>
+      <div style="display:flex;align-items:center;gap:1rem;">
+        <span class="role">${p.role}</span>
+        <span class="toggle" id="toggle-${p.id}">&#9660;</span>
+      </div>
+    </div>
+    <div class="person-body" id="body-${p.id}">
+      <div class="field">
+        <div class="field-label">Vision Statement (Remainder of 2026)</div>
+        <textarea class="field-input vision" id="${p.id}-vision" placeholder="Describe the leader you want to be by the next onsite..."></textarea>
+      </div>
+      <div class="field">
+        <div class="field-label">Quarterly Goals (Q3 2026)</div>
+        <div id="${p.id}-goals">
+          <div class="goal-row">
+            <input type="text" class="goal-text" placeholder="Goal description">
+            <input type="text" class="goal-deadline" placeholder="By: date">
+            <button class="remove-goal" onclick="this.parentElement.remove()" title="Remove">&times;</button>
+          </div>
+          <div class="goal-row">
+            <input type="text" class="goal-text" placeholder="Goal description">
+            <input type="text" class="goal-deadline" placeholder="By: date">
+            <button class="remove-goal" onclick="this.parentElement.remove()" title="Remove">&times;</button>
+          </div>
+          <div class="goal-row">
+            <input type="text" class="goal-text" placeholder="Goal description">
+            <input type="text" class="goal-deadline" placeholder="By: date">
+            <button class="remove-goal" onclick="this.parentElement.remove()" title="Remove">&times;</button>
+          </div>
+        </div>
+        <button class="add-goal-btn" onclick="addGoal('${p.id}')">+ Add Goal</button>
+      </div>
+      <div class="field">
+        <div class="field-label">Alignment to Collective Goals</div>
+        <textarea class="field-input" id="${p.id}-alignment" placeholder="How this vision contributes to team and organizational goals..."></textarea>
+      </div>
+      <div class="field">
+        <div class="field-label">Honest Gap: Intent vs. Current Behavior</div>
+        <textarea class="field-input gap" id="${p.id}-gap" placeholder="One specific gap between intent and current behavior to close this quarter..."></textarea>
+      </div>
+      <div class="field">
+        <div class="field-label">Progress Notes (updated monthly)</div>
+        <textarea class="field-input progress" id="${p.id}-progress" placeholder="Monthly progress notes..."></textarea>
+      </div>
+    </div>
+    <div class="person-actions" id="actions-${p.id}">
+      <button class="btn-save-person" onclick="savePerson('${p.id}')">Save ${p.name.split(' ')[0]}'s Vision</button>
+    </div>
+  </div>`;
+}
+
+function toggleCard(id) {
+  const body = document.getElementById('body-' + id);
+  const actions = document.getElementById('actions-' + id);
+  const toggle = document.getElementById('toggle-' + id);
+  const hidden = body.classList.toggle('hidden');
+  actions.style.display = hidden ? 'none' : 'flex';
+  toggle.classList.toggle('collapsed', hidden);
+}
+
+function addGoal(personId) {
+  const container = document.getElementById(personId + '-goals');
+  const row = document.createElement('div');
+  row.className = 'goal-row';
+  row.innerHTML = `
+    <input type="text" class="goal-text" placeholder="Goal description">
+    <input type="text" class="goal-deadline" placeholder="By: date">
+    <button class="remove-goal" onclick="this.parentElement.remove()" title="Remove">&times;</button>`;
+  container.appendChild(row);
+}
+
+function getPersonData(personId) {
+  const person = PEOPLE.find(p => p.id === personId);
+  const vision = document.getElementById(personId + '-vision').value.trim();
+  const alignment = document.getElementById(personId + '-alignment').value.trim();
+  const gap = document.getElementById(personId + '-gap').value.trim();
+  const progress = document.getElementById(personId + '-progress').value.trim();
+
+  const goalRows = document.getElementById(personId + '-goals').querySelectorAll('.goal-row');
+  const goals = [];
+  goalRows.forEach(row => {
+    const text = row.querySelector('.goal-text').value.trim();
+    const deadline = row.querySelector('.goal-deadline').value.trim();
+    if (text) goals.push({ text, deadline });
+  });
+
+  return { person, vision, goals, alignment, gap, progress };
+}
+
+function toMarkdown(data) {
+  const d = data;
+  const now = new Date().toISOString().split('T')[0];
+  let md = `# Personal Vision and Goals: ${d.person.name}\n\n`;
+  md += `**Role:** ${d.person.role}  \n`;
+  md += `**Last Updated:** ${now}  \n`;
+  md += `**Onsite:** SEL Q2 2026 - Sharpen the Standard  \n\n`;
+  md += `---\n\n`;
+  md += `## Vision Statement (Remainder of 2026)\n\n`;
+  md += (d.vision || '_Not yet completed_') + '\n\n';
+  md += `## Quarterly Goals (Q3 2026)\n\n`;
+  if (d.goals.length === 0) {
+    md += '_No goals entered yet_\n\n';
+  } else {
+    d.goals.forEach((g, i) => {
+      md += `${i + 1}. ${g.text}`;
+      if (g.deadline) md += ` (By: ${g.deadline})`;
+      md += '\n';
+    });
+    md += '\n';
+  }
+  md += `## Alignment to Collective Goals\n\n`;
+  md += (d.alignment || '_Not yet completed_') + '\n\n';
+  md += `## Honest Gap: Intent vs. Current Behavior\n\n`;
+  md += (d.gap || '_Not yet completed_') + '\n\n';
+  md += `## Progress Notes\n\n`;
+  md += (d.progress || '_No progress notes yet_') + '\n';
+  return md;
+}
+
+function downloadFile(filename, content) {
+  const blob = new Blob([content], { type: 'text/markdown' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function savePerson(personId) {
+  const data = getPersonData(personId);
+  const md = toMarkdown(data);
+  const filename = `vision-${data.person.id}.md`;
+  downloadFile(filename, md);
+  showToast(`Saved ${data.person.name.split(' ')[0]}'s vision`, 'success');
+}
+
+function saveAll() {
+  let count = 0;
+  PEOPLE.forEach(p => {
+    const data = getPersonData(p.id);
+    const hasContent = data.vision || data.goals.length > 0 || data.alignment || data.gap || data.progress;
+    if (hasContent) {
+      const md = toMarkdown(data);
+      downloadFile(`vision-${p.id}.md`, md);
+      count++;
+    }
+  });
+  if (count > 0) {
+    showToast(`Saved ${count} vision file${count > 1 ? 's' : ''}`, 'success');
+  } else {
+    showToast('No data entered yet', 'info');
+  }
+}
+
+function parseMarkdown(content) {
+  const data = { vision: '', goals: [], alignment: '', gap: '', progress: '' };
+
+  const sections = content.split(/^## /m);
+  sections.forEach(section => {
+    const lines = section.trim();
+    if (lines.startsWith('Vision Statement')) {
+      data.vision = lines.replace(/^Vision Statement.*\n+/, '').replace(/^_Not yet completed_$/, '').trim();
+    } else if (lines.startsWith('Quarterly Goals')) {
+      const body = lines.replace(/^Quarterly Goals.*\n+/, '').trim();
+      if (body && !body.startsWith('_No goals')) {
+        const goalLines = body.split('\n');
+        goalLines.forEach(gl => {
+          const match = gl.match(/^\d+\.\s+(.+?)(?:\s+\(By:\s*(.+?)\))?$/);
+          if (match) {
+            data.goals.push({ text: match[1].trim(), deadline: (match[2] || '').trim() });
+          }
+        });
+      }
+    } else if (lines.startsWith('Alignment to Collective')) {
+      data.alignment = lines.replace(/^Alignment to Collective Goals?\n+/, '').replace(/^_Not yet completed_$/, '').trim();
+    } else if (lines.startsWith('Honest Gap')) {
+      data.gap = lines.replace(/^Honest Gap.*\n+/, '').replace(/^_Not yet completed_$/, '').trim();
+    } else if (lines.startsWith('Progress Notes')) {
+      data.progress = lines.replace(/^Progress Notes\n+/, '').replace(/^_No progress notes yet_$/, '').trim();
+    }
+  });
+
+  return data;
+}
+
+function applyData(personId, data) {
+  document.getElementById(personId + '-vision').value = data.vision;
+  document.getElementById(personId + '-alignment').value = data.alignment;
+  document.getElementById(personId + '-gap').value = data.gap;
+  document.getElementById(personId + '-progress').value = data.progress;
+
+  const goalsContainer = document.getElementById(personId + '-goals');
+  goalsContainer.innerHTML = '';
+
+  const goals = data.goals.length > 0 ? data.goals : [{ text: '', deadline: '' }, { text: '', deadline: '' }];
+  goals.forEach(g => {
+    const row = document.createElement('div');
+    row.className = 'goal-row';
+    row.innerHTML = `
+      <input type="text" class="goal-text" placeholder="Goal description" value="${escapeHtml(g.text)}">
+      <input type="text" class="goal-deadline" placeholder="By: date" value="${escapeHtml(g.deadline)}">
+      <button class="remove-goal" onclick="this.parentElement.remove()" title="Remove">&times;</button>`;
+    goalsContainer.appendChild(row);
+  });
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML.replace(/"/g, '&quot;');
+}
+
+function loadFiles(event) {
+  const files = event.target.files;
+  let loaded = 0;
+  Array.from(files).forEach(file => {
+    const match = file.name.match(/^vision-(.+)\.md$/);
+    if (!match) return;
+    const personId = match[1];
+    const person = PEOPLE.find(p => p.id === personId);
+    if (!person) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const data = parseMarkdown(e.target.result);
+      applyData(personId, data);
+      loaded++;
+      showToast(`Loaded ${loaded} file${loaded > 1 ? 's' : ''}`, 'success');
+    };
+    reader.readAsText(file);
+  });
+
+  if (files.length === 0) {
+    showToast('No .md files selected', 'info');
+  }
+  event.target.value = '';
+}
+
+// Build all cards on load
+const container = document.getElementById('people-container');
+container.innerHTML = PEOPLE.map(buildCard).join('');
+</script>
+
+</body>
+</html>

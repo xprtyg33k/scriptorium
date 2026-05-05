@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEL Q2 2026 — Day 2 Guide | April 14, 2026</title>
+<style>
+  :root {
+    --navy: #1a2744;
+    --blue: #2c5282;
+    --light-blue: #ebf4ff;
+    --accent: #e67e22;
+    --accent-light: #fff3e6;
+    --green: #276749;
+    --light-green: #f0fff4;
+    --green-border: #9ae6b4;
+    --red: #c53030;
+    --red-bg: #fff5f5;
+    --red-border: #feb2b2;
+    --purple: #553c9a;
+    --purple-bg: #faf5ff;
+    --teal: #2c7a7b;
+    --teal-bg: #e6fffa;
+    --gray: #718096;
+    --light-gray: #f7fafc;
+    --white: #ffffff;
+    --border: #e2e8f0;
+    --text: #2d3748;
+    --text-light: #4a5568;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: var(--text); background: var(--light-gray); line-height: 1.65;
+  }
+
+  /* ── Header ─────────────────────────────────────── */
+  .header {
+    background: linear-gradient(135deg, #182240 0%, var(--green) 100%);
+    color: var(--white); padding: 2.75rem 2rem 2.25rem;
+  }
+  .header-inner { max-width: 960px; margin: 0 auto; }
+  .header-eyebrow {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: #81e6d9; margin-bottom: 0.6rem;
+  }
+  .header h1 { font-size: 2rem; font-weight: 800; line-height: 1.15; margin-bottom: 0.35rem; }
+  .header .sub { font-size: 1rem; opacity: 0.85; margin-bottom: 1.5rem; max-width: 640px; }
+  .header-meta {
+    display: flex; flex-wrap: wrap; gap: 1.5rem; font-size: 0.82rem;
+    opacity: 0.75; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 1rem;
+  }
+
+  /* ── Progress pill ───────────────────────────────── */
+  .progress-bar-wrap { background: rgba(255,255,255,0.12); border-radius: 99px; margin-top: 1.25rem; overflow: hidden; height: 6px; max-width: 480px; }
+  .progress-bar-fill { height: 100%; background: #81e6d9; border-radius: 99px; width: 50%; }
+  .progress-label { font-size: 0.72rem; opacity: 0.7; margin-top: 0.4rem; }
+
+  /* ── Nav ─────────────────────────────────────────── */
+  .nav { background: var(--green); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.15); }
+  .nav-inner { max-width: 960px; margin: 0 auto; display: flex; flex-wrap: wrap; }
+  .nav a {
+    color: rgba(255,255,255,0.88); text-decoration: none; font-size: 0.78rem;
+    font-weight: 500; padding: 0.7rem 1rem; transition: background 0.15s; white-space: nowrap;
+  }
+  .nav a:hover { background: rgba(255,255,255,0.15); color: var(--white); }
+
+  /* ── Container ───────────────────────────────────── */
+  .container { max-width: 960px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+  /* ── Section ─────────────────────────────────────── */
+  .section { margin-bottom: 3.25rem; }
+  .section-eyebrow {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 0.45rem;
+  }
+  .section-title {
+    font-size: 1.45rem; font-weight: 800; color: var(--navy);
+    margin-bottom: 0.85rem; line-height: 1.2;
+  }
+  .section-intro {
+    font-size: 0.9rem; color: var(--text-light); max-width: 740px;
+    margin-bottom: 1.5rem; line-height: 1.7;
+  }
+  hr.divider { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
+
+  /* ── Day 1 carryover ─────────────────────────────── */
+  .carryover-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.1rem; margin-top: 1rem; }
+  @media (max-width: 640px) { .carryover-grid { grid-template-columns: 1fr; } }
+  .carryover-card {
+    background: var(--white); border: 1px solid var(--border); border-radius: 8px;
+    padding: 1.2rem 1.35rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    border-top: 3px solid var(--green);
+  }
+  .carryover-card .co-label {
+    font-size: 0.66rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--green); margin-bottom: 0.4rem;
+  }
+  .carryover-card h3 { font-size: 0.9rem; font-weight: 700; color: var(--navy); margin-bottom: 0.4rem; }
+  .carryover-card p { font-size: 0.84rem; color: var(--text-light); line-height: 1.6; }
+
+  /* ── Timeline ────────────────────────────────────── */
+  .timeline { display: flex; flex-direction: column; gap: 0; margin-top: 1rem; }
+  .tl-item {
+    display: grid; grid-template-columns: 90px 1fr;
+    border-radius: 8px; overflow: hidden;
+    border: 1px solid var(--border);
+    margin-bottom: 0.85rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  .tl-time {
+    background: var(--navy); color: var(--white);
+    padding: 1.1rem 0.9rem; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; text-align: center;
+    flex-shrink: 0;
+  }
+  .tl-time .t-main { font-size: 0.88rem; font-weight: 700; line-height: 1.2; }
+  .tl-time .t-end { font-size: 0.7rem; opacity: 0.65; margin-top: 0.2rem; }
+  .tl-item.guest .tl-time { background: var(--accent); }
+  .tl-item.vision .tl-time { background: var(--purple); }
+  .tl-item.goals .tl-time { background: var(--blue); }
+  .tl-item.outdoor .tl-time { background: var(--green); }
+  .tl-item.close .tl-time { background: #1a2744; }
+  .tl-item.warmup .tl-time { background: var(--teal); }
+  .tl-item.break-row { opacity: 0.75; }
+  .tl-item.break-row .tl-time { background: var(--light-gray); }
+  .tl-item.break-row .tl-time .t-main { color: var(--gray); font-size: 0.8rem; }
+
+  .tl-body {
+    background: var(--white); padding: 1.1rem 1.35rem;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .tl-session-label {
+    font-size: 0.66rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; margin-bottom: 0.3rem;
+  }
+  .tl-item.guest .tl-session-label { color: var(--accent); }
+  .tl-item.vision .tl-session-label { color: var(--purple); }
+  .tl-item.goals .tl-session-label { color: var(--blue); }
+  .tl-item.outdoor .tl-session-label { color: var(--green); }
+  .tl-item.close .tl-session-label { color: var(--navy); }
+  .tl-item.warmup .tl-session-label { color: var(--teal); }
+  .tl-session-title { font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 0.3rem; }
+  .tl-session-desc { font-size: 0.82rem; color: var(--text-light); line-height: 1.55; }
+  .tl-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.5rem; }
+  .tl-tag {
+    font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;
+    padding: 0.15rem 0.5rem; border-radius: 3px;
+  }
+  .tag-output { background: var(--light-green); color: var(--green); }
+  .tag-question { background: var(--light-blue); color: var(--blue); }
+  .tag-guest { background: #fed7aa; color: #9c4221; }
+  .tag-energy { background: #e9d8fd; color: var(--purple); }
+  .tag-artifact { background: #fefcbf; color: #744210; }
+  .tag-outdoor { background: var(--light-green); color: var(--green); }
+  .tl-item.break-row .tl-body { background: var(--light-gray); }
+  .tl-item.break-row .tl-session-title { font-size: 0.82rem; color: var(--gray); font-weight: 500; }
+
+  /* ── Session deep-dives ──────────────────────────── */
+  .session-card {
+    background: var(--white); border: 1px solid var(--border); border-radius: 8px;
+    overflow: hidden; margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  .session-card-header {
+    padding: 1rem 1.35rem; display: flex; align-items: flex-start;
+    justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+    border-bottom: 1px solid var(--border); background: var(--light-gray);
+  }
+  .session-card-header .sh-left h3 { font-size: 1rem; font-weight: 700; color: var(--navy); }
+  .session-card-header .sh-left .sh-sub { font-size: 0.78rem; color: var(--gray); margin-top: 0.15rem; }
+  .session-card-header .sh-time {
+    font-size: 0.75rem; font-weight: 700; color: var(--white);
+    padding: 0.25rem 0.65rem; border-radius: 4px; white-space: nowrap; flex-shrink: 0;
+  }
+  .session-card-body { padding: 1.25rem 1.35rem; }
+  .sc-purpose { font-size: 0.875rem; color: var(--text-light); line-height: 1.7; margin-bottom: 1.1rem; }
+  .sc-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 580px) { .sc-cols { grid-template-columns: 1fr; } }
+  .sc-box {
+    border-radius: 6px; padding: 0.9rem 1rem;
+    border: 1px solid var(--border);
+  }
+  .sc-box.questions { background: var(--light-blue); border-color: #bfdbfe; }
+  .sc-box.output { background: var(--light-green); border-color: var(--green-border); }
+  .sc-box h4 {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; margin-bottom: 0.6rem;
+  }
+  .sc-box.questions h4 { color: var(--blue); }
+  .sc-box.output h4 { color: var(--green); }
+  .sc-box ul { padding-left: 1.1rem; }
+  .sc-box li { font-size: 0.84rem; color: var(--text-light); margin-bottom: 0.35rem; line-height: 1.55; }
+  .sc-box li strong { color: var(--text); }
+  .day1-feed {
+    margin-top: 0.9rem; padding: 0.8rem 1rem;
+    background: var(--accent-light); border: 1px solid #f6c79b; border-radius: 6px;
+  }
+  .day1-feed .df-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.3rem; }
+  .day1-feed p { font-size: 0.84rem; color: var(--text-light); line-height: 1.6; }
+  .day1-feed p strong { color: var(--text); }
+
+  /* ── Commitments framework ───────────────────────── */
+  .commit-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; margin-top: 1rem; }
+  @media (max-width: 640px) { .commit-grid { grid-template-columns: 1fr; } }
+  .commit-card {
+    background: var(--white); border: 1px solid var(--border); border-radius: 8px;
+    padding: 1.25rem 1.2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  .commit-card .cc-num {
+    width: 28px; height: 28px; border-radius: 50%; background: var(--navy);
+    color: var(--white); font-size: 0.8rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; margin-bottom: 0.65rem;
+  }
+  .commit-card h3 { font-size: 0.88rem; font-weight: 700; color: var(--navy); margin-bottom: 0.4rem; }
+  .commit-card p { font-size: 0.82rem; color: var(--text-light); line-height: 1.6; }
+  .commit-card .cc-example {
+    margin-top: 0.65rem; padding: 0.6rem 0.8rem;
+    background: var(--light-gray); border-radius: 5px;
+    font-size: 0.78rem; color: var(--text-light); font-style: italic; line-height: 1.5;
+    border: 1px solid var(--border);
+  }
+  .commit-card .cc-example::before { content: 'Example: '; font-style: normal; font-weight: 600; color: var(--text); }
+
+  /* ── Pull quote ──────────────────────────────────── */
+  .pull-quote {
+    border-left: 4px solid var(--green); background: var(--light-green);
+    border-radius: 0 8px 8px 0; padding: 1.4rem 1.75rem;
+    margin: 2rem 0; font-style: italic; font-size: 1rem;
+    color: var(--navy); line-height: 1.65;
+  }
+  .pull-quote cite {
+    display: block; margin-top: 0.6rem; font-style: normal;
+    font-size: 0.75rem; color: var(--gray); font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+
+  /* ── Message weave ───────────────────────────────── */
+  .messages-list { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1rem; }
+  .message-row {
+    display: flex; align-items: flex-start; gap: 1rem;
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 6px; padding: 0.9rem 1.1rem;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  .message-session {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em;
+    color: var(--white); background: var(--navy); padding: 0.2rem 0.55rem;
+    border-radius: 3px; white-space: nowrap; flex-shrink: 0; margin-top: 0.15rem;
+  }
+  .message-row blockquote { font-size: 0.865rem; color: var(--text-light); font-style: italic; line-height: 1.6; flex: 1; }
+  .message-row blockquote strong { font-style: normal; color: var(--text); }
+
+  /* ── Footer ──────────────────────────────────────── */
+  .footer {
+    text-align: center; padding: 2rem 1.5rem;
+    font-size: 0.78rem; color: var(--gray);
+    border-top: 1px solid var(--border); background: var(--white);
+  }
+  .footer a { color: var(--blue); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+
+  /* ── Print ───────────────────────────────────────── */
+  @media print {
+    body { background: white; }
+    .nav { display: none; }
+    .header { padding: 2rem; }
+    .carryover-grid, .commit-grid { grid-template-columns: repeat(2, 1fr); }
+    .sc-cols { grid-template-columns: repeat(2, 1fr); }
+    .session-card { break-inside: avoid; }
+    .tl-item { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ════════════════════════════════════════════ -->
+<div class="header">
+  <div class="header-inner">
+    <div class="header-eyebrow">SEL Q2 2026 Onsite &nbsp;·&nbsp; Sharpen the Standard</div>
+    <h1>Day 2 Guide</h1>
+    <p class="sub">Guests, personal vision, team goals, and commitments &mdash; closed with ownership. Tuesday, April 14, 2026.</p>
+    <div class="header-meta">
+      <span>&#128197; &nbsp;Tuesday, April 14, 2026</span>
+      <span>&#9200; &nbsp;8:30 AM &ndash; 3:00 PM</span>
+      <span>&#128100; &nbsp;SEL + Dan (Security) + Clarissa (CPO)</span>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill"></div></div>
+    <div class="progress-label">Day 2 of 2 &nbsp;&middot;&nbsp; Day 1 complete</div>
+  </div>
+</div>
+
+<!-- ══ NAV ═══════════════════════════════════════════════ -->
+<nav class="nav" aria-label="Page sections">
+  <div class="nav-inner">
+    <a href="#carryover">From Day 1</a>
+    <a href="#schedule">Schedule</a>
+    <a href="#vision">Personal Vision</a>
+    <a href="#guests">Guest Sessions</a>
+    <a href="#goals">Team Goals</a>
+    <a href="#close">Commitments &amp; Close</a>
+  </div>
+</nav>
+
+<!-- ══ MAIN ══════════════════════════════════════════════ -->
+<div class="container">
+
+  <!-- FROM DAY 1 ───────────────────────────────────────── -->
+  <section class="section" id="carryover">
+    <div class="section-eyebrow">Entering Day 2</div>
+    <h2 class="section-title">What Day 1 Surfaces Into Today</h2>
+    <p class="section-intro">
+      Day 1 was the team&rsquo;s own day. Day 2 builds on it. The four items below are the live threads from yesterday that each directly shape a session today. They are not background &mdash; they are inputs.
+    </p>
+
+    <div class="carryover-grid">
+      <div class="carryover-card">
+        <div class="co-label">&#8594; Feeds: Product Session</div>
+        <h3>Industrial Designer Framing</h3>
+        <p>Scott Seely named the opportunity to restructure EMR features and behaviors to raise the utility function for end users. This framing belongs in the Clarissa conversation: does it have a product ownership home, and can it become a named H2 initiative?</p>
+      </div>
+      <div class="carryover-card">
+        <div class="co-label">&#8594; Feeds: Team Goals Session</div>
+        <h3>AI Operational Metrics Baseline</h3>
+        <p>The team reached consensus on needing operational data (starting with Lines of Code) to prove AI impact measurably. This needs an owner and a deadline that comes out of today&rsquo;s goals whiteboard.</p>
+      </div>
+      <div class="carryover-card">
+        <div class="co-label">&#8594; Feeds: Team Goals + Product Session</div>
+        <h3>OnePacs AI Capacity Model</h3>
+        <p>Damien&rsquo;s holistic value model &mdash; redirecting AI-found capacity into QA support, mentoring, shift-left quality, and debt reduction &mdash; is the right frame for every team&rsquo;s AI experiment summary. Today&rsquo;s goals session should formalize this as the standard.</p>
+      </div>
+      <div class="carryover-card">
+        <div class="co-label">&#8594; Feeds: Personal Vision + Goals</div>
+        <h3>Evidence Gaps Named Yesterday</h3>
+        <p>Several leaders acknowledged they are still measuring or do not yet have the data their wins would require. Those gaps are not a failure &mdash; they are the raw material for personal commitments and team goals today. Name them precisely.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SCHEDULE ────────────────────────────────────────── -->
+  <section class="section" id="schedule">
+    <div class="section-eyebrow">Day 2 Schedule</div>
+    <h2 class="section-title">8:30 AM &ndash; 3:00 PM</h2>
+    <p class="section-intro">
+      The morning starts as a team: personal vision sharing while the room belongs to the leaders only. Guests join after &mdash; Clarissa at 10:00 for product alignment, Dan at 11:00 for security alignment. Midday shifts to team goals. The afternoon ends outside with Carry the Load, then closes with explicit commitments and accountability partners.
+    </p>
+
+    <div class="timeline">
+
+      <div class="tl-item warmup">
+        <div class="tl-time"><div class="t-main">8:30</div><div class="t-end">8:45</div></div>
+        <div class="tl-body">
+          <div class="tl-session-label">Warm-Up</div>
+          <div class="tl-session-title">Reset and Day 1 Debrief</div>
+          <div class="tl-session-desc">Re-ground the room. Review the Day 1 outputs board and parking lot. Surface anything that needs airtime before guests arrive.</div>
+          <div class="tl-tags"><span class="tl-tag tag-energy">Low demand</span><span class="tl-tag tag-output">Parking lot review</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item vision">
+        <div class="tl-time"><div class="t-main">8:45</div><div class="t-end">10:00</div></div>
+        <div class="tl-body">
+          <div class="tl-session-label">Personal Vision</div>
+          <div class="tl-session-title">Vision and Goals: Round Robin Sharing</div>
+          <div class="tl-session-desc">Each leader shares their personal vision for the remainder of 2026, 2-3 quarterly goals, and &mdash; critically &mdash; the honest gap between who they want to be as a leader and who they are today. Guillermo goes first. Team-only before guests arrive.</div>
+          <div class="tl-tags"><span class="tl-tag tag-energy">High energy &mdash; requires courage</span><span class="tl-tag tag-artifact">Vision + goals doc per leader</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item guest">
+        <div class="tl-time"><div class="t-main">10:00</div><div class="t-end">10:50</div></div>
+        <div class="tl-body">
+          <div class="tl-session-label">Guest Session &mdash; Clarissa</div>
+          <div class="tl-session-title">Product Alignment and Priorities</div>
+          <div class="tl-session-desc">Clarissa (CPO) shares H2 2026 product direction and the team has a candid conversation about engineering/product partnership quality. Where are we aligned and where is there friction?</div>
+          <div class="tl-tags"><span class="tl-tag tag-guest">Clarissa joins</span><span class="tl-tag tag-artifact">2-3 alignment commitments</span><span class="tl-tag tag-question">H2 direction shared</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item break-row">
+        <div class="tl-time"><div class="t-main" style="color:var(--gray);">10:50</div></div>
+        <div class="tl-body"><div class="tl-session-title">Break</div></div>
+      </div>
+
+      <div class="tl-item guest">
+        <div class="tl-time"><div class="t-main">11:00</div><div class="t-end">11:50</div></div>
+        <div class="tl-body">
+          <div class="tl-session-label">Guest Session &mdash; Dan</div>
+          <div class="tl-session-title">Security Posture and Engineering Alignment</div>
+          <div class="tl-session-desc">Dan (Information Security) joins to align on security priorities and the real tension between compliance requirements and engineering velocity. Structured conversation, not a briefing.</div>
+          <div class="tl-tags"><span class="tl-tag tag-guest">Dan joins</span><span class="tl-tag tag-artifact">2-3 joint commitments</span><span class="tl-tag tag-energy">High engagement</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item break-row">
+        <div class="tl-time"><div class="t-main" style="color:var(--gray);">11:50</div></div>
+        <div class="tl-body"><div class="tl-session-title">Working Lunch &mdash; Informal, parking lot review</div></div>
+      </div>
+
+      <div class="tl-item goals">
+        <div class="tl-time"><div class="t-main">12:45</div><div class="t-end">1:45</div></div>
+        <div class="tl-body">
+          <div class="tl-session-label">Team Goals</div>
+          <div class="tl-session-title">Whiteboard Goals: From Aspiration to Commitment</div>
+          <div class="tl-session-desc">Open brainstorm first, then cluster, vote, and refine. Every goal that survives must answer: how would we know if we achieved it, who owns it, and by when. Goals that can&rsquo;t answer those questions don&rsquo;t make the list.</div>
+          <div class="tl-tags"><span class="tl-tag tag-artifact">8-10 SMART goals</span><span class="tl-tag tag-energy">Medium-high, standing</span><span class="tl-tag tag-output">Q3 + H2 commitment list</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item outdoor">
+        <div class="tl-time"><div class="t-main">1:45</div><div class="t-end">2:30</div></div>
+        <div class="tl-body">
+          <div class="tl-session-label">Outdoor Exercise</div>
+          <div class="tl-session-title">Carry the Load: Team First</div>
+          <div class="tl-session-desc">Weighted items distributed across the team for a 20-25 min walk. Rules: no one carries the same load the whole way, the team notices and offers before being asked, the pace is set by the slowest, and everyone finishes together. Brief debrief on return.</div>
+          <div class="tl-tags"><span class="tl-tag tag-outdoor">Outdoor &mdash; go outside</span><span class="tl-tag tag-energy">Physical reset</span><span class="tl-tag tag-question">Debrief feeds closing</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item close">
+        <div class="tl-time"><div class="t-main">2:30</div><div class="t-end">3:00</div></div>
+        <div class="tl-body">
+          <div class="tl-session-label">Commitments &amp; Close</div>
+          <div class="tl-session-title">Final Commitments, Integration, and Close</div>
+          <div class="tl-session-desc">Each leader states their one 30-day commitment, one behavior to stop, and names an accountability partner. Artifacts are confirmed. Follow-through cadence is set. The onsite closes with evidence that the standard is sharper than it was two days ago.</div>
+          <div class="tl-tags"><span class="tl-tag tag-artifact">Commitments with owners + partners</span><span class="tl-tag tag-output">Follow-through cadence agreed</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- GUEST SESSIONS ───────────────────────────────────── -->
+  <section class="section" id="guests">
+    <div class="section-eyebrow">Guest Sessions</div>
+    <h2 class="section-title">Product and Security Alignment</h2>
+    <p class="section-intro">
+      Clarissa (10:00) and Dan (11:00) join not as presenters but as collaborators. These are structured conversations aimed at surfacing real tension, producing joint commitments, and ensuring that the engineering leadership team is connected to the constraints and priorities that sit outside its direct control.
+    </p>
+
+    <!-- Dan -->
+    <div class="session-card">
+      <div class="session-card-header">
+        <div class="sh-left">
+          <h3>Security Posture and Engineering Alignment &nbsp;&mdash;&nbsp; Dan</h3>
+          <div class="sh-sub">Director of Information Security &nbsp;&middot;&nbsp; 11:00 &ndash; 11:50 AM</div>
+        </div>
+        <span class="sh-time" style="background:var(--accent);">Guest</span>
+      </div>
+      <div class="session-card-body">
+        <p class="sc-purpose">
+          Security and engineering velocity are in real tension. HIPAA constraints shape tool selection. Pen testing adds time to releases. The AWS contractor access revocation in April 2026 disrupted multiple teams. This session names those tensions directly, distinguishes the non-negotiables from the negotiable, and leaves with concrete joint commitments. Engineering cannot treat security as someone else&rsquo;s problem &mdash; and security cannot afford to block engineering without a faster alternative path.
+        </p>
+        <div class="sc-cols">
+          <div class="sc-box questions">
+            <h4>Questions for this conversation</h4>
+            <ul>
+              <li>Where is security limiting velocity and what&rsquo;s the faster path we haven&rsquo;t found yet?</li>
+              <li>What are the absolute non-negotiables for Q3 &mdash; compliance, pen testing, HITRUST?</li>
+              <li>How do we handle the next contractor access revocation without multi-team disruption?</li>
+              <li>Which AI tools currently lack BAA coverage, and what&rsquo;s the approval path?</li>
+              <li>What should engineering leaders do <em>before</em> adopting a new tool to avoid retroactive compliance problems?</li>
+            </ul>
+          </div>
+          <div class="sc-box output">
+            <h4>What this produces</h4>
+            <ul>
+              <li><strong>2-3 joint commitments</strong> with owners from both security and engineering</li>
+              <li>Shared understanding of what is fixed vs. what is moveable this quarter</li>
+              <li>An agreed path for contractor access provisioning that serves both security and speed</li>
+              <li>Clarity on AI tool HIPAA/BAA status &mdash; feeds into the AI governance decisions from Day 1</li>
+            </ul>
+          </div>
+        </div>
+        <div class="day1-feed">
+          <div class="df-label">&#8592; From Day 1</div>
+          <p>The team agreed to standardize AI tooling and establish cost and governance guardrails. <strong>Several tools in active use may not have HIPAA/BAA coverage.</strong> Dan&rsquo;s session is the right moment to determine which tools need formal approval, what the process is, and whether Isaac&rsquo;s WhisperX and agentic tools are in scope for a security review.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Clarissa -->
+    <div class="session-card">
+      <div class="session-card-header">
+        <div class="sh-left">
+          <h3>Product Alignment and Priorities &nbsp;&mdash;&nbsp; Clarissa</h3>
+          <div class="sh-sub">Chief Product Officer &nbsp;&middot;&nbsp; 10:00 &ndash; 10:50 AM</div>
+        </div>
+        <span class="sh-time" style="background:var(--accent);">Guest</span>
+      </div>
+      <div class="session-card-body">
+        <p class="sc-purpose">
+          Engineering leadership that operates without understanding product priorities is engineering leadership in the dark. This session does not exist to get a roadmap briefing. It exists to name the real friction in the engineering/product partnership, understand H2 2026 product direction from the person who owns it, and produce commitments that tighten the handoff. The goal is not alignment theater &mdash; it is honest diagnosis and specific commitments.
+        </p>
+        <div class="sc-cols">
+          <div class="sc-box questions">
+            <h4>Questions for this conversation</h4>
+            <ul>
+              <li>What are the top 3-5 product priorities for H2 2026, and where does engineering need to be ahead of them?</li>
+              <li>Where does product feel it is not getting what it needs from engineering leadership?</li>
+              <li>If you could change one thing about how engineering leadership partners with product, what would it be?</li>
+              <li>Has the team shifted meaningfully from feature-factory to outcome-driven? What&rsquo;s Clarissa&rsquo;s read?</li>
+              <li>How does the EMR utility function / Industrial Designer framing land from a product perspective &mdash; is there a home for it?</li>
+            </ul>
+          </div>
+          <div class="sc-box output">
+            <h4>What this produces</h4>
+            <ul>
+              <li><strong>2-3 product/engineering alignment commitments</strong> with named owners on both sides</li>
+              <li>Shared understanding of H2 2026 product direction that every leader in the room can reference</li>
+              <li>A signal on whether the &ldquo;Industrial Designer&rdquo; concept has traction and ownership</li>
+              <li>An honest view of partnership quality from Clarissa&rsquo;s perspective &mdash; not just engineering&rsquo;s self-assessment</li>
+            </ul>
+          </div>
+        </div>
+        <div class="day1-feed">
+          <div class="df-label">&#8592; From Day 1</div>
+          <p>Scott Seely raised the opportunity to restructure EMR features and behaviors to raise the utility function &mdash; framed as an <strong>&ldquo;Industrial Designer&rdquo; role</strong> that engineering and product could jointly define and staff. This connects directly to the 2026 EMR retention target (92% &rarr; 97%). Clarissa&rsquo;s session is the right place to test whether this has product ownership appetite and what it would take to name it as an initiative.</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <hr class="divider">
+
+  <!-- PERSONAL VISION ──────────────────────────────────── -->
+  <section class="section" id="vision">
+    <div class="section-eyebrow">8:45 &ndash; 10:00</div>
+    <h2 class="section-title">Personal Vision and Goals: Round Robin</h2>
+    <p class="section-intro">
+      The drafts from Monday afternoon get shared this morning. Each leader reads their vision, their quarterly goals, and their honest gap. The group offers genuine challenge &mdash; not affirmation. This is not a performance review exercise. It is a leadership growth exercise, done in public, with the team as witness.
+    </p>
+
+    <div class="session-card">
+      <div class="session-card-header">
+        <div class="sh-left">
+          <h3>Vision and Goals Sharing</h3>
+          <div class="sh-sub">Round robin &nbsp;&middot;&nbsp; 5-7 min per person + 2 min group challenge &nbsp;&middot;&nbsp; Guillermo goes first</div>
+        </div>
+        <span class="sh-time" style="background:var(--purple);">Vision</span>
+      </div>
+      <div class="session-card-body">
+        <p class="sc-purpose">
+          Each leader shares four things: their vision of who they want to be as a leader by the next onsite, 2-3 specific goals for Q3 and the remainder of 2026, how that vision connects to character and core values, and &mdash; the hardest one &mdash; the gap between who they want to be and who they are right now. After each share, the group offers one piece of genuine challenge. Not reassurance. A real question or observation.
+        </p>
+        <div class="sc-cols">
+          <div class="sc-box questions">
+            <h4>What each share covers</h4>
+            <ul>
+              <li><strong>Vision:</strong> Who do you want to be as a leader at the Q3 onsite? Not what you&rsquo;ll have done &mdash; who you&rsquo;ll have <em>become</em>.</li>
+              <li><strong>Goals:</strong> 2-3 specific, measurable goals for Q3 and H2 2026. These connect to collective goals.</li>
+              <li><strong>Connection:</strong> How does this vision reflect your core values and the leader you believe this team needs?</li>
+              <li><strong>Gap:</strong> Where are you not yet the leader you described? Name it plainly.</li>
+            </ul>
+          </div>
+          <div class="sc-box output">
+            <h4>What this produces</h4>
+            <ul>
+              <li>A completed personal vision and goals document per leader &mdash; a living artifact revisited monthly</li>
+              <li>Peer accountability: the group has witnessed each person&rsquo;s gap and commitment</li>
+              <li>A shared understanding of who each leader is trying to become and what they are working on</li>
+              <li>Input for the team goals session: individual commitments should connect to team-level goals</li>
+            </ul>
+          </div>
+        </div>
+        <div class="pull-quote" style="margin-top:1.1rem; margin-bottom:0;">
+          &ldquo;A good leader is a visionary, an exemplar, and a mentor. When you describe your vision &mdash; ask yourself: does it include all three?&rdquo;
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <hr class="divider">
+
+  <!-- TEAM GOALS ───────────────────────────────────────── -->
+  <section class="section" id="goals">
+    <div class="section-eyebrow">12:45 &ndash; 1:45</div>
+    <h2 class="section-title">Whiteboard Goals: From Aspiration to Commitment</h2>
+    <p class="section-intro">
+      This is the team&rsquo;s commitment artifact for Q3 and H2 2026. The session starts open and generative, then narrows. Every goal that makes the final list must survive five questions. Goals that can&rsquo;t are either reframed or moved to the parking lot. What remains is what the team is held to.
+    </p>
+
+    <div class="session-card">
+      <div class="session-card-header">
+        <div class="sh-left">
+          <h3>Four-Phase Goals Session</h3>
+          <div class="sh-sub">Brainstorm &rarr; Cluster &rarr; Refine &rarr; Commit &nbsp;&middot;&nbsp; Standing at whiteboard</div>
+        </div>
+        <span class="sh-time" style="background:var(--blue);">Goals</span>
+      </div>
+      <div class="session-card-body">
+        <p class="sc-purpose">
+          Phase 1 is open: write every goal, aspiration, and outcome anyone wants to see the team achieve. No filtering yet. Volume is the point. Phase 2 clusters and prioritizes through a vote &mdash; the top 8-10 survive. Phase 3 is where the real work happens: the facilitator asks the same five questions about each surviving goal until it is specific enough to act on and honest enough to measure. Phase 4 locks the final list with owners and deadlines.
+        </p>
+        <div class="sc-cols">
+          <div class="sc-box questions">
+            <h4>The five refinement questions</h4>
+            <ul>
+              <li><strong>Measurable:</strong> How would we know if we achieved this? What&rsquo;s the number or signal?</li>
+              <li><strong>Owned:</strong> Who owns making this happen? Not &ldquo;the team&rdquo; &mdash; a person.</li>
+              <li><strong>Time-bound:</strong> By when? End of Q3? A specific date?</li>
+              <li><strong>Realistic:</strong> Is this within our control or influence this quarter?</li>
+              <li><strong>Specific:</strong> Is this specific enough that someone new to the team would know exactly what to do?</li>
+            </ul>
+          </div>
+          <div class="sc-box output">
+            <h4>Goal candidates from Day 1</h4>
+            <ul>
+              <li>AI operational metrics baseline &mdash; LoC + velocity shift, owner TBD</li>
+              <li>Team identity document &mdash; one-page, shareable, done before Q3 onsite</li>
+              <li>EMR Industrial Design initiative &mdash; named, staffed, and scoped</li>
+              <li>AI capacity reallocation model adopted across all teams</li>
+              <li>Security / engineering friction items from Dan&rsquo;s session this morning</li>
+              <li>Product / engineering commitments from Clarissa&rsquo;s session this morning</li>
+            </ul>
+          </div>
+        </div>
+        <div class="day1-feed">
+          <div class="df-label">Standard to hold</div>
+          <p><strong>A goal that cannot answer &ldquo;how would we know if we achieved this?&rdquo; does not belong on the commitment list.</strong> Some aspirations are legitimate aspirations. They should be named as such, not forced into quarterly form. Better an honest aspiration than a vague commitment nobody tracks.</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <hr class="divider">
+
+  <!-- COMMITMENTS & CLOSE ──────────────────────────────── -->
+  <section class="section" id="close">
+    <div class="section-eyebrow">2:30 &ndash; 3:00</div>
+    <h2 class="section-title">Commitments, Integration, and Close</h2>
+    <p class="section-intro">
+      Every onsite that does not produce explicit, named, distributed commitments becomes a conversation that evaporates by the following Monday. The closing round produces one specific thing per leader, distributed accountability via peer partners, and a confirmed follow-through cadence before anyone leaves the room.
+    </p>
+
+    <div class="commit-grid">
+      <div class="commit-card">
+        <div class="cc-num">1</div>
+        <h3>One 30-Day Commitment</h3>
+        <p>One specific action each leader will take in the next 30 days. Not a direction &mdash; a behavior or deliverable that can be verified at the next monthly check-in.</p>
+        <div class="cc-example">&ldquo;I will have an AI operational metrics baseline ready to share at the next SEL Weekly Hour, owner: [name].&rdquo;</div>
+      </div>
+      <div class="commit-card">
+        <div class="cc-num">2</div>
+        <h3>One Behavior to Stop</h3>
+        <p>One specific pattern to retire. Not a platitude &mdash; a named trigger and a named behavior. Ask yourself: what would I be embarrassed to still be doing by the Q3 onsite?</p>
+        <div class="cc-example">&ldquo;I will stop presenting wins without before/after evidence. If I don&rsquo;t have the data, I&rsquo;ll say so and name the gap.&rdquo;</div>
+      </div>
+      <div class="commit-card">
+        <div class="cc-num">3</div>
+        <h3>Accountability Partner</h3>
+        <p>Name one person from this group who will check in on your commitment weekly for 30 days. Choose someone who will genuinely challenge you, not just affirm you. Pairs are confirmed before everyone leaves.</p>
+        <div class="cc-example">&ldquo;Rafael will check in with me every Friday &mdash; one question: did you do the thing you committed to?&rdquo;</div>
+      </div>
+    </div>
+
+    <div class="session-card" style="margin-top:1.5rem;">
+      <div class="session-card-header">
+        <div class="sh-left">
+          <h3>Artifacts Produced This Onsite</h3>
+          <div class="sh-sub">Confirm every artifact before close &mdash; owner and location for each</div>
+        </div>
+        <span class="sh-time" style="background:var(--navy);">Close</span>
+      </div>
+      <div class="session-card-body">
+        <p class="sc-purpose">Before the final round, review every artifact produced across both days. Each one needs a confirmed owner and a confirmed home. If an artifact doesn&rsquo;t have both, it will not survive the week.</p>
+        <div class="sc-cols">
+          <div class="sc-box output">
+            <h4>Day 1 artifacts</h4>
+            <ul>
+              <li>Evidence-backed wins log &mdash; photo-captured wall + Day 1 Summary HTML</li>
+              <li>Q4 2025 artifact adoption scorecard &mdash; graded, gaps noted</li>
+              <li>Continue / Start / Stop board &mdash; live artifact with voted commitments</li>
+              <li>AI governance decisions document</li>
+              <li>Top 3 Q3 tech debt priorities with owners</li>
+              <li>Draft personal vision and goals documents</li>
+            </ul>
+          </div>
+          <div class="sc-box output">
+            <h4>Day 2 artifacts (produced today)</h4>
+            <ul>
+              <li>Security / engineering alignment commitments (from Dan session)</li>
+              <li>Product / engineering alignment commitments (from Clarissa session)</li>
+              <li>Completed personal vision and goals &mdash; one per leader</li>
+              <li>8-10 team SMART goals for Q3 and H2 2026 with owners and deadlines</li>
+              <li>Closing commitments: one action + one stop + one accountability partner per leader</li>
+              <li>Follow-through cadence confirmed (weekly check-ins, monthly review, Q3 onsite scorecard)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pull-quote">
+      &ldquo;Reach that destination where the things that are pleasant and the things that are honorable, finally become, for you, the same.&rdquo;
+      <cite>&mdash; Seneca</cite>
+    </div>
+
+  </section>
+
+  <hr class="divider">
+
+  <!-- WOVEN MESSAGES ───────────────────────────────────── -->
+  <section class="section">
+    <div class="section-eyebrow">Messages for Today</div>
+    <h2 class="section-title">What Gets Said and When</h2>
+    <p class="section-intro">These are not slides &mdash; they are short injections woven into specific moments where they land naturally.</p>
+
+    <div class="messages-list">
+      <div class="message-row">
+        <span class="message-session" style="background:var(--teal);">Warm-Up</span>
+        <blockquote>&ldquo;Excellence is expected, and the expectation keeps rising. Yesterday we proved the standard is holding. Today we sharpen what comes next.&rdquo;</blockquote>
+      </div>
+      <div class="message-row">
+        <span class="message-session" style="background:var(--accent);">Security</span>
+        <blockquote>&ldquo;We are not here to find fault or assign blame. We are trying to get it right &mdash; not to be right.&rdquo;</blockquote>
+      </div>
+      <div class="message-row">
+        <span class="message-session" style="background:var(--purple);">Vision</span>
+        <blockquote>&ldquo;A good leader is a <strong>visionary, an exemplar, and a mentor</strong>. As you share today, ask: does your vision describe all three?&rdquo;</blockquote>
+      </div>
+      <div class="message-row">
+        <span class="message-session" style="background:var(--purple);">Vision Close</span>
+        <blockquote>&ldquo;Reach that destination where the things that are pleasant and the things that are honorable, finally become, for you, the same.&rdquo; &mdash; Seneca</blockquote>
+      </div>
+      <div class="message-row">
+        <span class="message-session" style="background:var(--blue);">Goals</span>
+        <blockquote>&ldquo;We will not confuse activity with value. We will not confuse opinions with evidence. What survives these questions is what we actually commit to.&rdquo;</blockquote>
+      </div>
+      <div class="message-row">
+        <span class="message-session" style="background:var(--green);">Carry the Load</span>
+        <blockquote>&ldquo;We will not confuse heroics with health. <strong>Who noticed when someone was struggling before they said anything?</strong> Where in our real work are we carrying load alone that the team should share?&rdquo;</blockquote>
+      </div>
+      <div class="message-row">
+        <span class="message-session" style="background:var(--navy);">Close</span>
+        <blockquote>&ldquo;If an individual&rsquo;s vision does not align with and contribute to collective goals, that is a problem. We leave here aligned. <strong>The work is proving it.</strong>&rdquo;</blockquote>
+      </div>
+    </div>
+
+  </section>
+
+</div>
+
+<!-- ══ FOOTER ════════════════════════════════════════════ -->
+<footer class="footer">
+  SEL Q2 2026 Onsite &nbsp;&middot;&nbsp; Day 2 Guide &nbsp;&middot;&nbsp; April 14, 2026 &nbsp;&middot;&nbsp; Software Engineering Leadership &nbsp;&middot;&nbsp; Experity
+  &nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="day1-summary.html">&#8592; Day 1 Summary</a>
+</footer>
+
+</body>
+</html>

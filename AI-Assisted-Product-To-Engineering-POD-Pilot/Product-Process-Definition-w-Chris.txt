@@ -1,0 +1,460 @@
+Meeting Title: AI Assisted Product Process Definition, Validation Exercise OnSite
+Date: Apr 27
+Meeting participants: Guillermo Salas
+
+Transcript:
+ 
+Them: More than that. It includes at least five different  
+Me: That includes at least five different  
+Them: major product impacts, including a completely  
+Me: major product impacts including a completely  
+Them: two completely net new products that have to get built. So  
+Me: two completely net new products that have to get So  
+Them: telehealth is not like one thing. It's  
+Me: telehealth is not, like, one thing. It's  
+Them: a bunch of work that gets to get done on the AI Scribe product. So it's like an extension  
+Me: a bunch of work that gets to get done on the AI Scribe product. So it's like an extension  
+Them: adding a whole crap ton of features to AI Scribe that don't exist today. That's one product impact.  
+Me: adding a whole crap ton of features to AI Scribe that don't exist today. That's one product impact. Another product impact is we have to stand up a telehealth connect,  
+Them: Another product impact is we have to stand up a telehealth connect skill  
+Me: per care agent.  
+Them: for care agent completely net new.  
+Me: Completely net new.  
+Them: Zero to one. There's also the video wrapper, which Andrew has already  
+Me: Zero to one, There's also the video wrapper, which Andrew has already  
+Them: Andrew was not looking forward to going to Manchester Park apparently,  
+Me: Andrew was not looking forward to going to Manchester Park apparently.  
+Them: and stood up the video wrapper over the weekend because he's been wanting to demo it.  
+Me: Stood up the video wrapper over the weekend because he's been wanting to demo it.  
+Them: So, I'll go look at that. Stand about it this morning. So  
+Me: So I'll go look at that. Stand up on the screen. So yeah. Threatened people was happy to go to Machezi Park, suddenly it came  
+Them: yeah. Threaten people with having to go to Matchesi Park, and suddenly it kicks them in the ass.  
+Me: them in the ass.  
+Them: And then on the other part of telehealth is, we have to build there's a whole bunch of other product impacts that touch  
+Me: And then on the other part of telehealth was, we have to build. There's a whole bunch of other product impacts that it touch.  
+Them: payments, that touch e reg. It's a very complicated  
+Me: Payments, touch e reg, very complicated  
+Them: product. It's not like it's hard to wrap your arms around just, one thing.  
+Me: product. It's not like it's hard to wrap your arms around just, one thing.  
+Them: So  
+Me: We could I mean, we could say,  
+Them: could I mean, we could say, oh, great. Let's just build the telehealth connect skill.  
+Me: great. Let's just build the telehealth connect skill.  
+Them: Because it's a zero to one. Or you could say, let's just have Isaac focus on  
+Me: Because it's a zero to one. Or you could say, let's just have Isaac focus on  
+Them: building the AI scribe side of it.  
+Me: the AI scribe side of it.  
+Them: And you froze.  
+Me: He froze. Yeah. He froze. I was gonna say it's a me, but no. He is completely froze. Totally frozen. Let's see if he's still there. Alright.  
+Them: Well, you froze for I have that. That's probably minute.  
+Me: Well, you froze for I've had this probably minute.  
+Them: Minute or so.  
+Me: Minute or so. Yeah. And  
+Them: In I know where I left off.  
+Me: I know where I left off.  
+Them: You were saying that it is there was  
+Me: Were saying that it is there was scribe and then the Yeah. The skill.  
+Them: scribe and then the Yeah. The skill. Impact. All these multiple impacts. And so it's hard to, like,  
+Me: And There's all these multiple impacts. And so it's hard to, like, as a as a thing to, like, put a  
+Them: as a as a thing to, like, put a one, you know,  
+Me: one you know, to move forward quickly. I just don't know. Like,  
+Them: to move forward quickly, I just don't know. Like, I wouldn't recommend it at  
+Me: I wouldn't recommend it at  
+Them: the Duke separate, but just because of the complexity.  
+Me: the new separate, but because of the complexity.  
+Them: I would say if you wanted to do something on-site and you wanted to go fast,  
+Me: I would say if you wanted to do something on-site and you wanted to go fast, it's not the same local people. But  
+Them: it's not the same local people, but Tyrus,  
+Me: Heath, Tyrus, Nick,  
+Them: Nick, this guy Daniel, right, they're trying to get visit out the door.  
+Me: this guy, Daniel. Right? They were trying to get visit concierge out the door.  
+Them: They already have a lot of the product documentation done, but they're trying to pick up  
+Me: They already have a lot of the product documentation done, but they're trying to pick up the pieces from Locus still, and that project could  
+Them: the pieces from Locus still. And that project could so benefit  
+Me: so benefit from having, a hackathon type approach. Right? Like,  
+Them: from having, like, a hackathon type approach. Right? Like, get people on-site, get them using the new tools,  
+Me: get people on-site, get them using new tools, get them moving faster because there's there's  
+Them: get them moving faster because there's there's a bunch of work that's been identified as, like, needing to get done and, like,  
+Me: a bunch of work that's been identified as, like, needing to get done. And I I think getting here  
+Them: I think getting Heath and  
+Me: and  
+Them: everyone to just focus and get it done is tough, but the documentation is already there.  
+Me: everyone to just focus and get it done is tough, but the documentation is already there.  
+Them: That would require  
+Me: But that would require  
+Them: getting, like,  
+Me: getting, like,  
+Them: a bunch of people that local.  
+Me: a bunch of people that aren't local.  
+Them: Into the  
+Me: So maybe we can include them on something the following week. Here, and and I hear you. I'm I'm gonna push back a little bit just based on the general premise that number one, is that trying to take opportunity of something in the short term that doesn't necessarily need to be ideal, but I hear you on the  
+Them: Like, what would you  
+Me: there's  
+Them: it's just  
+Me: just I wanna hear from you guys. Think about telehealth.  
+Them: I wanna hear from you guys. Think about telehealth. What are you gonna build?  
+Me: What are you gonna do? So we're not gonna build anything for telehealth. We're just going to make sure that we use AI in a consistent way to deliver on the templates  
+Them: Okay.  
+Me: that have been defined. For both the AI Scribe and and Care Agent. Right? So it's not necessarily been great.  
+Them: Then great because we have the templates, and we already have the  
+Me: Because we have the templates, and we already have the first draft.  
+Them: first draft of a lot of that stuff done. And so if that's what you're gonna do,  
+Me: A lot of that stuff done. And so if that's what you're gonna do,  
+Them: getting all those people in the same room to get on the same page and, like,  
+Me: Yep. Getting all those people in the same room to get on the same page and, like,  
+Them: finalize up those documents so they're ready to go  
+Me: finalize those documents so they're ready to go.  
+Them: to the next step, that would be awesome. So if that's what you're doing,  
+Me: To the next step, that would be awesome. That's that's the goal. That is primarily the goal.  
+Them: do it. Right.  
+Me: K.  
+Them: And and we need we will need all of those touch points.  
+Me: Because If they need, we will connect all of those cards points.  
+Them: What our typical  
+Me: What our typical  
+Them: software development lifecycle process is we know we need all those touch points,  
+Me: software development life cycle process is we know we need all those touch points, but we're only starting with this one because  
+Them: we're only starting with this one. Because development has historically been the long pole in the tent. So  
+Me: development has historically been the long pole in the tent. So  
+Them: product has plenty of time to figure out  
+Me: product has plenty of time to figure out  
+Them: how they envision all these other touch points going.  
+Me: how they envision all these other touch points going. And  
+Them: And  
+Me: development should be the long pull and the 10.  
+Them: development shouldn't be the long pole in the tent. Anymore. It's gonna be, alright. We kinda gotta  
+Me: Anymore. It's gonna be, alright, we kinda gotta  
+Them: we we got some working code up and going with  
+Me: we got some working code up and going. What we had defined.  
+Them: what we had to find. Now we're ready to start talking about all those touch points, and  
+Me: Now we're ready to start talking about all those touch points and  
+Them: like, okay. Well, we had only kind of cursory looked at what that was gonna be doing.  
+Me: we're like, okay. Well, we had only kind of cursory looked at what that was gonna be doing.  
+Them: We really need to, when we have these kickoffs,  
+Me: We really need to, when we have these kickoffs,  
+Them: how do we envision all of these things working? Because there's gonna be a lot of fast  
+Me: do we envision all of these things working? Because there's gonna be a lot of fast follows  
+Them: follows assuming, right, we we provide  
+Me: assuming we we provide  
+Them: and we have the proper processes and templates in place  
+Me: and we have the proper processes and templates and place for the agent agentic workflow, we should be able to spin up a  
+Them: for the agent agentic workflow, we should be able to spin up a quite a few  
+Me: you know, quite a few  
+Them: agents to get the code out  
+Me: agents to get the code out  
+Them: pretty quick, and we're gonna start meet reaching those milestones  
+Me: pretty quick, and we're gonna start meeting reaching those milestones  
+Them: And, yeah, it's the block  
+Me: and yeah, it's the blocker is then gonna be due to how fast can we  
+Them: is then gonna be how fast can we feed  
+Me: feed these agents requirements of what to do next.  
+Them: these agents' requirements of what to do next. And so what we learned when we did the first on-site with Lauren is that  
+Me: And so what we learned when we did the first down-site with Lauren is that  
+Them: the team was given feedbacks. And, well, we kind of  
+Me: the team was given feedbacks and, well, we kind of  
+Them: once we got we unblocked our CICD pipeline,  
+Me: once we got once we unblocked our CICD pipeline,  
+Them: which we addressed, and now we're able to move a little bit faster is  
+Me: we addressed, and now we're able to move a little bit faster is  
+Them: they immediately came up because, like, okay. Now  
+Me: immediately came up because, like, okay. Now we have to  
+Them: we have to we know we have to integrate with some events in these other systems. What does that  
+Me: know we have to integrate with some events in these other systems. What does that look like? Because  
+Them: look like? Because the agents are ready to code that up.  
+Me: the agents are ready to code that up, and we kind of like, wow. We'll get to that.  
+Them: And we kind of like, well, we'll get to that. After you do this first bit. Well, that like, the next day,  
+Me: After you do this first bit. Well, that like, the next day,  
+Them: is when we were getting to that. So not  
+Me: is when we were getting to that. So not having the the funnel  
+Them: having the the funnel fully vetted out as much as we possibly can  
+Me: fully vetted out as much as we possibly can  
+Them: actually started to slow down that implementation.  
+Me: actually started to slow down that implementation.  
+Them: Yeah. No. I I did.  
+Me: So what's funny is that that's exactly what you said, Ian. Right?  
+Them: That's good. Can see you. Yeah.  
+Me: Your deck. In your document?  
+Them: Sorry?  
+Me: Sorry? That that's that's the concept that you captured in your document. Right?  
+Them: Yeah. No. I mean, I'm like, guys.  
+Me: Implementation has gotten cheap.  
+Them: Thousand percent. The thing that's tricky is that the product process is not as compressible.  
+Me: Percent. The thing that's tricky is that the product process is not as compressible  
+Them: We don't  
+Me: We don't because a lot of the stuff we rely on is, like, going and having conversations with  
+Them: because a lot of the stuff we rely on is, like, going and having conversations with customers and, like, waiting for the board to make business decisions about things.  
+Me: customers and, like, waiting for the board to make business decisions about things.  
+Them: It's not as compressible a process on the front end as it is  
+Me: It's not as compressible a process on the front end as it is  
+Them: on the code side now. Right? If you all the development cycle can now compress  
+Me: on the code side now. Right? If you all the development cycles can now compress  
+Them: because you've got agents can do this work.  
+Me: because you've got agents can do this work.  
+Them: But they can only do that work if we have the input context to give it to them.  
+Me: They can only do that work if we have the input context to give it to them.  
+Them: But gathering that input context is not a super compressed we don't have the same ability to compress.  
+Me: But gathering that input context is not a super compressed we don't have the same ability to compress.  
+Them: So what I was trying to get across, I guess, Chris, you haven't seen it, but that  
+Me: So what I was trying to get across, I guess, Chris, you haven't seen it, but that  
+Them: that framework is supposed to be, okay. The products  
+Me: that framework is supposed to be, okay. Products the product part of this is gonna take however long it takes.  
+Them: the product part of this is gonna take however long it takes. But we need to be efficient about it, and we need to distill it down into, like, what's the output  
+Me: But we need to be efficient about it, and we need to distill it down into, like, what's the output  
+Them: that's as simplistic as we can get so that we can hand it off to engineering.  
+Me: that's as simplistic as we can get so that we can hand it off to Engineering can then start ramping that forward,  
+Them: Engineering can then start ramping that forward. But it probably also means, and I think my documents don't capture this yet, is that  
+Me: But it probably also means, and I think my documents don't capture this yet, is that  
+Them: we need to be able to to get to a point of  
+Me: we need to be able to to get to a point of  
+Them: of being able to  
+Me: of being able to  
+Them: iterate, like,  
+Me: iterate, like,  
+Them: what we couldn't do before because code was too cheap is you didn't wanna pull the trigger.  
+Me: what we couldn't do before because code was too cheap you didn't wanna pull the trigger on having developers develop anything.  
+Them: On having developers develop anything until you were a 100000% sure.  
+Me: Until you were a 100000% sure. I don't think that's true now. I  
+Them: I don't think that's true now. I think we can I think we can now afford to experiment?  
+Me: we can I think we can now afford to experiment?  
+Them: Because the cost of code is cheaper. So what my documents currently do not  
+Me: Because the cost of code is cheaper. So what my documents currently do not accomplish, and I think it's a big problem,  
+Them: accomplish, and I think it's a big problem, is  
+Me: is  
+Them: how do we how do we set up that product life cycle to to facilitate  
+Me: how do we how do we set up that product life cycle to to facilitate  
+Them: early experimentation where we might actually build little bits of things?  
+Me: early experimentation where we might actually build little bits of things Mhmm. Enough to get it out in the market and get tech like, all the kind of, like, quick  
+Them: Enough to get it out in the market and get to like, all the kind of, like, quick turnaround  
+Me: turnaround, fast experimentation that  
+Them: fast experimentation that will give us signal rather than investing months on a product research on something that might Like,  
+Me: give us signal rather than investing months on a product research on something that might suck. Like, we need to figure out how to get to the  
+Them: we need to figure out how to get to the the coding faster.  
+Me: depth of coding faster.  
+Them: And my documents don't figure that out. They don't they don't  
+Me: My documents don't figure that out. They don't they don't  
+Them: it doesn't Your your what your suggestion is we actually  
+Me: doesn't You're what you're suggesting is we actually  
+Them: start becoming agile and do what agile intended. Yeah.  
+Me: start becoming agile and do it agile. Then Yeah. Getting a product into the  
+Them: Getting a product into the marketplace to have the market tell us  
+Me: They have the market sell us.  
+Them: what we should be building.  
+Me: What we should be building.  
+Them: That's exactly what we should be doing. And, yeah,  
+Me: Exactly what we should be doing. And yeah.  
+Them: I don't think that I don't so, like, I don't think I've gotten there with my stuff yet.  
+Me: Don't think that I don't so, like, I don't think I've gotten there with my stuff yet.  
+Them: But maybe that's something you guys could focus on is  
+Me: But maybe that's something you guys could focus on is  
+Them: how do you take this front heavy process and start to break it down into smaller slices?  
+Me: how do you take this front heavy process and start to break it down into smaller slices so that Do we know enough, though, about telehealth? Because  
+Them: So do we know enough, though, about telehealth? Because Matt has been out there, and we know what Elena has been experiencing or anything about.  
+Me: Matt has been out there, and we know what Elena has been experiencing and everything about.  
+Them: I mean, the pro telehealth is very mature in terms of, like, do we have a plan?  
+Me: I mean, the pro telehealth is very mature in terms of, like, do we have a plan  
+Them: Yeah. It's very mature.  
+Me: Yeah. It's very mature. So we don't know how it's gonna work with the skills,  
+Them: So we don't know how it's gonna work with the skills and the carry.  
+Me: the carriers, but we really do know how we should interact with  
+Them: But we really do know how we should interact with the EMR. And We have we have it all mapped out. Telehealth is tell because we I was expecting to actually have debt, like, contractors being hired within the next week or two is what I've been told.  
+Me: EMR and Sweden. We have it all mapped out. Telehealth is tell because we I was expecting to actually have debt, like, contractors being hired within the next week or two is what I've been told.  
+Them: So  
+Me: So  
+Them: telehealth is completely figured out top to bottom.  
+Me: is completely figured out top to bottom. On the like, how it works  
+Them: On the like, how it works all that stuff.  
+Me: all that stuff.  
+Them: There are some open questions around dependencies, but  
+Me: There are some open questions around dependencies, but  
+Them: it's a very mature  
+Me: it's a very mature  
+Them: product.  
+Me: product.  
+Them: Process. Like, all that work's been done.  
+Me: Process. Like, all that work's been done. So at at here's, we we haven't varied. Too much deviated too much from what the objective of, what this exercise would be is. Number one, we're trying to define, you know, how this is gonna look like in a definitive way. I I think that based on what you're what you have created. And then these concerns, which I I think are very valuable and and useful, is will see what basically comes out of that interaction. Right? Is it sufficient? Is it over the top? Is it are we, you know, are we trying to define you know, too much into a cycle that cannot be compressed? What is the right approach to this? What is the right size of those some of these early experimentations?  
+Them: Yeah.  
+Me: And then for those early experimentations, what are the documents that constitute this handoff between product and engineering, which doesn't have, and we should not confuse that, with waterfall. Right? It's not big design upfront because it's not designed. But it is aligning on what we expect to deliver so that experimentation can happen. I think that, you know, if we use that time to just question it, hopefully, get people off of the mindset of this is prescriptive. You're just going to execute based on, you know, the parameters that have been provided. And this is our objective. This is what we need to find out. Let's validate. Yes. Ian did some work and created some documents. Clear as a provided a whole bunch of other documents in a folder. I don't know if you have that. I'll share with you if you don't. Yeah. I'm more I'm more good. I'm not creating my stuff up  
+Them: Yeah. And we're I'm working. I'm not creating my stuff in a vacuum. I'm  
+Me: a vacuum. I'm sharing it. Like, Clarissa knows what I'm doing. We're all working together on  
+Them: sharing it. Like, Clarissa knows what I'm doing. We're all working together on this stuff. So  
+Me: So let's bring all that together and say, okay. Now do we all have does this make sense to everyone? Right? And and then ultimately come up with a What is our next step? Okay. These documents are the ones that we will be creating for most of these initiatives. Are there particular type of, is there a particular type of product work? That requires, you know, additional documentation? Maybe that's out of scope for the type of work that we have in front of us. How do we empower truly product right, to create all of these things that add clarity What is that structure? And then what can engineering expect as a result of that, which is that second day validation? Because I'm also trying to get ahead of or trying to eliminate, and you know that this is this happens all the time. Well, you know, the work was well defined. It was clear, and then engineering fights back and goes, no. We don't have it. It's not ready to act. And there's confusion. Right? And so let's it's too much it's too noisy. And so that if if we get everyone in the room, like, everyone now has buy in because they're they participated in the creation of it, That's what I want. Like, it's this is not in post. This is we created it. There's engineering. Participation. There's product participation. We all know. We have said we are doing this. No one they are not telling you to do anything. We have decided this is what makes us more efficient and more productive and reduce the noise, adds clarity, gets us working. And, yes, prototyping and getting not prototyping per se, but you know, getting into a cycle that it's truly agile, I think, ultimately the objective. We gotta be careful and cautious not to step into that landmine of saying, we're not going to act until everything is perfectly defined. We need to build it or our ability to iterate within the process itself. But, yeah, what we talked about, Chris, during the conversation, right, is that we somehow you know, agile with complete lack of documentation.  
+Them: Yeah.  
+Me: And overcorrected on the other side is, okay. Well, because of that, now we're not going to work on engineering pushes back because we're not gonna work. Until everything is perfectly defined. That's that that doesn't get us anywhere.  
+Them: Yeah. And so  
+Me: So I'm gonna try. So here's  
+Them: I'll work on this a little more today on my  
+Me: I'm gonna work on this a little more today on my on my little document  
+Them: on my little document thing and then kinda create, like, a rough  
+Me: thing and then kinda create, like, a rough sketch of of what I was sort of imagining.  
+Them: sketch of of what I was sort of imagining. But I feel like what that could be is also  
+Me: But I feel like what that could be is also Oh, he froze again.  
+Them: Promise. I don't know. Are you getting do you have storms up a year right now?  
+Me: Are you getting do you have storms up a year right now?  
+Them: Girl?  
+Me: No. It's it's kinda raining, which I wasn't necessarily expecting.  
+Them: Yes.  
+Me: Yeah. It's raining. It's raining here, and the mirror is thunder and lightning. I keep thinking, is that needed something  
+Them: It's raining here, and I'm hearing some thunder and lightning. And I'm I keep thinking, is that needed something just  
+Me: just go out? But  
+Them: go out? But you and I are still chatting, so it's not So  
+Me: you and I are still chatting, so it's not Yeah. No. So annoying. Yeah. I keep  
+Them: Yeah. I keep freezing. Yeah. What I was saying was I will  
+Me: What I was saying was I will  
+Them: go on the stuff I've been doing, hand that off to Matt Lauren.  
+Me: go on the stuff I've been doing, hand that off to Matt with the with the instructions that  
+Them: With the with the instructions that maybe what the answer like, one of the big gaps currently is  
+Me: maybe what the answer like, one of the big gaps currently is  
+Them: if we know that the product process upfront  
+Me: if we know that the product process upfront is kind of incompressible,  
+Them: is kind of incompressible, that means that the solution is to break it into pieces  
+Me: means that the solution is to break it into pieces so that we can be more agile.  
+Them: so that we can be more agile in there. And, like, that's one of the things they should be trying to figure out with you guys  
+Me: In there. And, like, that's one of the things they should be trying to figure out with you guys  
+Them: at this thing is how what what is that early like, how does that work?  
+Me: at this thing is how what what is that or, like, how does that work?  
+Them: Right? Like, we want we know before we push, we make a big investment.  
+Me: Right? Like, we want we know before we push, we make a big investment.  
+Them: We need to have this set of documents clearly  
+Me: We need to have this set of documents clearly  
+Them: defined. But  
+Me: defined. But  
+Them: earlier before that,  
+Me: earlier before that,  
+Them: what should be happening? Right? And I think the answer isn't  
+Me: what should be happening? Right? And I think the answer isn't engineering just sits and  
+Them: engineering just sits and waits. Until product is done. Like, it's gotta be no. There has to be  
+Me: prod is done. Like, it's gotta be no. There has to be experimentation. There's gotta be some spikes. There's gotta be  
+Them: experimentation. There's gotta be some spikes. There's gotta be some testing. There's got we have to be data driven. And I just think that's where we really  
+Me: some testing. There's got we have to be data driven. And I just think that's where we really haven't  
+Them: thought this through.  
+Me: thought this through. And that if you guys could define that during your time,  
+Them: And that if you guys could define that during your time,  
+Me: and, like, work through that mutually, that'd be tremendously valuable.  
+Them: and, like, work through that mutually, that'd be tremendously valuable. Yeah. I think our current agile  
+Me: Yeah. I think our current agile process or the current  
+Them: or the current thinking in the past has been engineers times is very  
+Me: thinking in the past has been engineers times very expensive, so don't add them doing  
+Them: so don't have them doing quote, unquote, throwaway code. Don't have them working on anything that  
+Me: quote, unquote, throwaway code. Don't have them working on anything that  
+Them: isn't actually gonna go into production. Every line of code that they build  
+Me: isn't actually gonna go into production. Every line of code that they build  
+Them: no regardless if they learned anything from it or not, if that if that gets thrown out,  
+Me: no regardless if they've learned anything from it or not, if that that gets thrown out,  
+Them: and not used in production, that was a waste of time, which is  
+Me: and not used in production, that was a waste of time, which is Mhmm. Never  
+Them: never never been part of the engineering mindset. It's like  
+Me: it's never been part of the engineering mindset. It's like,  
+Them: you'll try 10 experiments to find  
+Me: you'll try 10 experiments to find  
+Them: the correct eleventh one, and that eleventh one should stand the test of time or at least  
+Me: the correct eleventh one, and that eleventh one should stand the test of time or at least you know, you you you learn what not to build and what  
+Them: you know, you you you learn what not to build and what doesn't work. And  
+Me: doesn't work, and all of that effort was kind of  
+Them: all of that effort was kind of looked upon as being  
+Me: looked upon as being  
+Them: a waste.  
+Me: a waste.  
+Them: Now that we can  
+Me: Now that we can try more experiments,  
+Them: try more experiments, involving  
+Me: involving  
+Them: engineering upfront, which we never did because of  
+Me: engineering upfront, which we never did because of  
+Them: the the reasons I just stated,  
+Me: the reasons I just stated, should be  
+Them: should be like, how how best to build this. Let's build two proto  
+Me: like, how how best to build this. Let's build two prototypes and see which one works because at the end of the day, when we say pull the trigger,  
+Them: and see which one works because at the end of the day, when we say pull the trigger,  
+Me: we're gonna have a lot of information, a lot of knowledge  
+Them: we're gonna have a lot of information, a lot of knowledge feeding in that needs to be part of documentation that gets  
+Me: feeding in that needs to be part of documentation that gets  
+Them: fed into these agents of exactly  
+Me: fed into these agents of exactly what we're thinking and how we want them to build this. Right?  
+Them: what we're thinking and how we want them to build this. Right? So doing that upfront and getting an understanding of what  
+Me: So doing that upfront and getting an understanding of what product's thinking  
+Them: product's thinking does allow them to let me try that. Let me  
+Me: does allow them to allow let me try that let me try to  
+Them: try to use a POC  
+Me: use a POC to build this out.  
+Them: to build this out. The other thing that  
+Me: The other thing that  
+Them: was gonna make this successful is is the  
+Me: was gonna make this successful is is the  
+Them: and I'm gonna say architecture, not from a team perspective, but just under  
+Me: I'm gonna say architecture, not from a team perspective, but just understanding, you know, this code has to get  
+Them: you know, this code has to get delivered inside an environment  
+Me: delivered inside an environment, and it has to interact with  
+Them: and it has to interact with all of these other systems, the PM, the EMR, the care agent skills,  
+Me: all these other systems, the PM, the EMR, the carrier agent skills,  
+Them: So that is context that has to be  
+Me: So that is context that has to be  
+Them: fed into any any solution that comes up with.  
+Me: fed into any any solution that comes up with. And that context has to be gathered and curated  
+Them: That context has to be gathered and curated  
+Me: to help drive that development as well, which is  
+Them: to help drive that development as well, which is an engineering effort  
+Me: an engineering effort that  
+Them: that typically in the past  
+Me: typically in the past wasn't  
+Them: wasn't engineers weren't allowed to actually do that. They were just  
+Me: engineers weren't allowed to actually do that. They weren't this given tickets by a senior product owner or or single product owner.  
+Them: given tickets by a senior product owner or or single product owner, who shall rename name this,  
+Me: We shall remain named in this, basically telling  
+Them: basically telling product, here, take this ticket and tell the developers to build this.  
+Me: product, here, take this ticket and tell the developers to build this.  
+Them: Which was you know, we're we're also trying to  
+Me: Which was you know, we're we're also trying to  
+Them: Guillermo, you correct me if I'm wrong, but I I think we're also trying to  
+Me: Guillermo, you correct me if I'm wrong, but I I think we're also trying to unlearn that  
+Them: unlearn that skill with our engineers to say, no. You  
+Me: skill with our engineers to say, no. You  
+Them: you're no longer ticket takers. And  
+Me: you're no longer ticket takers and Correct. Just waiting  
+Them: just waiting waiting around for product to tell you what to build. Like, put your thinking caps back on.  
+Me: waiting around for product to tell you what to build. Like, put your thinking gaps back on, and come to the table with ideas and solutions  
+Them: And come to the table with ideas and solutions ahead of time. And in order to do that, we, you know, we really need to  
+Me: ahead of time. And in order to do that, we, you know, So long as they're aligned, and this is where objective and vision is important. Right?  
+Them: yes. I'm presenting.  
+Me: They need to be aligned with that.  
+Them: Yeah.  
+Me: Because and and that just creates that other channel of empowerment to other people, right, as saying, we're not ticket takers. This is great. We have now clarity. Now you're an active contributor. Because that validation happens You know, it's it's it's own version of a garden wall, right, of of why are we doing what we're doing. Now granted, there's always going to be some element of technical debt or of, you know, code health, etcetera, security. That, you know, maybe sort of peripherally attached to that. And that's we don't need to get into that or go down that rabbit hole. But I ideally, is to get that level of engagement from engineering as well. A way that doesn't create any sort of, you know, confrontation or misalignment with products. Like, why are you bringing that up? That's not important. This so long as the vision and the goal is very clear and everybody's on the same page, gonna have a little bit more thinking heads contributing to solutions. So that's another element here.  
+Them: Working remote has  
+Me: Working remote is one of the I mean, I've been a big  
+Them: one of the I mean, I've been a big proponent. I love working remote, but it also has  
+Me: I love working from home, but it also has had the downsides of the logging  
+Them: had the downsides of allowing people to disconnect and just  
+Me: people to disconnect and just not pay attention  
+Them: not pay attention, not participate, and wait for somebody to tell them what to do.  
+Me: not participate, and wait for somebody to tell them what to do.  
+Them: Yeah. It's it has to be working remote is like an art  
+Me: Yeah. It's it has to be working remote is like an art. It takes a lot of  
+Them: It takes a lot of there's definitely folks that will just  
+Me: there's definitely folks that will just sit back  
+Them: sit back and kinda use it as a as cover. I like the idea  
+Me: and kinda use it as a as cover. I like the idea  
+Them: like this idea. I think this is actually gonna potentially give people more  
+Me: I like this idea. I think this is actually gonna potentially give people more people aren't waiting around, and there's more interaction. And, like, they  
+Them: people aren't waiting around, and there's more interaction and, like, things are moving faster too to  
+Me: are moving faster to 10 tends to bring kinda force people forward. But  
+Them: that tends to bring kinda force people forward. But  
+Me: alright. So action items coming out of this.  
+Them: alright. So action items coming out of this then. It's like, I'm gonna talk to I mean,  
+Me: Then. It's like, I'm gonna talk to I mean,  
+Them: do you have the details worked out in terms of  
+Me: do you have the details we're that out in terms of  
+Them: dates and times and all that stuff, and who's sending that out to Lauren and Matt?  
+Me: dates and times and all that stuff? Who's So, Manna, I I wanted to talk to you first. And then I'm going to create a quick chat with Matt Lauren yourself, Chris and I,  
+Them: Are you I can push it up next week.  
+Me: Andrew, Isaac, right, and Elena. Next week.  
+Them: Then, or we still  
+Me: Then? Or So I'm gonna say if if people can make it work and, you know, just check really quick, check hotels, check flights for those that need to. If they can make it work, great. Let's do it this week. If not, then we'll push it. For next week. I'm asking for 3PM just go no go on whether they can make it here. On Wednesday, and that would be great. If not, we'll push it next week.  
+Them: k.  
+Me: And he froze again.  
+Them: Alright.  
+Me: So I'll, you know, I'll summarize. Alright. And I do have another 11:30, so I am  
+Them: And I do have another 11:30. So, am gonna drop a this is a good chat.  
+Me: gonna drop a this is a good chat.  
+Them: Alright.  
+Me: Awesome. Alright. Alrighty.  
+Them: Alright. Thanks, guys.  
+Me: Thanks. Bye. 

@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI POD Full Onsite Process Summary - Codex</title>
+  <link rel="stylesheet" href="experity-onsite-events-reports.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand" aria-label="Project">
+      <div class="brand-mark">AI</div>
+      <div>
+        <strong>AI POD Onsite</strong>
+        <span>Two-Day Process Summary</span>
+      </div>
+    </div>
+    <div class="top-actions">
+      <div class="now-line">
+        <span class="label">Report</span>
+        <strong>Process Definition</strong>
+      </div>
+      <div class="action-row" aria-label="Report controls">
+        <button class="text-btn" id="expandAll" type="button">Expand All</button>
+        <button class="icon-btn" id="printBtn" type="button" title="Print report" aria-label="Print report">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v7H6z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="rail">
+      <div class="rail-card">
+        <h2>Overall Conclusion</h2>
+        <p>The onsite defined a practical first version of the Product-to-Engineering process. It should be adopted as a pilot pattern, then refined through one more trial before standardization.</p>
+        <div class="status-strip">
+          <span class="status-chip status-strong">Adopt Pilot</span>
+          <span class="status-chip status-watch">Refine Packet</span>
+        </div>
+      </div>
+
+      <div class="rail-card">
+        <h2>Core Shift</h2>
+        <p>Move from scattered implicit context and ticket handoff to a validated artifact packet that enables TRD creation, JIRA generation, QA alignment, and AI-agent execution.</p>
+      </div>
+
+      <div class="rail-section-title">Sections</div>
+      <nav class="nav-list" aria-label="Report navigation">
+        <a class="nav-item active" href="#executive" style="--accent: var(--navy)"><span class="nav-time">01</span><span class="nav-title">Executive</span></a>
+        <a class="nav-item" href="#accomplishments" style="--accent: var(--green)"><span class="nav-time">02</span><span class="nav-title">Accomplishments</span></a>
+        <a class="nav-item" href="#before-after" style="--accent: var(--orange)"><span class="nav-time">03</span><span class="nav-title">Before / After</span></a>
+        <a class="nav-item" href="#operating-model" style="--accent: var(--blue)"><span class="nav-time">04</span><span class="nav-title">Operating Model</span></a>
+        <a class="nav-item" href="#engineering-process" style="--accent: var(--purple)"><span class="nav-time">05</span><span class="nav-title">Engineering Process</span></a>
+        <a class="nav-item" href="#lessons" style="--accent: var(--teal)"><span class="nav-time">06</span><span class="nav-title">Lessons</span></a>
+        <a class="nav-item" href="#actions" style="--accent: var(--gold)"><span class="nav-time">07</span><span class="nav-title">Actions</span></a>
+      </nav>
+    </aside>
+
+    <main>
+      <section class="hero fade-in" id="executive">
+        <div class="hero-copy">
+          <div class="eyebrow">
+            <span class="tag">Post-Onsite Report</span>
+            <span class="tag green">Process Definition</span>
+            <span class="tag orange">Artifact And Channel Design</span>
+          </div>
+          <h1>Full Onsite Summary: Product-To-Engineering Process</h1>
+          <p class="lead">
+            The two-day onsite produced a clear first version of the handoff model: Product creates a structured, plain-language artifact packet; Engineering and Architecture validate it through a cold read; Engineering then owns TRD creation and delivery decomposition. The model is promising because it surfaced hidden assumptions early, before they became sprint churn.
+          </p>
+          <div class="hero-grid" aria-label="Full onsite summary metrics">
+            <div class="metric" style="--accent: var(--green)">
+              <b>Defined</b>
+              <span>Artifact packet, review method, lane split, and validation standard.</span>
+            </div>
+            <div class="metric" style="--accent: var(--blue)">
+              <b>Proved</b>
+              <span>Cold readers can expose missing context better than internal review alone.</span>
+            </div>
+            <div class="metric" style="--accent: var(--orange)">
+              <b>Refine</b>
+              <span>Glossary, README, source links, visual references, and TRD trigger need formalization.</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="run-card fade-in delay-1">
+          <div>
+            <h2>Executive Report Out</h2>
+            <p>
+              We should move forward with this operating model as a pilot standard. The onsite showed that better product artifacts do not slow engineering down; they remove ambiguity earlier and make engineering autonomy safer. The process is not ready to be declared final, but it is strong enough to run again with a hardened packet checklist and formal TRD handoff.
+            </p>
+            <div class="flow">
+              <div class="flow-step" style="--accent: var(--green)">
+                <div class="flow-num">1</div>
+                <div><strong>Outcome</strong><span>Product and Engineering aligned on what belongs in PRD versus TRD.</span></div>
+              </div>
+              <div class="flow-step" style="--accent: var(--orange)">
+                <div class="flow-num">2</div>
+                <div><strong>Risk</strong><span>Ambiguous vocabulary and missing system definitions still create execution drag.</span></div>
+              </div>
+              <div class="flow-step" style="--accent: var(--blue)">
+                <div class="flow-num">3</div>
+                <div><strong>Next</strong><span>Publish the packet standard and run one more cold-read validation on a new initiative.</span></div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="section fade-in delay-2" id="accomplishments">
+        <div class="section-head">
+          <div>
+            <h2>What Was Accomplished</h2>
+            <p class="section-sub">
+              Across the two days, the team moved from a process hypothesis to a tested handoff pattern.
+            </p>
+          </div>
+          <span class="small-note">Two-Day Outcomes</span>
+        </div>
+
+        <div class="score-grid">
+          <article class="score-card" style="--accent: var(--navy)">
+            <div class="score-label"><b>Process Objective</b><span class="score-value">Met</span></div>
+            <p>The onsite defined the shape of a product-led, engineering-validated handoff that is meant to reduce churn and enable faster delivery.</p>
+            <ul class="evidence-list">
+              <li>Day 1 created the packet shape.</li>
+              <li>Day 2 validated the packet against cold-reader behavior.</li>
+              <li>The model explicitly supports AI-assisted delivery and human engineering judgment.</li>
+            </ul>
+          </article>
+
+          <article class="score-card" style="--accent: var(--green)">
+            <div class="score-label"><b>Artifact Structure</b><span class="score-value">Drafted</span></div>
+            <p>The artifact hierarchy is now clear enough to standardize into a checklist.</p>
+            <ul class="evidence-list">
+              <li>Strategy or solution context above module PRDs.</li>
+              <li>Module PRDs focused on outcome, users, scope, dependencies, assumptions, and acceptance.</li>
+              <li>TRD owned by Engineering and Architecture, fed by PRD plus standards and system context.</li>
+            </ul>
+          </article>
+
+          <article class="score-card" style="--accent: var(--blue)">
+            <div class="score-label"><b>Communication</b><span class="score-value">Clarified</span></div>
+            <p>The onsite clarified that communication needs a durable memory layer, not only meetings and chat.</p>
+            <ul class="evidence-list">
+              <li>Meeting chat can share the entry link.</li>
+              <li>Document comments capture artifact-specific feedback.</li>
+              <li>Shared wiki/folder structure is the source of truth.</li>
+            </ul>
+          </article>
+
+          <article class="score-card" style="--accent: var(--orange)">
+            <div class="score-label"><b>Engineering Concerns</b><span class="score-value">Captured</span></div>
+            <p>Engineering identified the repeatable failure modes that must be addressed before scale.</p>
+            <ul class="evidence-list">
+              <li>Undefined domain terms.</li>
+              <li>Contradictory gate rules.</li>
+              <li>Product text that leaks technical implementation.</li>
+              <li>Success criteria without a measurement path.</li>
+            </ul>
+          </article>
+
+          <article class="score-card" style="--accent: var(--purple)">
+            <div class="score-label"><b>AI Readiness</b><span class="score-value">Reframed</span></div>
+            <p>The team recognized that AI acceleration depends on curated context, not only coding speed.</p>
+            <ul class="evidence-list">
+              <li>Agents need the same definitions and constraints as new engineers.</li>
+              <li>Missing context causes invented implementation.</li>
+              <li>Prompt/project context should mirror the packet structure.</li>
+            </ul>
+          </article>
+
+          <article class="score-card" style="--accent: var(--teal)">
+            <div class="score-label"><b>Culture Shift</b><span class="score-value">Started</span></div>
+            <p>The process moves Engineering out of ticket-taking and Product out of accidental technical prescription.</p>
+            <ul class="evidence-list">
+              <li>Product owns problem, context, outcome, and product decision clarity.</li>
+              <li>Engineering owns technical judgment, architecture path, and implementation decomposition.</li>
+              <li>Both teams participate earlier without turning the process into waterfall.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="before-after">
+        <div class="section-head">
+          <div>
+            <h2>Product Process: Before And After</h2>
+            <p class="section-sub">
+              The biggest change is not a new document. It is a new operating contract between Product, Engineering, Architecture, QA, and AI-assisted execution.
+            </p>
+          </div>
+        </div>
+
+        <div class="decision-table">
+          <div class="decision-row" style="--accent: var(--orange)">
+            <div>
+              <h3>Before: Scattered Context</h3>
+              <p>Relevant context lived in meetings, individual memory, drafts, personal spaces, chat links, and partial artifacts.</p>
+            </div>
+            <div>
+              <h3>Observed Problem</h3>
+              <p>Engineers and agents fill gaps with assumptions, causing back-and-forth, rework, and inconsistent interpretation.</p>
+            </div>
+            <div>
+              <h3>After: Product Intelligence Hub</h3>
+              <p>A shared location holds the packet, glossary, decisions, source links, review history, and handoff state.</p>
+            </div>
+          </div>
+
+          <div class="decision-row" style="--accent: var(--blue)">
+            <div>
+              <h3>Before: PRD As Catch-All</h3>
+              <p>The PRD risked absorbing strategy, business rules, technical design, implementation details, and metrics all at once.</p>
+            </div>
+            <div>
+              <h3>Observed Problem</h3>
+              <p>Product could become overly technical, while Engineering either challenged the PRD or treated accidental wording as a requirement.</p>
+            </div>
+            <div>
+              <h3>After: Layered Artifacts</h3>
+              <p>Strategy holds context, PRD holds product outcomes, design/workflow artifacts show experience, and TRD holds implementation details.</p>
+            </div>
+          </div>
+
+          <div class="decision-row" style="--accent: var(--green)">
+            <div>
+              <h3>Before: Engineering Waits Or Fills Gaps</h3>
+              <p>Engineering often entered after Product believed the work was ready, then pushed back on missing or unclear detail.</p>
+            </div>
+            <div>
+              <h3>Observed Problem</h3>
+              <p>The feedback loop happened too late, creating tension between "not enough process" and "too much process."</p>
+            </div>
+            <div>
+              <h3>After: Cold Validation Gate</h3>
+              <p>Engineering validates the packet before sprint or build commitment, with gaps treated as process output, not failure.</p>
+            </div>
+          </div>
+
+          <div class="decision-row" style="--accent: var(--purple)">
+            <div>
+              <h3>Before: Completion Bias</h3>
+              <p>Requirements could be treated as something to finish before Engineering begins.</p>
+            </div>
+            <div>
+              <h3>Observed Problem</h3>
+              <p>AI-assisted build compresses implementation, but product discovery and context gathering are not equally compressible.</p>
+            </div>
+            <div>
+              <h3>After: Slice And Learn</h3>
+              <p>The process supports early experiments, spikes, and small build-to-learn slices while maintaining artifact discipline.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="operating-model">
+        <div class="section-head">
+          <div>
+            <h2>Defined Operating Model</h2>
+            <p class="section-sub">
+              This is the proposed Product-to-Engineering process as it stands after the onsite.
+            </p>
+          </div>
+        </div>
+
+        <div class="handoff-band">
+          <div class="handoff-step" style="--accent: var(--navy)">
+            <b>Signal</b>
+            <span>Product gathers customer signal, market context, business goals, decision rationale, constraints, and known workflow evidence.</span>
+          </div>
+          <div class="handoff-step" style="--accent: var(--blue)">
+            <b>Context</b>
+            <span>Product curates the packet: README, strategy, module PRD, glossary, dependency map, workflows, design references, assumptions, and open questions.</span>
+          </div>
+          <div class="handoff-step" style="--accent: var(--green)">
+            <b>Decision</b>
+            <span>Product states what is in, out, later, unknown, and why. Open questions are routed with owners and impact.</span>
+          </div>
+          <div class="handoff-step" style="--accent: var(--orange)">
+            <b>Validation</b>
+            <span>Engineering and Architecture cold-read the packet, comment inline, classify gaps, and determine whether it is ready for TRD generation.</span>
+          </div>
+          <div class="handoff-step" style="--accent: var(--purple)">
+            <b>Execution</b>
+            <span>Engineering creates TRD, JIRA artifacts, QA inputs, implementation plan, and agent context, then writes lessons back to memory.</span>
+          </div>
+        </div>
+
+        <details class="accordion" open>
+          <summary>
+            Artifact Structure
+            <span class="chevron"><svg class="icon" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></span>
+          </summary>
+          <div class="accordion-body">
+            <div class="accordion-panel">
+              <h4>Core Packet</h4>
+              <ul class="detail-list">
+                <li>Handoff README: entry point, reading order, artifact purpose, review questions, feedback channel.</li>
+                <li>Strategy or solution context: source of truth for market, customer, value, roadmap, and broad constraints.</li>
+                <li>Module PRD: plain-language product requirements for one module or slice.</li>
+                <li>Glossary and dependency map: named systems, terms, users, states, dependencies, and canonical source links.</li>
+                <li>Workflow/design references: Figma, screens, flows, mockups, journey diagrams, sequence-like product flows.</li>
+              </ul>
+            </div>
+            <div class="accordion-panel">
+              <h4>Engineering Add-On</h4>
+              <ul class="output-list">
+                <li>TRD: implementation route, technical decisions, standards, interfaces, system boundaries, data, events, and compliance implementation.</li>
+                <li>Delivery breakdown: epics, stories, spikes, QA scenarios, acceptance test plan, and agent prompts.</li>
+                <li>Architecture review record: decisions, tradeoffs, rejected options, and unresolved technical risks.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <details class="accordion">
+          <summary>
+            Communication Process And Channels
+            <span class="chevron"><svg class="icon" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></span>
+          </summary>
+          <div class="accordion-body">
+            <div class="accordion-panel">
+              <h4>Channel Rules</h4>
+              <ul class="detail-list">
+                <li>Meeting chat is for distribution only: links, timing, and quick logistics.</li>
+                <li>Inline comments are for artifact-specific feedback and resolution history.</li>
+                <li>Shared wiki/folder is the durable source of truth.</li>
+                <li>Architecture Hub is the durable system and standards reference.</li>
+                <li>JIRA is generated after artifact validation, not used as the initial product definition container.</li>
+              </ul>
+            </div>
+            <div class="accordion-panel">
+              <h4>Feedback Rules</h4>
+              <ul class="output-list">
+                <li>Every comment should trace to a section, term, rule, dependency, or missing source.</li>
+                <li>Every open question needs audience, owner, impact, and disposition.</li>
+                <li>Every live answer that changes understanding must be written back to the artifact.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+      </section>
+
+      <section class="section" id="engineering-process">
+        <div class="section-head">
+          <div>
+            <h2>Proposed Engineering Process</h2>
+            <p class="section-sub">
+              Engineering's role becomes more active, not less. The goal is autonomy with shared context.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-list">
+          <article class="timeline-item" style="--accent: var(--navy)">
+            <div class="timeline-time">
+              <b>Step 1</b>
+              <span>Receive</span>
+            </div>
+            <div class="timeline-copy">
+              <h3>Receive The Validated Product Packet</h3>
+              <p>Engineering starts from the handoff README and confirms the packet contains the expected artifacts, source links, glossary, dependency map, and open-question routing.</p>
+            </div>
+          </article>
+
+          <article class="timeline-item" style="--accent: var(--blue)">
+            <div class="timeline-time">
+              <b>Step 2</b>
+              <span>Read</span>
+            </div>
+            <div class="timeline-copy">
+              <h3>Run A Cold Read And Comment Pass</h3>
+              <p>At least one reader with limited domain context reads the packet and comments before live explanation. Questions are classified as product gap, definition gap, dependency gap, contradiction, or TRD input.</p>
+            </div>
+          </article>
+
+          <article class="timeline-item" style="--accent: var(--orange)">
+            <div class="timeline-time">
+              <b>Step 3</b>
+              <span>TRD</span>
+            </div>
+            <div class="timeline-copy">
+              <h3>Create The Technical Requirements Document</h3>
+              <p>Engineering and Architecture translate the product packet into the technical route: systems, contracts, events, services, data, compliance implementation, non-functional requirements, and architecture tradeoffs.</p>
+            </div>
+          </article>
+
+          <article class="timeline-item" style="--accent: var(--green)">
+            <div class="timeline-time">
+              <b>Step 4</b>
+              <span>Plan</span>
+            </div>
+            <div class="timeline-copy">
+              <h3>Generate Work And Quality Artifacts</h3>
+              <p>Use PRD plus TRD to generate epics, stories, spikes, QA scenarios, acceptance checks, and agent prompts. Trace each item back to source sections.</p>
+            </div>
+          </article>
+
+          <article class="timeline-item" style="--accent: var(--purple)">
+            <div class="timeline-time">
+              <b>Step 5</b>
+              <span>Build</span>
+            </div>
+            <div class="timeline-copy">
+              <h3>Build With Feedback Loops</h3>
+              <p>Use spikes and early slices when discovery cannot be completed through documents alone. Capture decisions and lessons back into the shared memory layer.</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="quote-panel" style="--accent: var(--purple)">
+          <p>
+            Engineering's general ask is clear: do not prescribe implementation in the PRD, but do provide enough business rule, dependency, vocabulary, workflow, and rationale context that Engineering does not have to guess.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="lessons">
+        <div class="section-head">
+          <div>
+            <h2>Lessons Learned</h2>
+            <p class="section-sub">
+              The repeatable lessons are process lessons, not telehealth-specific conclusions.
+            </p>
+          </div>
+        </div>
+
+        <div class="insight-grid">
+          <article class="insight-card" style="--accent: var(--green)">
+            <h3>Clarity Is Not Ceremony</h3>
+            <p>The packet must earn its place by reducing ambiguity, enabling decisions, or supporting execution. Documentation is valuable when it prevents avoidable rework.</p>
+          </article>
+
+          <article class="insight-card" style="--accent: var(--blue)">
+            <h3>Cold Readers Are Essential</h3>
+            <p>People with less domain knowledge surface hidden assumptions faster than the team that created the artifacts.</p>
+          </article>
+
+          <article class="insight-card" style="--accent: var(--orange)">
+            <h3>Plain Language Is Hard</h3>
+            <p>Product must be precise without becoming technical. Engineering is literal, and AI agents are even more literal.</p>
+          </article>
+
+          <article class="insight-card" style="--accent: var(--purple)">
+            <h3>Shorter Is Not Always Better</h3>
+            <p>The MVP artifact pack did not automatically remove questions. The right test is whether the reader can answer the review questions, not page count.</p>
+          </article>
+
+          <article class="insight-card" style="--accent: var(--teal)">
+            <h3>AI Changes The Cost Model</h3>
+            <p>Build is more compressible than product discovery. The process must preserve customer signal and context while enabling smaller experiments and faster slices.</p>
+          </article>
+
+          <article class="insight-card" style="--accent: var(--navy)">
+            <h3>Context Needs Architecture</h3>
+            <p>The process needs a knowledge architecture: glossary, cross-links, source ownership, artifact order, decision log, and explicit references.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="actions">
+        <div class="section-head">
+          <div>
+            <h2>Action Items And Follow-Up Activities</h2>
+            <p class="section-sub">
+              These actions convert the onsite into a usable organizational process.
+            </p>
+          </div>
+        </div>
+
+        <div class="artifact-grid">
+          <article class="artifact-card" style="--accent: var(--navy)">
+            <h3>Publish The Packet Standard</h3>
+            <p>Create a reusable checklist for README, strategy, PRD, glossary, dependency map, design/workflow links, assumptions, open questions, and review questions.</p>
+            <ul class="action-list">
+              <li>Owner area: Product Ops / Product leadership.</li>
+              <li>Output: standard packet template and quality gate.</li>
+            </ul>
+          </article>
+
+          <article class="artifact-card" style="--accent: var(--blue)">
+            <h3>Define The TRD Standard</h3>
+            <p>Clarify when TRD work starts, who owns it, what inputs it consumes, and how it hands off to delivery planning.</p>
+            <ul class="action-list">
+              <li>Owner area: Engineering and Architecture.</li>
+              <li>Output: TRD template plus architecture review workflow.</li>
+            </ul>
+          </article>
+
+          <article class="artifact-card" style="--accent: var(--orange)">
+            <h3>Create PRD Language Guardrails</h3>
+            <p>Build AI generation rails that avoid implementation-coded terms and force plain-language outcomes.</p>
+            <ul class="action-list">
+              <li>Owner area: Product, with Engineering review.</li>
+              <li>Output: prompt instructions, "do not use" glossary, example rewrites.</li>
+            </ul>
+          </article>
+
+          <article class="artifact-card" style="--accent: var(--green)">
+            <h3>Run A TRD/JIRA Dry Run</h3>
+            <p>Use the revised packet to generate a TRD outline, sample JIRA epics/stories, QA scenarios, and agent prompts.</p>
+            <ul class="action-list">
+              <li>Owner area: Engineering lead plus Product partner.</li>
+              <li>Output: traceable source-to-work map and missing-context list.</li>
+            </ul>
+          </article>
+
+          <article class="artifact-card" style="--accent: var(--purple)">
+            <h3>Pilot The Model On One More Initiative</h3>
+            <p>Repeat the process with a different initiative and at least one cold reader outside the core domain.</p>
+            <ul class="action-list">
+              <li>Owner area: Product and Engineering leadership.</li>
+              <li>Output: validation of whether the pattern generalizes beyond telehealth.</li>
+            </ul>
+          </article>
+
+          <article class="artifact-card" style="--accent: var(--teal)">
+            <h3>Finalize Communication Channels</h3>
+            <p>Decide the durable source of truth, naming/versioning rules, comment workflow, and when JIRA becomes the execution container.</p>
+            <ul class="action-list">
+              <li>Owner area: Product Ops, Engineering Ops, and Architecture.</li>
+              <li>Output: channel map and artifact lifecycle policy.</li>
+            </ul>
+          </article>
+        </div>
+
+        <details class="accordion" open>
+          <summary>
+            Executive Summary Message
+            <span class="chevron"><svg class="icon" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></span>
+          </summary>
+          <div class="accordion-body">
+            <div class="accordion-panel">
+              <h4>Recommended Message</h4>
+              <p>The onsite successfully produced and tested a first version of the Product-to-Engineering handoff model. The process is valuable because it exposed implicit assumptions, unclear vocabulary, and implementation-risking language before the team moved into build. We recommend adopting the model as a pilot standard, with immediate refinement to the artifact packet, TRD handoff, source-of-truth structure, and AI-generation guardrails.</p>
+            </div>
+            <div class="accordion-panel">
+              <h4>Decision Ask</h4>
+              <p>Approve one more structured pilot using the revised packet standard, with Engineering and Architecture accountable for the TRD path and Product accountable for the source packet quality. The success measure should be whether the validated packet can produce useful TRD direction, JIRA work items, QA checks, and AI-agent context with materially less rework.</p>
+            </div>
+          </div>
+        </details>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const expandButton = document.getElementById("expandAll");
+    const details = [...document.querySelectorAll("details.accordion")];
+    document.getElementById("printBtn").addEventListener("click", () => window.print());
+    expandButton.addEventListener("click", () => {
+      const shouldOpen = details.some(detail => !detail.open);
+      details.forEach(detail => detail.open = shouldOpen);
+      expandButton.textContent = shouldOpen ? "Collapse All" : "Expand All";
+    });
+
+    const sections = [...document.querySelectorAll("main section[id]")];
+    const navItems = [...document.querySelectorAll(".nav-item")];
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        navItems.forEach(item => item.classList.toggle("active", item.getAttribute("href") === `#${entry.target.id}`));
+      });
+    }, { rootMargin: "-20% 0px -70% 0px" });
+    sections.forEach(section => observer.observe(section));
+  </script>
+</body>
+</html>

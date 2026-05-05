@@ -1,0 +1,424 @@
+
+    <html>
+    <head>
+        <title>Confluence Report - EL</title>
+        <style>
+            :root {
+                --red-pantone: #e63946ff;
+                --honeydew: #f1faeeff;
+                --non-photo-blue: #a8dadcff;
+                --cerulean: #457b9dff;
+                --berkeley-blue: #1d3557ff;
+            }
+            body {
+                font-family: 'Segoe UI', Arial, sans-serif;
+                margin: 40px;
+                background: var(--honeydew);
+                color: var(--berkeley-blue);
+            }
+            h1 {
+                color: var(--berkeley-blue);
+                margin-bottom: 32px;
+                letter-spacing: 1px;
+            }
+            h2 {
+                color: var(--cerulean);
+                margin-top: 40px;
+                cursor: pointer;
+                background: var(--non-photo-blue);
+                padding: 14px 20px;
+                border-radius: 10px 10px 0 0;
+                transition: background 0.2s, color 0.2s;
+                box-shadow: 0 2px 8px rgba(69,123,157,0.07);
+                font-size: 1.2em;
+                user-select: none;
+            }
+            h2:hover, h2.expanded {
+                background: var(--cerulean);
+                color: var(--honeydew);
+            }
+            h2::before {
+                content: "▶ ";
+                font-size: 0.9em;
+                color: var(--red-pantone);
+                transition: color 0.2s;
+            }
+            h2.expanded::before {
+                content: "▼ ";
+                color: var(--honeydew);
+            }
+            .section-content {
+                display: none;
+                background: white;
+                border-radius: 0 0 12px 12px;
+                box-shadow: 0 4px 16px rgba(29,53,87,0.07);
+                margin-bottom: 32px;
+                padding: 0 0 18px 0;
+                transition: max-height 0.3s ease;
+            }
+            .section-content.expanded {
+                display: block;
+                animation: fadeIn 0.3s;
+            }
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(-10px);}
+                to { opacity: 1; transform: translateY(0);}
+            }
+            table {
+                width: 98%%;
+                border-collapse: separate;
+                border-spacing: 0;
+                margin: 18px auto 0 auto;
+                background: var(--honeydew);
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 2px 12px rgba(69,123,157,0.08);
+            }
+            th, td {
+                padding: 10px 16px;
+                border-bottom: 1px solid var(--non-photo-blue);
+                text-align: left;
+            }
+            th {
+                background: var(--cerulean);
+                color: var(--honeydew);
+                font-weight: 600;
+                border-bottom: 2px solid var(--red-pantone);
+            }
+            tr:last-child td {
+                border-bottom: none;
+            }
+            tr:hover td {
+                background: var(--non-photo-blue);
+                transition: background 0.2s;
+            }
+th:nth-child(3), td:nth-child(3) {
+                white-space: nowrap;
+                min-width: 100px;
+            }
+            a {
+                text-decoration: none;
+                color: var(--red-pantone);
+                font-weight: 500;
+                transition: color 0.2s;
+            }
+            a:hover {
+                color: var(--berkeley-blue);
+                text-decoration: underline;
+            }
+            .no-content {
+                color: var(--red-pantone);
+                font-style: italic;
+                padding: 18px;
+            }
+        </style>
+        <script>
+            function toggleSection(sectionId) {
+                const section = document.getElementById(sectionId);
+                const header = document.getElementById('header-' + sectionId);
+                
+                if (section.classList.contains('expanded')) {
+                    section.classList.remove('expanded');
+                    header.classList.remove('expanded');
+                } else {
+                    section.classList.add('expanded');
+                    header.classList.add('expanded');
+                }
+            }
+            
+            // Expand the first section by default when page loads
+            window.onload = function() {
+                const firstSection = document.querySelector('.section-content');
+                const firstHeader = document.querySelector('h2');
+                if (firstSection && firstHeader) {
+                    firstSection.classList.add('expanded');
+                    firstHeader.classList.add('expanded');
+                }
+            };
+        </script>
+    </head>
+    <body>
+        <h1>Confluence Content Report: EL</h1>
+        
+        <!-- Render all sections except "Deprecated Accounts" first -->
+        
+            
+            <h2 id="header-section-1" onclick="toggleSection('section-1')">Within YTD</h2>
+            <div id="section-1" class="section-content">
+            
+                <table>
+                    <tr>
+                        <th>Title</th>
+                        <th>Parent Folder</th>
+                        <th>Created</th>
+                        <th>Author</th>
+                        <th>Link</th>
+                    </tr>
+                    
+                    <tr>
+                        <td>Model Usage Decision Framework</td>
+                        <td>AI Guidance</td>
+                        <td>2025-05-16</td>
+                        <td>Guillermo Salas</td>
+                        <td><a href="https://experityhealth.atlassian.net/wiki/spaces/EL/pages/4103864410" target="_blank">View</a></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Google (Gemini) Models Overview and Usage Guidance (May 2025)</td>
+                        <td>AI Guidance</td>
+                        <td>2025-05-16</td>
+                        <td>Guillermo Salas</td>
+                        <td><a href="https://experityhealth.atlassian.net/wiki/spaces/EL/pages/4104519702" target="_blank">View</a></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>OpenAI Models Overview and Guidance Usage Guide (May 2025)</td>
+                        <td>AI Guidance</td>
+                        <td>2025-05-16</td>
+                        <td>Guillermo Salas</td>
+                        <td><a href="https://experityhealth.atlassian.net/wiki/spaces/EL/pages/4104290317" target="_blank">View</a></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Anthropic Claude Models Overview and Usage Guidance (May 2025)</td>
+                        <td>AI Guidance</td>
+                        <td>2025-05-16</td>
+                        <td>Guillermo Salas</td>
+                        <td><a href="https://experityhealth.atlassian.net/wiki/spaces/EL/pages/4104093737" target="_blank">View</a></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Weekly Planning and Alignment Guidance</td>
+                        <td>Process Guidance</td>
+                        <td>2025-05-16</td>
+                        <td>Guillermo Salas</td>
+                        <td><a href="https://experityhealth.atlassian.net/wiki/spaces/EL/pages/4105568257" target="_blank">View</a></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>AI Personas</td>
+                        <td>Prompting Specific Guidance</td>
+                        <td>2025-07-24</td>
+                        <td>Guillermo Salas</td>
+                        <td><a href="https://experityhealth.atlassian.net/wiki/spaces/EL/pages/4231692384" target="_blank">View</a></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Clarify Your AI Vision and Build Momentum</td>
+                        <td>Prompting Specific Guidance</td>
+                        <td>2025-07-24</td>
+                        <td>Guillermo Salas</td>
+                        <td><a href="https://experityhealth.atlassian.net/wiki/spaces/EL/pages/4231692373" target="_blank">View</a></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Prompts for Making Great Decisions</td>
+                        <td>Prompting Specific Guidance</td>
+                        <td>2025-07-24</td>
+                        <td>Guillermo Salas</td>
+                        <td><a href="https://experityhealth.atlassian.net/wiki/spaces/EL/pages/4231790702" target="_blank">View</a></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Prompts for Working with People</td>
+                        <td>Prompting Specific Guidance</td>
+                        <td>2025-07-24</td>
+                        <td>Guillermo Salas</td>
+                        <td><a href="https://experityhealth.atlassian.net/wiki/spaces/EL/pages/4231692364" target="_blank">View</a></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Strategic Planning Prompts</td>
+                        <td>Prompting Specific Guidance</td>
+                        <td>2025-07-24</td>
+                        <td>Guillermo Salas</td>
+                        <td><a href="https://experityhealth.atlassian.net/wiki/spaces/EL/pages/4231790692" target="_blank">View</a></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Engineering Manager Guide for Distributed Systems Resilience</td>
+                        <td>Technical Guidance</td>
+                        <td>2025-05-15</td>
+                        <td>Guillermo Salas</td>
+                        <td><a href="https://experityhealth.atlassian.net/wiki/spaces/EL/pages/4102258821" target="_blank">View</a></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Mitigating Cascading Failures in Documents API</td>
+                        <td>Technical Guidance</td>
+                        <td>2025-05-15</td>
+                        <td>Guillermo Salas</td>
+                        <td><a href="https://experityhealth.atlassian.net/wiki/spaces/EL/pages/4102652025" target="_blank">View</a></td>
+                    </tr>
+                    
+                </table>
+            
+            </div>
+            
+        
+            
+            <h2 id="header-section-2" onclick="toggleSection('section-2')">Within 1 year</h2>
+            <div id="section-2" class="section-content">
+            
+                <table>
+                    <tr>
+                        <th>Title</th>
+                        <th>Parent Folder</th>
+                        <th>Created</th>
+                        <th>Author</th>
+                        <th>Link</th>
+                    </tr>
+                    
+                    <tr>
+                        <td>Ideal Software Engineers for New Projects</td>
+                        <td>Engineering Leadership</td>
+                        <td>2024-12-10</td>
+                        <td>Josh Malan</td>
+                        <td><a href="https://experityhealth.atlassian.net/wiki/spaces/EL/pages/3699343375" target="_blank">View</a></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Daily Focus Guide for Software Engineering Leaders</td>
+                        <td>Process Guidance</td>
+                        <td>2024-12-09</td>
+                        <td>Josh Malan</td>
+                        <td><a href="https://experityhealth.atlassian.net/wiki/spaces/EL/pages/3695181940" target="_blank">View</a></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Technical Debt Report for Patient Engagement Queue (Clockwise)</td>
+                        <td>Technical Guidance</td>
+                        <td>2024-08-12</td>
+                        <td>Bo Pritchard (Deactivated)</td>
+                        <td><a href="https://experityhealth.atlassian.net/wiki/spaces/EL/pages/3427172405" target="_blank">View</a></td>
+                    </tr>
+                    
+                </table>
+            
+            </div>
+            
+        
+            
+            <h2 id="header-section-3" onclick="toggleSection('section-3')">Within 2 years</h2>
+            <div id="section-3" class="section-content">
+            
+                <table>
+                    <tr>
+                        <th>Title</th>
+                        <th>Parent Folder</th>
+                        <th>Created</th>
+                        <th>Author</th>
+                        <th>Link</th>
+                    </tr>
+                    
+                    <tr>
+                        <td>Engineering Leadership</td>
+                        <td><root></td>
+                        <td>2024-03-06</td>
+                        <td>Josh Malan</td>
+                        <td><a href="https://experityhealth.atlassian.net/wiki/spaces/EL/pages/3108831478" target="_blank">View</a></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Software Engineer Development Plan Framework</td>
+                        <td>Career Guidance</td>
+                        <td>2024-06-18</td>
+                        <td>Josh Malan</td>
+                        <td><a href="https://experityhealth.atlassian.net/wiki/spaces/EL/pages/3313532979" target="_blank">View</a></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Software List</td>
+                        <td>Engineering Leadership</td>
+                        <td>2024-03-15</td>
+                        <td>Bo Pritchard (Deactivated)</td>
+                        <td><a href="https://experityhealth.atlassian.net/wiki/spaces/EL/pages/3129180190" target="_blank">View</a></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Get the most out of your team space</td>
+                        <td>Engineering Leadership</td>
+                        <td>2024-03-06</td>
+                        <td>Josh Malan</td>
+                        <td><a href="https://experityhealth.atlassian.net/wiki/spaces/EL/pages/3108831575" target="_blank">View</a></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Template - Weekly status report</td>
+                        <td>Engineering Leadership</td>
+                        <td>2024-03-06</td>
+                        <td>Josh Malan</td>
+                        <td><a href="https://experityhealth.atlassian.net/wiki/spaces/EL/pages/3108831561" target="_blank">View</a></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Template - Meeting notes</td>
+                        <td>Engineering Leadership</td>
+                        <td>2024-03-06</td>
+                        <td>Josh Malan</td>
+                        <td><a href="https://experityhealth.atlassian.net/wiki/spaces/EL/pages/3108831547" target="_blank">View</a></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Template - Project plan</td>
+                        <td>Engineering Leadership</td>
+                        <td>2024-03-06</td>
+                        <td>Josh Malan</td>
+                        <td><a href="https://experityhealth.atlassian.net/wiki/spaces/EL/pages/3108831533" target="_blank">View</a></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Epic Allocations Per Sprint: A Comprehensive Overview</td>
+                        <td>Process Guidance</td>
+                        <td>2024-03-06</td>
+                        <td>Josh Malan</td>
+                        <td><a href="https://experityhealth.atlassian.net/wiki/spaces/EL/pages/3109224491" target="_blank">View</a></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Integrating Modern JavaScript Frameworks into the Practice Management System</td>
+                        <td>Technical Guidance</td>
+                        <td>2024-04-26</td>
+                        <td>Bo Pritchard (Deactivated)</td>
+                        <td><a href="https://experityhealth.atlassian.net/wiki/spaces/EL/pages/3203924006" target="_blank">View</a></td>
+                    </tr>
+                    
+                </table>
+            
+            </div>
+            
+        
+            
+            <h2 id="header-section-4" onclick="toggleSection('section-4')">Older than 3 years</h2>
+            <div id="section-4" class="section-content">
+            
+                <p class="no-content">No content in this group.</p>
+            
+            </div>
+            
+        
+            
+            <h2 id="header-section-5" onclick="toggleSection('section-5')">Older than 5 years</h2>
+            <div id="section-5" class="section-content">
+            
+                <p class="no-content">No content in this group.</p>
+            
+            </div>
+            
+        
+            
+        
+        
+        <!-- Render "Deprecated Accounts" section last -->
+        
+            
+            <h2 id="header-section-deprecated" onclick="toggleSection('section-deprecated')">Deprecated Accounts</h2>
+            <div id="section-deprecated" class="section-content">
+            
+                <p class="no-content">No content in this group.</p>
+            
+            </div>
+        
+    </body>
+    </html>
+    

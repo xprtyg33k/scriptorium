@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEL Q2 2026 Onsite: Sharpen the Standard</title>
+<style>
+  :root {
+    --navy: #1a2744;
+    --blue: #2c5282;
+    --blue-mid: #3a6aa8;
+    --light-blue: #ebf4ff;
+    --accent: #e67e22;
+    --accent-light: #fff3e6;
+    --green: #276749;
+    --light-green: #f0fff4;
+    --gray: #718096;
+    --light-gray: #f7fafc;
+    --white: #ffffff;
+    --border: #e2e8f0;
+    --text: #2d3748;
+    --text-light: #4a5568;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: var(--text);
+    background: var(--light-gray);
+    line-height: 1.65;
+  }
+
+  /* ── Header ─────────────────────────────────────── */
+  .header {
+    background: linear-gradient(135deg, var(--navy) 0%, #243460 100%);
+    color: var(--white);
+    padding: 3.5rem 2rem 3rem;
+  }
+  .header-inner { max-width: 900px; margin: 0 auto; }
+  .header-eyebrow {
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem;
+  }
+  .header h1 {
+    font-size: 2.4rem; font-weight: 800; line-height: 1.15;
+    margin-bottom: 0.5rem; letter-spacing: -0.01em;
+  }
+  .header .theme-tagline {
+    font-size: 1.05rem; opacity: 0.85; margin-bottom: 1.75rem; max-width: 600px;
+  }
+  .header-meta {
+    display: flex; flex-wrap: wrap; gap: 1.75rem;
+    font-size: 0.85rem; opacity: 0.75; border-top: 1px solid rgba(255,255,255,0.15);
+    padding-top: 1.25rem; margin-top: 0;
+  }
+  .header-meta span { display: flex; align-items: center; gap: 0.4rem; }
+
+  /* ── Sticky Nav ──────────────────────────────────── */
+  .nav {
+    background: var(--blue); position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  }
+  .nav-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; flex-wrap: wrap;
+  }
+  .nav a {
+    color: rgba(255,255,255,0.88); text-decoration: none;
+    font-size: 0.8rem; font-weight: 500; padding: 0.75rem 1.1rem;
+    transition: background 0.18s, color 0.18s;
+    white-space: nowrap;
+  }
+  .nav a:hover { background: rgba(255,255,255,0.12); color: var(--white); }
+
+  /* ── Main container ──────────────────────────────── */
+  .container { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+  /* ── Section wrapper ─────────────────────────────── */
+  .section { margin-bottom: 3.5rem; }
+  .section-label {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-size: 1.6rem; font-weight: 800; color: var(--navy);
+    margin-bottom: 1rem; line-height: 1.2;
+  }
+  .section-intro {
+    font-size: 0.96rem; color: var(--text-light); max-width: 740px;
+    margin-bottom: 1.5rem; line-height: 1.7;
+  }
+
+  /* ── Strategic driver cards ──────────────────────── */
+  .driver-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 1.5rem; }
+  @media (max-width: 720px) { .driver-grid { grid-template-columns: 1fr; } }
+  .driver-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 8px; padding: 1.5rem; position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .driver-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 3px; background: var(--accent);
+  }
+  .driver-card .num {
+    font-size: 0.75rem; font-weight: 700; color: var(--accent);
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.6rem;
+  }
+  .driver-card h3 {
+    font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem;
+  }
+  .driver-card p { font-size: 0.85rem; color: var(--text-light); line-height: 1.6; }
+
+  /* ── OKR highlight bar ───────────────────────────── */
+  .okr-bar {
+    background: var(--navy); border-radius: 10px; padding: 2rem 2.25rem;
+    margin: 1.75rem 0; color: var(--white);
+  }
+  .okr-bar h3 {
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 1.25rem;
+  }
+  .okr-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.85rem; }
+  @media (max-width: 600px) { .okr-grid { grid-template-columns: 1fr; } }
+  .okr-item {
+    background: rgba(255,255,255,0.07); border-radius: 6px;
+    padding: 0.85rem 1rem; border-left: 3px solid var(--accent);
+  }
+  .okr-item .okr-label { font-size: 0.75rem; opacity: 0.65; margin-bottom: 0.25rem; }
+  .okr-item .okr-value { font-size: 0.92rem; font-weight: 600; line-height: 1.4; }
+
+  /* ── Timeline ────────────────────────────────────── */
+  .timeline { position: relative; margin: 1.75rem 0; padding-left: 0; list-style: none; }
+  .timeline-item {
+    display: grid; grid-template-columns: 110px 1fr;
+    gap: 1rem; margin-bottom: 0; padding: 0.9rem 1rem 0.9rem 0;
+    border-bottom: 1px solid var(--border); position: relative;
+  }
+  .timeline-item:last-child { border-bottom: none; }
+  .timeline-item .q-label {
+    font-size: 0.8rem; font-weight: 700; color: var(--blue);
+    text-transform: uppercase; letter-spacing: 0.04em; padding-top: 0.1rem;
+  }
+  .timeline-item .q-label span {
+    display: block; font-size: 0.7rem; font-weight: 500;
+    color: var(--gray); letter-spacing: 0; text-transform: none; margin-top: 0.15rem;
+  }
+  .timeline-item .q-desc { font-size: 0.875rem; color: var(--text-light); line-height: 1.6; }
+  .timeline-item .q-desc strong { color: var(--text); }
+  .timeline-item.current { background: var(--light-blue); margin: 0 -1rem; padding-left: 1rem; padding-right: 1rem; border-radius: 6px; border-bottom: none; }
+  .timeline-item.current .q-label { color: var(--navy); }
+
+  /* ── Focus areas ─────────────────────────────────── */
+  .focus-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; margin-top: 1.5rem; }
+  @media (max-width: 640px) { .focus-grid { grid-template-columns: 1fr; } }
+  .focus-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 8px; padding: 1.4rem 1.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    display: flex; flex-direction: column; gap: 0.5rem;
+  }
+  .focus-card .day-tag {
+    font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; padding: 0.2rem 0.55rem;
+    border-radius: 3px; display: inline-block; width: fit-content;
+  }
+  .day-tag.day1 { background: var(--light-blue); color: var(--blue); }
+  .day-tag.day2 { background: var(--light-green); color: var(--green); }
+  .day-tag.both { background: #fef3c7; color: #92400e; }
+  .focus-card h3 {
+    font-size: 0.95rem; font-weight: 700; color: var(--navy);
+  }
+  .focus-card p { font-size: 0.845rem; color: var(--text-light); line-height: 1.6; }
+
+  /* ── Guest callout ───────────────────────────────── */
+  .guest-strip {
+    background: var(--accent-light); border: 1px solid #f6c79b;
+    border-radius: 8px; padding: 1.1rem 1.5rem;
+    display: flex; align-items: flex-start; gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  .guest-strip .icon { font-size: 1.35rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .guest-strip p { font-size: 0.875rem; color: var(--text-light); margin: 0; line-height: 1.6; }
+  .guest-strip p strong { color: var(--text); }
+
+  /* ── Outcomes list ───────────────────────────────── */
+  .outcomes-list { list-style: none; margin: 1.5rem 0; display: flex; flex-direction: column; gap: 0.75rem; }
+  .outcomes-list li {
+    display: flex; align-items: flex-start; gap: 0.85rem;
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 6px; padding: 1rem 1.25rem;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  .outcomes-list li .check {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--green); display: flex; align-items: center;
+    justify-content: center; flex-shrink: 0; margin-top: 0.05rem;
+  }
+  .outcomes-list li .check::after {
+    content: ''; display: block; width: 6px; height: 10px;
+    border: 2px solid white; border-top: none; border-left: none;
+    transform: rotate(45deg) translate(-1px, -1px);
+  }
+  .outcomes-list li .outcome-text { font-size: 0.875rem; color: var(--text-light); line-height: 1.6; }
+  .outcomes-list li .outcome-text strong { color: var(--text); }
+
+  /* ── Pull quote ──────────────────────────────────── */
+  .pull-quote {
+    border-left: 4px solid var(--blue); background: var(--light-blue);
+    border-radius: 0 8px 8px 0; padding: 1.5rem 1.75rem;
+    margin: 2rem 0; font-style: italic; font-size: 1.05rem;
+    color: var(--navy); line-height: 1.65;
+  }
+  .pull-quote cite {
+    display: block; margin-top: 0.75rem; font-style: normal;
+    font-size: 0.78rem; color: var(--gray); font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+
+  /* ── What this means section ─────────────────────── */
+  .means-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; margin-top: 1.5rem; }
+  @media (max-width: 600px) { .means-grid { grid-template-columns: 1fr; } }
+  .means-card {
+    border-radius: 8px; padding: 1.4rem 1.5rem;
+    border: 1px solid var(--border); background: var(--white);
+  }
+  .means-card .means-label {
+    font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.5rem;
+  }
+  .means-card p { font-size: 0.875rem; color: var(--text-light); line-height: 1.65; }
+
+  /* ── Divider ─────────────────────────────────────── */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
+
+  /* ── Footer ──────────────────────────────────────── */
+  .footer {
+    text-align: center; padding: 2rem 1.5rem;
+    font-size: 0.78rem; color: var(--gray);
+    border-top: 1px solid var(--border);
+    background: var(--white);
+  }
+
+  /* ── Print ───────────────────────────────────────── */
+  @media print {
+    body { background: white; }
+    .nav { display: none; }
+    .header { padding: 2rem; }
+    .focus-grid, .driver-grid, .means-grid { grid-template-columns: repeat(2, 1fr); }
+    .okr-grid { grid-template-columns: repeat(2, 1fr); }
+    .section { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ═══════════════════════════════════════════ -->
+<div class="header">
+  <div class="header-inner">
+    <div class="header-eyebrow">Software Engineering Leadership &nbsp;·&nbsp; Experity</div>
+    <h1>Sharpen the Standard</h1>
+    <p class="theme-tagline">
+      SEL Q2 2026 Onsite &mdash; Two days to prove the standard is working, close the gaps between intent and execution, and align on what the team commits to next.
+    </p>
+    <div class="header-meta">
+      <span>&#128197; &nbsp;April 13 &ndash; 14, 2026</span>
+      <span>&#128205; &nbsp;Onsite &mdash; Conference Room + Breakout Spaces</span>
+      <span>&#128100; &nbsp;Engineering Leadership Team</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ STICKY NAV ════════════════════════════════════════ -->
+<nav class="nav" aria-label="Page sections">
+  <div class="nav-inner">
+    <a href="#theme">The Theme</a>
+    <a href="#why-now">Why Now</a>
+    <a href="#journey">Leadership Arc</a>
+    <a href="#focus">Focus Areas</a>
+    <a href="#outcomes">Expected Outcomes</a>
+  </div>
+</nav>
+
+<!-- ══ MAIN ══════════════════════════════════════════════ -->
+<div class="container">
+
+  <!-- THE THEME -->
+  <section class="section" id="theme">
+    <div class="section-label">The Theme</div>
+    <h2 class="section-title">What &ldquo;Sharpen the Standard&rdquo; Means</h2>
+    <p class="section-intro">
+      Over the past two years, the Software Engineering Leadership team has done the work to define who it is, what it expects, and how it operates. Values are documented. An operating model exists. Roles are clearer. Expectations have been stated &mdash; in writing, in conversation, in performance reviews.
+    </p>
+    <p class="section-intro">
+      Q2 2026 is not about restarting. It is not about redefining. The identity work is done.
+      <strong>The question now is whether the standard cuts &mdash; whether the commitments the team has made are producing measurable results in the hands of the people and teams it leads.</strong>
+    </p>
+
+    <div class="pull-quote">
+      &ldquo;We are not here to set a new direction. We are here to prove the direction is working &mdash; with evidence.&rdquo;
+    </div>
+
+    <div class="means-grid">
+      <div class="means-card">
+        <div class="means-label">From Narrative to Evidence</div>
+        <p>Every win is backed by data. Not &ldquo;we improved deployment reliability&rdquo; but &ldquo;change failure rate moved from X% to Y% between November and March.&rdquo; Claims require proof.</p>
+      </div>
+      <div class="means-card">
+        <div class="means-label">Specific Goals, Not Aspirations</div>
+        <p>Every goal has a number, an owner, and a deadline. Not &ldquo;improve sprint predictability&rdquo; but &ldquo;sprint commitment accuracy above 80% by end of Q3, owned by a named leader, measured weekly.&rdquo;</p>
+      </div>
+      <div class="means-card">
+        <div class="means-label">Commitments That Close</div>
+        <p>Root cause analyses get followed up. Artifacts from prior onsites get used or retired honestly. Commitments made in one quarter are checked in the next &mdash; by the whole team, not just the leader who made them.</p>
+      </div>
+      <div class="means-card">
+        <div class="means-label">Honesty Over Performance</div>
+        <p>If something is not working, the team names it plainly and diagnoses the pattern. Sharpening means precision, not perfection &mdash; specific enough to act on, honest enough to measure.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- WHY NOW -->
+  <section class="section" id="why-now">
+    <div class="section-label">Strategic Context</div>
+    <h2 class="section-title">Why This Theme, Why Now</h2>
+    <p class="section-intro">
+      Three converging factors make this the right focus for Q2 2026.
+    </p>
+
+    <div class="driver-grid">
+      <div class="driver-card">
+        <div class="num">Driver 01</div>
+        <h3>2026 OKRs Require Numbers, Not Direction</h3>
+        <p>Experity&rsquo;s 2026 goals are quantified and tied to revenue, retention, and customer outcomes. Engineering leadership cannot contribute to these by having good conversations. Measurable results is the ask.</p>
+      </div>
+      <div class="driver-card">
+        <div class="num">Driver 02</div>
+        <h3>Evidence-Based Leadership Is the Next Maturity Level</h3>
+        <p>The team has grown from defining identity, to naming excellence, to building operating discipline. The next step is proving that leadership direction translates into outcomes teams and the org can see.</p>
+      </div>
+      <div class="driver-card">
+        <div class="num">Driver 03</div>
+        <h3>Q4 2025 Commitments Need Honest Review</h3>
+        <p>The Q4 2025 onsite produced real artifacts: an operating model, a scorecard, a feedback framework, and AI experiment commitments. This onsite checks whether they are being used. That answer matters before building anything new.</p>
+      </div>
+    </div>
+
+    <div class="okr-bar">
+      <h3>Experity 2026 Goals &mdash; What Engineering Must Connect To</h3>
+      <div class="okr-grid">
+        <div class="okr-item">
+          <div class="okr-label">EMR Retention</div>
+          <div class="okr-value">92% &rarr; 97%</div>
+        </div>
+        <div class="okr-item">
+          <div class="okr-label">AI Scribe Clinic Adoption</div>
+          <div class="okr-value">5% &rarr; 35% of clinics</div>
+        </div>
+        <div class="okr-item">
+          <div class="okr-label">Organic EBITDA</div>
+          <div class="okr-value">$72M &rarr; $82M</div>
+        </div>
+        <div class="okr-item">
+          <div class="okr-label">Annual Recurring Revenue</div>
+          <div class="okr-value">$221M &rarr; $240M</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- LEADERSHIP ARC -->
+  <section class="section" id="journey">
+    <div class="section-label">Leadership Arc</div>
+    <h2 class="section-title">Two Years of Intentional Development</h2>
+    <p class="section-intro">
+      Each quarterly onsite has built on the last. This is not a series of disconnected events &mdash; it is a deliberate arc of team maturity. The table below shows where the team has been and why Q2 2026 is the natural next step.
+    </p>
+
+    <ul class="timeline">
+      <li class="timeline-item">
+        <div class="q-label">Q1 2024 <span>Identity</span></div>
+        <div class="q-desc"><strong>Who are we?</strong> First formal exercise as a leadership team. Documented values. Introduced OKRs and architecture thinking. The beginning of shared identity.</div>
+      </li>
+      <li class="timeline-item">
+        <div class="q-label">Q2 2024 <span>Excellence</span></div>
+        <div class="q-desc"><strong>What does good look like?</strong> Defined excellence for developers and leaders. Introduced outcomes vs. output. Named role clarity and the gap between the trivial many and the vital few.</div>
+      </li>
+      <li class="timeline-item">
+        <div class="q-label">Q3 2024 <span>Focus</span></div>
+        <div class="q-desc"><strong>What is the one thing?</strong> Prioritization as discipline. Introduced the Say/Do tracker, VSM opportunities, and &ldquo;Disagree and Commit.&rdquo; Each leader committed to one significant project.</div>
+      </li>
+      <li class="timeline-item">
+        <div class="q-label">Q1 2025 <span>Growth</span></div>
+        <div class="q-desc"><strong>What have you done to make others succeed?</strong> Pushed from definition into action. Introduced the Outward Mindset. Challenged each leader to articulate their unique contribution.</div>
+      </li>
+      <li class="timeline-item">
+        <div class="q-label">Q4 2025 <span>Recalibration</span></div>
+        <div class="q-desc"><strong>The most structured onsite to date.</strong> Built Operating Model v1.0. Created a three-tier scorecard. Adopted the GAIN feedback framework. Set five explicit success criteria for the quarter. Left with owned commitments.</div>
+      </li>
+      <li class="timeline-item current">
+        <div class="q-label">Q2 2026 <span>&#x2192; Now</span></div>
+        <div class="q-desc"><strong>Sharpen the Standard.</strong> The standard has been set. Now it must cut. This onsite asks: did the bar hold? Are the commitments producing evidence? Where is the gap between what we said and what we did &mdash; and what do we do about it?</div>
+      </li>
+    </ul>
+  </section>
+
+  <hr class="divider">
+
+  <!-- FOCUS AREAS -->
+  <section class="section" id="focus">
+    <div class="section-label">Two-Day Focus</div>
+    <h2 class="section-title">What the Team Is Working Through</h2>
+    <p class="section-intro">
+      The onsite is structured across two days. Monday belongs to the team: retrospective, behavioral accountability, and personal leadership growth. Tuesday integrates cross-functional partners and closes with commitments that carry forward into Q3.
+    </p>
+
+    <div class="guest-strip">
+      <span class="icon">&#x1F465;</span>
+      <p><strong>Tuesday guests:</strong> Dan (Director of Information Security) and Clarissa (Chief Product Officer) join Tuesday morning for structured alignment conversations &mdash; not as speakers, but as collaborators working through shared priorities with the engineering leadership team.</p>
+    </div>
+
+    <div class="focus-grid">
+      <div class="focus-card">
+        <span class="day-tag day1">Day 1 &mdash; Monday</span>
+        <h3>Evidence of Progress</h3>
+        <p>Each leader presents wins and growth since the Q4 2025 onsite with supporting evidence. The bar: not claims, but proof. Where does the data exist, and where has it been missing?</p>
+      </div>
+      <div class="focus-card">
+        <span class="day-tag day1">Day 1 &mdash; Monday</span>
+        <h3>Accountability to Q4 2025 Commitments</h3>
+        <p>Honest review of every artifact from the Q4 onsite: Operating Model, Scorecard, GAIN framework, Architecture loop, AI experiments. What was adopted, what wasn&rsquo;t, and why.</p>
+      </div>
+      <div class="focus-card">
+        <span class="day-tag day1">Day 1 &mdash; Monday</span>
+        <h3>Leadership Behaviors: Continue / Start / Stop</h3>
+        <p>The team evaluates its own operating habits, communication patterns, and accountability norms &mdash; not its teams&rsquo;, its own. Top commitments are voted on and made visible for monthly tracking.</p>
+      </div>
+      <div class="focus-card">
+        <span class="day-tag day1">Day 1 &mdash; Monday</span>
+        <h3>AI Adoption: From Experiments to Governance</h3>
+        <p>AI tools are in use across teams but managed inconsistently. This session closes out the Q4 AI experiment commitments and establishes lightweight governance: approved tools, cost visibility, and learning-sharing mechanisms for Q3.</p>
+      </div>
+      <div class="focus-card">
+        <span class="day-tag day1">Day 1 &mdash; Monday</span>
+        <h3>Tech Debt and Modernization</h3>
+        <p>The team has over 2,500 story points of tech debt. Specific modernization work is in flight. This session surfaces honest progress, identifies the top three Q3 priorities, and checks whether the quarterly sprint cadence is functioning.</p>
+      </div>
+      <div class="focus-card">
+        <span class="day-tag day2">Day 2 &mdash; Tuesday</span>
+        <h3>Security and Engineering Alignment</h3>
+        <p>Dan (Information Security) and the engineering leaders work through the real tensions between security compliance requirements and engineering velocity &mdash; producing concrete joint commitments with owners on both sides.</p>
+      </div>
+      <div class="focus-card">
+        <span class="day-tag day2">Day 2 &mdash; Tuesday</span>
+        <h3>Product Direction and Partnership</h3>
+        <p>Clarissa (CPO) shares H2 2026 product direction and the team has an honest conversation about partnership quality: where engineering and product are aligned, where there is friction, and what to do about it.</p>
+      </div>
+      <div class="focus-card">
+        <span class="day-tag both">Both Days</span>
+        <h3>Personal Leadership Vision and Goals</h3>
+        <p>Each leader drafts and then shares their personal vision for the remainder of 2026 &mdash; including where they are not yet the leader they want to be. Goals are specific, owned, and revisited monthly. The team witnesses and supports each other&rsquo;s growth.</p>
+      </div>
+      <div class="focus-card">
+        <span class="day-tag day2">Day 2 &mdash; Tuesday</span>
+        <h3>Team Goals: From Aspiration to Commitment</h3>
+        <p>The team sets 8&ndash;10 goals for Q3 and H2 2026. Every surviving goal must answer &ldquo;how would we know if we achieved this?&rdquo; Goals that cannot are either refined or removed. What remains is what the team is held to.</p>
+      </div>
+      <div class="focus-card">
+        <span class="day-tag day2">Day 2 &mdash; Tuesday</span>
+        <h3>Closing Commitments and Accountability</h3>
+        <p>Each leader states one specific 30-day commitment, one behavior they will stop, and names an accountability partner. The follow-through cadence is confirmed. The onsite closes with ownership distributed across the team.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- EXPECTED OUTCOMES -->
+  <section class="section" id="outcomes">
+    <div class="section-label">Expected Outcomes</div>
+    <h2 class="section-title">What the Team Walks Away With</h2>
+    <p class="section-intro">
+      Every session is designed to produce an artifact or decision &mdash; not just discussion. These are the tangible outputs the onsite is accountable for.
+    </p>
+
+    <ul class="outcomes-list">
+      <li>
+        <span class="check"></span>
+        <span class="outcome-text"><strong>Evidence-backed wins log.</strong> A documented record of what has measurably improved since Q4 2025 &mdash; by leader and by theme. Sets the bar for how wins are reported going forward.</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <span class="outcome-text"><strong>Q4 2025 artifact adoption scorecard.</strong> An honest grade on each prior commitment: adopted, partially adopted, or not adopted &mdash; with root causes and decisions on what to carry forward.</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <span class="outcome-text"><strong>Leadership behavior commitments board.</strong> The top behavioral changes the team votes to make, with owners &mdash; visible and referenced in monthly meetings.</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <span class="outcome-text"><strong>AI governance decisions.</strong> Approved tools or criteria, cost guardrails, learning-sharing mechanism, and one new experiment per team for Q3.</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <span class="outcome-text"><strong>Top 3 Q3 tech debt priorities.</strong> Named items, owners, and clarity on whether the quarterly sprint cadence is on track.</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <span class="outcome-text"><strong>Security / engineering alignment commitments.</strong> 2&ndash;3 joint commitments with owners from both engineering and security that improve velocity without increasing risk.</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <span class="outcome-text"><strong>Product / engineering alignment commitments.</strong> 2&ndash;3 partnership commitments from the conversation with the CPO, with shared understanding of H2 product direction.</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <span class="outcome-text"><strong>Personal vision and goals documents.</strong> One per leader &mdash; specific, honest, and revisited at Q3. Not a performance artifact. A leadership development artifact.</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <span class="outcome-text"><strong>8&ndash;10 team SMART goals for Q3 and H2 2026.</strong> Each with a number, an owner, and a deadline. The team&rsquo;s commitment artifact for the second half of the year.</span>
+      </li>
+      <li>
+        <span class="check"></span>
+        <span class="outcome-text"><strong>Distributed accountability commitments.</strong> One 30-day action and one stop-doing per leader, each with a named peer accountability partner. Follow-through is the team&rsquo;s responsibility, not any one person&rsquo;s.</span>
+      </li>
+    </ul>
+
+    <div class="pull-quote">
+      &ldquo;Reach that destination where the things that are pleasant and the things that are honorable, finally become, for you, the same.&rdquo;
+      <cite>&mdash; Seneca</cite>
+    </div>
+  </section>
+
+</div>
+
+<!-- ══ FOOTER ════════════════════════════════════════════ -->
+<footer class="footer">
+  SEL Q2 2026 Onsite &nbsp;&middot;&nbsp; Sharpen the Standard &nbsp;&middot;&nbsp; April 13&ndash;14, 2026 &nbsp;&middot;&nbsp; Software Engineering Leadership &nbsp;&middot;&nbsp; Experity
+</footer>
+
+</body>
+</html>

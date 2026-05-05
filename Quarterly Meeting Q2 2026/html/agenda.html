@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEL Q2 2026 Onsite: Sharpen the Standard</title>
+<style>
+  :root {
+    --navy: #1a2744;
+    --blue: #2c5282;
+    --light-blue: #ebf4ff;
+    --accent: #e67e22;
+    --green: #276749;
+    --light-green: #f0fff4;
+    --gray: #718096;
+    --light-gray: #f7fafc;
+    --white: #ffffff;
+    --border: #e2e8f0;
+    --text: #2d3748;
+    --text-light: #4a5568;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: var(--text); background: var(--light-gray); line-height: 1.5; }
+  .header { background: var(--navy); color: var(--white); padding: 2.5rem 2rem 2rem; }
+  .header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem; }
+  .header .theme { font-size: 1.1rem; color: var(--accent); font-weight: 600; margin-bottom: 1rem; }
+  .header .meta { display: flex; flex-wrap: wrap; gap: 1.5rem; font-size: 0.9rem; opacity: 0.85; }
+  .header .meta span { display: flex; align-items: center; gap: 0.4rem; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 1.5rem; }
+  .prep-box { background: var(--light-blue); border-left: 4px solid var(--blue); border-radius: 6px; padding: 1.25rem 1.5rem; margin-bottom: 2rem; }
+  .prep-box h3 { color: var(--blue); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+  .prep-box ul { padding-left: 1.25rem; font-size: 0.9rem; color: var(--text-light); }
+  .prep-box li { margin-bottom: 0.3rem; }
+  .days { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  @media (max-width: 800px) { .days { grid-template-columns: 1fr; } }
+  .day { background: var(--white); border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); overflow: hidden; }
+  .day-header { padding: 1rem 1.5rem; font-size: 1.15rem; font-weight: 700; color: var(--white); }
+  .day-1 .day-header { background: var(--blue); }
+  .day-2 .day-header { background: var(--green); }
+  .day-header small { font-weight: 400; opacity: 0.85; display: block; font-size: 0.85rem; }
+  .session { padding: 0.9rem 1.5rem; border-bottom: 1px solid var(--border); }
+  .session:last-child { border-bottom: none; }
+  .session .time { font-size: 0.8rem; font-weight: 700; color: var(--gray); text-transform: uppercase; letter-spacing: 0.03em; }
+  .session .title { font-size: 0.95rem; font-weight: 600; color: var(--text); margin-top: 0.15rem; }
+  .session .desc { font-size: 0.82rem; color: var(--text-light); margin-top: 0.2rem; }
+  .session.break { background: var(--light-gray); padding: 0.5rem 1.5rem; }
+  .session.break .title { font-size: 0.82rem; color: var(--gray); font-weight: 500; }
+  .session.guest { border-left: 3px solid var(--accent); }
+  .session.outdoor { border-left: 3px solid var(--green); background: var(--light-green); }
+  .tag { display: inline-block; font-size: 0.7rem; font-weight: 600; padding: 0.15rem 0.5rem; border-radius: 3px; margin-top: 0.3rem; text-transform: uppercase; letter-spacing: 0.03em; }
+  .tag.discussion { background: #ebf4ff; color: #2c5282; }
+  .tag.exercise { background: #fefcbf; color: #975a16; }
+  .tag.guest-tag { background: #fed7aa; color: #9c4221; }
+  .tag.reflection { background: #e9d8fd; color: #553c9a; }
+  .tag.physical { background: #c6f6d5; color: #276749; }
+  .footer { text-align: center; padding: 2rem; font-size: 0.8rem; color: var(--gray); }
+  .quote { font-style: italic; color: var(--text-light); font-size: 0.85rem; padding: 1rem 1.5rem; background: var(--light-gray); border-radius: 0 0 8px 8px; }
+  @media print {
+    body { background: white; }
+    .days { grid-template-columns: 1fr 1fr; }
+    .day { box-shadow: none; border: 1px solid #ccc; break-inside: avoid; }
+    .header { padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>SEL Q2 2026 Onsite</h1>
+  <div class="theme">Sharpen the Standard</div>
+  <div class="meta">
+    <span>Monday, April 13 &amp; Tuesday, April 14, 2026</span>
+    <span>Software Engineering Leadership</span>
+    <span>Experity</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="prep-box">
+    <h3>Preparation Required</h3>
+    <ul>
+      <li>Come with 2-3 wins since the Q4 2025 onsite, with supporting evidence (numbers, before/after, examples)</li>
+      <li>Review the Q4 2025 onsite success criteria and your commitments from that session</li>
+      <li>Reflect on your current AI tool usage and any experiments your team has run</li>
+      <li>Be ready to draft your personal vision and quarterly goals on Day 1 afternoon</li>
+    </ul>
+  </div>
+
+  <div class="days">
+
+    <div class="day day-1">
+      <div class="day-header">Day 1: Monday, April 13 <small>8:30 AM - 5:00 PM | Team dinner at 6:00 PM</small></div>
+
+      <div class="session">
+        <div class="time">8:30 - 9:00</div>
+        <div class="title">Arrival, Coffee, Setup</div>
+      </div>
+
+      <div class="session">
+        <div class="time">9:00 - 9:20</div>
+        <div class="title">Opening: Why "Sharpen the Standard"</div>
+        <div class="desc">Frame the two days. Connect to the arc from prior onsites. Set success criteria.</div>
+        <span class="tag discussion">Framing</span>
+      </div>
+
+      <div class="session">
+        <div class="time">9:20 - 10:30</div>
+        <div class="title">Retrospective: Evidence of Progress</div>
+        <div class="desc">Round robin. Each leader shares 2-3 wins since the Q4 onsite with supporting evidence. Theme clustering.</div>
+        <span class="tag exercise">Round Robin</span>
+      </div>
+
+      <div class="session break"><div class="title">10:30 - 10:45 | Break</div></div>
+
+      <div class="session">
+        <div class="time">10:45 - 11:45</div>
+        <div class="title">Continue / Start / Stop</div>
+        <div class="desc">Leadership-grade evaluation of team behaviors, operating habits, and norms. Silent write, cluster, vote, commit.</div>
+        <span class="tag exercise">Exercise</span>
+      </div>
+
+      <div class="session">
+        <div class="time">11:45 - 12:45</div>
+        <div class="title">Q4 Artifact Adoption Check + Metrics Reality</div>
+        <div class="desc">Grade Q425 success criteria honestly. Pressure-test current metrics, baselines, and gaps.</div>
+        <span class="tag discussion">Discussion</span>
+      </div>
+
+      <div class="session break"><div class="title">12:45 - 1:45 | Working Lunch</div></div>
+
+      <div class="session">
+        <div class="time">1:45 - 2:45</div>
+        <div class="title">Personal Vision and Goals: Drafting</div>
+        <div class="desc">Individual silent work. Draft your vision, quarterly goals, alignment to collective goals, and honest gap identification.</div>
+        <span class="tag reflection">Reflection</span>
+      </div>
+
+      <div class="session break"><div class="title">2:45 - 3:00 | Break</div></div>
+
+      <div class="session">
+        <div class="time">3:00 - 3:45</div>
+        <div class="title">AI Adoption: From Experiments to Governance</div>
+        <div class="desc">Status check on AI experiments. Agree on lightweight governance, tool decisions, cost guardrails.</div>
+        <span class="tag discussion">Discussion</span>
+      </div>
+
+      <div class="session break"><div class="title">3:45 - 4:00 | Break</div></div>
+
+      <div class="session">
+        <div class="time">4:00 - 4:45</div>
+        <div class="title">Tech Debt and Modernization: Progress and Priorities</div>
+        <div class="desc">Review tech debt sprint cadence. Prioritize top 3 items for Q3 with owners.</div>
+        <span class="tag discussion">Discussion</span>
+      </div>
+
+      <div class="session">
+        <div class="time">4:45 - 5:00</div>
+        <div class="title">Day 1 Close</div>
+        <div class="desc">One thing that landed. One question for tomorrow.</div>
+      </div>
+
+      <div class="quote">"Culture is the sum total of shared habits and expectations. It has tremendous inertia."</div>
+    </div>
+
+    <div class="day day-2">
+      <div class="day-header">Day 2: Tuesday, April 14 <small>8:30 AM - 3:00 PM | Guests join in the morning</small></div>
+
+      <div class="session">
+        <div class="time">8:30 - 8:45</div>
+        <div class="title">Warm-Up and Reset</div>
+        <div class="desc">Review Day 1 outputs. Check parking lot.</div>
+      </div>
+
+      <div class="session guest">
+        <div class="time">8:45 - 9:45</div>
+        <div class="title">Security Posture and Engineering Alignment</div>
+        <div class="desc">Dan (Dir. of Information Security). Security update, Q&amp;A on security/velocity intersection, alignment commitments.</div>
+        <span class="tag guest-tag">Guest: Dan</span>
+      </div>
+
+      <div class="session guest">
+        <div class="time">9:45 - 10:30</div>
+        <div class="title">Product Alignment and Priorities</div>
+        <div class="desc">Clarissa (Chief Product Officer). Product priorities for H2 2026, alignment gaps, partnership commitments.</div>
+        <span class="tag guest-tag">Guest: Clarissa</span>
+      </div>
+
+      <div class="session break"><div class="title">10:30 - 10:45 | Break</div></div>
+
+      <div class="session">
+        <div class="time">10:45 - 12:00</div>
+        <div class="title">Personal Vision and Goals: Round Robin Sharing</div>
+        <div class="desc">Each leader shares their vision, goals, collective alignment, and one honest gap. Group challenge after each.</div>
+        <span class="tag exercise">Round Robin</span>
+      </div>
+
+      <div class="session break"><div class="title">12:00 - 12:45 | Working Lunch</div></div>
+
+      <div class="session">
+        <div class="time">12:45 - 1:45</div>
+        <div class="title">Team Goals: From Aspiration to Commitment</div>
+        <div class="desc">Whiteboard brainstorm of team goals and outcomes. Cluster, prioritize, and refine into measurable commitments with owners.</div>
+        <span class="tag exercise">Exercise</span>
+      </div>
+
+      <div class="session outdoor">
+        <div class="time">1:45 - 2:30</div>
+        <div class="title">Carry the Load: Team First</div>
+        <div class="desc">Outdoor walking exercise with shared weighted load. Reflection on leadership responsibility, shared burden, and trust.</div>
+        <span class="tag physical">Outdoor</span>
+      </div>
+
+      <div class="session">
+        <div class="time">2:30 - 3:00</div>
+        <div class="title">Commitments, Integration, and Close</div>
+        <div class="desc">Finalize all artifacts. Each leader: one 30-day commitment, one behavior to stop, one accountability partner. Close.</div>
+        <span class="tag exercise">Closing Round</span>
+      </div>
+
+      <div class="quote">"Reach that destination where the things that are pleasant and the things that are honorable, finally become, for you, the same." &mdash; Seneca</div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    SEL Q2 2026 Onsite &middot; Sharpen the Standard &middot; April 13-14, 2026
+  </div>
+
+</div>
+
+</body>
+</html>

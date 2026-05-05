@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Day 2 — Engineering Blind Validation Session</title>
+  <link rel="stylesheet" href="experity-onsite-agenda-reports.css" />
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<!-- Sidebar Navigation -->
+<nav id="sidenav">
+  <div class="nav-logo">
+    <div class="day-badge">Day 2</div>
+    <h2>Thursday · May 1, 2026</h2>
+  </div>
+  <a class="nav-item" href="#s0"><span>🎯</span> Framing &amp; Ground Rules <span class="time-tag">9:00</span></a>
+  <a class="nav-item" href="#s1"><span>📖</span> Blind Read            <span class="time-tag">9:30</span></a>
+  <a class="nav-item" href="#s2"><span>🔎</span> Validation Round 1    <span class="time-tag">10:15</span></a>
+  <a class="nav-item" href="#break1"><span>☕</span> Break               <span class="time-tag">11:15</span></a>
+  <a class="nav-item" href="#s3"><span>🔬</span> Deep Dive — Context   <span class="time-tag">11:30</span></a>
+  <a class="nav-item" href="#lunch"><span>🥗</span> Lunch               <span class="time-tag">12:30</span></a>
+  <a class="nav-item" href="#s4"><span>📊</span> Readiness Scoring     <span class="time-tag">1:15</span></a>
+  <a class="nav-item" href="#s5"><span>🛠️</span> Gap Resolution        <span class="time-tag">2:00</span></a>
+  <a class="nav-item" href="#break2"><span>☕</span> Break               <span class="time-tag">3:15</span></a>
+  <a class="nav-item" href="#s6"><span>🚦</span> Go / No-Go Decision   <span class="time-tag">3:30</span></a>
+  <a class="nav-item" href="#s7"><span>✅</span> Close &amp; Next Steps  <span class="time-tag">4:15</span></a>
+</nav>
+
+<!-- Main Content -->
+<div id="main">
+
+  <!-- ══ Header ══════════════════════════════════════════════ -->
+  <header>
+    <div class="header-meta">
+      <span class="pill blue">Thursday · May 1, 2026</span>
+      <span class="pill green">9:00 AM – 4:45 PM</span>
+      <span class="pill amber">AI Acceleration Strategy · Phase 1</span>
+    </div>
+    <h1>Engineering Blind<br>Validation Session</h1>
+    <p class="subtitle">
+      Day 2 is Engineering's day — the artifact pack from Wednesday is put in front of Isaac and Andrew with minimal added context,
+      and we let the packet speak for itself. The goal is not to defend the work, but to surface gaps, ambiguities, and implementation
+      readiness signals that will make Sprint 1 start with clarity, not guessing.
+    </p>
+  </header>
+
+  <!-- PDLC Flow Strip -->
+  <div class="pdlc-flow">
+    <div class="pdlc-step done">
+      <div class="step-label">Step 1 · Complete</div>
+      <div class="step-name">Signal</div>
+      <div class="step-sub">VoC, telehealth proposal, stakeholder inputs</div>
+    </div>
+    <div class="pdlc-step done">
+      <div class="step-label">Step 2 · Day 1 ✓</div>
+      <div class="step-name">Context</div>
+      <div class="step-sub">Working brief built from live sources</div>
+    </div>
+    <div class="pdlc-step done">
+      <div class="step-label">Step 3 · Day 1 ✓</div>
+      <div class="step-name">Decision</div>
+      <div class="step-sub">Scope, tradeoffs, rationale documented</div>
+    </div>
+    <div class="pdlc-step active">
+      <div class="step-label">Step 4 · Today</div>
+      <div class="step-name">Execution</div>
+      <div class="step-sub">Validate inputs → unlock Sprint 1</div>
+    </div>
+    <div class="pdlc-step">
+      <div class="step-label">Step 5 · Ongoing</div>
+      <div class="step-name">Memory</div>
+      <div class="step-sub">Decisions &amp; outputs written back</div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-card" style="--c: var(--accent)">
+      <div class="label">Start Time</div>
+      <div class="value">9:00 AM</div>
+      <div class="sub">Engineering arrives blind</div>
+    </div>
+    <div class="stat-card" style="--c: var(--green)">
+      <div class="label">Sessions</div>
+      <div class="value">7</div>
+      <div class="sub">+ 2 breaks + lunch</div>
+    </div>
+    <div class="stat-card" style="--c: var(--amber)">
+      <div class="label">Validators</div>
+      <div class="value">2</div>
+      <div class="sub">Isaac (on-site) · Andrew (remote)</div>
+    </div>
+    <div class="stat-card" style="--c: #818cf8">
+      <div class="label">End Target</div>
+      <div class="value">4:45 PM</div>
+      <div class="sub">Go / No-Go + Sprint 1 plan</div>
+    </div>
+  </div>
+
+  <!-- Strategic Principles -->
+  <div class="principles-row">
+    <div class="principle-card" style="--pc: #3b82f6">
+      <div class="pc-num">1</div>
+      <h4>Artifacts Speak First</h4>
+      <p>Engineering reads the packet cold. No verbal orientation, no pre-read briefing from Product. The packet must stand on its own. Product observes, facilitates questions, and captures feedback — not defends decisions.</p>
+      <span class="pc-tag" style="background:rgba(59,130,246,.12);color:var(--accent2)">Blind-test standard</span>
+    </div>
+    <div class="principle-card" style="--pc: #22c55e">
+      <div class="pc-num">2</div>
+      <h4>Gaps Are the Output</h4>
+      <p>A gap found today is a blocker avoided mid-sprint. The goal is not to pass a review — it is to surface every ambiguity, missing context, and unclear scope boundary before any code is written.</p>
+      <span class="pc-tag" style="background:rgba(34,197,94,.12);color:#4ade80">Learning, not defense</span>
+    </div>
+    <div class="principle-card" style="--pc: #818cf8">
+      <div class="pc-num">3</div>
+      <h4>Close with Clarity</h4>
+      <p>Every open question gets one of three resolutions today: answer now, defer with rationale, or escalate to named owner. We do not leave Thursday with vague "we'll figure it out" items — those become sprint blockers.</p>
+      <span class="pc-tag" style="background:rgba(129,140,248,.12);color:#a5b4fc">Hard close on ambiguity</span>
+    </div>
+  </div>
+
+  <!-- Command Intent -->
+  <div class="intent-box">
+    <h3>🎯 Command Intent · Day 2 Blind Validation</h3>
+    <ul class="intent-list">
+      <li>Engineering reads the artifact pack without verbal context — the packet validates itself or it does not</li>
+      <li>Surface every gap, ambiguity, and missing integration context before Sprint 1 begins</li>
+      <li>Produce a scored readiness assessment: what is actionable today, what needs refinement</li>
+      <li>Resolve critical open questions from Day 1 — 9 items queued, 5 are P1</li>
+      <li>Close with a Go / No-Go decision for Sprint 1 kickoff — no ambiguity allowed out the door</li>
+      <li>Capture feedback in a format that improves the next pod's Day 1 process</li>
+    </ul>
+  </div>
+
+  <!-- ══ Agenda ══════════════════════════════════════════════ -->
+  <div class="section-label"><span>Day 2 Agenda</span></div>
+
+  <!-- ══ Session 0: Framing & Ground Rules ══════════════════ -->
+  <div class="block open" id="s0">
+    <div class="block-header" onclick="toggleBlock(this)">
+      <div class="time-pill">9:00 – 9:30</div>
+      <div class="block-icon" style="background:rgba(59,130,246,.12)">🎯</div>
+      <div class="block-title-group">
+        <div class="block-title">Opening · Framing &amp; Ground Rules</div>
+        <div class="block-desc">30 min · Guillermo facilitates · All participants</div>
+      </div>
+      <div class="block-tags">
+        <span class="tag" style="background:rgba(59,130,246,.12);color:var(--accent2)">Facilitated</span>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div class="block-body">
+      <div class="block-inner">
+        <div class="objective-intro">
+          The opening of Day 2 is deliberately brief. Isaac and Andrew should arrive having read the packet — this session sets the rules of engagement, not the context. Do not re-explain what was built on Wednesday. The artifacts will explain themselves — or fail to. Either outcome is useful.
+        </div>
+
+        <div class="content-grid">
+          <div class="content-card">
+            <h4>📌 Opening Talking Points (Guillermo)</h4>
+            <ul>
+              <li><span class="dot"></span>Day 2 is Engineering's day — your read of the artifacts is the data. There are no wrong answers.</li>
+              <li><span class="dot"></span>The packet was built yesterday using the AI-Native PDLC process. You are the first cold validators.</li>
+              <li><span class="dot"></span>Product will not defend or explain during the blind read — we observe and capture. Questions are for the Q&amp;A sessions.</li>
+              <li><span class="dot"></span>Gaps and ambiguities you find are the primary output of today — they are not failures, they are the test working correctly.</li>
+              <li><span class="dot"></span>By 4:30 PM: Go / No-Go on Sprint 1, and a list of actions to resolve the named risks.</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>📋 Ground Rules — Read &amp; Agree</h4>
+            <ul>
+              <li><span class="dot"></span><strong>No pre-briefing:</strong> Engineering reads the packet as received — no verbal orientation from Product before S1.</li>
+              <li><span class="dot"></span><strong>First impressions matter:</strong> Capture your first reaction to each artifact, not your refined analysis after discussion.</li>
+              <li><span class="dot"></span><strong>Questions, not answers:</strong> During the read, surface questions — do not resolve them yet. Resolution happens in S2 and S3.</li>
+              <li><span class="dot"></span><strong>Trace to artifact:</strong> All feedback must reference a specific section. "This section feels vague" without a reference is not actionable.</li>
+              <li><span class="dot"></span><strong>No re-scoping:</strong> Today validates scope, it does not redefine it. Architecture debates belong in Sprint 1 planning.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="participants" style="margin-top:14px">
+          <h4>Participants</h4>
+          <div class="participant-chips">
+            <div class="chip lead"><div class="avatar">G</div> Guillermo · Facilitator</div>
+            <div class="chip lead"><div class="avatar">I</div> Isaac · Engineering Lead (On-site)</div>
+            <div class="chip lead"><div class="avatar">A</div> Andrew · Engineering (Remote)</div>
+            <div class="chip"><div class="avatar">C</div> Chris · Process Observer</div>
+            <div class="chip"><div class="avatar">L</div> Lauren · Artifact Owner / Note-taker</div>
+            <div class="chip"><div class="avatar">P</div> Product Owner · Observer only during S1</div>
+          </div>
+        </div>
+
+        <div class="exit-criteria">
+          <h4>✅ Exit Criteria</h4>
+          <ul>
+            <li><input type="checkbox"> Ground rules read and acknowledged by all participants</li>
+            <li><input type="checkbox"> Isaac and Andrew confirm they received and read the pre-read packet</li>
+            <li><input type="checkbox"> Feedback capture format confirmed (live doc, shared screen)</li>
+            <li><input type="checkbox"> Today's Go / No-Go standard explained and understood</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ Session 1: Blind Read ══════════════════════════════ -->
+  <div class="block" id="s1">
+    <div class="block-header" onclick="toggleBlock(this)">
+      <div class="time-pill">9:30 – 10:15</div>
+      <div class="block-icon" style="background:rgba(99,102,241,.12)">📖</div>
+      <div class="block-title-group">
+        <div class="block-title">Blind Read — Engineering Reviews Artifact Pack Cold</div>
+        <div class="block-desc">45 min · Isaac &amp; Andrew read · Product observes silently</div>
+      </div>
+      <div class="block-tags">
+        <span class="tag" style="background:rgba(239,68,68,.12);color:#f87171">No Context Assist</span>
+        <span class="tag" style="background:rgba(99,102,241,.12);color:#a5b4fc">Critical</span>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div class="block-body">
+      <div class="block-inner">
+        <div class="objective-intro">
+          This is the most important 45 minutes of the two-day exercise. Isaac and Andrew read the full artifact pack in silence.
+          Product and Product-side participants observe but do not speak. Every question Engineering has during this read
+          is a signal about whether the artifact is sufficient for autonomous action. The facilitator captures first-impressions in real time.
+        </div>
+
+        <div class="content-grid">
+          <div class="content-card">
+            <h4>📦 Artifact Pack — Reading Order</h4>
+            <ul>
+              <li><span class="dot"></span><strong>1. Product Outcome Brief</strong> — Problem statement, target user, business outcome, success metric.</li>
+              <li><span class="dot"></span><strong>2. MVP / PRD Brief</strong> — Scope boundary, explicit exclusions, assumptions, open questions, acceptance signals.</li>
+              <li><span class="dot"></span><strong>3. Workflow &amp; Context Brief</strong> — Current flow, desired flow, systems involved, known dependencies.</li>
+              <li><span class="dot"></span><strong>4. Candidate Execution Slices</strong> — Outcome statements, validation gates, sequencing rationale.</li>
+              <li><span class="dot"></span><strong>5. Readiness &amp; Validation Log</strong> — 9 open questions with owners, Day 1 decisions, named risks.</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>📝 Facilitator: What to Capture During the Read</h4>
+            <ul>
+              <li><span class="dot"></span>Every time a validator pauses and re-reads a section — mark it as a potential ambiguity.</li>
+              <li><span class="dot"></span>Any facial or verbal reaction (including remote video) — note the section being read.</li>
+              <li><span class="dot"></span>Any questions asked aloud (even if premature) — capture verbatim, respond with "hold that for S2."</li>
+              <li><span class="dot"></span>Which sections were read quickly vs. slowly — pace is a signal of clarity or density.</li>
+              <li><span class="dot"></span>Time each artifact section — flag any section that takes more than 10 minutes for a single reader.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="watchout">
+          <h4>⚠️ Facilitator Watch-Outs During Blind Read</h4>
+          <ul>
+            <li>Do not explain or clarify anything unprompted — silence from Product is the discipline being tested.</li>
+            <li>If a validator directly asks a question, respond only with "Hold that — we'll capture it in the Q&amp;A."</li>
+            <li>If Andrew (remote) appears lost, ask "Are you on the right section?" — connectivity, not content, is fair to assist with.</li>
+            <li>Do not let side conversations start between Product participants — the read is a signal-gathering period.</li>
+          </ul>
+        </div>
+
+        <div class="exit-criteria">
+          <h4>✅ Exit Criteria</h4>
+          <ul>
+            <li><input type="checkbox"> Both Isaac and Andrew have completed reading all 5 artifacts</li>
+            <li><input type="checkbox"> First-impression questions captured (even if unanswered)</li>
+            <li><input type="checkbox"> Sections that caused hesitation or re-reads are marked</li>
+            <li><input type="checkbox"> No verbal context was provided by Product during the read</li>
+          </ul>
+        </div>
+
+        <div class="notes-area">
+          <h4>📝 Facilitator: First-Impression Observations</h4>
+          <textarea placeholder="What sections caused pauses? What questions were asked aloud? Which artifacts got re-read?"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ Session 2: Validation Round 1 ══════════════════════ -->
+  <div class="block" id="s2">
+    <div class="block-header" onclick="toggleBlock(this)">
+      <div class="time-pill">10:15 – 11:15</div>
+      <div class="block-icon" style="background:rgba(34,197,94,.1)">🔎</div>
+      <div class="block-title-group">
+        <div class="block-title">Validation Round 1 — First Impressions &amp; Scope Questions</div>
+        <div class="block-desc">60 min · Engineering leads · Product answers only what's asked</div>
+      </div>
+      <div class="block-tags">
+        <span class="tag" style="background:rgba(34,197,94,.1);color:#4ade80">Engineering-Led</span>
+        <span class="tag" style="background:rgba(59,130,246,.12);color:var(--accent2)">Q&amp;A</span>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div class="block-body">
+      <div class="block-inner">
+        <div class="objective-intro">
+          Engineering surfaces every question, gap, and ambiguity from the blind read. This is a structured Q&amp;A — not a requirements refinement session.
+          Product answers questions concisely and documents any answer that is not already in the artifact as an artifact gap.
+          The facilitator drives the structured validation prompts if the conversation stalls.
+        </div>
+
+        <div class="content-grid">
+          <div class="content-card">
+            <h4>🔎 Structured Validation Prompts (Guillermo)</h4>
+            <ul>
+              <li><span class="dot"></span>"Without any additional context, can you describe what problem this product is solving and for whom?"</li>
+              <li><span class="dot"></span>"Is the MVP scope boundary clear enough to start work? What would you need to know before writing the first line of code?"</li>
+              <li><span class="dot"></span>"What questions does the Workflow &amp; Context Brief leave unanswered? Which integration dependencies are underspecified?"</li>
+              <li><span class="dot"></span>"Do the Execution Slices make sense to you as an engineering team? Is Slice 1 a viable starting point?"</li>
+              <li><span class="dot"></span>"What is missing from the artifact pack that, if absent in Sprint 1, would cause a blocker?"</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>📋 Feedback Capture Framework</h4>
+            <ul>
+              <li><span class="dot"></span><strong>Understandable:</strong> Can Engineering explain what is being built, for whom, and why without help?</li>
+              <li><span class="dot"></span><strong>Actionable:</strong> Is the MVP scope defined precisely enough to start Sprint 1 planning?</li>
+              <li><span class="dot"></span><strong>Sufficient Integration Context:</strong> Are the systems, dependencies, and APIs documented at an actionable level?</li>
+              <li><span class="dot"></span><strong>Slice Viability:</strong> Are the execution slices outcome-framed, correctly sequenced, and realistic?</li>
+              <li><span class="dot"></span><strong>Missing Context:</strong> What is Engineering blocked by that isn't in the packet?</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-grid" style="margin-top:14px">
+          <div class="content-card">
+            <h4>⚡ Day 1 Named Risks — Probe These Specifically</h4>
+            <ul>
+              <li><span class="dot"></span><strong>R1:</strong> Care Agent skill dependency APIs (carrier event schema) — does Engineering know what's missing and can they specify it?</li>
+              <li><span class="dot"></span><strong>R2:</strong> Slice 1 validation gate — can Engineering propose a binary, observable gate criterion?</li>
+              <li><span class="dot"></span><strong>R3:</strong> Patient-facing experience — Engineering should confirm whether this is in or out of Slice 1.</li>
+              <li><span class="dot"></span><strong>R4:</strong> Workflow diagram (whiteboard photo) — is it in the artifact? If not, does Engineering need it to proceed?</li>
+              <li><span class="dot"></span><strong>R5:</strong> Systems inventory completeness — can Engineering identify what's missing and prioritize it?</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>🚩 What Passes vs. Fails This Session</h4>
+            <ul>
+              <li><span class="dot"></span><strong>Pass:</strong> Engineering can re-state the problem and goal without Product prompting. → Artifact is sufficient.</li>
+              <li><span class="dot"></span><strong>Probe:</strong> Engineering can describe scope but has 1–3 clarification questions. → Artifact needs minor additions.</li>
+              <li><span class="dot"></span><strong>Fail:</strong> Engineering cannot describe what they would build from the artifacts alone. → Artifact gaps are critical.</li>
+              <li><span class="dot"></span>All three outcomes are acceptable today — "fail" produces the most valuable feedback for the next pod's Day 1.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="artifact-track">
+          <h4>📁 Feedback Log — Updated Live During Session</h4>
+          <div class="artifact-item">
+            <input type="checkbox">
+            <div class="art-name">Product Outcome Brief — feedback captured and artifact gaps flagged</div>
+            <span class="art-status art-pending">Pending</span>
+          </div>
+          <div class="artifact-item">
+            <input type="checkbox">
+            <div class="art-name">MVP / PRD Brief — scope questions answered and gaps documented</div>
+            <span class="art-status art-pending">Pending</span>
+          </div>
+          <div class="artifact-item">
+            <input type="checkbox">
+            <div class="art-name">Workflow &amp; Context Brief — integration gaps named and prioritized</div>
+            <span class="art-status art-pending">Pending</span>
+          </div>
+          <div class="artifact-item">
+            <input type="checkbox">
+            <div class="art-name">Execution Slices — slice viability confirmed or challenged</div>
+            <span class="art-status art-pending">Pending</span>
+          </div>
+        </div>
+
+        <div class="exit-criteria">
+          <h4>✅ Exit Criteria</h4>
+          <ul>
+            <li><input type="checkbox"> Engineering has verbalized what they understand about the problem and scope</li>
+            <li><input type="checkbox"> All 5 Day 1 named risks have been probed and responses captured</li>
+            <li><input type="checkbox"> Every gap question has been logged with the section reference it came from</li>
+            <li><input type="checkbox"> Artifact gaps are separated from "good to have" clarifications</li>
+          </ul>
+        </div>
+
+        <div class="notes-area">
+          <h4>📝 Session Notes</h4>
+          <textarea placeholder="Engineering's verbalization of the problem, scope gaps identified, named risks probed and results..."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ Break ═══════════════════════════════════════════════ -->
+  <div class="break-block" id="break1">
+    <div class="break-icon">☕</div>
+    <div>
+      <strong>Break · 11:15 – 11:30 AM</strong>
+      <span style="margin-left:10px;font-size:12px;color:var(--muted)">15 min · Facilitator groups Round 1 feedback by artifact section</span>
+    </div>
+    <div style="margin-left:auto;font-size:12px;color:var(--muted)">Reconvene 11:30 sharp</div>
+  </div>
+
+  <!-- ══ Session 3: Deep Dive — Context ═════════════════════ -->
+  <div class="block" id="s3">
+    <div class="block-header" onclick="toggleBlock(this)">
+      <div class="time-pill">11:30 – 12:30</div>
+      <div class="block-icon" style="background:rgba(245,158,11,.1)">🔬</div>
+      <div class="block-title-group">
+        <div class="block-title">Deep Dive — Integration Context &amp; Technical Feasibility</div>
+        <div class="block-desc">60 min · Engineering + Architecture · Product clarifies only when asked</div>
+      </div>
+      <div class="block-tags">
+        <span class="tag" style="background:rgba(245,158,11,.1);color:#fbbf24">Integration</span>
+        <span class="tag" style="background:rgba(99,102,241,.12);color:#a5b4fc">Technical</span>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div class="block-body">
+      <div class="block-inner">
+        <div class="objective-intro">
+          This session focuses on the integration context gaps identified in S2 and the known Day 1 weakness in the Workflow &amp; Context Brief.
+          Isaac and Andrew should drive — they know what they need to proceed. The lesson from the prior POC: integration context surfaced mid-sprint is a one-day stall.
+          Surface it now, not in Sprint 1.
+        </div>
+
+        <div class="content-grid">
+          <div class="content-card">
+            <h4>🔌 Integration Deep Dive Prompts</h4>
+            <ul>
+              <li><span class="dot"></span>"Walk us through every system this feature must touch — tell us if the artifact missed any."</li>
+              <li><span class="dot"></span>"For each system: what data does the feature read, write, or subscribe to? Is that documented?"</li>
+              <li><span class="dot"></span>"For the Care Agent Telehealth skill — what do you need to know about the carrier APIs before you can start coding?"</li>
+              <li><span class="dot"></span>"For the AI Scribe extension — what is the existing codebase context that an AI coding agent would need to be loaded with?"</li>
+              <li><span class="dot"></span>"Is the EMR interaction pattern documented at a level where an agent could produce a first-draft integration without Engineering manually providing schemas?"</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>🧩 Architecture Context Check</h4>
+            <ul>
+              <li><span class="dot"></span>Does the artifact describe where this code lives in the system architecture? (Scribe service? New microservice? Skill layer?)</li>
+              <li><span class="dot"></span>Are the deployment environment constraints documented? (Cloud, on-prem, hybrid — does it matter for this feature?)</li>
+              <li><span class="dot"></span>Are there security or compliance constraints (HIPAA, PHI handling) that affect the integration design?</li>
+              <li><span class="dot"></span>Does Andrew's video wrapper POC need to be documented as a technical dependency input — and is it currently described in the artifact?</li>
+              <li><span class="dot"></span>Is there an existing API contract for the Care Agent skill platform that Engineering should pre-load into the agent context?</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-grid" style="margin-top:14px">
+          <div class="content-card">
+            <h4>📋 Lesson from Prior POC (Chris)</h4>
+            <ul>
+              <li><span class="dot"></span>In the last POC: coding agents were ready to implement integrations but the table structures weren't provided — one-day stall.</li>
+              <li><span class="dot"></span>The fix is not "bring it next sprint" — it is "what schema or API spec do you need right now, and who provides it?"</li>
+              <li><span class="dot"></span>Chris's framing: "Bring integration context to the kickoff — even if you don't think it's needed yet."</li>
+              <li><span class="dot"></span>If Engineering says "I'd need the event schema before we start" — that is a Sprint 1 kickoff prerequisite, not a sprint discovery item.</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>🎯 Outputs This Session Must Produce</h4>
+            <ul>
+              <li><span class="dot"></span>A prioritized list of integration context items that must be resolved before Sprint 1 starts.</li>
+              <li><span class="dot"></span>Named owners for each missing integration context item.</li>
+              <li><span class="dot"></span>A confirmation that the EMR interaction pattern is documented at an actionable level — or a specific gap description.</li>
+              <li><span class="dot"></span>Andrew's assessment of whether the video wrapper POC context is in the artifact or needs to be added.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exit-criteria">
+          <h4>✅ Exit Criteria</h4>
+          <ul>
+            <li><input type="checkbox"> All system integrations reviewed by Engineering — gaps named and prioritized</li>
+            <li><input type="checkbox"> Care Agent skill dependencies identified with owner and target resolution date</li>
+            <li><input type="checkbox"> EMR interaction pattern assessed — actionable or needs update</li>
+            <li><input type="checkbox"> Sprint 1 integration pre-requisites list produced</li>
+          </ul>
+        </div>
+
+        <div class="notes-area">
+          <h4>📝 Integration Gaps Log</h4>
+          <textarea placeholder="System | Gap | Owner | Resolution date | Blocks Sprint 1?"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ Lunch ═══════════════════════════════════════════════ -->
+  <div class="break-block" id="lunch">
+    <div class="break-icon">🥗</div>
+    <div>
+      <strong>Lunch · 12:30 – 1:15 PM</strong>
+      <span style="margin-left:10px;font-size:12px;color:var(--muted)">45 min · Facilitator prepares readiness scoring canvas for afternoon</span>
+    </div>
+    <div style="margin-left:auto;font-size:12px;color:var(--muted)">Reconvene 1:15 sharp</div>
+  </div>
+
+  <!-- ══ Session 4: Readiness Scoring ══════════════════════ -->
+  <div class="block" id="s4">
+    <div class="block-header" onclick="toggleBlock(this)">
+      <div class="time-pill">1:15 – 2:00</div>
+      <div class="block-icon" style="background:rgba(59,130,246,.12)">📊</div>
+      <div class="block-title-group">
+        <div class="block-title">Readiness Scoring — Engineering Scores the Artifact Pack</div>
+        <div class="block-desc">45 min · Engineering scores each dimension · Product captures gaps</div>
+      </div>
+      <div class="block-tags">
+        <span class="tag" style="background:rgba(59,130,246,.12);color:var(--accent2)">Scoring</span>
+        <span class="tag" style="background:rgba(34,197,94,.1);color:#4ade80">Structured</span>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div class="block-body">
+      <div class="block-inner">
+        <div class="objective-intro">
+          Engineering scores the artifact pack across five dimensions on a 1–5 scale. This structured scoring produces a traceable, objective readiness assessment
+          that becomes the input for the Go / No-Go decision in S6. Each score requires a brief rationale — not a number alone.
+        </div>
+
+        <div class="content-grid">
+          <div class="content-card">
+            <h4>📊 Scoring Dimensions (1 = Not ready · 5 = Sprint-ready)</h4>
+            <ul>
+              <li><span class="dot"></span><strong>1. Problem Clarity</strong> — Can Engineering describe the problem and target user from the artifact alone?</li>
+              <li><span class="dot"></span><strong>2. Scope Definition</strong> — Is the MVP boundary explicit and unambiguous? Are exclusions clear?</li>
+              <li><span class="dot"></span><strong>3. Integration Context</strong> — Are the system interactions, dependencies, and API expectations documented at an actionable level?</li>
+              <li><span class="dot"></span><strong>4. Slice Viability</strong> — Are the execution slices correctly outcome-framed, sequenced, and sized for Sprint 1?</li>
+              <li><span class="dot"></span><strong>5. Agent-Readiness</strong> — Could a well-configured AI coding agent start on Slice 1 using only these artifacts as context?</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>🎯 Scoring Standard</h4>
+            <ul>
+              <li><span class="dot"></span><strong>5 — Sprint-ready:</strong> Engineering would start tomorrow without additional context.</li>
+              <li><span class="dot"></span><strong>4 — Ready with minor clarifications:</strong> 1–2 quick answers needed, then start.</li>
+              <li><span class="dot"></span><strong>3 — Proceed with named gaps:</strong> Key items missing but workarounds exist for Sprint 1 start.</li>
+              <li><span class="dot"></span><strong>2 — Significant rework needed:</strong> Multiple critical gaps; Sprint 1 start would be high-risk.</li>
+              <li><span class="dot"></span><strong>1 — Not actionable:</strong> Cannot start; artifacts need a Day 1 redo for this section.</li>
+              <li><span class="dot"></span>Every score below 4 must have a specific gap description — not a vague statement.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="notes-area">
+          <h4>📝 Readiness Score Card (Fill Live)</h4>
+          <textarea style="min-height:160px" placeholder="Problem Clarity:   [Score /5] — Rationale:&#10;Scope Definition:   [Score /5] — Rationale:&#10;Integration Context: [Score /5] — Rationale:&#10;Slice Viability:    [Score /5] — Rationale:&#10;Agent-Readiness:    [Score /5] — Rationale:&#10;&#10;AVERAGE: __ / 5&#10;&#10;Critical Gaps (must resolve before Sprint 1):&#10;1.&#10;2.&#10;3."></textarea>
+        </div>
+
+        <div class="exit-criteria">
+          <h4>✅ Exit Criteria</h4>
+          <ul>
+            <li><input type="checkbox"> All 5 dimensions scored by both Isaac and Andrew</li>
+            <li><input type="checkbox"> Every score below 4 has a written gap description</li>
+            <li><input type="checkbox"> Overall readiness score calculated and agreed</li>
+            <li><input type="checkbox"> List of critical gaps (must resolve before Sprint 1) is finalized</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ Session 5: Gap Resolution ══════════════════════════ -->
+  <div class="block" id="s5">
+    <div class="block-header" onclick="toggleBlock(this)">
+      <div class="time-pill">2:00 – 3:15</div>
+      <div class="block-icon" style="background:rgba(34,197,94,.1)">🛠️</div>
+      <div class="block-title-group">
+        <div class="block-title">Gap Resolution Working Session</div>
+        <div class="block-desc">75 min · All participants · Close every critical gap or assign an owner</div>
+      </div>
+      <div class="block-tags">
+        <span class="tag" style="background:rgba(34,197,94,.1);color:#4ade80">Working Session</span>
+        <span class="tag" style="background:rgba(245,158,11,.1);color:#fbbf24">Critical Path</span>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div class="block-body">
+      <div class="block-inner">
+        <div class="objective-intro">
+          Every critical gap identified in S2–S4 gets one of three resolutions in this session: <strong>Answer now</strong> (Product or Engineering provides the answer and the artifact is updated live),
+          <strong>Defer with rationale</strong> (explicitly decided, owner named, date set), or <strong>Escalate</strong> (requires input from someone not in the room — owner assigned, timeline committed).
+          No gap leaves this session as "we'll figure it out."
+        </div>
+
+        <div class="content-grid">
+          <div class="content-card">
+            <h4>🔧 Resolution Protocol</h4>
+            <ul>
+              <li><span class="dot"></span>Read each critical gap from the S4 list.</li>
+              <li><span class="dot"></span>Can we answer this right now with the people in this room? → If yes: answer it, update the artifact, mark closed.</li>
+              <li><span class="dot"></span>Is this a decision that needs a stakeholder not present? → Escalate: name the owner, commit to a date before Sprint 1 kickoff.</li>
+              <li><span class="dot"></span>Is this gap acceptable if we explicitly acknowledge the risk? → Defer: write the rationale, name the risk, add to the Readiness Log.</li>
+              <li><span class="dot"></span>Lauren updates artifacts in real time as answers are captured — not post-session.</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>⚡ Day 1 Open Questions — Resolve These Now</h4>
+            <ul>
+              <li><span class="dot"></span><strong>OQ-1 (P1):</strong> Care Agent skill carrier API schema — can Andrew specify what's needed right now?</li>
+              <li><span class="dot"></span><strong>OQ-2 (P1):</strong> Slice 1 binary validation gate — can Isaac and Product define the observable event together now?</li>
+              <li><span class="dot"></span><strong>OQ-3 (P1):</strong> Patient-facing scope — can we close this with a definitive yes/no from the Product Owner?</li>
+              <li><span class="dot"></span><strong>OQ-4 (P1):</strong> Contractor onboarding — can Guillermo confirm the handoff plan now?</li>
+              <li><span class="dot"></span><strong>OQ-5 (P1):</strong> Workflow diagram in shared folder — Lauren confirms embed status and fixes it live if not done.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-grid" style="margin-top:14px">
+          <div class="content-card">
+            <h4>📝 Artifact Update Protocol (Lauren)</h4>
+            <ul>
+              <li><span class="dot"></span>For each closed gap: update the relevant artifact section live during the session.</li>
+              <li><span class="dot"></span>For each escalated gap: add to the Readiness Log with owner and date.</li>
+              <li><span class="dot"></span>For each deferred gap: add the explicit rationale to the exclusions or assumptions section.</li>
+              <li><span class="dot"></span>After this session, re-run the blind-read check on any section that was updated — does it still pass?</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>🚫 What This Session Is NOT</h4>
+            <ul>
+              <li><span class="dot"></span>Not a re-scope of the MVP — scope was set on Day 1 and validated in S2.</li>
+              <li><span class="dot"></span>Not an architecture design session — Engineering can note architectural questions for Sprint 1 planning, not resolve them here.</li>
+              <li><span class="dot"></span>Not a blame session — gaps in the artifact are process improvements for the next pod, not performance issues.</li>
+              <li><span class="dot"></span>Not optional — every critical gap gets a resolution before S6. No exceptions.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exit-criteria">
+          <h4>✅ Exit Criteria</h4>
+          <ul>
+            <li><input type="checkbox"> Every critical gap resolved (closed, deferred with rationale, or escalated with owner)</li>
+            <li><input type="checkbox"> Artifacts updated live — updated sections re-checked for blind-read quality</li>
+            <li><input type="checkbox"> All 9 Day 1 open questions have a final status (closed / deferred / escalated)</li>
+            <li><input type="checkbox"> No gap leaves with "we'll figure it out" — every item has an owner and a date</li>
+          </ul>
+        </div>
+
+        <div class="notes-area">
+          <h4>📝 Gap Resolution Log</h4>
+          <textarea style="min-height:140px" placeholder="Gap | Resolution (Closed/Deferred/Escalated) | Owner | Date | Artifact section updated?"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ Break 2 ══════════════════════════════════════════════ -->
+  <div class="break-block" id="break2">
+    <div class="break-icon">☕</div>
+    <div>
+      <strong>Break · 3:15 – 3:30 PM</strong>
+      <span style="margin-left:10px;font-size:12px;color:var(--muted)">15 min · Facilitator prepares Go / No-Go summary</span>
+    </div>
+    <div style="margin-left:auto;font-size:12px;color:var(--muted)">Reconvene 3:30 sharp</div>
+  </div>
+
+  <!-- ══ Session 6: Go / No-Go ══════════════════════════════ -->
+  <div class="block" id="s6">
+    <div class="block-header" onclick="toggleBlock(this)">
+      <div class="time-pill">3:30 – 4:15</div>
+      <div class="block-icon" style="background:rgba(34,197,94,.1)">🚦</div>
+      <div class="block-title-group">
+        <div class="block-title">Go / No-Go — Sprint 1 Kickoff Decision</div>
+        <div class="block-desc">45 min · Guillermo facilitates · Engineering and Product decide together</div>
+      </div>
+      <div class="block-tags">
+        <span class="tag" style="background:rgba(34,197,94,.1);color:#4ade80">Gate</span>
+        <span class="tag" style="background:rgba(239,68,68,.12);color:#f87171">Decision</span>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div class="block-body">
+      <div class="block-inner">
+        <div class="objective-intro">
+          The Go / No-Go decision is a formal milestone in the AI-Native PDLC. We are deciding whether the combined artifact pack — including the gaps resolved in S5 — provides sufficient clarity to begin Sprint 1.
+          A "No-Go" is not a failure. It means we found the gaps before writing code, which is exactly the point of the exercise.
+        </div>
+
+        <div class="content-grid">
+          <div class="content-card">
+            <h4>🚦 Go / No-Go Options</h4>
+            <ul>
+              <li><span class="dot"></span><strong style="color:#4ade80">Go</strong> — Artifact pack is actionable. Sprint 1 kickoff can proceed as planned. All critical gaps are closed or have committed owners and dates.</li>
+              <li><span class="dot"></span><strong style="color:#fbbf24">Go with Pre-Conditions</strong> — Sprint 1 can start, but specific pre-conditions must be met first (named gaps with resolution deadline before Day 1 of Sprint 1).</li>
+              <li><span class="dot"></span><strong style="color:#f87171">No-Go</strong> — Critical gaps remain that would stall Sprint 1 within the first week. The artifacts need refinement before kickoff. Sprint 1 date moves or scope shrinks.</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>🔎 Go / No-Go Check Questions</h4>
+            <ul>
+              <li><span class="dot"></span>Can Engineering begin Sprint 1 planning without additional Product availability?</li>
+              <li><span class="dot"></span>Is the Slice 1 outcome statement and validation gate specific enough to plan against?</li>
+              <li><span class="dot"></span>Are the integration pre-requisites documented with owners and committed dates?</li>
+              <li><span class="dot"></span>Would an AI coding agent loaded with these artifacts produce useful first-draft code for Slice 1?</li>
+              <li><span class="dot"></span>Is the contractor onboarding plan clear — will new resources have what they need on day one?</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-grid" style="margin-top:14px">
+          <div class="content-card">
+            <h4>📊 Engineering Readiness Scores Summary</h4>
+            <ul>
+              <li><span class="dot"></span>Problem Clarity: <em style="color:var(--accent2)">[Score from S4]</em></li>
+              <li><span class="dot"></span>Scope Definition: <em style="color:var(--accent2)">[Score from S4]</em></li>
+              <li><span class="dot"></span>Integration Context: <em style="color:var(--accent2)">[Score from S4]</em></li>
+              <li><span class="dot"></span>Slice Viability: <em style="color:var(--accent2)">[Score from S4]</em></li>
+              <li><span class="dot"></span>Agent-Readiness: <em style="color:var(--accent2)">[Score from S4]</em></li>
+              <li><span class="dot"></span><strong>Average: <em style="color:var(--text)">[Calculated] / 5</em></strong></li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>📋 Pilot Pattern Assessment</h4>
+            <ul>
+              <li><span class="dot"></span>Did the Day 1 → Day 2 format produce useful output? (1–5)</li>
+              <li><span class="dot"></span>What would the team have done differently on Day 1 given Day 2's feedback?</li>
+              <li><span class="dot"></span>Is this pilot pattern repeatable for the next AI-enabled pod?</li>
+              <li><span class="dot"></span>What process improvements should be built into the next pod's Day 1?</li>
+              <li><span class="dot"></span>Should Engineering participate in any Day 1 session in future pods?</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exit-criteria">
+          <h4>✅ Exit Criteria</h4>
+          <ul>
+            <li><input type="checkbox"> Go / No-Go decision made and documented (with rationale)</li>
+            <li><input type="checkbox"> If Go with Pre-Conditions: pre-conditions written with owner and date</li>
+            <li><input type="checkbox"> If No-Go: specific gaps listed and remediation plan started</li>
+            <li><input type="checkbox"> Pilot pattern assessment captured for process improvement</li>
+          </ul>
+        </div>
+
+        <div class="notes-area">
+          <h4>📝 Go / No-Go Decision &amp; Rationale</h4>
+          <textarea placeholder="Decision: [Go / Go with Pre-Conditions / No-Go]&#10;Rationale:&#10;Pre-Conditions (if applicable):&#10;Pilot pattern rating: /5&#10;Process improvements for next pod:"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ Session 7: Close & Next Steps ══════════════════════ -->
+  <div class="block" id="s7">
+    <div class="block-header" onclick="toggleBlock(this)">
+      <div class="time-pill">4:15 – 4:45</div>
+      <div class="block-icon" style="background:rgba(99,102,241,.12)">✅</div>
+      <div class="block-title-group">
+        <div class="block-title">Close · Commitments, Ownership &amp; Sprint 1 Next Steps</div>
+        <div class="block-desc">30 min · All participants · Guillermo facilitates</div>
+      </div>
+      <div class="block-tags">
+        <span class="tag" style="background:rgba(99,102,241,.12);color:#a5b4fc">Close</span>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div class="block-body">
+      <div class="block-inner">
+        <div class="objective-intro">
+          The closing session crystallizes commitments and ensures that the momentum from these two days translates into Sprint 1 action.
+          Every person leaves with one named action item. The pilot lessons are captured for the next pod. The context is written back to the intelligence hub.
+        </div>
+
+        <div class="content-grid">
+          <div class="content-card">
+            <h4>📋 Closing Commits — Go Around the Room</h4>
+            <ul>
+              <li><span class="dot"></span>Each participant states: one risk they still see, and one thing they are confident in.</li>
+              <li><span class="dot"></span>Each participant states: their specific action item before Sprint 1 Day 1, and the date it's due.</li>
+              <li><span class="dot"></span>Guillermo reads back the Go / No-Go decision and rationale — confirm everyone agrees on the record.</li>
+              <li><span class="dot"></span>Lauren confirms artifact pack is updated with all Day 2 resolutions before end of day.</li>
+              <li><span class="dot"></span>Chris captures pilot learnings and process improvement notes for the next pod format.</li>
+            </ul>
+          </div>
+          <div class="content-card">
+            <h4>🔁 Pilot Closure — What Changes Because of This</h4>
+            <ul>
+              <li><span class="dot"></span>Answer the pilot's core question: does this two-day format produce a better Sprint 1 starting point than the prior process?</li>
+              <li><span class="dot"></span>What would we tell the next pod's team to do differently on Day 1?</li>
+              <li><span class="dot"></span>What artifacts were most useful? Which were unnecessary overhead?</li>
+              <li><span class="dot"></span>Was the blind-test standard the right format for Day 2, or should Engineering be involved differently?</li>
+              <li><span class="dot"></span>One shared answer: "What changes in how we work because we ran this pilot?"</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Non-Negotiables -->
+        <div style="margin-top:18px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Non-Negotiables Before Leaving</div>
+          <div class="nonneg-grid">
+            <div class="nonneg-item">Do not start Sprint 1 without the Go / No-Go decision documented and shared with all participants</div>
+            <div class="nonneg-item">Do not let the artifact pack sit unfiled — updated versions must be in the shared location before EOD today</div>
+            <div class="nonneg-item">Do not allow "we'll figure it out" items to survive — every open issue has an owner and a date</div>
+            <div class="nonneg-item">Do not schedule the contractor onboarding without the updated artifact pack ready for them</div>
+            <div class="nonneg-item">Do not treat today's gaps as product failures — capture them as process improvements for the next pod</div>
+            <div class="nonneg-item">Do not let the pilot learnings stay in one person's head — write them into the intelligence hub before everyone disperses</div>
+          </div>
+        </div>
+
+        <div class="exit-criteria" style="margin-top:14px">
+          <h4>✅ Day 2 Done When</h4>
+          <ul>
+            <li><input type="checkbox"> Go / No-Go decision documented and all participants agree</li>
+            <li><input type="checkbox"> Every person has a named action item with a date</li>
+            <li><input type="checkbox"> Updated artifact pack in shared location with Day 2 resolutions applied</li>
+            <li><input type="checkbox"> Pilot learnings written and saved to the intelligence hub</li>
+            <li><input type="checkbox"> Sprint 1 kickoff plan is clear — who, what, when, and what artifacts go with them</li>
+            <li><input type="checkbox"> Contractor onboarding plan confirmed</li>
+          </ul>
+        </div>
+
+        <div class="notes-area">
+          <h4>📝 Closing Notes &amp; Action Items</h4>
+          <textarea style="min-height:140px" placeholder="Go / No-Go: [Decision]&#10;&#10;Action Items:&#10;- [Name]: [Action] — Due: [Date]&#10;- [Name]: [Action] — Due: [Date]&#10;&#10;Pilot Learnings:&#10;1.&#10;2.&#10;&#10;What changes because we ran this pilot:"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day Summary -->
+  <div class="day-summary">
+    <h3>Day 2 Target Outputs — AI-Native PDLC Phase 1 Complete</h3>
+    <p>By 4:45 PM, the following must be in place for the pilot to be complete. These outputs close the Context → Decision → Execution loop and write the pilot learnings back into the system as durable memory.</p>
+    <div class="output-grid">
+      <div class="output-item">
+        <div class="output-icon">🚦</div>
+        <div class="output-text">
+          <strong>Go / No-Go Decision</strong>
+          Documented, rationale written, all participants aligned. Sprint 1 date confirmed or revised.
+        </div>
+      </div>
+      <div class="output-item">
+        <div class="output-icon">📊</div>
+        <div class="output-text">
+          <strong>Engineering Readiness Score</strong>
+          5-dimension score card with gap rationale. Actionable feedback on each artifact section.
+        </div>
+      </div>
+      <div class="output-item">
+        <div class="output-icon">🛠️</div>
+        <div class="output-text">
+          <strong>Gap Resolution Log</strong>
+          Every critical gap closed, deferred, or escalated. All owners and dates named. Artifacts updated.
+        </div>
+      </div>
+      <div class="output-item">
+        <div class="output-icon">📋</div>
+        <div class="output-text">
+          <strong>Sprint 1 Pre-Requisite List</strong>
+          Integration context items, open question resolutions, and pre-conditions for Sprint 1 kickoff.
+        </div>
+      </div>
+      <div class="output-item">
+        <div class="output-icon">🔁</div>
+        <div class="output-text">
+          <strong>Pilot Learnings — Process Improvements</strong>
+          What the next pod's Day 1 should do differently, written into the intelligence hub before EOD.
+        </div>
+      </div>
+      <div class="output-item">
+        <div class="output-icon">📦</div>
+        <div class="output-text">
+          <strong>Updated Artifact Pack</strong>
+          All Day 2 resolutions applied. Final version in shared location — ready for contractors and Sprint 1 team.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /#main -->
+
+<!-- Live Clock -->
+<div id="live-clock">
+  <div class="dot-live"></div>
+  <span id="clock-time">--:-- --</span>
+</div>
+
+<script>
+  /* ─── Live Clock ─────────────────────────────────── */
+  function updateClock() {
+    const now = new Date();
+    const h = now.getHours();
+    const m = String(now.getMinutes()).padStart(2,'0');
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    const h12 = ((h + 11) % 12 + 1);
+    document.getElementById('clock-time').textContent = `${h12}:${m} ${ampm}`;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  /* ─── Scroll Progress Bar ────────────────────────── */
+  window.addEventListener('scroll', () => {
+    const el = document.documentElement;
+    const pct = (el.scrollTop / (el.scrollHeight - el.clientHeight)) * 100;
+    document.getElementById('progress-bar').style.width = pct + '%';
+  });
+
+  /* ─── Accordion ──────────────────────────────────── */
+  function toggleBlock(header) {
+    const block = header.closest('.block');
+    const isOpen = block.classList.contains('open');
+    document.querySelectorAll('.block.open').forEach(b => b.classList.remove('open'));
+    if (!isOpen) block.classList.add('open');
+    if (!isOpen) {
+      setTimeout(() => block.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+  }
+
+  /* ─── Active Sidenav on Scroll ───────────────────── */
+  const sections = document.querySelectorAll('[id]');
+  const navItems = document.querySelectorAll('.nav-item');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navItems.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  /* ─── Checkbox persistence ───────────────────────── */
+  document.querySelectorAll('input[type=checkbox]').forEach((cb, i) => {
+    const key = 'day2-cb-' + i;
+    if (sessionStorage.getItem(key) === 'true') cb.checked = true;
+    cb.addEventListener('change', () => {
+      sessionStorage.setItem(key, cb.checked);
+      const li = cb.closest('li') || cb.closest('.artifact-item');
+      if (li) li.style.opacity = cb.checked ? '.5' : '1';
+      const badge = cb.closest('.artifact-item')?.querySelector('.art-status');
+      if (badge) {
+        badge.textContent = cb.checked ? 'Done' : 'Pending';
+        badge.className = 'art-status ' + (cb.checked ? 'art-done' : 'art-pending');
+      }
+    });
+    if (cb.checked) {
+      const li = cb.closest('li') || cb.closest('.artifact-item');
+      if (li) li.style.opacity = '.5';
+      const badge = cb.closest('.artifact-item')?.querySelector('.art-status');
+      if (badge) { badge.textContent = 'Done'; badge.className = 'art-status art-done'; }
+    }
+  });
+
+  /* ─── Animate blocks on first view ──────────────── */
+  const blockObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        blockObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05 });
+  document.querySelectorAll('.block').forEach(b => {
+    b.style.opacity = '0';
+    b.style.transform = 'translateY(12px)';
+    b.style.transition = 'opacity .4s ease, transform .4s ease';
+    blockObserver.observe(b);
+  });
+</script>
+
+</body>
+</html>

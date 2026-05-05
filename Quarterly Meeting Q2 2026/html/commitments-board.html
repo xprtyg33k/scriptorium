@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEL Q2 2026 - Commitments Board</title>
+<style>
+  :root {
+    --navy: #1a2744;
+    --blue: #2c5282;
+    --blue-bg: #ebf4ff;
+    --accent: #e67e22;
+    --accent-light: #fff3e6;
+    --green: #276749;
+    --green-bg: #f0fff4;
+    --green-border: #9ae6b4;
+    --red: #c53030;
+    --red-bg: #fff5f5;
+    --yellow: #d69e2e;
+    --yellow-bg: #fefcbf;
+    --purple: #553c9a;
+    --purple-bg: #faf5ff;
+    --teal: #2c7a7b;
+    --teal-bg: #e6fffa;
+    --gray: #718096;
+    --light-gray: #f7fafc;
+    --white: #fff;
+    --border: #e2e8f0;
+    --text: #2d3748;
+    --text-light: #4a5568;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; color: var(--text); background: var(--light-gray); line-height: 1.5; }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, var(--navy) 0%, #243460 100%);
+    color: var(--white); padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+  }
+  .header h1 { font-size: 1.5rem; font-weight: 800; }
+  .header .subtitle { font-size: 0.85rem; opacity: 0.7; margin-top: 0.15rem; }
+  .header-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+  .save-indicator { font-size: 0.75rem; opacity: 0.65; font-style: italic; white-space: nowrap; color: var(--white); }
+  .btn {
+    font-size: 0.78rem; font-weight: 600; padding: 0.4rem 0.85rem; border-radius: 4px; cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.12); color: var(--white);
+    transition: background 0.15s ease; display: flex; align-items: center; gap: 0.35rem;
+  }
+  .btn:hover { background: rgba(255,255,255,0.22); }
+  .btn.danger { border-color: rgba(197,48,48,0.5); background: rgba(197,48,48,0.15); }
+  .btn.danger:hover { background: rgba(197,48,48,0.3); }
+
+  /* Nav */
+  .nav { background: var(--blue); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.15); }
+  .nav-inner { max-width: 1400px; margin: 0 auto; display: flex; flex-wrap: wrap; }
+  .nav a {
+    color: rgba(255,255,255,0.88); text-decoration: none; font-size: 0.78rem;
+    font-weight: 500; padding: 0.7rem 1rem; transition: background 0.15s; white-space: nowrap;
+  }
+  .nav a:hover { background: rgba(255,255,255,0.12); color: var(--white); }
+
+  /* Container */
+  .container { max-width: 1400px; margin: 0 auto; padding: 1.5rem; }
+
+  /* Sections */
+  .section { margin-bottom: 2.5rem; }
+  .section-header {
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;
+    padding: 0.75rem 0; border-bottom: 2px solid var(--navy); margin-bottom: 1rem;
+  }
+  .section-header-left { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  .section-icon { font-size: 1.1rem; }
+  .section-title { font-size: 1.05rem; font-weight: 700; color: var(--navy); }
+  .count { font-size: 0.8rem; font-weight: 400; color: var(--gray); }
+  .add-section-btn {
+    font-size: 0.78rem; font-weight: 600; padding: 0.35rem 0.75rem; border-radius: 4px; cursor: pointer;
+    border: 1px solid var(--blue); background: var(--blue-bg); color: var(--blue);
+    transition: all 0.15s ease; display: flex; align-items: center; gap: 0.3rem;
+  }
+  .add-section-btn:hover { background: var(--blue); color: var(--white); }
+
+  /* Cards */
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1rem; }
+  .card {
+    background: var(--white); border-radius: 6px; border: 1px solid var(--border);
+    padding: 1.1rem 1.25rem; position: relative; transition: box-shadow 0.15s;
+  }
+  .card:hover { box-shadow: 0 3px 12px rgba(0,0,0,0.08); }
+  .card .person { font-weight: 700; font-size: 0.9rem; color: var(--blue); padding-right: 6rem; }
+  .card .commitment { font-size: 0.88rem; margin: 0.5rem 0; color: var(--text); line-height: 1.55; }
+  .card .meta-row { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.78rem; color: var(--gray); margin-top: 0.5rem; }
+  .card .meta-row span { display: flex; align-items: center; gap: 0.25rem; }
+  .card .goal-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.5rem; }
+  .tag {
+    display: inline-block; font-size: 0.62rem; font-weight: 700; padding: 0.15rem 0.45rem;
+    border-radius: 3px; text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .tag.reliability { background: #fed7d7; color: var(--red); }
+  .tag.ai { background: #e9d8fd; color: var(--purple); }
+  .tag.modernization { background: var(--blue-bg); color: var(--blue); }
+  .tag.delivery { background: var(--green-bg); color: var(--green); }
+  .tag.people { background: var(--accent-light); color: #c05621; }
+  .tag.product { background: var(--yellow-bg); color: #744210; }
+  .tag.security { background: var(--teal-bg); color: var(--teal); }
+  .tag.process { background: #edf2f7; color: #4a5568; }
+
+  /* Status */
+  .status {
+    display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.6rem;
+    border-radius: 3px; text-transform: uppercase; letter-spacing: 0.04em;
+    position: absolute; top: 1rem; right: 1rem;
+  }
+  .status.open { background: #fed7d7; color: var(--red); }
+  .status.in-progress { background: #fefcbf; color: #975a16; }
+  .status.complete { background: #c6f6d5; color: var(--green); }
+
+  /* Card controls */
+  .card-controls {
+    position: absolute; bottom: 0.6rem; right: 0.6rem;
+    display: flex; gap: 0.25rem; opacity: 0; transition: opacity 0.15s ease;
+  }
+  .card:hover .card-controls { opacity: 1; }
+  .icon-btn {
+    background: none; border: none; cursor: pointer; padding: 0.2rem 0.35rem; border-radius: 3px;
+    font-size: 0.82rem; color: var(--gray); line-height: 1;
+    transition: background 0.1s ease, color 0.1s ease;
+  }
+  .icon-btn:hover { background: rgba(0,0,0,0.07); color: var(--text); }
+  .icon-btn.del:hover { color: var(--red); }
+
+  /* Empty */
+  .empty-card {
+    background: var(--light-gray); border: 2px dashed var(--border); border-radius: 6px;
+    padding: 2rem; text-align: center; color: var(--gray); font-size: 0.85rem;
+    grid-column: 1 / -1;
+  }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 500;
+    display: flex; align-items: center; justify-content: center; padding: 1rem;
+    opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: auto; }
+  .modal {
+    background: var(--white); border-radius: 8px; width: 100%; max-width: 520px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2); transform: translateY(12px);
+    transition: transform 0.2s ease; max-height: 90vh; overflow-y: auto;
+  }
+  .modal-overlay.open .modal { transform: translateY(0); }
+  .modal-header { padding: 1.1rem 1.4rem 0.75rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; border-top: 3px solid var(--navy); }
+  .modal-header h2 { font-size: 1rem; color: var(--navy); }
+  .modal-close { background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--gray); line-height: 1; padding: 0.1rem 0.3rem; border-radius: 3px; }
+  .modal-close:hover { background: var(--light-gray); color: var(--text); }
+  .modal-body { padding: 1.1rem 1.4rem; display: flex; flex-direction: column; gap: 0.9rem; }
+  .field label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.3rem; }
+  .field textarea, .field input[type="text"], .field select {
+    width: 100%; border: 1px solid var(--border); border-radius: 4px; padding: 0.5rem 0.7rem;
+    font-family: inherit; font-size: 0.88rem; color: var(--text); background: var(--white);
+    transition: border-color 0.15s ease; resize: vertical;
+  }
+  .field textarea { min-height: 72px; }
+  .field textarea:focus, .field input:focus, .field select:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(44,82,130,0.1); }
+  .field-row { display: flex; gap: 1rem; }
+  .field-row .field { flex: 1; }
+  .tags-input { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.35rem; }
+  .tags-input .tag-option {
+    font-size: 0.72rem; font-weight: 600; padding: 0.25rem 0.55rem; border-radius: 3px;
+    cursor: pointer; border: 1px solid var(--border); background: var(--white); color: var(--text-light);
+    transition: all 0.15s; user-select: none;
+  }
+  .tags-input .tag-option.selected { border-color: var(--blue); background: var(--blue-bg); color: var(--blue); }
+  .modal-footer { padding: 0.9rem 1.4rem; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 0.5rem; }
+  .btn-cancel { padding: 0.45rem 1rem; border-radius: 4px; border: 1px solid var(--border); background: var(--white); font-size: 0.85rem; cursor: pointer; color: var(--text-light); transition: background 0.15s ease; }
+  .btn-cancel:hover { background: var(--light-gray); }
+  .btn-save { padding: 0.45rem 1.1rem; border-radius: 4px; border: none; background: var(--navy); font-size: 0.85rem; cursor: pointer; color: var(--white); font-weight: 600; transition: background 0.15s ease; }
+  .btn-save:hover { background: var(--blue); }
+
+  /* Summary */
+  .summary-bar {
+    background: var(--white); border: 1px solid var(--border); border-radius: 8px;
+    padding: 1rem 1.5rem; margin-bottom: 1.5rem;
+    display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center;
+  }
+  .summary-stat { text-align: center; }
+  .summary-stat .stat-value { font-size: 1.5rem; font-weight: 800; color: var(--navy); }
+  .summary-stat .stat-label { font-size: 0.7rem; font-weight: 600; color: var(--gray); text-transform: uppercase; letter-spacing: 0.06em; }
+  .summary-divider { width: 1px; height: 2.5rem; background: var(--border); }
+
+  #import-input { display: none; }
+
+  @media (max-width: 600px) {
+    .cards { grid-template-columns: 1fr; }
+    .header { flex-direction: column; align-items: flex-start; }
+    .summary-bar { gap: 1rem; }
+  }
+  @media print {
+    body { background: white; font-size: 11px; }
+    .card { break-inside: avoid; border: 1px solid #ccc; }
+    .header { padding: 1rem; }
+    .header-actions, .add-section-btn, .card-controls, .modal-overlay, .nav { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>Commitments Board</h1>
+    <div class="subtitle">SEL Q2 2026 Onsite: Sharpen the Standard | April 13&#8211;14, 2026</div>
+  </div>
+  <div class="header-actions">
+    <span class="save-indicator" id="save-indicator">No changes yet</span>
+    <button class="btn" onclick="exportData()" title="Download board as JSON">&#8659; Export JSON</button>
+    <button class="btn" onclick="document.getElementById('import-input').click()" title="Load board from JSON">&#8657; Import JSON</button>
+    <button class="btn danger" onclick="confirmReset()" title="Reset to seeded defaults">&#10005; Reset</button>
+    <input type="file" id="import-input" accept=".json" onchange="importData(event)">
+  </div>
+</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#personal">Personal 30-Day</a>
+    <a href="#team-goals">Team Goals</a>
+    <a href="#security">Security / Eng</a>
+    <a href="#product">Product / Eng</a>
+    <a href="#ai-governance">AI Governance</a>
+    <a href="#css-behavioral">CSS Behavioral</a>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="summary-bar" id="summary-bar"></div>
+  <div id="board-root"></div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <h2 id="modal-title">Add Commitment</h2>
+      <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label>Commitment / Goal</label>
+        <textarea id="field-text" placeholder="Describe the commitment, goal, or decision&#8230;" rows="3"></textarea>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Owner</label>
+          <input type="text" id="field-owner" placeholder="e.g. Isaac Blatter, All">
+        </div>
+        <div class="field">
+          <label>Status</label>
+          <select id="field-status">
+            <option value="open">Open</option>
+            <option value="in-progress">In Progress</option>
+            <option value="complete">Complete</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Deadline</label>
+          <input type="text" id="field-deadline" placeholder="e.g. May 14, 2026">
+        </div>
+        <div class="field">
+          <label>Accountability Partner</label>
+          <input type="text" id="field-partner" placeholder="e.g. Rob Giordano">
+        </div>
+      </div>
+      <div class="field">
+        <label>Stop Behavior (optional)</label>
+        <input type="text" id="field-stop" placeholder="One behavior to stop&#8230;">
+      </div>
+      <div class="field">
+        <label>Measurable Target (optional)</label>
+        <input type="text" id="field-measure" placeholder="e.g. Top 10 crash types resolved">
+      </div>
+      <div class="field">
+        <label>Tags</label>
+        <div class="tags-input" id="field-tags"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-save" onclick="saveItem()">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// === Constants ===
+var STORAGE_KEY = 'sel-q2-2026-commitments';
+
+var ALL_TAGS = [
+  { key: 'reliability', label: 'Reliability' },
+  { key: 'ai', label: 'AI' },
+  { key: 'modernization', label: 'Modernization' },
+  { key: 'delivery', label: 'Delivery' },
+  { key: 'people', label: 'People' },
+  { key: 'product', label: 'Product' },
+  { key: 'security', label: 'Security' },
+  { key: 'process', label: 'Process' }
+];
+
+var SECTIONS = [
+  { key: 'personal',       title: 'Personal 30-Day Commitments',                         icon: '\u{1F464}', countLabel: 'One per leader' },
+  { key: 'team-goals',     title: 'Team Goals (Q3 / H2 2026)',                           icon: '\u{1F3AF}', countLabel: 'From whiteboard + vision statements' },
+  { key: 'security',       title: 'Security / Engineering Alignment',                    icon: '\u{1F512}', countLabel: "From Dan\u2019s session" },
+  { key: 'product',        title: 'Product / Engineering Alignment',                     icon: '\u{1F680}', countLabel: "From Clarissa\u2019s session" },
+  { key: 'ai-governance',  title: 'AI Governance Decisions',                              icon: '\u{1F916}', countLabel: 'From Day 1 + Day 2 discussions' },
+  { key: 'css-behavioral', title: 'Continue / Start / Stop: Top Behavioral Commitments', icon: '\u26A1',    countLabel: 'Priority items only' }
+];
+
+// === Seeded Default State ===
+var DEFAULT_STATE = {
+  personal: [
+    {
+      id: 'p1', owner: 'Isaac Blatter',
+      text: 'Invest in automated testing, CI/CD rigor, and observability so the Scribe team ships with confidence and catches problems before users do.',
+      deadline: 'May 14, 2026', partner: 'Rob Giordano', stop: 'Building in too many repos without empowering others to own those systems',
+      measure: 'Automated test coverage increase; zero P1 regressions from untested code paths',
+      tags: ['ai', 'reliability', 'delivery'], status: 'open'
+    },
+    {
+      id: 'p2', owner: 'John Thomalla',
+      text: 'Define and implement Service Level Objectives (SLOs) for critical integration pathways and initiate the first phase of legacy integration engine replacement.',
+      deadline: 'May 14, 2026', partner: 'Henry Happ', stop: 'Reactive integration management \u2014 letting incidents drive prioritization over proactive design',
+      measure: 'SLOs defined for top 3 integration pathways; one high-value domain targeted for strangler pattern',
+      tags: ['reliability', 'modernization', 'delivery'], status: 'open'
+    },
+    {
+      id: 'p3', owner: 'Damien Evans',
+      text: 'Extend AI-assisted workflows to QA (test case generation, coverage analysis) and PM (requirements drafting, story refinement) \u2014 not just developers.',
+      deadline: 'May 14, 2026', partner: 'Scott Seely', stop: 'Absorbing work under pressure instead of using the moment to develop the person who should own it',
+      measure: 'QA and PM each using at least one AI-assisted workflow in daily practice',
+      tags: ['ai', 'people', 'delivery'], status: 'open'
+    },
+    {
+      id: 'p4', owner: 'Rob Giordano',
+      text: 'Identify and systematically resolve the top 10 crash signatures driving the majority of EMR failures, with full root-cause analysis and prevention.',
+      deadline: 'May 14, 2026', partner: 'Isaac Blatter', stop: 'Responding to issues reactively rather than systematically preventing them',
+      measure: 'Top 10 crash types root-caused; 50%+ resolved and verified in production',
+      tags: ['reliability', 'delivery'], status: 'open'
+    },
+    {
+      id: 'p5', owner: 'Henry Happ',
+      text: 'Standardize CI/CD processes and ship at least one platform improvement that reduces manual effort and enables teams to move faster with fewer dependencies.',
+      deadline: 'May 14, 2026', partner: 'John Thomalla', stop: 'Being highly responsive at the cost of consistent focus on lasting systemic improvements',
+      measure: 'One CI/CD standardization shipped; measurable reduction in manual deployment steps',
+      tags: ['process', 'modernization'], status: 'open'
+    },
+    {
+      id: 'p6', owner: 'Scott Seely',
+      text: 'Socialize the Claude foundation as a developer choice, ship at least one end-to-end OneBox definition (platform-first), and establish visible examples of developers using AI to work differently.',
+      deadline: 'May 14, 2026', partner: 'Damien Evans', stop: 'Letting AI usage remain uneven \u2014 find seams in interconnected systems proactively',
+      measure: 'OneBox definition shipped; 3+ developers actively using Claude with org-tuned context',
+      tags: ['ai', 'people', 'process'], status: 'open'
+    },
+    {
+      id: 'p7', owner: 'Rafael Van Dyke',
+      text: 'Co-lead the metrics reality check \u2014 establish clear KPIs tied to quality, adoption, and velocity for each team area, with baselines and visible dashboards.',
+      deadline: 'May 14, 2026', partner: 'Guillermo Salas', stop: 'Making decisions based on intuition rather than data when data is available',
+      measure: 'Metrics dashboard live for at least 3 key areas with baselines established',
+      tags: ['process', 'delivery', 'reliability'], status: 'open'
+    },
+    {
+      id: 'p8', owner: 'Guillermo Salas',
+      text: 'Close the gap between strategy and execution: enforce clearer ownership boundaries, fewer priorities executed fully, and institutionalize learning from every incident and delivery.',
+      deadline: 'May 14, 2026', partner: 'Rafael Van Dyke', stop: 'Allowing too many priorities to dilute execution quality',
+      measure: 'Ownership matrix published; priority list reduced to top 5 active items per team',
+      tags: ['people', 'process', 'delivery'], status: 'open'
+    }
+  ],
+
+  'team-goals': [
+    {
+      id: 'tg1', owner: 'Isaac Blatter + Rob Giordano',
+      text: 'Build Scribe into the WebEMR workflow \u2014 close the gap between AI documentation and the clinical experience so 80% of visits can be completed within Scribe or WebEMR.',
+      deadline: 'End of Q3 2026', partner: '', stop: '',
+      measure: 'Scribe-WebEMR integration milestone shipped; 80% visit completion target baselined',
+      tags: ['ai', 'modernization', 'delivery'], status: 'open'
+    },
+    {
+      id: 'tg2', owner: 'Rob Giordano + Henry Happ',
+      text: 'Establish real-time observability for client and backend performance \u2014 detect and address issues before they impact clinicians.',
+      deadline: 'End of Q3 2026', partner: '', stop: '',
+      measure: 'Actionable dashboards live for top 5 clinical workflows; MTTD reduced 40%',
+      tags: ['reliability', 'process'], status: 'open'
+    },
+    {
+      id: 'tg3', owner: 'John Thomalla',
+      text: 'Introduce FHIR-aligned APIs and standardized data contracts, applying strangler patterns to progressively shift traffic away from the legacy integration engine.',
+      deadline: 'End of Q3 2026', partner: '', stop: '',
+      measure: 'First integration domain migrated; FHIR API contract published for partner onboarding',
+      tags: ['modernization', 'delivery'], status: 'open'
+    },
+    {
+      id: 'tg4', owner: 'Damien Evans',
+      text: 'Ship one major OnePACS modernization milestone without a severity incident \u2014 proving the team can execute reliably at scale.',
+      deadline: 'End of Q2 2026', partner: '', stop: '',
+      measure: 'Major platform component released with zero Sev-1/Sev-2 incidents in first 30 days',
+      tags: ['delivery', 'reliability', 'modernization'], status: 'open'
+    },
+    {
+      id: 'tg5', owner: 'Isaac Blatter',
+      text: 'Build top-to-bottom product tracking \u2014 clear line of sight from milestones to PRDs to Jira Epics and Stories across Scribe and EMR.',
+      deadline: 'End of Q3 2026', partner: '', stop: '',
+      measure: 'Traceability chain live: milestone \u2192 PRD \u2192 epic \u2192 story for all active initiatives',
+      tags: ['process', 'product', 'delivery'], status: 'open'
+    },
+    {
+      id: 'tg6', owner: 'All Leaders',
+      text: 'Raise the bar for release quality \u2014 require performance and reliability validation in all major feature releases, including defined SLAs and production readiness checks.',
+      deadline: 'Ongoing from Q2 2026', partner: '', stop: '',
+      measure: 'Release quality checklist enforced; zero releases bypassing performance validation',
+      tags: ['reliability', 'process'], status: 'open'
+    },
+    {
+      id: 'tg7', owner: 'Guillermo Salas + All Leaders',
+      text: 'Institutionalize learning: every incident, delivery, and decision leaves the organization stronger. Formalize post-incident reviews and delivery retrospectives.',
+      deadline: 'Ongoing from Q2 2026', partner: '', stop: '',
+      measure: 'Post-incident reviews within 48 hours; learnings published and tracked',
+      tags: ['process', 'people'], status: 'open'
+    },
+    {
+      id: 'tg8', owner: 'Isaac Blatter + Scott Seely',
+      text: 'Get into the clinics \u2014 regular onsite visits to understand real client workflows across clinic sizes, specialties, and staffing models. Let field observation drive roadmap.',
+      deadline: 'End of Q3 2026', partner: '', stop: '',
+      measure: 'Minimum 2 clinic visits per quarter with documented findings shared to product',
+      tags: ['product', 'people'], status: 'open'
+    }
+  ],
+
+  security: [
+    {
+      id: 's1', owner: 'Dan + All Engineering Leaders',
+      text: 'Establish security review as a standard gate in the release process \u2014 not a blocker, but a consistent checkpoint that catches issues before production.',
+      deadline: 'End of Q2 2026', partner: '', stop: '',
+      measure: 'Security review checklist integrated into release quality gate',
+      tags: ['security', 'process'], status: 'open'
+    },
+    {
+      id: 's2', owner: 'Dan + Henry Happ',
+      text: 'Integrate automated security scanning into CI/CD pipelines across all critical repositories.',
+      deadline: 'End of Q3 2026', partner: '', stop: '',
+      measure: 'SAST/DAST tooling active in CI for top 10 repos by risk',
+      tags: ['security', 'process', 'modernization'], status: 'open'
+    },
+    {
+      id: 's3', owner: 'Dan + John Thomalla',
+      text: 'Conduct resiliency and security reviews for critical partner integrations \u2014 failover, data integrity, access controls.',
+      deadline: 'End of Q3 2026', partner: '', stop: '',
+      measure: 'Top 5 partner integrations reviewed; findings documented with remediation plan',
+      tags: ['security', 'reliability'], status: 'open'
+    }
+  ],
+
+  product: [
+    {
+      id: 'pr1', owner: 'Clarissa + All Engineering Leaders',
+      text: 'Define and enforce minimum product artifact standards \u2014 every initiative requires a PRD with outcome definition, customer problem statement, and measurable success criteria before engineering work begins.',
+      deadline: 'End of Q2 2026', partner: '', stop: '',
+      measure: 'PRD template published; 100% of new initiatives have compliant PRD before sprint planning',
+      tags: ['product', 'process'], status: 'open'
+    },
+    {
+      id: 'pr2', owner: 'Clarissa + Engineering Leads',
+      text: 'Establish cross-functional operating cadence at the team level \u2014 regular alignment on priorities, design/prototype feedback, release readiness, and scope changes.',
+      deadline: 'Ongoing from Q2 2026', partner: '', stop: '',
+      measure: 'Weekly cross-functional sync active for each product team; escalation paths documented',
+      tags: ['product', 'process', 'people'], status: 'open'
+    },
+    {
+      id: 'pr3', owner: 'Clarissa + Isaac Blatter',
+      text: 'Shift from feature-factory to outcome orientation \u2014 product teams measure success by customer impact and business value, not story count or velocity.',
+      deadline: 'End of Q3 2026', partner: '', stop: '',
+      measure: 'Each team has at least one outcome-based OKR replacing an activity-based metric',
+      tags: ['product', 'delivery'], status: 'open'
+    },
+    {
+      id: 'pr4', owner: 'Clarissa + Design + Engineering',
+      text: 'Elevate design practice beyond visual polish \u2014 invest in interaction design, workflow effectiveness, and usability testing for complex clinical contexts.',
+      deadline: 'End of Q3 2026', partner: '', stop: '',
+      measure: 'Usability testing conducted for at least 2 major workflows; design system interaction patterns documented',
+      tags: ['product', 'people'], status: 'open'
+    },
+    {
+      id: 'pr5', owner: 'Clarissa + Damien Evans',
+      text: 'Address OnePACS identity and integration posture \u2014 clarify ownership boundaries, reduce perceptions of separation, and ensure consistent standards across product lines.',
+      deadline: 'End of Q3 2026', partner: '', stop: '',
+      measure: 'OnePACS product standards aligned with Experity-wide standards; shared operating model documented',
+      tags: ['product', 'process'], status: 'open'
+    },
+    {
+      id: 'pr6', owner: 'Clarissa + Guillermo Salas',
+      text: 'Manage GCC transition risk explicitly \u2014 plan by team, communicate delivery risks clearly, and tie transitions to outcome/commitment risk management.',
+      deadline: 'End of Q2 2026', partner: '', stop: '',
+      measure: 'GCC transition plan with team-level risk assessment shared with leadership',
+      tags: ['people', 'delivery'], status: 'open'
+    }
+  ],
+
+  'ai-governance': [
+    {
+      id: 'ai1', owner: 'Scott Seely + Guillermo Salas',
+      text: 'Standardize AI tooling choices \u2014 establish Claude as the recommended foundation with clear guidance for when and how teams can adapt to their workflow.',
+      deadline: 'End of Q2 2026', partner: '', stop: '',
+      measure: 'AI tooling guidance document published; Claude foundation available to all teams',
+      tags: ['ai', 'process'], status: 'open'
+    },
+    {
+      id: 'ai2', owner: 'Damien Evans + Isaac Blatter',
+      text: 'Extend AI adoption beyond development into the full SDLC \u2014 QA test generation, PM requirements drafting, release notes, and operational metrics analysis.',
+      deadline: 'End of Q3 2026', partner: '', stop: '',
+      measure: 'AI-assisted workflows documented and active for QA and PM roles on at least 2 teams',
+      tags: ['ai', 'process', 'delivery'], status: 'open'
+    },
+    {
+      id: 'ai3', owner: 'All Leaders',
+      text: 'Establish cost guardrails for AI tool spend \u2014 define per-team budgets, track usage, and review ROI quarterly.',
+      deadline: 'End of Q2 2026', partner: '', stop: '',
+      measure: 'AI spend dashboard live; per-team budget caps agreed; Q3 review scheduled',
+      tags: ['ai', 'process'], status: 'open'
+    },
+    {
+      id: 'ai4', owner: 'Isaac Blatter + Rob Giordano',
+      text: 'Define and fund Q3 AI experiments \u2014 evaluate AI-enabled features beyond Scribe (operational data via LoC, OnePACS AI-enabled capacity model).',
+      deadline: 'End of Q2 2026', partner: '', stop: '',
+      measure: 'At least 2 AI experiments scoped with success criteria, owners, and timelines for Q3',
+      tags: ['ai', 'modernization'], status: 'open'
+    },
+    {
+      id: 'ai5', owner: 'Clarissa + Engineering Leads',
+      text: 'Use PRDs as AI context source \u2014 integrate product requirements into AI-assisted story generation and end-to-end traceability pipelines.',
+      deadline: 'End of Q3 2026', partner: '', stop: '',
+      measure: 'PRD \u2192 Jira artifact generation pipeline piloted on at least 1 product team',
+      tags: ['ai', 'product', 'process'], status: 'open'
+    }
+  ],
+
+  'css-behavioral': [
+    {
+      id: 'css1', owner: 'All Leaders',
+      text: 'CONTINUE: Evidence-based decision making \u2014 bring data and measurable progress to every leadership discussion, not narrative.',
+      deadline: 'Ongoing', partner: '', stop: '',
+      measure: 'Every bi-weekly leader readout includes at least one quantitative metric per topic',
+      tags: ['process'], status: 'open'
+    },
+    {
+      id: 'css2', owner: 'All Leaders',
+      text: 'START: Proactive reliability investment \u2014 dedicate capacity to stability and performance work before incidents force the issue.',
+      deadline: 'Ongoing from Q2 2026', partner: '', stop: '',
+      measure: 'Minimum 15% sprint capacity reserved for reliability work across all teams',
+      tags: ['reliability', 'process'], status: 'open'
+    },
+    {
+      id: 'css3', owner: 'All Leaders',
+      text: 'START: Cross-team architecture consultation before major design decisions \u2014 architecture as a force multiplier, not a gate.',
+      deadline: 'Ongoing from Q2 2026', partner: '', stop: '',
+      measure: 'Architecture input documented for 100% of major design decisions before implementation',
+      tags: ['process', 'modernization'], status: 'open'
+    },
+    {
+      id: 'css4', owner: 'All Leaders',
+      text: 'STOP: Saying yes to everything \u2014 protect focus by explicitly declining or deferring lower-priority work.',
+      deadline: 'Ongoing', partner: '', stop: '',
+      measure: 'Each leader maintains a visible not-doing list alongside active priorities',
+      tags: ['process', 'people'], status: 'open'
+    },
+    {
+      id: 'css5', owner: 'All Leaders',
+      text: 'STOP: Siloed execution \u2014 break the pattern of teams operating independently on cross-cutting problems.',
+      deadline: 'Ongoing', partner: '', stop: '',
+      measure: 'At least one cross-team collaboration initiative per quarter with shared deliverable',
+      tags: ['people', 'process'], status: 'open'
+    }
+  ]
+};
+
+// === State ===
+var state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+var editingSection = null;
+var editingId = null;
+
+// === Persistence ===
+function loadFromStorage() {
+  try {
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      var parsed = JSON.parse(raw);
+      var merged = {};
+      SECTIONS.forEach(function(s) { merged[s.key] = parsed[s.key] || []; });
+      state = merged;
+      return true;
+    }
+  } catch (e) { console.warn('Failed to load state:', e); }
+  return false;
+}
+
+function saveToStorage() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    var now = new Date();
+    var ts = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    document.getElementById('save-indicator').textContent = 'Saved at ' + ts;
+  } catch (e) { console.warn('Failed to save state:', e); }
+}
+
+// === Rendering ===
+function renderAll() {
+  renderSummary();
+  renderSections();
+}
+
+function renderSummary() {
+  var total = 0, open = 0, inProg = 0, complete = 0;
+  SECTIONS.forEach(function(s) {
+    (state[s.key] || []).forEach(function(item) {
+      total++;
+      if (item.status === 'open') open++;
+      else if (item.status === 'in-progress') inProg++;
+      else if (item.status === 'complete') complete++;
+    });
+  });
+  document.getElementById('summary-bar').innerHTML =
+    '<div class="summary-stat"><div class="stat-value">' + total + '</div><div class="stat-label">Total</div></div>' +
+    '<div class="summary-divider"></div>' +
+    '<div class="summary-stat"><div class="stat-value" style="color:var(--red)">' + open + '</div><div class="stat-label">Open</div></div>' +
+    '<div class="summary-divider"></div>' +
+    '<div class="summary-stat"><div class="stat-value" style="color:var(--yellow)">' + inProg + '</div><div class="stat-label">In Progress</div></div>' +
+    '<div class="summary-divider"></div>' +
+    '<div class="summary-stat"><div class="stat-value" style="color:var(--green)">' + complete + '</div><div class="stat-label">Complete</div></div>';
+}
+
+function renderSections() {
+  var root = document.getElementById('board-root');
+  root.innerHTML = '';
+  SECTIONS.forEach(function(sec) {
+    var items = state[sec.key] || [];
+    var div = document.createElement('div');
+    div.className = 'section';
+    div.id = sec.key;
+    div.innerHTML =
+      '<div class="section-header">' +
+        '<div class="section-header-left">' +
+          '<span class="section-icon">' + sec.icon + '</span>' +
+          '<span class="section-title">' + escapeHtml(sec.title) + '</span>' +
+          '<span class="count">' + escapeHtml(sec.countLabel) + ' \u00B7 ' + items.length + ' item' + (items.length !== 1 ? 's' : '') + '</span>' +
+        '</div>' +
+        '<button class="add-section-btn" data-sec="' + sec.key + '">+ Add</button>' +
+      '</div>' +
+      '<div class="cards" id="cards-' + sec.key + '"></div>';
+    root.appendChild(div);
+
+    div.querySelector('.add-section-btn').addEventListener('click', function() {
+      openModal(this.dataset.sec, null);
+    });
+
+    var cardsEl = div.querySelector('.cards');
+    if (items.length === 0) {
+      cardsEl.innerHTML = '<div class="empty-card">No items yet. Click + Add to create one.</div>';
+    } else {
+      items.forEach(function(item) {
+        cardsEl.appendChild(createCardEl(sec.key, item));
+      });
+    }
+  });
+}
+
+function createCardEl(sectionKey, item) {
+  var div = document.createElement('div');
+  div.className = 'card';
+  div.dataset.id = item.id;
+
+  var sc = item.status || 'open';
+  var sl = sc === 'in-progress' ? 'In Progress' : sc.charAt(0).toUpperCase() + sc.slice(1);
+
+  var tagsHtml = '';
+  if (item.tags && item.tags.length) {
+    tagsHtml = '<div class="goal-tags">' + item.tags.map(function(t) {
+      return '<span class="tag ' + escapeHtml(t) + '">' + escapeHtml(t) + '</span>';
+    }).join('') + '</div>';
+  }
+
+  var metaHtml = '';
+  var mp = [];
+  if (item.deadline) mp.push('<span>\u{1F4C5} ' + escapeHtml(item.deadline) + '</span>');
+  if (item.partner) mp.push('<span>\u{1F91D} ' + escapeHtml(item.partner) + '</span>');
+  if (mp.length) metaHtml += '<div class="meta-row">' + mp.join('') + '</div>';
+  if (item.stop) metaHtml += '<div class="meta-row"><span style="color:var(--red)">\u{1F6D1} Stop: ' + escapeHtml(item.stop) + '</span></div>';
+  if (item.measure) metaHtml += '<div class="meta-row"><span>\u{1F3AF} ' + escapeHtml(item.measure) + '</span></div>';
+
+  div.innerHTML =
+    '<span class="status ' + sc + '">' + sl + '</span>' +
+    '<div class="person">' + escapeHtml(item.owner || 'Unassigned') + '</div>' +
+    '<div class="commitment">' + escapeHtml(item.text) + '</div>' +
+    tagsHtml + metaHtml +
+    '<div class="card-controls">' +
+      '<button class="icon-btn edit-btn" data-sec="' + sectionKey + '" data-id="' + item.id + '" title="Edit">\u270E</button>' +
+      '<button class="icon-btn del del-btn" data-sec="' + sectionKey + '" data-id="' + item.id + '" title="Delete">\u{1F5D1}</button>' +
+    '</div>';
+
+  div.querySelector('.edit-btn').addEventListener('click', function() {
+    openModal(this.dataset.sec, this.dataset.id);
+  });
+  div.querySelector('.del-btn').addEventListener('click', function() {
+    deleteItem(this.dataset.sec, this.dataset.id);
+  });
+
+  return div;
+}
+
+function escapeHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+// === Delete ===
+function deleteItem(sectionKey, id) {
+  if (!confirm('Delete this item?')) return;
+  state[sectionKey] = (state[sectionKey] || []).filter(function(i) { return i.id !== id; });
+  saveToStorage();
+  renderAll();
+}
+
+// === Modal ===
+function openModal(sectionKey, id) {
+  editingSection = sectionKey;
+  editingId = id;
+
+  var secObj = SECTIONS.find(function(s) { return s.key === sectionKey; });
+  document.getElementById('modal-title').textContent = id ? 'Edit Commitment' : 'Add to ' + (secObj ? secObj.title : sectionKey);
+
+  var tc = document.getElementById('field-tags');
+  tc.innerHTML = '';
+  ALL_TAGS.forEach(function(t) {
+    var btn = document.createElement('span');
+    btn.className = 'tag-option';
+    btn.textContent = t.label;
+    btn.dataset.key = t.key;
+    btn.addEventListener('click', function() { this.classList.toggle('selected'); });
+    tc.appendChild(btn);
+  });
+
+  if (id) {
+    var item = (state[sectionKey] || []).find(function(i) { return i.id === id; });
+    if (item) {
+      document.getElementById('field-text').value = item.text || '';
+      document.getElementById('field-owner').value = item.owner || '';
+      document.getElementById('field-status').value = item.status || 'open';
+      document.getElementById('field-deadline').value = item.deadline || '';
+      document.getElementById('field-partner').value = item.partner || '';
+      document.getElementById('field-stop').value = item.stop || '';
+      document.getElementById('field-measure').value = item.measure || '';
+      (item.tags || []).forEach(function(t) {
+        var el = tc.querySelector('[data-key="' + t + '"]');
+        if (el) el.classList.add('selected');
+      });
+    }
+  } else {
+    document.getElementById('field-text').value = '';
+    document.getElementById('field-owner').value = '';
+    document.getElementById('field-status').value = 'open';
+    document.getElementById('field-deadline').value = '';
+    document.getElementById('field-partner').value = '';
+    document.getElementById('field-stop').value = '';
+    document.getElementById('field-measure').value = '';
+  }
+
+  document.getElementById('modal-overlay').classList.add('open');
+  setTimeout(function() { document.getElementById('field-text').focus(); }, 80);
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  editingSection = null;
+  editingId = null;
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+
+function saveItem() {
+  var text = document.getElementById('field-text').value.trim();
+  if (!text) {
+    var f = document.getElementById('field-text');
+    f.focus();
+    f.style.borderColor = 'var(--red)';
+    setTimeout(function() { f.style.borderColor = ''; }, 1200);
+    return;
+  }
+
+  var owner = document.getElementById('field-owner').value.trim();
+  var status = document.getElementById('field-status').value;
+  var deadline = document.getElementById('field-deadline').value.trim();
+  var partner = document.getElementById('field-partner').value.trim();
+  var stop = document.getElementById('field-stop').value.trim();
+  var measure = document.getElementById('field-measure').value.trim();
+  var selectedTags = [];
+  document.querySelectorAll('#field-tags .tag-option.selected').forEach(function(el) {
+    selectedTags.push(el.dataset.key);
+  });
+
+  if (!state[editingSection]) state[editingSection] = [];
+
+  if (editingId) {
+    var item = state[editingSection].find(function(i) { return i.id === editingId; });
+    if (item) {
+      item.text = text; item.owner = owner; item.status = status;
+      item.deadline = deadline; item.partner = partner;
+      item.stop = stop; item.measure = measure; item.tags = selectedTags;
+    }
+  } else {
+    state[editingSection].push({
+      id: uid(), text: text, owner: owner, status: status, deadline: deadline,
+      partner: partner, stop: stop, measure: measure, tags: selectedTags
+    });
+  }
+
+  saveToStorage();
+  renderAll();
+  closeModal();
+}
+
+// === Export / Import ===
+function exportData() {
+  var blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'commitments-board.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function importData(e) {
+  var file = e.target.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(ev) {
+    try {
+      var parsed = JSON.parse(ev.target.result);
+      var keys = Object.keys(parsed);
+      var recognized = keys.filter(function(k) { return SECTIONS.some(function(s) { return s.key === k; }); });
+      if (recognized.length === 0) throw new Error('Unexpected format');
+      var merged = {};
+      SECTIONS.forEach(function(s) { merged[s.key] = parsed[s.key] || []; });
+      state = merged;
+      saveToStorage();
+      renderAll();
+      document.getElementById('save-indicator').textContent = 'Imported from file';
+    } catch (err) {
+      alert('Could not read that file. Make sure it is a valid commitments-board.json export.');
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
+
+// === Reset ===
+function confirmReset() {
+  if (!confirm('Reset the board to seeded defaults? All edits will be lost.\n\nConsider exporting first.')) return;
+  state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+  saveToStorage();
+  document.getElementById('save-indicator').textContent = 'Reset to defaults';
+  renderAll();
+}
+
+// === Keyboard ===
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeModal();
+  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+    if (document.getElementById('modal-overlay').classList.contains('open')) saveItem();
+  }
+});
+
+// === Utilities ===
+function uid() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+}
+
+// === Boot ===
+var loaded = loadFromStorage();
+if (loaded) {
+  document.getElementById('save-indicator').textContent = 'Loaded from storage';
+} else {
+  saveToStorage();
+  document.getElementById('save-indicator').textContent = 'Seeded with onsite goals';
+}
+renderAll();
+</script>
+</body>
+</html>

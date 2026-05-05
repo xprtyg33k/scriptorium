@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ownership & Execution - Engineering On-Site</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+/* 1. THE SETUP */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #1a1a1a;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+  margin: 0;
+  min-height: 100vh;
+  padding: 20px 0;
+  place-items: center;
+}
+
+/* Slide Container */
+.slide-container {
+  align-items: flex-start;
+  background-color: #000000;
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  height: 720px;
+  justify-content: center;
+  overflow: hidden;
+  padding: 40px 60px;
+  position: relative;
+  width: 1280px;
+}
+
+/* Background Design - Abstract Lines */
+.slide-container::after {
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(222, 255, 154, 0.03),
+    rgba(222, 255, 154, 0.03) 1px,
+    transparent 1px,
+    transparent 20px
+  );
+  bottom: 0;
+  content: '';
+  height: 100%;
+  left: 0;
+  position: absolute;
+  right: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 2. TYPOGRAPHY */
+.slide-container h1,
+.slide-container h2,
+.slide-container h3,
+.slide-container h4,
+.slide-container .slide-title {
+  color: #f5f5f5;
+  font-weight: 700;
+  font-family: 'Urbanist', sans-serif;
+  margin: 0;
+  z-index: 1;
+}
+
+/* High Contrast Accent */
+.slide-container span, 
+.slide-container h1 span,
+.slide-container h2 span,
+.slide-container .accent-text {
+  color: #deff9a; /* The lime green accent from Theme 4 */
+}
+
+.slide-container p,
+.slide-container li,
+.slide-container .subtitle {
+  color: #e0e0e0;
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.6;
+  z-index: 1;
+}
+
+/* Title Sizes */
+.slide-container h1 {
+  font-size: 72px;
+  line-height: 1.1;
+}
+
+.slide-container .slide-title {
+  font-size: 54px;
+  margin-bottom: 40px;
+  width: 100%;
+  border-bottom: 1px solid #333;
+  padding-bottom: 20px;
+}
+
+.slide-container .subtitle {
+  font-size: 24px;
+  color: #daffde;
+  margin-top: 20px;
+}
+
+/* 3. LAYOUTS */
+
+/* Title Slide */
+.title-layout {
+  text-align: center;
+  align-self: center;
+  max-width: 900px;
+}
+
+/* Section Title */
+.section-title-layout {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+.section-title-layout h2 {
+  font-size: 90px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Tiled Text with Icons */
+.tiled-content {
+  display: grid;
+  gap: 30px;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  z-index: 1;
+}
+
+.tile {
+  background-color: #1e1e1e;
+  border-radius: 16px;
+  padding: 30px;
+  border-left: 4px solid #deff9a;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.tile .icon {
+  font-size: 40px;
+  color: #deff9a;
+  margin-bottom: 10px;
+}
+
+.tile h3 {
+  font-size: 28px;
+}
+
+/* Two Column / Image Right */
+.two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+}
+
+.two-column .content-container ul {
+  list-style: none;
+  padding: 0;
+}
+
+.two-column .content-container li {
+  margin-bottom: 20px;
+  padding-left: 30px;
+  position: relative;
+}
+
+.two-column .content-container li::before {
+  content: '▹';
+  color: #deff9a;
+  position: absolute;
+  left: 0;
+  font-size: 24px;
+}
+
+.image-container {
+  height: 100%;
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #333;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Quote Layout */
+.quote-layout {
+  text-align: center;
+  width: 80%;
+  align-self: center;
+}
+
+.quote-layout blockquote {
+  font-size: 60px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.quote-layout cite {
+  display: block;
+  margin-top: 30px;
+  font-size: 30px;
+  color: #deff9a;
+  font-style: normal;
+}
+
+/* Full Background Image */
+.full-bg-image {
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.full-bg-image::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 100%);
+  z-index: 0;
+}
+
+.full-bg-image .content-overlay {
+  position: relative;
+  z-index: 1;
+  max-width: 60%;
+  padding-left: 40px;
+}
+
+.full-bg-image h2 {
+  font-size: 70px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.full-bg-image p {
+  font-size: 32px;
+  color: #deff9a;
+}
+
+/* Two Column Tiled (for Learning) */
+.two-column-tiled {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  width: 100%;
+}
+
+.learning-tile {
+  background-color: #252525;
+  padding: 40px;
+  border-radius: 16px;
+  text-align: center;
+  border-top: 8px solid #deff9a;
+}
+
+.learning-tile h3 {
+  font-size: 36px;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+.learning-tile p {
+  font-size: 22px;
+}
+
+/* Q&A */
+.qa-layout {
+  text-align: center;
+  align-self: center;
+}
+
+.qa-layout h2 {
+  font-size: 100px;
+  color: #deff9a;
+}
+
+.qa-layout p {
+  font-size: 30px;
+}
+
+    </style>
+</head>
+<body>
+
+<div class="slide-container" id="slide1">
+    <div class="title-layout">
+        <h1>Ownership, Execution &<br><span>The Path Forward</span></h1>
+        <p class="subtitle">Engineering On-Site | Defining the New Standard</p>
+    </div>
+</div>
+
+<div class="slide-container" id="slide2">
+    <div class="section-title-layout">
+        <h2>Absolute<br><span>Ownership</span></h2>
+    </div>
+</div>
+
+<div class="slide-container" id="slide3">
+    <h2 class="slide-title">From Task-Doer to <span>Solution-Provider</span></h2>
+    <div class="tiled-content">
+        <div class="tile">
+            <div class="icon"><i class="fa-solid fa-lightbulb"></i></div>
+            <h3>Provide Solutions</h3>
+            <p>Your work is not defined by others. You are not here to simply do as told. You are here to solve problems.</p>
+        </div>
+        <div class="tile">
+            <div class="icon"><i class="fa-solid fa-chess-king"></i></div>
+            <h3>Explicit Leadership</h3>
+            <p>Intentional, very well-defined leadership and ownership of the action plan is expected.</p>
+        </div>
+        <div class="tile">
+            <div class="icon"><i class="fa-solid fa-rocket"></i></div>
+            <h3>Action Plan</h3>
+            <p>Define the "what," "how," and "when." If you don't step up to own it, someone else will.</p>
+        </div>
+    </div>
+    <div class="image-container">
+        <img src="http://googleusercontent.com/image_generation_content/1
+
+" alt="Team collaborating on a glowing holographic solution design">
+    </div>
+</div>
+
+<div class="slide-container" id="slide4">
+    <div class="two-column">
+        <div class="content-container">
+            <h2 class="slide-title">Technical Proficiency:<br><span>Containerization</span></h2>
+            <p>We need to assess our practical working knowledge.</p>
+            <ul>
+                <li>Who can <strong>dockerize</strong> a workload today?</li>
+                <li>Who has experience with <strong>Docker Enterprise</strong>?</li>
+                <li>Who knows what a <strong>Dockerfile</strong> and <strong>Docker Compose</strong> are?</li>
+                <li>Who has run a workload in production using these tools?</li>
+            </ul>
+        </div>
+        <div class="image-container">
+            <img src="http://googleusercontent.com/image_generation_content/2
+
+" alt="Abstract neon glowing shipping containers representing Docker">
+        </div>
+    </div>
+</div>
+
+<div class="slide-container" id="slide5">
+    <div class="quote-layout">
+        <blockquote>"Now, what will you do about it?"</blockquote>
+        <cite>What is your plan?</cite>
+    </div>
+</div>
+
+<div class="slide-container" id="slide6">
+    <h2 class="slide-title">Growth Mindset <span>Requirements</span></h2>
+    <div class="two-column-tiled">
+        <div class="learning-tile">
+            <i class="fa-brands fa-linkedin" style="font-size: 60px; color: #0077b5; margin-bottom: 20px;"></i>
+            <h3>LinkedIn Learning</h3>
+            <p><strong>1 Hour / Week</strong></p>
+            <p>Intentionally carve out and protect this time. It is a provided service—use it.</p>
+        </div>
+        <div class="learning-tile">
+            <i class="fa-solid fa-chart-line" style="font-size: 60px; color: #deff9a; margin-bottom: 20px;"></i>
+            <h3>Jellyfish</h3>
+            <p><strong>Mandatory for Managers</strong></p>
+            <p>Dedicate time to learn the tool. Use it to assess team performance and metrics.</p>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container full-bg-image" id="slide7" style="background-image: url('http://googleusercontent.com/image_generation_content/3');">
+    <div class="content-overlay">
+        <h2>The Runway is <span>Over</span></h2>
+        <p>We have been extended a reasonable runway for over a year. We cannot keep circling the same topics.</p>
+    </div>
+</div>
+
+<div class="slide-container" id="slide8">
+    <h2 class="slide-title">The Choice: <span>Accountability vs. Replacement</span></h2>
+    <div class="two-column" style="align-items: flex-start;">
+        <div class="content-container">
+            <h3 style="color: #deff9a; font-size: 36px; margin-bottom: 20px;">Option 1: Results</h3>
+            <p>We show up. We execute. We deliver.</p>
+            <p>We will be recognized by our results. Expectations are high because the business needs are high.</p>
+        </div>
+        <div class="content-container" style="border-left: 1px solid #444; padding-left: 40px;">
+            <h3 style="color: #ff6b6b; font-size: 36px; margin-bottom: 20px;">Option 2: Reality</h3>
+            <p>These expectations are marketplace standards.</p>
+            <p>If we cannot perform at this level, we will be replaced by those who have the skills and will perform.</p>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container" id="slide9">
+    <div class="qa-layout">
+        <h2>Questions?</h2>
+        <p>Let's discuss the execution plan.</p>
+    </div>
+</div>
+
+</body>
+</html>
