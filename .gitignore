@@ -48,6 +48,9 @@ coverage.xml
 *.cover
 *.py.cover
 .hypothesis/
+
+# macOS
+.DS_Store
 .pytest_cache/
 cover/
 
