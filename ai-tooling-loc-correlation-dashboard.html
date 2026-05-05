@@ -1,0 +1,1237 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Tooling Adoption and Engineering Output</title>
+  <style>
+    :root {
+      --navy: #1b2b54;
+      --cobalt: #2b72b2;
+      --teal: #57c2b4;
+      --lime: #2fcb40;
+      --amber: #ffa539;
+      --slate: #686f83;
+      --ink: #19243f;
+      --paper: #ffffff;
+      --mist: #f7f8fa;
+      --line: #dce4ee;
+      --soft-blue: #eaf3fb;
+      --soft-green: #eafbea;
+      --shadow: 0 20px 50px rgba(27, 43, 84, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(27, 43, 84, 0.04), rgba(247, 248, 250, 0.96) 360px),
+        var(--mist);
+      font-family: "Open Sans", Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .shell {
+      width: min(1400px, calc(100vw - 40px));
+      margin: 0 auto;
+      padding: 30px 0 46px;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 22px;
+      align-items: end;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--cobalt);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 44px;
+      height: 6px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--cobalt), var(--teal), var(--lime));
+    }
+
+    h1 {
+      max-width: 940px;
+      margin: 10px 0 8px;
+      color: var(--navy);
+      font-family: Poppins, "Open Sans", Arial, sans-serif;
+      font-size: clamp(34px, 4.4vw, 66px);
+      font-weight: 300;
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    .lede {
+      max-width: 930px;
+      margin: 0;
+      color: #526078;
+      font-size: 16px;
+    }
+
+    .updated-as-of {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.84);
+      color: var(--navy);
+      font-size: 13px;
+      font-weight: 700;
+      box-shadow: 0 8px 24px rgba(27, 43, 84, 0.07);
+    }
+
+    .updated-as-of::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--lime);
+    }
+
+    .updated-as-of span {
+      color: var(--slate);
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 11px;
+    }
+
+    .brand-chip {
+      justify-self: end;
+      min-width: 220px;
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.88);
+      box-shadow: 0 12px 30px rgba(27, 43, 84, 0.08);
+    }
+
+    .brand-chip strong {
+      display: block;
+      color: var(--navy);
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .brand-chip span {
+      color: var(--slate);
+      font-size: 12px;
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 14px;
+      align-items: center;
+      margin: 28px 0 18px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 10px 30px rgba(27, 43, 84, 0.07);
+    }
+
+    .segments {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    button,
+    select {
+      height: 38px;
+      border: 1px solid #cbd7e5;
+      border-radius: 8px;
+      background: #fff;
+      color: var(--navy);
+      font: inherit;
+      font-weight: 700;
+    }
+
+    button {
+      cursor: pointer;
+      padding: 0 14px;
+    }
+
+    button.active {
+      border-color: var(--cobalt);
+      background: var(--navy);
+      color: #fff;
+      box-shadow: inset 0 -3px 0 var(--lime);
+    }
+
+    select {
+      min-width: 190px;
+      padding: 0 32px 0 12px;
+    }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0;
+    }
+
+    .kpi,
+    .panel,
+    .source-note {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .kpi {
+      min-height: 146px;
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 110px;
+      height: 8px;
+      background: linear-gradient(90deg, var(--cobalt), var(--teal), var(--lime));
+    }
+
+    .kpi .label {
+      color: var(--slate);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .kpi .value {
+      margin-top: 8px;
+      color: var(--navy);
+      font-family: Poppins, "Open Sans", Arial, sans-serif;
+      font-size: clamp(30px, 3.2vw, 46px);
+      font-weight: 300;
+      line-height: 1;
+    }
+
+    .kpi .detail {
+      margin-top: 10px;
+      color: #53627a;
+      font-size: 13px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(360px, 0.65fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .panel {
+      padding: 18px;
+      min-width: 0;
+    }
+
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: start;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      margin: 0;
+      color: var(--navy);
+      font-family: Poppins, "Open Sans", Arial, sans-serif;
+      font-size: 22px;
+      font-weight: 400;
+      line-height: 1.22;
+      letter-spacing: 0;
+    }
+
+    .panel-subtitle {
+      margin: 5px 0 0;
+      color: var(--slate);
+      font-size: 13px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      border-radius: 999px;
+      padding: 7px 10px;
+      background: var(--soft-green);
+      color: #1f7730;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .pill::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--lime);
+    }
+
+    .chart-wrap {
+      position: relative;
+      min-height: 360px;
+    }
+
+    svg.chart {
+      width: 100%;
+      height: auto;
+      min-height: 340px;
+      display: block;
+      overflow: visible;
+    }
+
+    .axis text,
+    .axis-label {
+      fill: #68758d;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .gridline {
+      stroke: #e5ebf2;
+      stroke-width: 1;
+    }
+
+    .chart-title {
+      fill: var(--navy);
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      margin-top: 10px;
+      color: #53627a;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+      display: inline-block;
+    }
+
+    .insights {
+      display: grid;
+      gap: 12px;
+    }
+
+    .insight {
+      border-left: 6px solid var(--cobalt);
+      border-radius: 8px;
+      background: var(--mist);
+      padding: 14px 14px 14px 16px;
+    }
+
+    .insight:nth-child(2) {
+      border-color: var(--teal);
+    }
+
+    .insight:nth-child(3) {
+      border-color: var(--lime);
+    }
+
+    .insight:nth-child(4) {
+      border-color: var(--amber);
+    }
+
+    .insight strong {
+      display: block;
+      color: var(--navy);
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .insight p {
+      margin: 0;
+      color: #526078;
+      font-size: 13px;
+    }
+
+    .three {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .spark-panel {
+      min-height: 270px;
+    }
+
+    .spark-value {
+      margin-top: 6px;
+      color: var(--navy);
+      font-family: Poppins, "Open Sans", Arial, sans-serif;
+      font-size: 30px;
+      font-weight: 300;
+      line-height: 1;
+    }
+
+    .spark-meta {
+      color: var(--slate);
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+
+    .table-panel {
+      margin-top: 16px;
+      overflow: hidden;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1180px;
+      background: #fff;
+    }
+
+    th,
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #edf1f6;
+      text-align: right;
+      white-space: nowrap;
+      font-size: 13px;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: var(--navy);
+      color: #fff;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    th:first-child,
+    td:first-child {
+      text-align: left;
+    }
+
+    tbody tr:hover {
+      background: #f6fbff;
+    }
+
+    .source-note {
+      margin-top: 16px;
+      padding: 16px 18px;
+      color: #526078;
+      font-size: 13px;
+      box-shadow: none;
+    }
+
+    .source-note strong {
+      color: var(--navy);
+    }
+
+    .tooltip {
+      position: fixed;
+      pointer-events: none;
+      z-index: 20;
+      max-width: 280px;
+      padding: 10px 12px;
+      border: 1px solid #cbd7e5;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.98);
+      color: var(--ink);
+      box-shadow: 0 16px 40px rgba(27, 43, 84, 0.18);
+      font-size: 12px;
+      opacity: 0;
+      transform: translate(-50%, -112%);
+      transition: opacity 0.12s ease;
+    }
+
+    .tooltip.show {
+      opacity: 1;
+    }
+
+    .tooltip strong {
+      display: block;
+      color: var(--navy);
+      margin-bottom: 3px;
+    }
+
+    @media (max-width: 1080px) {
+      header,
+      .toolbar,
+      .grid,
+      .three {
+        grid-template-columns: 1fr;
+      }
+
+      .brand-chip {
+        justify-self: stretch;
+      }
+
+      .kpis {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      select {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .shell {
+        width: min(100% - 24px, 1400px);
+        padding-top: 18px;
+      }
+
+      .kpis {
+        grid-template-columns: 1fr;
+      }
+
+      .panel {
+        padding: 14px;
+      }
+
+      .panel-head {
+        display: block;
+      }
+
+      .pill {
+        margin-top: 10px;
+        white-space: normal;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <div>
+        <div class="eyebrow">Engineering Productivity Analytics</div>
+        <h1>AI Tooling Adoption and Engineering Output</h1>
+        <p class="lede">Monthly GitHub engineering reports are compared against GitHub Copilot adoption, Copilot premium request usage, and Claude Code inference profile consumption. The data supports the hypothesis that broader AI tooling adoption is associated with materially higher LoC output.</p>
+        <div class="updated-as-of" id="updatedAsOf"><span>Updated as of</span> May 1, 2026</div>
+      </div>
+      <div class="brand-chip" aria-label="Experity palette">
+        <strong>Experity</strong>
+        <span>Board-ready dashboard · source-backed</span>
+      </div>
+    </header>
+
+    <section class="toolbar" aria-label="Dashboard controls">
+      <div class="segments" id="rangeButtons">
+        <button type="button" class="active" data-range="all">All months</button>
+        <button type="button" data-range="output">Output reports only</button>
+        <button type="button" data-range="rollout">AI rollout</button>
+        <button type="button" data-range="ytd">2026 YTD</button>
+      </div>
+      <select id="outputMetric" aria-label="Output metric">
+        <option value="added">Lines added</option>
+        <option value="net">Net LoC</option>
+        <option value="totalChurn">Total changed LoC</option>
+      </select>
+      <select id="signalMetric" aria-label="AI signal">
+        <option value="adoptionIndex">AI adoption index</option>
+        <option value="aiRequests">Copilot premium requests</option>
+        <option value="claudeCost">Claude Code spend</option>
+        <option value="copilotSeatMonths">Copilot seat-months</option>
+      </select>
+    </section>
+
+    <section class="kpis" id="kpis" aria-label="Executive metrics"></section>
+
+    <main class="grid">
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>Output Moves With AI Adoption</h2>
+            <p class="panel-subtitle">Bars show engineering output; the line shows the selected AI adoption signal on a right-side scale.</p>
+          </div>
+          <div class="pill" id="corrPill">r = 0.00</div>
+        </div>
+        <div class="chart-wrap" id="comboChart"></div>
+        <div class="legend" id="comboLegend"></div>
+      </section>
+
+      <aside class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>Board Readout</h2>
+            <p class="panel-subtitle">High-signal interpretation from the selected data window.</p>
+          </div>
+        </div>
+        <div class="insights" id="insights"></div>
+      </aside>
+    </main>
+
+    <section class="three" aria-label="Adoption detail charts">
+      <section class="panel spark-panel">
+        <h2>Copilot Adoption</h2>
+        <div class="spark-value" id="seatSparkValue">0</div>
+        <div class="spark-meta">billable seat-months / active users where available</div>
+        <div id="seatSpark"></div>
+      </section>
+      <section class="panel spark-panel">
+        <h2>Premium AI Requests</h2>
+        <div class="spark-value" id="requestSparkValue">0</div>
+        <div class="spark-meta">Copilot premium + coding agent request quantity</div>
+        <div id="requestSpark"></div>
+      </section>
+      <section class="panel spark-panel">
+        <h2>Claude Code Consumption</h2>
+        <div class="spark-value" id="claudeSparkValue">$0</div>
+        <div class="spark-meta">tagged Bedrock inference profile spend</div>
+        <div id="claudeSpark"></div>
+      </section>
+    </section>
+
+    <section class="panel table-panel">
+      <div class="panel-head">
+        <div>
+          <h2>Premium Request Model Mix</h2>
+          <p class="panel-subtitle">Aggregated from the detailed GitHub premium request exports. The selected date range controls the ranking.</p>
+        </div>
+        <div class="pill" id="modelPill">Models loaded</div>
+      </div>
+      <div id="modelChart"></div>
+      <div class="legend" id="modelLegend"></div>
+    </section>
+
+    <section class="grid" style="margin-top:16px;">
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>Correlation Scatter</h2>
+            <p class="panel-subtitle">Each dot is a month with a GitHub output report. Regression updates with the selected AI signal and output metric.</p>
+          </div>
+          <div class="pill" id="scatterPill">r = 0.00</div>
+        </div>
+        <div id="scatterChart"></div>
+      </section>
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>Adoption Mix</h2>
+            <p class="panel-subtitle">The combined adoption index weights Copilot seat-months, premium requests, Claude active users, and Claude spend.</p>
+          </div>
+        </div>
+        <div id="mixChart"></div>
+      </section>
+    </section>
+
+    <section class="panel table-panel">
+      <div class="panel-head">
+        <div>
+          <h2>Monthly Data</h2>
+          <p class="panel-subtitle">Sorted table of the embedded data used by the charts. Click a column header to change the sort.</p>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table id="dataTable"></table>
+      </div>
+    </section>
+
+    <section class="source-note">
+      <strong>Data sources.</strong>
+      GitHub output is parsed from <code>github-reports/*.md</code>. Copilot adoption and premium usage are parsed from <code>usage-reports/usageReport_*.csv</code>, <code>usage-reports/summarizedUsageReport_*.csv</code>, and the detailed premium exports including <code>usage-reports/premium_requests_usage.csv</code>. The April premium/model detail is current through <strong>April 29, 2026</strong>. Claude Code consumption is parsed from the Bedrock cost CSVs in <code>usage-reports</code>. April 2026 GitHub output is included in the LoC correlation and monthly output views.
+    </section>
+  </div>
+  <div class="tooltip" id="tooltip"></div>
+
+  <script>
+    const DATA = {"records":[{"month":"2025-01","label":"Jan 2025","repos":109,"contributors":77,"added":329169,"removed":288906,"net":40263,"totalChurn":618075,"copilotUsers":38,"copilotSeatMonths":37.48,"copilotSeatSource":"usage","premiumRequests":0.0,"codingAgentRequests":0.0,"aiRequests":0.0,"premiumUsers":0,"claudeCost":0.0,"claudeTotalCost":0.0,"claudeUntaggedCost":0.0,"claudeUsers":0,"adoptionIndex":18.6,"topModel":null,"topModelRequests":0,"premiumSource":"usage","hasOutput":true},{"month":"2025-02","label":"Feb 2025","repos":134,"contributors":82,"added":270099,"removed":109451,"net":160648,"totalChurn":379550,"copilotUsers":38,"copilotSeatMonths":37.07,"copilotSeatSource":"usage","premiumRequests":0.0,"codingAgentRequests":0.0,"aiRequests":0.0,"premiumUsers":0,"claudeCost":0.0,"claudeTotalCost":0.0,"claudeUntaggedCost":0.0,"claudeUsers":0,"adoptionIndex":18.4,"topModel":null,"topModelRequests":0,"premiumSource":"usage","hasOutput":true},{"month":"2025-03","label":"Mar 2025","repos":148,"contributors":68,"added":156531,"removed":106266,"net":50265,"totalChurn":262797,"copilotUsers":33,"copilotSeatMonths":33.0,"copilotSeatSource":"usage","premiumRequests":0.0,"codingAgentRequests":0.0,"aiRequests":0.0,"premiumUsers":0,"claudeCost":0.0,"claudeTotalCost":0.0,"claudeUntaggedCost":0.0,"claudeUsers":0,"adoptionIndex":16.4,"topModel":null,"topModelRequests":0,"premiumSource":"usage","hasOutput":true},{"month":"2025-04","label":"Apr 2025","repos":120,"contributors":73,"added":370802,"removed":247055,"net":123747,"totalChurn":617857,"copilotUsers":36,"copilotSeatMonths":34.23,"copilotSeatSource":"usage","premiumRequests":0.0,"codingAgentRequests":0.0,"aiRequests":0.0,"premiumUsers":0,"claudeCost":0.0,"claudeTotalCost":0.0,"claudeUntaggedCost":0.0,"claudeUsers":0,"adoptionIndex":17.0,"topModel":null,"topModelRequests":0,"premiumSource":"usage","hasOutput":true},{"month":"2025-05","label":"May 2025","repos":109,"contributors":72,"added":160024,"removed":78909,"net":81115,"totalChurn":238933,"copilotUsers":36,"copilotSeatMonths":36.0,"copilotSeatSource":"usage","premiumRequests":0.0,"codingAgentRequests":0.0,"aiRequests":0.0,"premiumUsers":0,"claudeCost":0.0,"claudeTotalCost":0.0,"claudeUntaggedCost":0.0,"claudeUsers":0,"adoptionIndex":17.9,"topModel":null,"topModelRequests":0,"premiumSource":"usage","hasOutput":true},{"month":"2025-06","label":"Jun 2025","repos":115,"contributors":72,"added":249247,"removed":119905,"net":129342,"totalChurn":369152,"copilotUsers":37,"copilotSeatMonths":36.6,"copilotSeatSource":"usage","premiumRequests":0.0,"codingAgentRequests":0.0,"aiRequests":0.0,"premiumUsers":0,"claudeCost":0.0,"claudeTotalCost":0.0,"claudeUntaggedCost":0.0,"claudeUsers":0,"adoptionIndex":18.2,"topModel":null,"topModelRequests":0,"premiumSource":"usage","hasOutput":true},{"month":"2025-07","label":"Jul 2025","repos":94,"contributors":70,"added":200405,"removed":93317,"net":107088,"totalChurn":293722,"copilotUsers":37,"copilotSeatMonths":36.9,"copilotSeatSource":"usage","premiumRequests":0.0,"codingAgentRequests":0.0,"aiRequests":0.0,"premiumUsers":0,"claudeCost":0.0,"claudeTotalCost":0.0,"claudeUntaggedCost":0.0,"claudeUsers":0,"adoptionIndex":18.3,"topModel":null,"topModelRequests":0,"premiumSource":"usage","hasOutput":true},{"month":"2025-08","label":"Aug 2025","repos":94,"contributors":79,"added":264904,"removed":60497,"net":204407,"totalChurn":325401,"copilotUsers":39,"copilotSeatMonths":36.39,"copilotSeatSource":"usage","premiumRequests":1396.0,"codingAgentRequests":0.0,"aiRequests":1396.0,"premiumUsers":33,"claudeCost":0.0,"claudeTotalCost":0.0,"claudeUntaggedCost":0.0,"claudeUsers":0,"adoptionIndex":19.1,"topModel":null,"topModelRequests":0,"premiumSource":"usage","hasOutput":true},{"month":"2025-09","label":"Sep 2025","repos":124,"contributors":88,"added":397274,"removed":184989,"net":212285,"totalChurn":582263,"copilotUsers":46,"copilotSeatMonths":38.67,"copilotSeatSource":"usage","premiumRequests":1980.25,"codingAgentRequests":0.0,"aiRequests":1980.25,"premiumUsers":40,"claudeCost":0.0,"claudeTotalCost":0.0,"claudeUntaggedCost":0.0,"claudeUsers":0,"adoptionIndex":20.7,"topModel":null,"topModelRequests":0,"premiumSource":"usage","hasOutput":true},{"month":"2025-10","label":"Oct 2025","repos":162,"contributors":85,"added":649867,"removed":160115,"net":489752,"totalChurn":809982,"copilotUsers":null,"copilotSeatMonths":61.26,"copilotSeatSource":"summarized","premiumRequests":4195.33,"codingAgentRequests":0.0,"aiRequests":4195.33,"premiumUsers":46,"claudeCost":0.0,"claudeTotalCost":0.0,"claudeUntaggedCost":0.0,"claudeUsers":0,"adoptionIndex":33.6,"topModel":"Claude Sonnet 4","topModelRequests":2934.0,"premiumSource":"detailed","hasOutput":true},{"month":"2025-11","label":"Nov 2025","repos":102,"contributors":82,"added":561730,"removed":181623,"net":380107,"totalChurn":743353,"copilotUsers":65,"copilotSeatMonths":63.2,"copilotSeatSource":"usage","premiumRequests":4404.42,"codingAgentRequests":6.0,"aiRequests":4410.42,"premiumUsers":47,"claudeCost":0.0,"claudeTotalCost":0.0,"claudeUntaggedCost":0.0,"claudeUsers":0,"adoptionIndex":34.8,"topModel":"Claude Sonnet 4.5","topModelRequests":2441.0,"premiumSource":"detailed","hasOutput":true},{"month":"2025-12","label":"Dec 2025","repos":100,"contributors":81,"added":449160,"removed":379866,"net":69294,"totalChurn":829026,"copilotUsers":71,"copilotSeatMonths":69.06,"copilotSeatSource":"usage","premiumRequests":3652.99,"codingAgentRequests":6.0,"aiRequests":3658.99,"premiumUsers":51,"claudeCost":0.0,"claudeTotalCost":0.0,"claudeUntaggedCost":0.0,"claudeUsers":0,"adoptionIndex":37.1,"topModel":"Claude Sonnet 4.5","topModelRequests":2085.0,"premiumSource":"detailed","hasOutput":true},{"month":"2026-01","label":"Jan 2026","repos":112,"contributors":86,"added":650607,"removed":279194,"net":371413,"totalChurn":929801,"copilotUsers":73,"copilotSeatMonths":70.32,"copilotSeatSource":"usage","premiumRequests":6078.38,"codingAgentRequests":16.0,"aiRequests":6094.38,"premiumUsers":57,"claudeCost":1805.68,"claudeTotalCost":2155.43,"claudeUntaggedCost":349.75,"claudeUsers":53,"adoptionIndex":64.1,"topModel":"Claude Sonnet 4.5","topModelRequests":4575.0,"premiumSource":"detailed","hasOutput":true},{"month":"2026-02","label":"Feb 2026","repos":121,"contributors":88,"added":1146634,"removed":512188,"net":634446,"totalChurn":1658822,"copilotUsers":78,"copilotSeatMonths":74.79,"copilotSeatSource":"usage","premiumRequests":13253.87,"codingAgentRequests":51.0,"aiRequests":13304.87,"premiumUsers":70,"claudeCost":2225.44,"claudeTotalCost":2626.68,"claudeUntaggedCost":401.24,"claudeUsers":49,"adoptionIndex":71.2,"topModel":"Claude Sonnet 4.5","topModelRequests":5192.0,"premiumSource":"detailed","hasOutput":true},{"month":"2026-03","label":"Mar 2026","repos":186,"contributors":96,"added":2391893,"removed":1077073,"net":1314820,"totalChurn":3468966,"copilotUsers":84,"copilotSeatMonths":80.52,"copilotSeatSource":"usage","premiumRequests":22578.7,"codingAgentRequests":84.0,"aiRequests":22662.7,"premiumUsers":76,"claudeCost":4937.62,"claudeTotalCost":14484.3,"claudeUntaggedCost":9546.68,"claudeUsers":65,"adoptionIndex":93.5,"topModel":"Claude Opus 4.6","topModelRequests":12404.4,"premiumSource":"detailed","hasOutput":true},{"month":"2026-04","label":"Apr 2026","repos":174,"contributors":93,"added":1546638,"removed":1488612,"net":58026,"totalChurn":3035250,"copilotUsers":88,"copilotSeatMonths":45.97,"copilotSeatSource":"usage","premiumRequests":28739.69,"codingAgentRequests":68.0,"aiRequests":28807.69,"premiumUsers":78,"claudeCost":5718.26,"claudeTotalCost":5718.26,"claudeUntaggedCost":0.0,"claudeUsers":65,"adoptionIndex":82.8,"topModel":"Claude Opus 4.6","topModelRequests":10353.0,"premiumSource":"detailed","hasOutput":true}],"modelUsage":[{"month":"2026-02","model":"Claude Haiku 4.5","requests":486.42,"users":29,"cost":0.01},{"month":"2026-02","model":"Claude Sonnet 4.5","requests":5192.0,"users":47,"cost":44.85},{"month":"2026-02","model":"GPT-5","requests":63.0,"users":4,"cost":0.0},{"month":"2026-02","model":"Auto: Claude Haiku 4.5","requests":22.5,"users":10,"cost":0.01},{"month":"2026-02","model":"Auto: Claude Sonnet 4.5","requests":37.8,"users":3,"cost":0.0},{"month":"2026-02","model":"Code Review model","requests":450.0,"users":48,"cost":5.4},{"month":"2026-02","model":"GPT-5.1","requests":43.0,"users":6,"cost":0.0},{"month":"2026-02","model":"Gemini 2.5 Pro","requests":5.0,"users":2,"cost":0.0},{"month":"2026-02","model":"Claude Sonnet 4","requests":186.0,"users":7,"cost":0.32},{"month":"2026-02","model":"Coding Agent model","requests":51.0,"users":12,"cost":0.04},{"month":"2026-02","model":"GPT-5-Codex","requests":9.0,"users":1,"cost":0.0},{"month":"2026-02","model":"Gemini 3 Pro","requests":70.0,"users":4,"cost":0.0},{"month":"2026-02","model":"Claude Opus 4.5","requests":948.0,"users":7,"cost":22.76},{"month":"2026-02","model":"Claude Opus 4.6","requests":4017.0,"users":21,"cost":114.05},{"month":"2026-02","model":"GPT-5.2","requests":178.0,"users":16,"cost":0.16},{"month":"2026-02","model":"GPT-5.2-Codex","requests":6.0,"users":2,"cost":0.0},{"month":"2026-02","model":"Auto: GPT-5.2-Codex","requests":27.9,"users":4,"cost":0.0},{"month":"2026-02","model":"Grok Code Fast 1","requests":7.25,"users":3,"cost":0.0},{"month":"2026-02","model":"GPT-5.3-Codex","requests":205.0,"users":6,"cost":4.2},{"month":"2026-02","model":"Claude Sonnet 4.6","requests":1298.0,"users":28,"cost":16.82},{"month":"2026-02","model":"GPT-5.1-Codex","requests":1.0,"users":1,"cost":0.0},{"month":"2026-02","model":"GPT-5.1-Codex-Max","requests":1.0,"users":1,"cost":0.0},{"month":"2025-11","model":"Claude Sonnet 4.5","requests":2441.0,"users":37,"cost":1.2},{"month":"2025-11","model":"Code Review model","requests":339.0,"users":35,"cost":0.12},{"month":"2025-11","model":"Claude Sonnet 4","requests":1133.0,"users":26,"cost":0.44},{"month":"2025-11","model":"GPT-5","requests":173.0,"users":11,"cost":0.0},{"month":"2025-11","model":"Gemini 2.5 Pro","requests":22.0,"users":2,"cost":0.0},{"month":"2025-11","model":"GPT-5-Codex","requests":10.0,"users":1,"cost":0.0},{"month":"2025-11","model":"Claude Haiku 4.5","requests":222.42,"users":18,"cost":0.0},{"month":"2025-11","model":"Coding Agent model","requests":6.0,"users":5,"cost":0.0},{"month":"2025-11","model":"GPT-5.1","requests":10.0,"users":1,"cost":0.0},{"month":"2025-11","model":"GPT-5.1-Codex","requests":34.0,"users":2,"cost":0.0},{"month":"2025-11","model":"Gemini 3 Pro","requests":20.0,"users":1,"cost":0.0},{"month":"2026-01","model":"Claude Sonnet 4.5","requests":4575.0,"users":43,"cost":31.96},{"month":"2026-01","model":"Code Review model","requests":333.0,"users":35,"cost":1.72},{"month":"2026-01","model":"Auto: Claude Haiku 4.5","requests":11.1,"users":2,"cost":0.0},{"month":"2026-01","model":"Auto: Claude Sonnet 4.5","requests":7.2,"users":1,"cost":0.0},{"month":"2026-01","model":"Claude Haiku 4.5","requests":665.28,"users":31,"cost":0.0},{"month":"2026-01","model":"GPT-4o mini","requests":22.0,"users":5,"cost":0.0},{"month":"2026-01","model":"GPT-5","requests":236.0,"users":7,"cost":0.0},{"month":"2026-01","model":"Gemini 3 Pro","requests":31.0,"users":6,"cost":0.48},{"month":"2026-01","model":"GPT-5.1","requests":68.0,"users":4,"cost":0.0},{"month":"2026-01","model":"Claude Sonnet 4","requests":119.0,"users":7,"cost":0.68},{"month":"2026-01","model":"Coding Agent model","requests":16.0,"users":8,"cost":0.0},{"month":"2026-01","model":"Auto: GPT-5","requests":1.8,"users":1,"cost":0.0},{"month":"2026-01","model":"Gemini 2.5 Pro","requests":1.0,"users":1,"cost":0.0},{"month":"2026-01","model":"GPT-5.1-Codex","requests":8.0,"users":3,"cost":0.0},{"month":"2025-12","model":"Claude Haiku 4.5","requests":759.99,"users":28,"cost":0.17},{"month":"2025-12","model":"Claude Sonnet 4","requests":340.0,"users":12,"cost":0.0},{"month":"2025-12","model":"Claude Sonnet 4.5","requests":2085.0,"users":38,"cost":6.0},{"month":"2025-12","model":"Code Review model","requests":279.0,"users":33,"cost":0.32},{"month":"2025-12","model":"Coding Agent model","requests":6.0,"users":3,"cost":0.0},{"month":"2025-12","model":"GPT-5","requests":22.0,"users":4,"cost":0.0},{"month":"2025-12","model":"GPT-5.1-Codex","requests":47.0,"users":5,"cost":0.0},{"month":"2025-12","model":"GPT-5.1","requests":57.0,"users":7,"cost":0.0},{"month":"2025-12","model":"Gemini 3 Pro","requests":48.0,"users":5,"cost":0.48},{"month":"2025-12","model":"GPT-5-Codex","requests":7.0,"users":1,"cost":0.0},{"month":"2025-12","model":"GPT-4o mini","requests":3.0,"users":2,"cost":0.08},{"month":"2025-12","model":"Gemini 2.5 Pro","requests":5.0,"users":1,"cost":0.0},{"month":"2026-03","model":"Claude Sonnet 4.5","requests":1977.0,"users":34,"cost":27.52},{"month":"2026-03","model":"Code Review model","requests":551.0,"users":44,"cost":7.2},{"month":"2026-03","model":"GPT-5.3-Codex","requests":925.0,"users":18,"cost":11.99},{"month":"2026-03","model":"Claude Haiku 4.5","requests":193.38,"users":32,"cost":1.0},{"month":"2026-03","model":"Claude Opus 4.6","requests":12404.4,"users":28,"cost":388.73},{"month":"2026-03","model":"Claude Sonnet 4","requests":20.0,"users":5,"cost":0.4},{"month":"2026-03","model":"Claude Sonnet 4.6","requests":5107.0,"users":42,"cost":69.99},{"month":"2026-03","model":"GPT-5.1","requests":40.0,"users":3,"cost":0.0},{"month":"2026-03","model":"Auto: Claude Haiku 4.5","requests":38.1,"users":14,"cost":0.68},{"month":"2026-03","model":"Coding Agent model","requests":84.0,"users":17,"cost":1.72},{"month":"2026-03","model":"GPT-5.2","requests":340.0,"users":21,"cost":0.28},{"month":"2026-03","model":"Gemini 3 Flash","requests":2.31,"users":6,"cost":0.0},{"month":"2026-03","model":"Grok Code Fast 1","requests":6.25,"users":3,"cost":0.0},{"month":"2026-03","model":"Claude Opus 4.5","requests":486.0,"users":4,"cost":12.72},{"month":"2026-03","model":"Gemini 3.1 Pro","requests":65.0,"users":2,"cost":1.4},{"month":"2026-03","model":"GPT-5.2-Codex","requests":59.0,"users":2,"cost":0.0},{"month":"2026-03","model":"Auto: Claude Sonnet 4.5","requests":5.4,"users":1,"cost":0.0},{"month":"2026-03","model":"Auto: GPT-5.3-Codex","requests":261.0,"users":20,"cost":5.36},{"month":"2026-03","model":"Auto: Claude Sonnet 4.6","requests":97.2,"users":9,"cost":2.02},{"month":"2026-03","model":"GPT-5.1-Codex-Mini","requests":0.66,"users":1,"cost":0.0},{"month":"2026-04","model":"Code Review model","requests":703.0,"users":43,"cost":8.7},{"month":"2026-04","model":"Claude Haiku 4.5","requests":271.59,"users":31,"cost":0.34},{"month":"2026-04","model":"Claude Opus 4.6","requests":10353.0,"users":35,"cost":264.09},{"month":"2026-04","model":"Claude Sonnet 4.6","requests":6540.0,"users":54,"cost":78.04},{"month":"2026-04","model":"Claude Sonnet 4.5","requests":1548.0,"users":29,"cost":26.68},{"month":"2026-04","model":"Auto: Claude Haiku 4.5","requests":128.1,"users":23,"cost":1.0},{"month":"2026-04","model":"Auto: Claude Sonnet 4.6","requests":228.6,"users":16,"cost":1.76},{"month":"2026-04","model":"Auto: GPT-5.3-Codex","requests":1096.2,"users":27,"cost":9.61},{"month":"2026-04","model":"Coding Agent model","requests":44.0,"users":13,"cost":0.28},{"month":"2026-04","model":"Gemini 3.1 Pro","requests":98.0,"users":4,"cost":1.32},{"month":"2026-04","model":"GPT-5.2","requests":390.0,"users":22,"cost":1.25},{"month":"2026-04","model":"GPT-5.3-Codex","requests":413.0,"users":11,"cost":0.94},{"month":"2026-04","model":"Grok Code Fast 1","requests":5.5,"users":4,"cost":0.0},{"month":"2026-04","model":"Gemini 3 Flash","requests":0.0,"users":4,"cost":0.0},{"month":"2026-04","model":"Claude Opus 4.5","requests":177.0,"users":3,"cost":0.0},{"month":"2026-04","model":"GPT-5.1","requests":10.0,"users":2,"cost":0.0},{"month":"2026-04","model":"Claude Sonnet 4","requests":6.0,"users":2,"cost":0.0},{"month":"2026-04","model":"Gemini 2.5 Pro","requests":1.0,"users":1,"cost":0.0},{"month":"2026-04","model":"Auto: Coding Agent model","requests":24.0,"users":10,"cost":0.32},{"month":"2026-04","model":"GPT-5.2-Codex","requests":3.0,"users":1,"cost":0.0},{"month":"2026-04","model":"Auto: GPT-5.4","requests":70.2,"users":12,"cost":1.33},{"month":"2026-04","model":"GPT-5.4","requests":135.0,"users":7,"cost":1.72},{"month":"2026-04","model":"Claude Opus 4.7","requests":6562.5,"users":9,"cost":253.34},{"month":"2025-10","model":"Claude Sonnet 3.5","requests":39.0,"users":3,"cost":0.0},{"month":"2025-10","model":"Claude Sonnet 4","requests":2934.0,"users":35,"cost":0.0},{"month":"2025-10","model":"Code Review model","requests":272.0,"users":33,"cost":0.0},{"month":"2025-10","model":"Claude Sonnet 4.5","requests":842.0,"users":25,"cost":0.0},{"month":"2025-10","model":"GPT-5","requests":83.0,"users":6,"cost":0.0},{"month":"2025-10","model":"o3-mini","requests":0.33,"users":1,"cost":0.0},{"month":"2025-10","model":"Gemini 2.5 Pro","requests":16.0,"users":3,"cost":0.0},{"month":"2025-10","model":"Claude Sonnet 3.7","requests":9.0,"users":2,"cost":0.0}],"stats":{"allCorrelation":0.927,"rolloutCorrelation":0.902,"premiumCorrelation":0.89,"claudeCorrelation":0.896,"baselineAvgAdded":248040,"aiAvgAdded":1433943,"outputMultiplier":5.8,"peakMonth":"Mar 2026","peakAdded":2391893,"latestOutputMonth":"Apr 2026","latestOutputAdded":1546638,"latestOutputNet":58026,"dataCurrentThrough":"2026-05-01"}};
+
+    const labels = {
+      added: "Lines added",
+      net: "Net LoC",
+      totalChurn: "Total changed LoC",
+      adoptionIndex: "AI adoption index",
+      aiRequests: "AI premium requests",
+      claudeCost: "Claude Code spend",
+      copilotSeatMonths: "Copilot seat-months"
+    };
+
+    const colors = {
+      output: "#2b72b2",
+      signal: "#2fcb40",
+      signalAlt: "#57c2b4",
+      amber: "#ffa539",
+      navy: "#1b2b54",
+      grid: "#e5ebf2",
+      slate: "#686f83"
+    };
+
+    const state = {
+      range: "all",
+      outputMetric: "added",
+      signalMetric: "adoptionIndex",
+      sortKey: "label",
+      sortDir: "asc"
+    };
+
+    const tooltip = document.getElementById("tooltip");
+
+    function formatNumber(value, digits = 0) {
+      if (value === null || value === undefined || Number.isNaN(value)) return "n/a";
+      return new Intl.NumberFormat("en-US", { maximumFractionDigits: digits, minimumFractionDigits: digits }).format(value);
+    }
+
+    function compact(value) {
+      if (value === null || value === undefined || Number.isNaN(value)) return "n/a";
+      const abs = Math.abs(value);
+      if (abs >= 1000000) return `${(value / 1000000).toFixed(abs >= 10000000 ? 0 : 1)}M`;
+      if (abs >= 1000) return `${(value / 1000).toFixed(abs >= 10000 ? 0 : 1)}K`;
+      return `${Math.round(value)}`;
+    }
+
+    function currency(value) {
+      if (value === null || value === undefined || Number.isNaN(value)) return "n/a";
+      if (Math.abs(value) >= 1000) return `$${(value / 1000).toFixed(1)}K`;
+      return `$${value.toFixed(0)}`;
+    }
+
+    function currentRecords() {
+      return DATA.records.filter((row) => {
+        if (state.range === "output") return row.hasOutput;
+        if (state.range === "rollout") return row.month >= "2025-08" && row.hasOutput;
+        if (state.range === "ytd") return row.month >= "2026-01";
+        return true;
+      });
+    }
+
+    function chartRecords() {
+      return currentRecords();
+    }
+
+    function outputRecords(rows = currentRecords()) {
+      return rows.filter((row) => row.hasOutput && row[state.outputMetric] !== null && row[state.outputMetric] !== undefined);
+    }
+
+    function pearson(rows, xKey, yKey) {
+      const pairs = rows
+        .map((row) => [Number(row[xKey]), Number(row[yKey])])
+        .filter(([x, y]) => Number.isFinite(x) && Number.isFinite(y));
+      if (pairs.length < 2) return 0;
+      const meanX = pairs.reduce((sum, [x]) => sum + x, 0) / pairs.length;
+      const meanY = pairs.reduce((sum, [, y]) => sum + y, 0) / pairs.length;
+      const numerator = pairs.reduce((sum, [x, y]) => sum + (x - meanX) * (y - meanY), 0);
+      const denX = Math.sqrt(pairs.reduce((sum, [x]) => sum + (x - meanX) ** 2, 0));
+      const denY = Math.sqrt(pairs.reduce((sum, [, y]) => sum + (y - meanY) ** 2, 0));
+      return denX && denY ? numerator / (denX * denY) : 0;
+    }
+
+    function regression(rows, xKey, yKey) {
+      const pairs = rows
+        .map((row) => [Number(row[xKey]), Number(row[yKey])])
+        .filter(([x, y]) => Number.isFinite(x) && Number.isFinite(y));
+      if (pairs.length < 2) return { slope: 0, intercept: 0 };
+      const meanX = pairs.reduce((sum, [x]) => sum + x, 0) / pairs.length;
+      const meanY = pairs.reduce((sum, [, y]) => sum + y, 0) / pairs.length;
+      const numerator = pairs.reduce((sum, [x, y]) => sum + (x - meanX) * (y - meanY), 0);
+      const denominator = pairs.reduce((sum, [x]) => sum + (x - meanX) ** 2, 0);
+      const slope = denominator ? numerator / denominator : 0;
+      return { slope, intercept: meanY - slope * meanX };
+    }
+
+    function showTooltip(event, html) {
+      tooltip.innerHTML = html;
+      tooltip.classList.add("show");
+      tooltip.style.left = `${event.clientX}px`;
+      tooltip.style.top = `${event.clientY}px`;
+    }
+
+    function hideTooltip() {
+      tooltip.classList.remove("show");
+    }
+
+    function svgEl(tag, attrs = {}, children = []) {
+      const el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+      Object.entries(attrs).forEach(([key, value]) => {
+        if (value !== null && value !== undefined) el.setAttribute(key, value);
+      });
+      children.forEach((child) => el.appendChild(child));
+      return el;
+    }
+
+    function makeText(text, attrs) {
+      const el = svgEl("text", attrs);
+      el.textContent = text;
+      return el;
+    }
+
+    function renderKpis() {
+      const rows = outputRecords(DATA.records);
+      const latest = rows[rows.length - 1];
+      const march = DATA.records.find((row) => row.month === "2026-03");
+      const april = DATA.records.find((row) => row.month === "2026-04");
+      const updatedAsOf = DATA.stats.dataCurrentThrough ? new Date(`${DATA.stats.dataCurrentThrough}T00:00:00`).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }) : "April 29, 2026";
+      const updatedEl = document.getElementById("updatedAsOf");
+      if (updatedEl) updatedEl.innerHTML = `<span>Updated as of</span> ${updatedAsOf}`;
+      const kpis = [
+        {
+          label: "Average output lift",
+          value: `${DATA.stats.outputMultiplier}x`,
+          detail: `${compact(DATA.stats.aiAvgAdded)} avg lines added in Jan-Mar 2026 vs ${compact(DATA.stats.baselineAvgAdded)} baseline.`
+        },
+        {
+          label: "AI index correlation",
+          value: `r ${DATA.stats.rolloutCorrelation.toFixed(2)}`,
+          detail: "Correlation between adoption index and lines added during the AI rollout window."
+        },
+        {
+          label: "Peak monthly output",
+          value: compact(DATA.stats.peakAdded),
+          detail: `${DATA.stats.peakMonth}: ${compact(latest.net)} net LoC across ${latest.repos} repos.`
+        },
+        {
+          label: "Current premium usage",
+          value: compact(april.aiRequests),
+          detail: `Through Apr 29: ${april.premiumUsers} premium users; top model ${april.topModel} at ${compact(april.topModelRequests)} requests.`
+        }
+      ];
+      document.getElementById("kpis").innerHTML = kpis.map((kpi) => `
+        <article class="kpi">
+          <div class="label">${kpi.label}</div>
+          <div class="value">${kpi.value}</div>
+          <div class="detail">${kpi.detail}</div>
+        </article>
+      `).join("");
+      void march;
+    }
+
+    function renderCombo() {
+      const rows = chartRecords();
+      const outRows = rows.filter((row) => row[state.outputMetric] !== null && row[state.outputMetric] !== undefined);
+      const width = 920;
+      const height = 420;
+      const margin = { top: 24, right: 72, bottom: 66, left: 78 };
+      const plotW = width - margin.left - margin.right;
+      const plotH = height - margin.top - margin.bottom;
+      const outputMax = Math.max(...outRows.map((row) => Math.max(0, row[state.outputMetric] || 0)), 1);
+      const signalMax = Math.max(...rows.map((row) => Math.max(0, row[state.signalMetric] || 0)), 1);
+      const xStep = plotW / Math.max(rows.length, 1);
+      const barW = Math.max(10, Math.min(42, xStep * 0.58));
+      const x = (index) => margin.left + index * xStep + xStep / 2;
+      const yOut = (value) => margin.top + plotH - (Math.max(0, value) / outputMax) * plotH;
+      const ySignal = (value) => margin.top + plotH - (Math.max(0, value) / signalMax) * plotH;
+
+      const svg = svgEl("svg", { class: "chart", viewBox: `0 0 ${width} ${height}`, role: "img", "aria-label": "AI adoption and engineering output over time" });
+      for (let i = 0; i <= 4; i += 1) {
+        const y = margin.top + (plotH / 4) * i;
+        svg.appendChild(svgEl("line", { class: "gridline", x1: margin.left, y1: y, x2: width - margin.right, y2: y }));
+        svg.appendChild(makeText(compact(outputMax * (1 - i / 4)), { class: "axis-label", x: margin.left - 12, y: y + 4, "text-anchor": "end" }));
+        svg.appendChild(makeText(compact(signalMax * (1 - i / 4)), { class: "axis-label", x: width - margin.right + 12, y: y + 4 }));
+      }
+
+      rows.forEach((row, index) => {
+        const value = row[state.outputMetric];
+        if (value !== null && value !== undefined) {
+          const barHeight = margin.top + plotH - yOut(value);
+          const rect = svgEl("rect", {
+            x: x(index) - barW / 2,
+            y: yOut(value),
+            width: barW,
+            height: Math.max(1, barHeight),
+            rx: 5,
+            fill: row.month >= "2026-01" ? colors.cobalt : "#8db7db"
+          });
+          rect.addEventListener("mousemove", (event) => showTooltip(event, tooltipFor(row)));
+          rect.addEventListener("mouseleave", hideTooltip);
+          svg.appendChild(rect);
+        }
+      });
+
+      const points = rows.map((row, index) => [x(index), ySignal(row[state.signalMetric] || 0), row]).filter(([, y]) => Number.isFinite(y));
+      if (points.length) {
+        const path = points.map(([px, py], index) => `${index ? "L" : "M"}${px.toFixed(1)} ${py.toFixed(1)}`).join(" ");
+        svg.appendChild(svgEl("path", { d: path, fill: "none", stroke: colors.signal, "stroke-width": 4, "stroke-linecap": "round", "stroke-linejoin": "round" }));
+        points.forEach(([px, py, row]) => {
+          const dot = svgEl("circle", { cx: px, cy: py, r: 5.5, fill: "#fff", stroke: colors.signal, "stroke-width": 3 });
+          dot.addEventListener("mousemove", (event) => showTooltip(event, tooltipFor(row)));
+          dot.addEventListener("mouseleave", hideTooltip);
+          svg.appendChild(dot);
+        });
+      }
+
+      rows.forEach((row, index) => {
+        const tick = makeText(row.label.replace(" ", "\n"), { class: "axis-label", x: x(index), y: height - 38, "text-anchor": "middle" });
+        const isEndpoint = index === 0 || index === rows.length - 1;
+        if (rows.length > 12 && index % 2 && !isEndpoint) tick.setAttribute("opacity", "0");
+        svg.appendChild(tick);
+      });
+      svg.appendChild(makeText(labels[state.outputMetric], { class: "chart-title", x: margin.left, y: 16 }));
+      svg.appendChild(makeText(labels[state.signalMetric], { class: "chart-title", x: width - margin.right, y: 16, "text-anchor": "end" }));
+      document.getElementById("comboChart").replaceChildren(svg);
+      document.getElementById("comboLegend").innerHTML = `
+        <span><i class="swatch" style="background:${colors.output}"></i>${labels[state.outputMetric]}</span>
+        <span><i class="swatch" style="background:${colors.signal}"></i>${labels[state.signalMetric]}</span>
+        <span><i class="swatch" style="background:#8db7db"></i>2025 output</span>
+      `;
+
+      const corr = pearson(outputRecords(rows), state.signalMetric, state.outputMetric);
+      document.getElementById("corrPill").textContent = `r = ${corr.toFixed(2)}`;
+    }
+
+    function renderScatter() {
+      const rows = outputRecords(currentRecords());
+      const width = 700;
+      const height = 390;
+      const margin = { top: 18, right: 28, bottom: 62, left: 78 };
+      const plotW = width - margin.left - margin.right;
+      const plotH = height - margin.top - margin.bottom;
+      const xs = rows.map((row) => row[state.signalMetric] || 0);
+      const ys = rows.map((row) => row[state.outputMetric] || 0);
+      const xMax = Math.max(...xs, 1);
+      const yMax = Math.max(...ys, 1);
+      const xScale = (value) => margin.left + (value / xMax) * plotW;
+      const yScale = (value) => margin.top + plotH - (value / yMax) * plotH;
+      const svg = svgEl("svg", { class: "chart", viewBox: `0 0 ${width} ${height}`, role: "img", "aria-label": "Correlation scatter plot" });
+
+      for (let i = 0; i <= 4; i += 1) {
+        const y = margin.top + (plotH / 4) * i;
+        const x = margin.left + (plotW / 4) * i;
+        svg.appendChild(svgEl("line", { class: "gridline", x1: margin.left, y1: y, x2: width - margin.right, y2: y }));
+        svg.appendChild(svgEl("line", { class: "gridline", x1: x, y1: margin.top, x2: x, y2: height - margin.bottom, opacity: 0.55 }));
+        svg.appendChild(makeText(compact(yMax * (1 - i / 4)), { class: "axis-label", x: margin.left - 12, y: y + 4, "text-anchor": "end" }));
+        svg.appendChild(makeText(compact(xMax * (i / 4)), { class: "axis-label", x, y: height - margin.bottom + 24, "text-anchor": "middle" }));
+      }
+
+      const fit = regression(rows, state.signalMetric, state.outputMetric);
+      const x1 = 0;
+      const x2 = xMax;
+      const y1 = Math.max(0, fit.intercept + fit.slope * x1);
+      const y2 = Math.max(0, fit.intercept + fit.slope * x2);
+      svg.appendChild(svgEl("line", { x1: xScale(x1), y1: yScale(y1), x2: xScale(x2), y2: yScale(y2), stroke: colors.amber, "stroke-width": 4, "stroke-linecap": "round" }));
+
+      rows.forEach((row) => {
+        const dot = svgEl("circle", {
+          cx: xScale(row[state.signalMetric] || 0),
+          cy: yScale(row[state.outputMetric] || 0),
+          r: row.month >= "2026-01" ? 8 : 6,
+          fill: row.month >= "2026-01" ? colors.lime : colors.cobalt,
+          opacity: 0.9
+        });
+        dot.addEventListener("mousemove", (event) => showTooltip(event, tooltipFor(row)));
+        dot.addEventListener("mouseleave", hideTooltip);
+        svg.appendChild(dot);
+      });
+
+      svg.appendChild(makeText(labels[state.signalMetric], { class: "axis-label", x: margin.left + plotW / 2, y: height - 12, "text-anchor": "middle" }));
+      svg.appendChild(makeText(labels[state.outputMetric], { class: "axis-label", x: 16, y: margin.top + plotH / 2, transform: `rotate(-90 16 ${margin.top + plotH / 2})`, "text-anchor": "middle" }));
+      document.getElementById("scatterChart").replaceChildren(svg);
+      document.getElementById("scatterPill").textContent = `r = ${pearson(rows, state.signalMetric, state.outputMetric).toFixed(2)}`;
+    }
+
+    function renderSpark(containerId, valueId, key, color, formatter) {
+      const rows = currentRecords();
+      const width = 360;
+      const height = 150;
+      const margin = { top: 12, right: 16, bottom: 34, left: 42 };
+      const plotW = width - margin.left - margin.right;
+      const plotH = height - margin.top - margin.bottom;
+      const max = Math.max(...rows.map((row) => row[key] || 0), 1);
+      const xStep = plotW / Math.max(rows.length - 1, 1);
+      const x = (i) => margin.left + i * xStep;
+      const y = (value) => margin.top + plotH - (Math.max(0, value) / max) * plotH;
+      const svg = svgEl("svg", { class: "chart", viewBox: `0 0 ${width} ${height}`, role: "img" });
+      const areaPoints = rows.map((row, i) => `${x(i).toFixed(1)},${y(row[key] || 0).toFixed(1)}`).join(" ");
+      const baseline = `${x(rows.length - 1)},${margin.top + plotH} ${x(0)},${margin.top + plotH}`;
+      svg.appendChild(svgEl("polygon", { points: `${areaPoints} ${baseline}`, fill: color, opacity: 0.13 }));
+      svg.appendChild(svgEl("polyline", { points: areaPoints, fill: "none", stroke: color, "stroke-width": 4, "stroke-linecap": "round", "stroke-linejoin": "round" }));
+      rows.forEach((row, i) => {
+        const circle = svgEl("circle", { cx: x(i), cy: y(row[key] || 0), r: 4, fill: "#fff", stroke: color, "stroke-width": 2 });
+        circle.addEventListener("mousemove", (event) => showTooltip(event, tooltipFor(row)));
+        circle.addEventListener("mouseleave", hideTooltip);
+        svg.appendChild(circle);
+        if (i === 0 || i === rows.length - 1) {
+          svg.appendChild(makeText(row.label, { class: "axis-label", x: x(i), y: height - 8, "text-anchor": i === 0 ? "start" : "end" }));
+        }
+      });
+      document.getElementById(containerId).replaceChildren(svg);
+      const latest = [...rows].reverse().find((row) => (row[key] || 0) > 0) || rows[rows.length - 1];
+      document.getElementById(valueId).textContent = formatter(latest ? latest[key] : 0);
+    }
+
+    function selectedMonths() {
+      return new Set(currentRecords().map((row) => row.month));
+    }
+
+    function renderModelChart() {
+      const months = selectedMonths();
+      const byModel = new Map();
+      (DATA.modelUsage || []).forEach((item) => {
+        if (!months.has(item.month)) return;
+        const current = byModel.get(item.model) || { model: item.model, requests: 0, users: 0, cost: 0, months: new Set() };
+        current.requests += item.requests || 0;
+        current.users += item.users || 0;
+        current.cost += item.cost || 0;
+        current.months.add(item.month);
+        byModel.set(item.model, current);
+      });
+      const rows = [...byModel.values()]
+        .sort((a, b) => b.requests - a.requests)
+        .slice(0, 12);
+      const width = 1080;
+      const rowH = 30;
+      const height = Math.max(170, rows.length * rowH + 76);
+      const margin = { top: 14, right: 116, bottom: 34, left: 250 };
+      const plotW = width - margin.left - margin.right;
+      const max = Math.max(...rows.map((row) => row.requests), 1);
+      const svg = svgEl("svg", { class: "chart", viewBox: `0 0 ${width} ${height}`, role: "img", "aria-label": "Premium request model mix" });
+      rows.forEach((row, index) => {
+        const y = margin.top + index * rowH;
+        const barW = Math.max(2, (row.requests / max) * plotW);
+        const fill = index === 0 ? colors.navy : index % 3 === 1 ? colors.cobalt : index % 3 === 2 ? colors.signalAlt : colors.amber;
+        const label = row.model.length > 34 ? `${row.model.slice(0, 33)}...` : row.model;
+        svg.appendChild(makeText(label, { class: "axis-label", x: margin.left - 12, y: y + 19, "text-anchor": "end" }));
+        const rect = svgEl("rect", { x: margin.left, y: y + 4, width: barW, height: 18, rx: 5, fill, opacity: 0.92 });
+        rect.addEventListener("mousemove", (event) => showTooltip(event, `
+          <strong>${row.model}</strong>
+          Requests: ${formatNumber(row.requests, 1)}<br>
+          Cost: ${currency(row.cost)}<br>
+          Reporting months: ${row.months.size}
+        `));
+        rect.addEventListener("mouseleave", hideTooltip);
+        svg.appendChild(rect);
+        svg.appendChild(makeText(formatNumber(row.requests, 1), { class: "axis-label", x: margin.left + barW + 8, y: y + 19 }));
+      });
+      if (!rows.length) {
+        svg.appendChild(makeText("No detailed model data is available for this selection.", { class: "axis-label", x: margin.left, y: 78 }));
+      }
+      svg.appendChild(makeText("Premium request quantity by model", { class: "axis-label", x: margin.left, y: height - 10 }));
+      document.getElementById("modelChart").replaceChildren(svg);
+      const total = rows.reduce((sum, row) => sum + row.requests, 0);
+      const selected = currentRecords();
+      const rangeLabel = selected.length ? `${selected[0].label}-${selected[selected.length - 1].label}` : "";
+      document.getElementById("modelPill").textContent = rows.length ? `${rows.length} models · ${compact(total)} top-model requests · ${rangeLabel}` : "No model detail";
+      document.getElementById("modelLegend").innerHTML = `
+        <span><i class="swatch" style="background:${colors.navy}"></i>Top model</span>
+        <span><i class="swatch" style="background:${colors.cobalt}"></i>Claude/GitHub premium detail</span>
+        <span><i class="swatch" style="background:${colors.amber}"></i>Costs are GitHub premium request cost, not Bedrock spend</span>
+      `;
+    }
+
+    function renderMix() {
+      const rows = currentRecords();
+      const width = 520;
+      const height = 360;
+      const margin = { top: 16, right: 20, bottom: 68, left: 58 };
+      const plotW = width - margin.left - margin.right;
+      const plotH = height - margin.top - margin.bottom;
+      const max = Math.max(...rows.map((row) => row.adoptionIndex || 0), 1);
+      const xStep = plotW / Math.max(rows.length, 1);
+      const barW = Math.max(10, Math.min(32, xStep * 0.58));
+      const y = (value) => margin.top + plotH - (value / max) * plotH;
+      const svg = svgEl("svg", { class: "chart", viewBox: `0 0 ${width} ${height}`, role: "img", "aria-label": "Adoption index by month" });
+      for (let i = 0; i <= 4; i += 1) {
+        const yy = margin.top + (plotH / 4) * i;
+        svg.appendChild(svgEl("line", { class: "gridline", x1: margin.left, y1: yy, x2: width - margin.right, y2: yy }));
+        svg.appendChild(makeText(formatNumber(max * (1 - i / 4), 0), { class: "axis-label", x: margin.left - 12, y: yy + 4, "text-anchor": "end" }));
+      }
+      rows.forEach((row, i) => {
+        const px = margin.left + i * xStep + xStep / 2;
+        const rect = svgEl("rect", {
+          x: px - barW / 2,
+          y: y(row.adoptionIndex || 0),
+          width: barW,
+          height: margin.top + plotH - y(row.adoptionIndex || 0),
+          rx: 5,
+          fill: i % 3 === 0 ? colors.navy : i % 3 === 1 ? colors.cobalt : colors.signalAlt,
+          opacity: row.hasOutput ? 0.95 : 0.55
+        });
+        rect.addEventListener("mousemove", (event) => showTooltip(event, tooltipFor(row)));
+        rect.addEventListener("mouseleave", hideTooltip);
+        svg.appendChild(rect);
+        if (rows.length <= 10 || i % 2 === 0 || i === 0 || i === rows.length - 1) {
+          svg.appendChild(makeText(row.label, { class: "axis-label", x: px, y: height - 38, "text-anchor": "middle" }));
+        }
+      });
+      svg.appendChild(makeText("0-100 weighted index", { class: "axis-label", x: margin.left, y: height - 10 }));
+      document.getElementById("mixChart").replaceChildren(svg);
+    }
+
+    function renderInsights() {
+      const rows = outputRecords(currentRecords());
+      const first = rows[0];
+      const last = rows[rows.length - 1];
+      const avg = rows.length ? rows.reduce((sum, row) => sum + row[state.outputMetric], 0) / rows.length : 0;
+      const corr = pearson(rows, state.signalMetric, state.outputMetric);
+      const maxRow = rows.reduce((best, row) => row[state.outputMetric] > best[state.outputMetric] ? row : best, rows[0] || DATA.records[0]);
+      document.getElementById("insights").innerHTML = [
+        {
+          title: `${labels[state.outputMetric]} averaged ${compact(avg)}`,
+          text: `${first ? first.label : "n/a"} to ${last ? last.label : "n/a"} includes ${rows.length} output months; peak is ${maxRow.label} at ${compact(maxRow[state.outputMetric])}.`
+        },
+        {
+          title: `${labels[state.signalMetric]} correlation is r ${corr.toFixed(2)}`,
+          text: "The relationship is strongly positive in the selected window. This is evidence of association, with delivery mix and repo composition still acting as confounders."
+        },
+        {
+          title: "AI request volume inflects before the output jump",
+          text: "Premium requests appear in August 2025, step up through Q4, and then expand sharply in February and March 2026."
+        },
+        {
+          title: "Claude Code expands the adoption surface",
+          text: "Tagged Claude consumption begins in January 2026 and reaches 65 active users by March, coinciding with the highest LoC output month."
+        }
+      ].map((item) => `
+        <div class="insight">
+          <strong>${item.title}</strong>
+          <p>${item.text}</p>
+        </div>
+      `).join("");
+    }
+
+    function tooltipFor(row) {
+      return `
+        <strong>${row.label}${row.hasOutput ? "" : " · adoption only"}</strong>
+        ${labels[state.outputMetric]}: ${row[state.outputMetric] === null ? "n/a" : compact(row[state.outputMetric])}<br>
+        Adoption index: ${formatNumber(row.adoptionIndex, 1)}<br>
+        Copilot seats: ${formatNumber(row.copilotSeatMonths, 1)}${row.copilotUsers ? ` · ${row.copilotUsers} users` : ""}<br>
+        AI requests: ${compact(row.aiRequests)} · premium users: ${row.premiumUsers}<br>
+        Top model: ${row.topModel ? `${row.topModel} (${compact(row.topModelRequests)})` : "n/a"}<br>
+        Claude: ${currency(row.claudeCost)} · ${row.claudeUsers} users
+      `;
+    }
+
+    function renderTable() {
+      const headers = [
+        ["label", "Month"],
+        ["added", "Added"],
+        ["net", "Net"],
+        ["totalChurn", "Changed"],
+        ["contributors", "Contrib."],
+        ["repos", "Repos"],
+        ["copilotSeatMonths", "Copilot Seats"],
+        ["aiRequests", "AI Requests"],
+        ["premiumUsers", "AI Users"],
+        ["topModelRequests", "Top Model Qty"],
+        ["claudeCost", "Claude $"],
+        ["claudeUsers", "Claude Users"],
+        ["adoptionIndex", "Index"]
+      ];
+      const rows = [...currentRecords()].sort((a, b) => {
+        const av = a[state.sortKey];
+        const bv = b[state.sortKey];
+        if (state.sortKey === "label") return state.sortDir === "asc" ? a.month.localeCompare(b.month) : b.month.localeCompare(a.month);
+        const na = av === null || av === undefined ? -Infinity : av;
+        const nb = bv === null || bv === undefined ? -Infinity : bv;
+        return state.sortDir === "asc" ? na - nb : nb - na;
+      });
+      const head = `<thead><tr>${headers.map(([key, label]) => `<th data-key="${key}">${label}${state.sortKey === key ? (state.sortDir === "asc" ? " ↑" : " ↓") : ""}</th>`).join("")}</tr></thead>`;
+      const body = `<tbody>${rows.map((row) => `
+        <tr>
+          <td>${row.label}${row.hasOutput ? "" : " · MTD"}</td>
+          <td>${row.added === null ? "n/a" : formatNumber(row.added)}</td>
+          <td>${row.net === null ? "n/a" : formatNumber(row.net)}</td>
+          <td>${row.totalChurn === null ? "n/a" : formatNumber(row.totalChurn)}</td>
+          <td>${row.contributors === null ? "n/a" : formatNumber(row.contributors)}</td>
+          <td>${row.repos === null ? "n/a" : formatNumber(row.repos)}</td>
+          <td>${formatNumber(row.copilotSeatMonths, 1)}${row.copilotSeatSource === "summarized" ? " *" : ""}</td>
+          <td>${formatNumber(row.aiRequests, 1)}</td>
+          <td>${formatNumber(row.premiumUsers)}</td>
+          <td>${row.topModel ? `${formatNumber(row.topModelRequests, 1)} · ${row.topModel}` : "n/a"}</td>
+          <td>${currency(row.claudeCost)}</td>
+          <td>${formatNumber(row.claudeUsers)}</td>
+          <td>${formatNumber(row.adoptionIndex, 1)}</td>
+        </tr>
+      `).join("")}</tbody>`;
+      const table = document.getElementById("dataTable");
+      table.innerHTML = head + body;
+      table.querySelectorAll("th").forEach((th) => {
+        th.addEventListener("click", () => {
+          const key = th.dataset.key;
+          if (state.sortKey === key) state.sortDir = state.sortDir === "asc" ? "desc" : "asc";
+          else {
+            state.sortKey = key;
+            state.sortDir = key === "label" ? "asc" : "desc";
+          }
+          renderTable();
+        });
+      });
+    }
+
+    function renderAll() {
+      renderKpis();
+      renderCombo();
+      renderInsights();
+      renderSpark("seatSpark", "seatSparkValue", "copilotSeatMonths", colors.cobalt, (value) => formatNumber(value, 1));
+      renderSpark("requestSpark", "requestSparkValue", "aiRequests", colors.lime, compact);
+      renderSpark("claudeSpark", "claudeSparkValue", "claudeCost", colors.amber, currency);
+      renderModelChart();
+      renderScatter();
+      renderMix();
+      renderTable();
+    }
+
+    document.getElementById("rangeButtons").addEventListener("click", (event) => {
+      const button = event.target.closest("button[data-range]");
+      if (!button) return;
+      state.range = button.dataset.range;
+      document.querySelectorAll("#rangeButtons button").forEach((btn) => btn.classList.toggle("active", btn === button));
+      renderAll();
+    });
+
+    document.getElementById("outputMetric").addEventListener("change", (event) => {
+      state.outputMetric = event.target.value;
+      renderAll();
+    });
+
+    document.getElementById("signalMetric").addEventListener("change", (event) => {
+      state.signalMetric = event.target.value;
+      renderAll();
+    });
+
+    window.addEventListener("resize", () => hideTooltip());
+    renderAll();
+  </script>
+</body>
+</html>
