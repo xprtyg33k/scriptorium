@@ -10,7 +10,7 @@ set -euo pipefail
 #   - Already configured properly
 # =============================================================================
 
-PROFILE="experity-dev"
+PROFILE="enterprise-dev"
 REGION="us-east-1"
 
 # -- Colors -------------------------------------------------------------------
@@ -143,7 +143,7 @@ check_shell_env() {
         *)    local shell_rc="$HOME/.profile"  ;;
     esac
 
-    local marker="# >>> Claude Code Bedrock (experity-dev) >>>"
+    local marker="# >>> Claude Code Bedrock"
 
     if [[ ! -f "$shell_rc" ]] || ! grep -qF "$marker" "$shell_rc" 2>/dev/null; then
         warn "Bedrock environment variables not found in $shell_rc"
