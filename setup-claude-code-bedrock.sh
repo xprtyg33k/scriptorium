@@ -5,14 +5,14 @@ set -euo pipefail
 # Claude Code + AWS Bedrock — One-Shot Setup Script
 # =============================================================================
 # Configures:
-#   1. AWS CLI profile "experity-dev" (us-east-1, json output)
+#   1. AWS CLI profile "enterprise-dev" (us-east-1, json output)
 #   2. Verifies AWS identity via STS
 #   3. Queries Bedrock inference profiles and extracts ARNs
 #   4. Writes ~/.claude/settings.json with Bedrock env vars + model config
 #   5. Appends Bedrock env block to shell RC file (idempotent)
 # =============================================================================
 
-PROFILE="experity-dev"
+PROFILE="enterprise-dev"
 REGION="us-east-1"
 ACCOUNT_ID="276772386143"
 
@@ -182,9 +182,8 @@ case "$(basename "${SHELL:-}")" in
     bash) SHELL_RC="$HOME/.bashrc"   ;;
     *)    SHELL_RC="$HOME/.profile"  ;;
 esac
-MARKER="# >>> Claude Code Bedrock (experity-dev) >>>"
-
-MARKER_END="# <<< Claude Code Bedrock (experity-dev) <<<"
+MARKER="# >>> Claude Code Bedrock (Enterprise) >>>"
+MARKER_END="# <<< Claude Code Bedrock (Enterprise) <<<"
 
 # Remove existing block if present (so re-runs always refresh)
 if grep -qF "${MARKER}" "${SHELL_RC}" 2>/dev/null; then
@@ -197,7 +196,7 @@ fi
 info "Appending Bedrock environment variables to ${SHELL_RC}"
 cat >> "${SHELL_RC}" <<ZSHRC_EOF
 
-${MARKER}
+# >>> Claude Code Bedrock (Enterprise) >>>
 export CLAUDE_CODE_USE_BEDROCK=1
 export CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1
 export AWS_REGION=${REGION}
@@ -217,7 +216,7 @@ export ANTHROPIC_DEFAULT_OPUS_MODEL_DESCRIPTION="Claude Opus 4.6 via AWS Bedrock
 export ANTHROPIC_DEFAULT_OPUS_MODEL_SUPPORTED_CAPABILITIES="effort,max_effort,thinking,adaptive_thinking,interleaved_thinking"
 export CLAUDE_CODE_MAX_OUTPUT_TOKENS=32000
 export MAX_THINKING_TOKENS=8000
-${MARKER_END}
+# <<< Claude Code Bedrock (Enterprise) <<<
 ZSHRC_EOF
 ok "Environment variables appended to ${SHELL_RC}"
 

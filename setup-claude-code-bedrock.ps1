@@ -5,7 +5,7 @@
 
 .DESCRIPTION
     Configures:
-      1. AWS CLI profile "experity-dev" (us-east-1, json output)
+      1. AWS CLI profile "enterprise-dev" (us-east-1, json output)
       2. Verifies AWS identity via STS
       3. Derives sanitized username and queries user-scoped Bedrock inference profiles
       4. Writes ~/.claude/settings.json with Bedrock env vars + model config
@@ -22,7 +22,7 @@ $ErrorActionPreference = 'Stop'
 # Constants
 # =============================================================================
 # AWS profile name (trailing underscore avoids collision with PowerShell's automatic $PROFILE variable)
-$Profile_   = 'experity-dev'
+$Profile_   = 'enterprise-dev'
 $Region     = 'us-east-1'
 $AccountId  = '276772386143'
 

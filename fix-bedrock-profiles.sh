@@ -8,11 +8,11 @@ set -euo pipefail
 # Use this after the initial setup if you suspect the configured ARNs belong
 # to another user's inference profiles.
 #
-# Prerequisites: AWS profile "experity-dev" must already be configured with
+# Prerequisites: AWS profile "enterprise-dev" must already be configured with
 #                valid credentials (run setup-claude-code-bedrock.sh first).
 # =============================================================================
 
-PROFILE="experity-dev"
+PROFILE="enterprise-dev"
 REGION="us-east-1"
 
 # -- Colors -------------------------------------------------------------------
@@ -171,8 +171,8 @@ ok "${SETTINGS_FILE} written"
 # 6. Rewrite ~/.zshrc env block (idempotent)
 # =============================================================================
 SHELL_RC="$HOME/.zshrc"
-MARKER="# >>> Claude Code Bedrock (experity-dev) >>>"
-MARKER_END="# <<< Claude Code Bedrock (experity-dev) <<<"
+MARKER="# >>> Claude Code Bedrock"
+MARKER_END="# <<< Claude Code Bedrock"
 
 if grep -qF "${MARKER}" "${SHELL_RC}" 2>/dev/null; then
     info "Removing existing Bedrock env block from ${SHELL_RC}"
@@ -182,7 +182,7 @@ fi
 info "Appending updated env vars to ${SHELL_RC}"
 cat >> "${SHELL_RC}" <<ZSHRC_EOF
 
-${MARKER}
+# >>> Claude Code Bedrock (Enterprise) >>>
 export CLAUDE_CODE_USE_BEDROCK=1
 export CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1
 export AWS_REGION=${REGION}
@@ -202,7 +202,7 @@ export ANTHROPIC_DEFAULT_OPUS_MODEL_DESCRIPTION="Claude Opus 4.6 via AWS Bedrock
 export ANTHROPIC_DEFAULT_OPUS_MODEL_SUPPORTED_CAPABILITIES="effort,max_effort,thinking,adaptive_thinking,interleaved_thinking"
 export CLAUDE_CODE_MAX_OUTPUT_TOKENS=32000
 export MAX_THINKING_TOKENS=8000
-${MARKER_END}
+# <<< Claude Code Bedrock (Enterprise) <<<
 ZSHRC_EOF
 ok "Environment variables updated in ${SHELL_RC}"
 

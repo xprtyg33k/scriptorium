@@ -26,8 +26,8 @@ case "$(basename "${SHELL:-}")" in
     *)    SHELL_RC="$HOME/.profile"  ;;
 esac
 
-BEDROCK_MARKER="# >>> Claude Code Bedrock (experity-dev) >>>"
-BEDROCK_MARKER_END="# <<< Claude Code Bedrock (experity-dev) <<<"
+BEDROCK_MARKER="# >>> Claude Code Bedrock"
+BEDROCK_MARKER_END="# <<< Claude Code Bedrock"
 
 # -- Colors -------------------------------------------------------------------
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; CYAN='\033[0;36m'; NC='\033[0m'
@@ -151,7 +151,7 @@ switch_to_enterprise() {
         PROFILE=$(jq -r '.env.AWS_PROFILE' "$BEDROCK_SNAPSHOT")
     else
         REGION=$(python3 -c "import json; print(json.load(open('$BEDROCK_SNAPSHOT')).get('env', {}).get('AWS_REGION', 'us-east-1'))")
-        PROFILE=$(python3 -c "import json; print(json.load(open('$BEDROCK_SNAPSHOT')).get('env', {}).get('AWS_PROFILE', 'experity-dev'))")
+        PROFILE=$(python3 -c "import json; print(json.load(open('$BEDROCK_SNAPSHOT')).get('env', {}).get('AWS_PROFILE', 'enterprise-dev'))")
     fi
 
     # Update shell RC
@@ -167,7 +167,7 @@ switch_to_enterprise() {
     # Append new Bedrock block
     cat >> "${SHELL_RC}" <<ZSHRC_EOF
 
-${BEDROCK_MARKER}
+${BEDROCK_MARKER} (${PROFILE}) >>>
 export CLAUDE_CODE_USE_BEDROCK=1
 export CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1
 export AWS_REGION=${REGION}
@@ -187,7 +187,7 @@ export ANTHROPIC_DEFAULT_OPUS_MODEL_DESCRIPTION="Claude Opus 4.6 via AWS Bedrock
 export ANTHROPIC_DEFAULT_OPUS_MODEL_SUPPORTED_CAPABILITIES="effort,max_effort,thinking,adaptive_thinking,interleaved_thinking"
 export CLAUDE_CODE_MAX_OUTPUT_TOKENS=32000
 export MAX_THINKING_TOKENS=8000
-${BEDROCK_MARKER_END}
+${BEDROCK_MARKER_END} (${PROFILE}) <<<
 ZSHRC_EOF
     ok "Bedrock environment variables appended to $SHELL_RC"
 

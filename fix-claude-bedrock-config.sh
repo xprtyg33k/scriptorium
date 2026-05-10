@@ -18,7 +18,7 @@ set -euo pipefail
 # Prerequisites: Existing Bedrock setup (run setup-claude-code-bedrock.sh first)
 # =============================================================================
 
-PROFILE="experity-dev"
+PROFILE="enterprise-dev"
 
 # -- Colors -------------------------------------------------------------------
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; CYAN='\033[0;36m'; NC='\033[0m'
@@ -120,8 +120,8 @@ case "$(basename "${SHELL:-}")" in
     *)    SHELL_RC="$HOME/.profile"  ;;
 esac
 
-MARKER="# >>> Claude Code Bedrock (experity-dev) >>>"
-MARKER_END="# <<< Claude Code Bedrock (experity-dev) <<<"
+MARKER="# >>> Claude Code Bedrock"
+MARKER_END="# <<< Claude Code Bedrock"
 
 if [[ ! -f "$SHELL_RC" ]] || ! grep -qF "$MARKER" "$SHELL_RC" 2>/dev/null; then
     fail "Bedrock environment block not found in $SHELL_RC. Run setup-claude-code-bedrock.sh first."
