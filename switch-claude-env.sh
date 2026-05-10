@@ -38,6 +38,28 @@ warn()  { printf "${YELLOW}[WARN]${NC}  %s\n" "$*"; }
 fail()  { printf "${RED}[FAIL]${NC}  %s\n" "$*"; exit 1; }
 
 # -- Helpers ------------------------------------------------------------------
+unset_bedrock_vars() {
+    unset CLAUDE_CODE_USE_BEDROCK
+    unset CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS
+    unset AWS_REGION
+    unset AWS_PROFILE
+    unset ANTHROPIC_MODEL
+    unset ANTHROPIC_DEFAULT_HAIKU_MODEL
+    unset ANTHROPIC_DEFAULT_HAIKU_MODEL_NAME
+    unset ANTHROPIC_DEFAULT_HAIKU_MODEL_DESCRIPTION
+    unset ANTHROPIC_DEFAULT_HAIKU_MODEL_SUPPORTED_CAPABILITIES
+    unset ANTHROPIC_DEFAULT_SONNET_MODEL
+    unset ANTHROPIC_DEFAULT_SONNET_MODEL_NAME
+    unset ANTHROPIC_DEFAULT_SONNET_MODEL_DESCRIPTION
+    unset ANTHROPIC_DEFAULT_SONNET_MODEL_SUPPORTED_CAPABILITIES
+    unset ANTHROPIC_DEFAULT_OPUS_MODEL
+    unset ANTHROPIC_DEFAULT_OPUS_MODEL_NAME
+    unset ANTHROPIC_DEFAULT_OPUS_MODEL_DESCRIPTION
+    unset ANTHROPIC_DEFAULT_OPUS_MODEL_SUPPORTED_CAPABILITIES
+    unset CLAUDE_CODE_MAX_OUTPUT_TOKENS
+    unset MAX_THINKING_TOKENS
+}
+
 detect_mode() {
     [[ ! -f "$SETTINGS_PATH" ]] && echo "unconfigured" && return
     if grep -q '"CLAUDE_CODE_USE_BEDROCK"' "$SETTINGS_PATH" 2>/dev/null; then
@@ -191,6 +213,28 @@ ${BEDROCK_MARKER_END} (${PROFILE}) <<<
 ZSHRC_EOF
     ok "Bedrock environment variables appended to $SHELL_RC"
 
+    # Export Bedrock vars to current shell session (active when script is sourced)
+    export CLAUDE_CODE_USE_BEDROCK=1
+    export CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1
+    export AWS_REGION="${REGION}"
+    export AWS_PROFILE="${PROFILE}"
+    export ANTHROPIC_MODEL="haiku"
+    export ANTHROPIC_DEFAULT_HAIKU_MODEL="${HAIKU_ARN}"
+    export ANTHROPIC_DEFAULT_HAIKU_MODEL_NAME="Haiku 4.5 (Enterprise)"
+    export ANTHROPIC_DEFAULT_HAIKU_MODEL_DESCRIPTION="Claude Haiku 4.5 via AWS Bedrock — fast & cost-effective"
+    export ANTHROPIC_DEFAULT_HAIKU_MODEL_SUPPORTED_CAPABILITIES=""
+    export ANTHROPIC_DEFAULT_SONNET_MODEL="${SONNET_ARN}"
+    export ANTHROPIC_DEFAULT_SONNET_MODEL_NAME="Sonnet 4.6 (Enterprise)"
+    export ANTHROPIC_DEFAULT_SONNET_MODEL_DESCRIPTION="Claude Sonnet 4.6 via AWS Bedrock — balanced performance"
+    export ANTHROPIC_DEFAULT_SONNET_MODEL_SUPPORTED_CAPABILITIES="effort,max_effort,thinking,interleaved_thinking"
+    export ANTHROPIC_DEFAULT_OPUS_MODEL="${OPUS_ARN}"
+    export ANTHROPIC_DEFAULT_OPUS_MODEL_NAME="Opus 4.6 (Enterprise)"
+    export ANTHROPIC_DEFAULT_OPUS_MODEL_DESCRIPTION="Claude Opus 4.6 via AWS Bedrock — maximum capability"
+    export ANTHROPIC_DEFAULT_OPUS_MODEL_SUPPORTED_CAPABILITIES="effort,max_effort,thinking,adaptive_thinking,interleaved_thinking"
+    export CLAUDE_CODE_MAX_OUTPUT_TOKENS=32000
+    export MAX_THINKING_TOKENS=8000
+    ok "Bedrock environment variables exported to current shell (when sourced)"
+
     echo ""
     printf "${GREEN}========================================${NC}\n"
     printf "${GREEN}  Switched to Enterprise Mode!${NC}\n"
@@ -199,9 +243,9 @@ ZSHRC_EOF
     printf "  AWS Profile: ${CYAN}${PROFILE}${NC}\n"
     printf "  Region:      ${CYAN}${REGION}${NC}\n"
     echo ""
-    printf "  To activate now:\n"
-    printf "    ${YELLOW}source ${SHELL_RC}${NC}\n"
-    printf "    ${YELLOW}claude${NC}\n"
+    printf "  To activate immediately in this shell, source this script:\n"
+    printf "    ${YELLOW}source ./switch-claude-env.sh enterprise${NC}\n"
+    printf "  Or open a new terminal.\n"
     echo ""
 }
 
@@ -225,16 +269,21 @@ switch_to_pro() {
         ok "Enterprise snapshot saved to $BEDROCK_SNAPSHOT"
     fi
 
-    # Write minimal PRO settings
-    info "Writing minimal PRO configuration"
+    # Restore PRO settings from snapshot if available, else write minimal config
+    info "Writing PRO configuration"
     mkdir -p ~/.claude
 
-    cat > "$SETTINGS_PATH" <<SETTINGS_EOF
+    if [[ -f "$PRO_SNAPSHOT" ]]; then
+        cp "$PRO_SNAPSHOT" "$SETTINGS_PATH"
+        ok "PRO settings restored from snapshot ($PRO_SNAPSHOT)"
+    else
+        cat > "$SETTINGS_PATH" <<SETTINGS_EOF
 {
   "model": "claude-opus-4-7"
 }
 SETTINGS_EOF
-    ok "Minimal PRO settings written to $SETTINGS_PATH"
+        ok "Minimal PRO settings written to $SETTINGS_PATH"
+    fi
 
     # Remove Bedrock block from shell RC
     if grep -qF "${BEDROCK_MARKER}" "${SHELL_RC}" 2>/dev/null; then
@@ -244,6 +293,10 @@ SETTINGS_EOF
         ok "Bedrock environment variables removed from $SHELL_RC"
     fi
 
+    # Unset Bedrock vars from current shell session
+    unset_bedrock_vars
+    ok "Bedrock environment variables unset in current shell"
+
     echo ""
     printf "${GREEN}========================================${NC}\n"
     printf "${GREEN}  Switched to PRO Mode!${NC}\n"
@@ -251,9 +304,9 @@ SETTINGS_EOF
     echo ""
     printf "  Claude Code is now configured for Anthropic PRO subscription (OAuth).\n"
     echo ""
-    printf "  To activate now:\n"
-    printf "    ${YELLOW}source ${SHELL_RC}${NC}\n"
-    printf "    ${YELLOW}claude${NC}\n"
+    printf "  To activate immediately in this shell, source this script:\n"
+    printf "    ${YELLOW}source ./switch-claude-env.sh pro${NC}\n"
+    printf "  Or open a new terminal — new shells will use PRO automatically.\n"
     echo ""
     printf "  On first run, Claude Code will open a browser for OAuth authentication.\n"
     echo ""
