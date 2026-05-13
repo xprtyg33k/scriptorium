@@ -124,15 +124,43 @@ OPUS_ARN=$(echo "${PROFILES_JSON}" | json_extract_arn 'opus' '4-6' 2>/dev/null) 
     OPUS_ARN="us.anthropic.claude-opus-4-6-v1"
 }
 
+OPUS_47_ARN=$(echo "${PROFILES_JSON}" | json_extract_arn 'opus' '4-7' 2>/dev/null) || {
+    warn "No Opus 4.7 inference profile found for user '${SANITIZED_USER}' — skipping (optional model)."
+    OPUS_47_ARN=""
+}
+
 ok "Haiku 4.5 ARN:  ${HAIKU_ARN}"
 ok "Sonnet 4.6 ARN: ${SONNET_ARN}"
 ok "Opus 4.6 ARN:   ${OPUS_ARN}"
+[[ -n "${OPUS_47_ARN}" ]] && ok "Opus 4.7 ARN:   ${OPUS_47_ARN}"
 
 # =============================================================================
 # 4. Write ~/.claude/settings.json
 # =============================================================================
 info "Writing Claude Code settings to ~/.claude/settings.json"
 mkdir -p ~/.claude
+
+# Build optional Opus 4.7 fragments for settings.json and shell RC
+if [[ -n "${OPUS_47_ARN}" ]]; then
+    OPUS47_AVAIL=', "opus47"'
+    OPUS47_OVERRIDE=',
+    "claude-opus-4-7": "'"${OPUS_47_ARN}"'"'
+    OPUS47_ENV=',
+    "ANTHROPIC_DEFAULT_OPUS_47_MODEL": "'"${OPUS_47_ARN}"'",
+    "ANTHROPIC_DEFAULT_OPUS_47_MODEL_NAME": "Opus 4.7 (Enterprise)",
+    "ANTHROPIC_DEFAULT_OPUS_47_MODEL_DESCRIPTION": "Claude Opus 4.7 via AWS Bedrock — next-gen maximum capability",
+    "ANTHROPIC_DEFAULT_OPUS_47_MODEL_SUPPORTED_CAPABILITIES": "effort,max_effort,thinking,adaptive_thinking,interleaved_thinking"'
+    OPUS47_RC_EXPORTS='
+export ANTHROPIC_DEFAULT_OPUS_47_MODEL="'"${OPUS_47_ARN}"'"
+export ANTHROPIC_DEFAULT_OPUS_47_MODEL_NAME="Opus 4.7 (Enterprise)"
+export ANTHROPIC_DEFAULT_OPUS_47_MODEL_DESCRIPTION="Claude Opus 4.7 via AWS Bedrock — next-gen maximum capability"
+export ANTHROPIC_DEFAULT_OPUS_47_MODEL_SUPPORTED_CAPABILITIES="effort,max_effort,thinking,adaptive_thinking,interleaved_thinking"'
+else
+    OPUS47_AVAIL=""
+    OPUS47_OVERRIDE=""
+    OPUS47_ENV=""
+    OPUS47_RC_EXPORTS=""
+fi
 
 if [[ -f ~/.claude/settings.json ]]; then
     BACKUP=~/.claude/settings.json.bak.$(date +%Y%m%d%H%M%S)
@@ -143,11 +171,11 @@ fi
 cat > ~/.claude/settings.json <<SETTINGS_EOF
 {
   "model": "haiku",
-  "availableModels": ["haiku", "sonnet", "opus"],
+  "availableModels": ["haiku", "sonnet", "opus"${OPUS47_AVAIL}],
   "modelOverrides": {
     "claude-haiku-4-5-20251001": "${HAIKU_ARN}",
     "claude-sonnet-4-6": "${SONNET_ARN}",
-    "claude-opus-4-6": "${OPUS_ARN}"
+    "claude-opus-4-6": "${OPUS_ARN}"${OPUS47_OVERRIDE}
   },
   "env": {
     "CLAUDE_CODE_USE_BEDROCK": "1",
@@ -166,7 +194,7 @@ cat > ~/.claude/settings.json <<SETTINGS_EOF
     "ANTHROPIC_DEFAULT_OPUS_MODEL": "${OPUS_ARN}",
     "ANTHROPIC_DEFAULT_OPUS_MODEL_NAME": "Opus 4.6 (Enterprise)",
     "ANTHROPIC_DEFAULT_OPUS_MODEL_DESCRIPTION": "Claude Opus 4.6 via AWS Bedrock — maximum capability",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL_SUPPORTED_CAPABILITIES": "effort,max_effort,thinking,adaptive_thinking,interleaved_thinking",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL_SUPPORTED_CAPABILITIES": "effort,max_effort,thinking,adaptive_thinking,interleaved_thinking"${OPUS47_ENV},
     "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "32000",
     "MAX_THINKING_TOKENS": "8000"
   }
@@ -215,7 +243,7 @@ export ANTHROPIC_DEFAULT_OPUS_MODEL_NAME="Opus 4.6 (Enterprise)"
 export ANTHROPIC_DEFAULT_OPUS_MODEL_DESCRIPTION="Claude Opus 4.6 via AWS Bedrock — maximum capability"
 export ANTHROPIC_DEFAULT_OPUS_MODEL_SUPPORTED_CAPABILITIES="effort,max_effort,thinking,adaptive_thinking,interleaved_thinking"
 export CLAUDE_CODE_MAX_OUTPUT_TOKENS=32000
-export MAX_THINKING_TOKENS=8000
+export MAX_THINKING_TOKENS=8000${OPUS47_RC_EXPORTS}
 # <<< Claude Code Bedrock (Enterprise) <<<
 ZSHRC_EOF
 ok "Environment variables appended to ${SHELL_RC}"
@@ -236,6 +264,7 @@ printf "  Models available in /model picker:\n"
 printf "    • Haiku 4.5 (Enterprise)  — ${HAIKU_ARN}\n"
 printf "    • Sonnet 4.6 (Enterprise) — ${SONNET_ARN}\n"
 printf "    • Opus 4.6 (Enterprise)   — ${OPUS_ARN}\n"
+[[ -n "${OPUS_47_ARN}" ]] && printf "    • Opus 4.7 (Enterprise)   — ${OPUS_47_ARN}\n"
 echo ""
 printf "  To activate now:  ${YELLOW}source ${SHELL_RC}${NC}\n"
 printf "  Then launch:      ${YELLOW}claude${NC}\n"

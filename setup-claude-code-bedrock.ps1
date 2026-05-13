@@ -126,9 +126,16 @@ if (-not $opusArn) {
     $opusArn = 'us.anthropic.claude-opus-4-6-v1'
 }
 
+$opus47Arn = Find-ProfileArn -Profiles $profiles -ModelKeyword 'opus' -VersionPattern '4-7'
+if (-not $opus47Arn) {
+    Write-Warn "No Opus 4.7 inference profile found for user '$sanitizedUser' - skipping (optional model)."
+    $opus47Arn = $null
+}
+
 Write-Ok "Haiku 4.5 ARN:  $haikuArn"
 Write-Ok "Sonnet 4.6 ARN: $sonnetArn"
 Write-Ok "Opus 4.6 ARN:   $opusArn"
+if ($opus47Arn) { Write-Ok "Opus 4.7 ARN:   $opus47Arn" }
 
 # =============================================================================
 # 4. Write ~/.claude/settings.json
@@ -138,14 +145,20 @@ Write-Info "Writing Claude Code settings to ~/.claude/settings.json"
 $claudeDir = Join-Path $env:USERPROFILE '.claude'
 if (-not (Test-Path $claudeDir)) { New-Item -ItemType Directory -Path $claudeDir -Force | Out-Null }
 
+$availableModelsList = [System.Collections.Generic.List[string]]@('haiku', 'sonnet', 'opus')
+if ($opus47Arn) { $availableModelsList.Add('opus47') }
+
+$modelOverridesMap = [ordered]@{
+    'claude-haiku-4-5-20251001' = $haikuArn
+    'claude-sonnet-4-6'         = $sonnetArn
+    'claude-opus-4-6'           = $opusArn
+}
+if ($opus47Arn) { $modelOverridesMap['claude-opus-4-7'] = $opus47Arn }
+
 $settings = [ordered]@{
     model           = 'haiku'
-    availableModels = @('haiku', 'sonnet', 'opus')
-    modelOverrides  = [ordered]@{
-        'claude-haiku-4-5-20251001' = $haikuArn
-        'claude-sonnet-4-6'         = $sonnetArn
-        'claude-opus-4-6'           = $opusArn
-    }
+    availableModels = $availableModelsList.ToArray()
+    modelOverrides  = $modelOverridesMap
     env = [ordered]@{
         CLAUDE_CODE_USE_BEDROCK                            = '1'
         CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS             = '1'
@@ -167,6 +180,12 @@ $settings = [ordered]@{
         CLAUDE_CODE_MAX_OUTPUT_TOKENS                      = '32000'
         MAX_THINKING_TOKENS                                = '8000'
     }
+}
+if ($opus47Arn) {
+    $settings.env['ANTHROPIC_DEFAULT_OPUS_47_MODEL']                        = $opus47Arn
+    $settings.env['ANTHROPIC_DEFAULT_OPUS_47_MODEL_NAME']                   = 'Opus 4.7 (Enterprise)'
+    $settings.env['ANTHROPIC_DEFAULT_OPUS_47_MODEL_DESCRIPTION']            = 'Claude Opus 4.7 via AWS Bedrock - next-gen maximum capability'
+    $settings.env['ANTHROPIC_DEFAULT_OPUS_47_MODEL_SUPPORTED_CAPABILITIES'] = 'effort,max_effort,thinking,adaptive_thinking,interleaved_thinking'
 }
 
 $settingsPath = Join-Path $claudeDir 'settings.json'
@@ -204,6 +223,12 @@ $envVars = [ordered]@{
     CLAUDE_CODE_MAX_OUTPUT_TOKENS                      = '32000'
     MAX_THINKING_TOKENS                                = '8000'
 }
+if ($opus47Arn) {
+    $envVars['ANTHROPIC_DEFAULT_OPUS_47_MODEL']                        = $opus47Arn
+    $envVars['ANTHROPIC_DEFAULT_OPUS_47_MODEL_NAME']                   = 'Opus 4.7 (Enterprise)'
+    $envVars['ANTHROPIC_DEFAULT_OPUS_47_MODEL_DESCRIPTION']            = 'Claude Opus 4.7 via AWS Bedrock - next-gen maximum capability'
+    $envVars['ANTHROPIC_DEFAULT_OPUS_47_MODEL_SUPPORTED_CAPABILITIES'] = 'effort,max_effort,thinking,adaptive_thinking,interleaved_thinking'
+}
 
 foreach ($kv in $envVars.GetEnumerator()) {
     # Persist to User scope (survives reboots, no elevation needed)
@@ -229,6 +254,7 @@ Write-Host '  Models available in /model picker:'
 Write-Host "    * Haiku 4.5 (Enterprise)  - $haikuArn"
 Write-Host "    * Sonnet 4.6 (Enterprise) - $sonnetArn"
 Write-Host "    * Opus 4.6 (Enterprise)   - $opusArn"
+if ($opus47Arn) { Write-Host "    * Opus 4.7 (Enterprise)   - $opus47Arn" }
 Write-Host ''
 Write-Host "  Env vars are set in this session AND persisted at User level." -ForegroundColor Yellow
 Write-Host "  Launch with:  claude" -ForegroundColor Yellow
