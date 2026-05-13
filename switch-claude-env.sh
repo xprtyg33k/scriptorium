@@ -56,6 +56,10 @@ unset_bedrock_vars() {
     unset ANTHROPIC_DEFAULT_OPUS_MODEL_NAME
     unset ANTHROPIC_DEFAULT_OPUS_MODEL_DESCRIPTION
     unset ANTHROPIC_DEFAULT_OPUS_MODEL_SUPPORTED_CAPABILITIES
+    unset ANTHROPIC_DEFAULT_OPUS_47_MODEL
+    unset ANTHROPIC_DEFAULT_OPUS_47_MODEL_NAME
+    unset ANTHROPIC_DEFAULT_OPUS_47_MODEL_DESCRIPTION
+    unset ANTHROPIC_DEFAULT_OPUS_47_MODEL_SUPPORTED_CAPABILITIES
     unset CLAUDE_CODE_MAX_OUTPUT_TOKENS
     unset MAX_THINKING_TOKENS
 }
@@ -79,8 +83,9 @@ extract_bedrock_arns() {
             .env.ANTHROPIC_DEFAULT_HAIKU_MODEL as $haiku |
             .env.ANTHROPIC_DEFAULT_SONNET_MODEL as $sonnet |
             .env.ANTHROPIC_DEFAULT_OPUS_MODEL as $opus |
+            (.env.ANTHROPIC_DEFAULT_OPUS_47_MODEL // "") as $opus47 |
             if ($haiku and $sonnet and $opus) then
-                ($haiku + "|" + $sonnet + "|" + $opus)
+                ($haiku + "|" + $sonnet + "|" + $opus + "|" + $opus47)
             else empty end
         ' "$1" 2>/dev/null || return 1
     else
@@ -92,8 +97,9 @@ try:
     h = s.get('env', {}).get('ANTHROPIC_DEFAULT_HAIKU_MODEL')
     so = s.get('env', {}).get('ANTHROPIC_DEFAULT_SONNET_MODEL')
     o = s.get('env', {}).get('ANTHROPIC_DEFAULT_OPUS_MODEL')
+    o47 = s.get('env', {}).get('ANTHROPIC_DEFAULT_OPUS_47_MODEL', '')
     if h and so and o:
-        print(h + '|' + so + '|' + o)
+        print(h + '|' + so + '|' + o + '|' + o47)
     else:
         sys.exit(1)
 except:
@@ -164,8 +170,19 @@ switch_to_enterprise() {
     ok "Restored $SETTINGS_PATH from snapshot"
 
     # Extract ARNs for shell RC update
-    IFS='|' read -r HAIKU_ARN SONNET_ARN OPUS_ARN <<< "$(extract_bedrock_arns "$BEDROCK_SNAPSHOT")" || \
+    IFS='|' read -r HAIKU_ARN SONNET_ARN OPUS_ARN OPUS_47_ARN <<< "$(extract_bedrock_arns "$BEDROCK_SNAPSHOT")" || \
         fail "Could not extract ARNs from Bedrock snapshot"
+
+    # Build optional Opus 4.7 RC export block
+    if [[ -n "${OPUS_47_ARN}" ]]; then
+        OPUS47_RC_EXPORTS='
+export ANTHROPIC_DEFAULT_OPUS_47_MODEL="'"${OPUS_47_ARN}"'"
+export ANTHROPIC_DEFAULT_OPUS_47_MODEL_NAME="Opus 4.7 (Enterprise)"
+export ANTHROPIC_DEFAULT_OPUS_47_MODEL_DESCRIPTION="Claude Opus 4.7 via AWS Bedrock — next-gen maximum capability"
+export ANTHROPIC_DEFAULT_OPUS_47_MODEL_SUPPORTED_CAPABILITIES="effort,max_effort,thinking,adaptive_thinking,interleaved_thinking"'
+    else
+        OPUS47_RC_EXPORTS=""
+    fi
 
     # Get region and profile from snapshot
     if command -v jq &>/dev/null; then
@@ -208,7 +225,7 @@ export ANTHROPIC_DEFAULT_OPUS_MODEL_NAME="Opus 4.6 (Enterprise)"
 export ANTHROPIC_DEFAULT_OPUS_MODEL_DESCRIPTION="Claude Opus 4.6 via AWS Bedrock — maximum capability"
 export ANTHROPIC_DEFAULT_OPUS_MODEL_SUPPORTED_CAPABILITIES="effort,max_effort,thinking,adaptive_thinking,interleaved_thinking"
 export CLAUDE_CODE_MAX_OUTPUT_TOKENS=32000
-export MAX_THINKING_TOKENS=8000
+export MAX_THINKING_TOKENS=8000${OPUS47_RC_EXPORTS}
 ${BEDROCK_MARKER_END} (${PROFILE}) <<<
 ZSHRC_EOF
     ok "Bedrock environment variables appended to $SHELL_RC"
@@ -233,6 +250,12 @@ ZSHRC_EOF
     export ANTHROPIC_DEFAULT_OPUS_MODEL_SUPPORTED_CAPABILITIES="effort,max_effort,thinking,adaptive_thinking,interleaved_thinking"
     export CLAUDE_CODE_MAX_OUTPUT_TOKENS=32000
     export MAX_THINKING_TOKENS=8000
+    if [[ -n "${OPUS_47_ARN}" ]]; then
+        export ANTHROPIC_DEFAULT_OPUS_47_MODEL="${OPUS_47_ARN}"
+        export ANTHROPIC_DEFAULT_OPUS_47_MODEL_NAME="Opus 4.7 (Enterprise)"
+        export ANTHROPIC_DEFAULT_OPUS_47_MODEL_DESCRIPTION="Claude Opus 4.7 via AWS Bedrock — next-gen maximum capability"
+        export ANTHROPIC_DEFAULT_OPUS_47_MODEL_SUPPORTED_CAPABILITIES="effort,max_effort,thinking,adaptive_thinking,interleaved_thinking"
+    fi
     ok "Bedrock environment variables exported to current shell (when sourced)"
 
     echo ""

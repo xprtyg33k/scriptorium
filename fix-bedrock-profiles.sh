@@ -99,9 +99,22 @@ else: sys.exit(1)
     OPUS_ARN="us.anthropic.claude-opus-4-6-v1"
 }
 
+OPUS_47_ARN=$(echo "${PROFILES_JSON}" | python3 -c "
+import json, sys
+for p in json.load(sys.stdin):
+    name = p.get('inferenceProfileName','').lower().replace('.', '-')
+    if 'opus' in name and '4-7' in name:
+        print(p['inferenceProfileArn']); break
+else: sys.exit(1)
+" 2>/dev/null) || {
+    warn "No Opus 4.7 profile found — skipping (optional model)."
+    OPUS_47_ARN=""
+}
+
 ok "Haiku ARN:  ${HAIKU_ARN}"
 ok "Sonnet ARN: ${SONNET_ARN}"
 ok "Opus ARN:   ${OPUS_ARN}"
+[[ -n "${OPUS_47_ARN}" ]] && ok "Opus 4.7 ARN: ${OPUS_47_ARN}"
 
 # =============================================================================
 # 4. Show diff of what will change in ~/.claude/settings.json
@@ -118,12 +131,15 @@ env = s.get('env', {})
 print(f\"  HAIKU:  {env.get('ANTHROPIC_DEFAULT_HAIKU_MODEL', '(not set)')}\")
 print(f\"  SONNET: {env.get('ANTHROPIC_DEFAULT_SONNET_MODEL', '(not set)')}\")
 print(f\"  OPUS:   {env.get('ANTHROPIC_DEFAULT_OPUS_MODEL', '(not set)')}\")
+opus47 = env.get('ANTHROPIC_DEFAULT_OPUS_47_MODEL')
+if opus47: print(f\"  OPUS47: {opus47}\")
 " 2>/dev/null || true
     echo ""
     printf "${YELLOW}New ARNs that will be written:${NC}\n"
     printf "  HAIKU:  %s\n" "${HAIKU_ARN}"
     printf "  SONNET: %s\n" "${SONNET_ARN}"
     printf "  OPUS:   %s\n" "${OPUS_ARN}"
+    [[ -n "${OPUS_47_ARN}" ]] && printf "  OPUS47: %s\n" "${OPUS_47_ARN}"
     echo ""
 fi
 
@@ -133,14 +149,36 @@ fi
 info "Writing ${SETTINGS_FILE}"
 mkdir -p ~/.claude
 
+# Build optional Opus 4.7 fragments for settings.json and shell RC
+if [[ -n "${OPUS_47_ARN}" ]]; then
+    OPUS47_AVAIL=', "opus47"'
+    OPUS47_OVERRIDE=',
+    "claude-opus-4-7": "'"${OPUS_47_ARN}"'"'
+    OPUS47_ENV=',
+    "ANTHROPIC_DEFAULT_OPUS_47_MODEL": "'"${OPUS_47_ARN}"'",
+    "ANTHROPIC_DEFAULT_OPUS_47_MODEL_NAME": "Opus 4.7 (Enterprise)",
+    "ANTHROPIC_DEFAULT_OPUS_47_MODEL_DESCRIPTION": "Claude Opus 4.7 via AWS Bedrock — next-gen maximum capability",
+    "ANTHROPIC_DEFAULT_OPUS_47_MODEL_SUPPORTED_CAPABILITIES": "effort,max_effort,thinking,adaptive_thinking,interleaved_thinking"'
+    OPUS47_RC_EXPORTS='
+export ANTHROPIC_DEFAULT_OPUS_47_MODEL="'"${OPUS_47_ARN}"'"
+export ANTHROPIC_DEFAULT_OPUS_47_MODEL_NAME="Opus 4.7 (Enterprise)"
+export ANTHROPIC_DEFAULT_OPUS_47_MODEL_DESCRIPTION="Claude Opus 4.7 via AWS Bedrock — next-gen maximum capability"
+export ANTHROPIC_DEFAULT_OPUS_47_MODEL_SUPPORTED_CAPABILITIES="effort,max_effort,thinking,adaptive_thinking,interleaved_thinking"'
+else
+    OPUS47_AVAIL=""
+    OPUS47_OVERRIDE=""
+    OPUS47_ENV=""
+    OPUS47_RC_EXPORTS=""
+fi
+
 cat > "${SETTINGS_FILE}" <<SETTINGS_EOF
 {
   "model": "haiku",
-  "availableModels": ["haiku", "sonnet", "opus"],
+  "availableModels": ["haiku", "sonnet", "opus"${OPUS47_AVAIL}],
   "modelOverrides": {
     "claude-haiku-4-5-20251001": "${HAIKU_ARN}",
     "claude-sonnet-4-6": "${SONNET_ARN}",
-    "claude-opus-4-6": "${OPUS_ARN}"
+    "claude-opus-4-6": "${OPUS_ARN}"${OPUS47_OVERRIDE}
   },
   "env": {
     "CLAUDE_CODE_USE_BEDROCK": "1",
@@ -159,7 +197,7 @@ cat > "${SETTINGS_FILE}" <<SETTINGS_EOF
     "ANTHROPIC_DEFAULT_OPUS_MODEL": "${OPUS_ARN}",
     "ANTHROPIC_DEFAULT_OPUS_MODEL_NAME": "Opus 4.6 (Enterprise)",
     "ANTHROPIC_DEFAULT_OPUS_MODEL_DESCRIPTION": "Claude Opus 4.6 via AWS Bedrock — maximum capability",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL_SUPPORTED_CAPABILITIES": "effort,max_effort,thinking,adaptive_thinking,interleaved_thinking",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL_SUPPORTED_CAPABILITIES": "effort,max_effort,thinking,adaptive_thinking,interleaved_thinking"${OPUS47_ENV},
     "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "32000",
     "MAX_THINKING_TOKENS": "8000"
   }
@@ -201,7 +239,7 @@ export ANTHROPIC_DEFAULT_OPUS_MODEL_NAME="Opus 4.6 (Enterprise)"
 export ANTHROPIC_DEFAULT_OPUS_MODEL_DESCRIPTION="Claude Opus 4.6 via AWS Bedrock — maximum capability"
 export ANTHROPIC_DEFAULT_OPUS_MODEL_SUPPORTED_CAPABILITIES="effort,max_effort,thinking,adaptive_thinking,interleaved_thinking"
 export CLAUDE_CODE_MAX_OUTPUT_TOKENS=32000
-export MAX_THINKING_TOKENS=8000
+export MAX_THINKING_TOKENS=8000${OPUS47_RC_EXPORTS}
 # <<< Claude Code Bedrock (Enterprise) <<<
 ZSHRC_EOF
 ok "Environment variables updated in ${SHELL_RC}"
@@ -218,6 +256,7 @@ printf "  User:    ${CYAN}${RAW_USER}${NC}\n"
 printf "  Haiku:   ${HAIKU_ARN}\n"
 printf "  Sonnet:  ${SONNET_ARN}\n"
 printf "  Opus:    ${OPUS_ARN}\n"
+[[ -n "${OPUS_47_ARN}" ]] && printf "  Opus 4.7: ${OPUS_47_ARN}\n"
 echo ""
 printf "  To activate now:  ${YELLOW}source ~/.zshrc${NC}\n"
 printf "  Then relaunch:    ${YELLOW}claude${NC}\n"
