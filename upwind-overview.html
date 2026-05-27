@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Upwind — Cloud-Native Security Platform Overview</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #0f172a;
+    --secondary: #1e40af;
+    --accent: #3b82f6;
+    --accent-light: #dbeafe;
+    --surface: #f8fafc;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --text-muted: #64748b;
+    --success: #059669;
+    --warning: #d97706;
+    --danger: #dc2626;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--surface);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 2rem;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  header {
+    border-bottom: 3px solid var(--secondary);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.25rem;
+  }
+
+  header .subtitle {
+    font-size: 1rem;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  .meta {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  .meta span { display: flex; align-items: center; gap: 0.4rem; }
+
+  section {
+    margin-bottom: 2.5rem;
+  }
+
+  h2 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--secondary);
+    margin: 1.25rem 0 0.5rem;
+  }
+
+  p { margin-bottom: 0.85rem; }
+
+  ul {
+    margin: 0.5rem 0 1rem 1.5rem;
+  }
+
+  li { margin-bottom: 0.4rem; }
+
+  .callout {
+    background: var(--accent-light);
+    border-left: 4px solid var(--accent);
+    padding: 1rem 1.25rem;
+    border-radius: 0 6px 6px 0;
+    margin: 1.25rem 0;
+  }
+
+  .callout p { margin: 0; }
+
+  /* Tabs */
+  .tabs {
+    margin-top: 1rem;
+  }
+
+  .tab-nav {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid var(--border);
+    overflow-x: auto;
+  }
+
+  .tab-btn {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    font-family: inherit;
+    border: none;
+    background: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+
+  .tab-btn:hover {
+    color: var(--secondary);
+    background: var(--accent-light);
+  }
+
+  .tab-btn.active {
+    color: var(--secondary);
+    border-bottom-color: var(--secondary);
+    font-weight: 600;
+  }
+
+  .tab-panel {
+    display: none;
+    padding: 1.5rem 0;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .tab-panel.active {
+    display: block;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .tab-panel h3 { margin-top: 0; }
+
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin: 1.25rem 0;
+  }
+
+  .kpi {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .kpi .label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .kpi .value {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--secondary);
+  }
+
+  .diff-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+  }
+
+  .diff-table th, .diff-table td {
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .diff-table th {
+    background: var(--primary);
+    color: white;
+    font-weight: 500;
+  }
+
+  .diff-table tr:nth-child(even) { background: #f1f5f9; }
+
+  .tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    background: var(--accent-light);
+    color: var(--secondary);
+    margin-right: 0.4rem;
+  }
+
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    background: #f1f5f9;
+    padding: 0.15rem 0.4rem;
+    border-radius: 3px;
+  }
+
+  footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-align: center;
+  }
+
+  @media print {
+    body { padding: 0; font-size: 11pt; }
+    .container { max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>Upwind — Cloud-Native Runtime Security Platform</h1>
+  <p class="subtitle">Internal Evaluation Brief &mdash; Why This Matters for Experity</p>
+  <div class="meta">
+    <span>📅 May 27, 2026</span>
+    <span>👤 Prepared by Guillermo Salas</span>
+    <span>🏷️ Cloud Security · CNAPP · Shift-Left</span>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<section>
+  <h2>What Is Upwind?</h2>
+  <p>Upwind is a <strong>cloud-native application protection platform (CNAPP)</strong> that differentiates itself by providing <strong>runtime intelligence</strong> — real-time, inside-out visibility into how applications actually behave in production — rather than relying on periodic snapshots or static configuration scans alone.</p>
+
+  <div class="callout">
+    <p><strong>Core thesis:</strong> Security decisions are only as good as the context behind them. Upwind instruments workloads via an eBPF sensor on the kernel to deliver continuous, low-overhead telemetry — enabling prioritization based on what is actually exploitable at runtime, not merely what <em>could</em> be.</p>
+  </div>
+
+  <h3>Origin &amp; Philosophy</h3>
+  <p>Founded by the team behind Spot.io (acquired by NetApp for its cloud cost-optimization technology), Upwind was born from a real pain point: after acquisition, NetApp flagged hundreds of vulnerabilities — but the existing CNAPP tools couldn't distinguish genuine, exploitable risk from noise. The founders built Upwind to solve exactly that problem — actionable, runtime-contextualized security.</p>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<section>
+  <h2>How It Differs From What We Do Today</h2>
+
+  <table class="diff-table">
+    <thead>
+      <tr>
+        <th>Dimension</th>
+        <th>Traditional / Current State</th>
+        <th>Upwind Approach</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Scanning cadence</td>
+        <td>Point-in-time (every 6–24 hrs)</td>
+        <td>Continuous, real-time via eBPF sensor</td>
+      </tr>
+      <tr>
+        <td>Vulnerability context</td>
+        <td>CVE exists in image → alert</td>
+        <td>CVE + package in use + function invoked + internet-exposed → alert</td>
+      </tr>
+      <tr>
+        <td>Direction of insight</td>
+        <td>Outside-in (config snapshots, scan results)</td>
+        <td>Inside-out (runtime behavior, API traffic, data flows)</td>
+      </tr>
+      <tr>
+        <td>Threat detection</td>
+        <td>Post-hoc log analysis</td>
+        <td>Real-time behavioral detection (SQL injection, reverse shell, recon)</td>
+      </tr>
+      <tr>
+        <td>Remediation guidance</td>
+        <td>Generic CVE advisories</td>
+        <td>AI agents (Red/Blue/Green) that pen-test, defend, and generate least-effort fixes</td>
+      </tr>
+      <tr>
+        <td>Code-to-Cloud</td>
+        <td>GitHub Advanced Security (SAST/SCA)</td>
+        <td>Complementary: runtime context feeds back into PR-level deploy recommendations</td>
+      </tr>
+      <tr>
+        <td>Performance overhead</td>
+        <td>N/A (agentless) or heavy user-space agents</td>
+        <td>eBPF — kernel-level hooks, no kernel extensions, minimal resource footprint</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<section>
+  <h2>Key Capabilities</h2>
+
+  <h3>1. Runtime Exploitability Analysis</h3>
+  <p>Goes beyond "does this CVE exist" to answer: is the vulnerable package loaded, is the specific function invoked, is the workload internet-exposed, and is there a known exploit path? This dramatically reduces alert fatigue and focuses remediation on real risk.</p>
+
+  <h3>2. Application-Aware Topology &amp; API Discovery</h3>
+  <p>Automatically maps service-to-service communication, discovers API endpoints, and detects sensitive data in transit — providing a live dependency graph grounded in actual traffic, not static config.</p>
+
+  <h3>3. Real-Time Threat Detection</h3>
+  <p>Correlates behavioral events (e.g., SQL injection attempts, log4shell exploitation, reverse shells, credential access) into unified attack narratives — minute-by-minute, not after-the-fact.</p>
+
+  <h3>4. Agentic Remediation (Red / Blue / Green Agents)</h3>
+  <ul>
+    <li><strong>Red Agent</strong> — Automated attack-surface validation; pen-tests exposure paths</li>
+    <li><strong>Blue Agent</strong> — Defensive posture assessment; correlates events into threat narratives</li>
+    <li><strong>Green Agent</strong> — Generates lowest-effort remediation paths for prioritized issues</li>
+  </ul>
+
+  <h3>5. Code-to-Cloud (Shift Left)</h3>
+  <ul>
+    <li>Image scanning with runtime-informed risk context</li>
+    <li>PR-level recommendations: <em>Deploy</em>, <em>Deploy with Caution</em>, <em>Do Not Deploy</em></li>
+    <li>CVE differential analysis per build (new vs. resolved vulnerabilities)</li>
+    <li>Optional build-fail gates or audit-only mode</li>
+  </ul>
+
+  <h3>6. Operational Integration</h3>
+  <p>Designed to push value into existing workflows — Slack, Teams, Jira, ServiceNow, SIEM — so teams receive actionable notifications without living inside another dashboard.</p>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<section>
+  <h2>Why We Believe This Matters</h2>
+
+  <div class="tabs">
+    <div class="tab-nav">
+      <button class="tab-btn active" data-tab="overview">🌐 Platform Overview</button>
+      <button class="tab-btn" data-tab="security">🔒 Information Security</button>
+      <button class="tab-btn" data-tab="engineering">🏗️ Engineering &amp; Architecture</button>
+      <button class="tab-btn" data-tab="executive">📊 CTO / Executive</button>
+    </div>
+
+    <!-- ── Overview Tab ── -->
+    <div class="tab-panel active" id="tab-overview">
+      <h3>Upwind at a Glance</h3>
+      <p>Upwind is a <strong>cloud-native application protection platform (CNAPP)</strong> built on the premise that security without runtime context is security in the dark. By deploying a lightweight eBPF sensor at the kernel level, Upwind observes how workloads actually behave — in real time — and layers security intelligence on top of that ground truth.</p>
+
+      <div class="kpi-row">
+        <div class="kpi"><div class="label">Approach</div><div class="value">Inside-Out</div></div>
+        <div class="kpi"><div class="label">Sensor</div><div class="value">eBPF</div></div>
+        <div class="kpi"><div class="label">Detection</div><div class="value">Real-Time</div></div>
+        <div class="kpi"><div class="label">Coverage</div><div class="value">Code → Runtime</div></div>
+      </div>
+
+      <h3>The Problem It Solves</h3>
+      <p>Traditional CNAPP solutions take periodic snapshots of cloud environments (every 6–24 hours) and generate lists of potential vulnerabilities with no context as to whether they're actually exploitable. This creates two compounding problems:</p>
+      <ul>
+        <li><strong>Alert fatigue:</strong> Teams drown in CVE notifications that may have zero real-world impact</li>
+        <li><strong>Blind spots:</strong> Active threats occurring between scans go undetected until post-incident analysis</li>
+      </ul>
+      <p>Upwind eliminates both by continuously observing runtime behavior and only escalating issues that are demonstrably exploitable — the package is loaded, the function is invoked, and there is a viable attack path.</p>
+
+      <h3>How It Works — Technical Foundation</h3>
+      <ul>
+        <li><strong>eBPF sensor</strong> — Hooks into the Linux kernel without kernel extensions; avoids the overhead and crash risk of traditional agents (no kernel panic scenarios like CrowdStrike's 2024 incident)</li>
+        <li><strong>Application-aware topology</strong> — Maps live service-to-service communication, API endpoints, and data flows automatically from observed traffic</li>
+        <li><strong>Runtime exploitability engine</strong> — Correlates CVEs with actual package usage, function invocation, network exposure, and exploit availability</li>
+        <li><strong>AI agents (Red/Blue/Green)</strong> — Automate pen testing, defensive correlation, and remediation generation</li>
+        <li><strong>Code-to-Cloud pipeline</strong> — Scans builds with runtime context, provides deploy/caution/block recommendations at the PR level</li>
+      </ul>
+
+      <h3>Relationship to Our Existing Security Stack</h3>
+      <table class="diff-table">
+        <thead><tr><th>Tool</th><th>What It Does</th><th>Upwind's Role</th></tr></thead>
+        <tbody>
+          <tr><td>CrowdStrike</td><td>Endpoint Detection &amp; Response (desktops, servers)</td><td>Complementary — Upwind covers cloud-native workloads (containers, K8s) at a layer CrowdStrike doesn't instrument deeply</td></tr>
+          <tr><td>Rapid7</td><td>Periodic pen testing &amp; vulnerability management</td><td>Complementary — Upwind's Red Agent provides continuous attack-surface validation between pen tests</td></tr>
+          <tr><td>GitHub Advanced Security</td><td>Static code scanning (SAST/SCA) in CI</td><td>Complementary — GHAS finds code-level issues; Upwind adds "is this actually exploitable in prod?" context</td></tr>
+          <tr><td>Architecture Hub</td><td>Service compliance scoring across pillars</td><td>Synergistic — Upwind runtime signals can feed the Security pillar score for each service</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── Information Security Tab ── -->
+    <div class="tab-panel" id="tab-security">
+      <h3>🔒 For Dan — Director of Information Security</h3>
+      <p><em>Bottom line: Upwind gives your team continuous runtime visibility into cloud workload risk without adding operational overhead — it integrates into the tools you already use.</em></p>
+
+      <h3>What This Solves for InfoSec</h3>
+      <ul>
+        <li><strong>Closes the scan-to-runtime gap:</strong> Today we know a CVE exists in an image. Upwind tells us whether it's loaded, the vulnerable function is being called, and there's an internet-facing path to it. This is the difference between "possible risk" and "confirmed exposure."</li>
+        <li><strong>Real-time incident detection:</strong> The Blue Agent correlates events (SQL injection, reverse shell, credential harvesting, log4shell) into unified attack narratives as they happen — not hours later from log analysis.</li>
+        <li><strong>Zero-day discovery:</strong> Upwind is actively publishing zero-days found through runtime behavioral observation — catching what no CVE database has cataloged yet.</li>
+      </ul>
+
+      <h3>How It Complements (Not Replaces) Current Tools</h3>
+      <ul>
+        <li><strong>CrowdStrike</strong> — Remains your EDR for endpoints. Upwind operates at the cloud-native workload layer (containers, EKS, serverless) where CrowdStrike has limited depth.</li>
+        <li><strong>Rapid7</strong> — Continues as periodic pen-test validation. Upwind's Red Agent provides continuous, automated attack-surface probing between assessments — raising your confidence level going into each pen test.</li>
+        <li><strong>Pen testing scope:</strong> With continuous exploitability validation, you can better target pen-test efforts on areas of genuine uncertainty rather than broad surface sweeps.</li>
+      </ul>
+
+      <h3>Operational Model — Low Lift for Your Team</h3>
+      <p>Upwind's design principle is <strong>integration-first</strong>. Your team should not need to log into another dashboard daily:</p>
+      <ul>
+        <li>Workflow automations push alerts to Slack, Teams, Jira, ServiceNow, and SIEM based on configurable criteria (runtime exploitable + internet exposed + fix available + package in use)</li>
+        <li>Ticket creation with full context and remediation steps — ready for assignment</li>
+        <li>Threshold tuning ensures only truly actionable findings reach your team</li>
+      </ul>
+
+      <h3>Risk Reduction Metrics You'd Gain</h3>
+      <div class="kpi-row">
+        <div class="kpi"><div class="label">Alert Reduction</div><div class="value">~90%</div></div>
+        <div class="kpi"><div class="label">Detection Speed</div><div class="value">Minutes</div></div>
+        <div class="kpi"><div class="label">Additional FTE</div><div class="value">0</div></div>
+        <div class="kpi"><div class="label">Stack Overlap</div><div class="value">None</div></div>
+      </div>
+      <p class="callout"><strong>Key takeaway:</strong> This is not a managed service that requires dedicated staff. It's an intelligence layer that makes your existing processes and tools dramatically more effective at finding real risk.</p>
+    </div>
+
+    <!-- ── Engineering & Architecture Tab ── -->
+    <div class="tab-panel" id="tab-engineering">
+      <h3>🏗️ For Engineering Leadership — Staff Engineers, Tech Leads, Architects, Chief Architect</h3>
+      <p><em>Bottom line: Upwind strengthens the Security pillar of the Architecture Hub, shifts security left into the developer workflow, and provides live runtime validation of architectural decisions — all with near-zero performance overhead.</em></p>
+
+      <h3>Architecture Hub Integration</h3>
+      <p>Our Architecture Hub scores every service across pillars: Reliable, Maintainable, Deployable, Secure, Observable. Today, the Security pillar relies on static standards. Upwind provides the <strong>runtime signal</strong> to make that scoring dynamic and grounded in reality:</p>
+      <ul>
+        <li>Per-service runtime risk score based on actual exploitability — not just "has CVEs in its image"</li>
+        <li>Live dependency and API topology that validates (or challenges) our intended architecture</li>
+        <li>Continuous compliance evidence that doesn't require manual assessment cycles</li>
+      </ul>
+
+      <h3>Developer Workflow — Shift Left Without Friction</h3>
+      <ul>
+        <li><strong>PR-level feedback:</strong> Upwind scans builds and comments with deploy recommendations (<em>Deploy</em> / <em>Deploy with Caution</em> / <em>Do Not Deploy</em>) — informed by what's actually happening in runtime for that service</li>
+        <li><strong>CVE differential:</strong> Shows new vulnerabilities introduced and resolved per build — contextualized with runtime exploitability</li>
+        <li><strong>Build gates:</strong> Optional fail/warn modes (or audit-only) that fit your team's maturity and appetite</li>
+        <li><strong>Complements GHAS:</strong> GitHub Advanced Security finds code-level issues statically; Upwind answers "does this actually matter once deployed?"</li>
+      </ul>
+
+      <h3>Runtime Topology &amp; API Discovery</h3>
+      <p>Upwind automatically maps how services communicate in production — not based on config files or Terraform, but on <strong>observed traffic</strong>:</p>
+      <ul>
+        <li>Service-to-service call graphs with actual traffic patterns</li>
+        <li>Automatic API endpoint discovery with sensitive data detection in payloads</li>
+        <li>Drift detection — does runtime behavior match architectural intent?</li>
+      </ul>
+
+      <h3>eBPF — Why This Is Production-Safe</h3>
+      <div class="callout">
+        <p><strong>Technical note:</strong> eBPF (Extended Berkeley Packet Filter) provides kernel-level observability via verified, sandboxed programs — no kernel modules, no extensions to update, no user-space agent competing for CPU/memory. This avoids the class of problems that caused CrowdStrike's 2024 global outage. Resource overhead is minimal and predictable.</p>
+      </div>
+      <ul>
+        <li>No kernel extensions — no panic risk</li>
+        <li>No heavy user-space agent — safe for latency-sensitive production workloads</li>
+        <li>AWS partnership — designed and validated for EKS/ECS/Lambda environments</li>
+      </ul>
+
+      <h3>What This Means for Our Platform Strategy</h3>
+      <ul>
+        <li>Security becomes a <strong>first-class citizen</strong> in the build process — not a downstream gate that slows velocity</li>
+        <li>Engineers get actionable, contextualized feedback at the point of authorship — not a vulnerability report 3 weeks later</li>
+        <li>Architecture decisions get validated by runtime evidence — closing the feedback loop between intent and reality</li>
+        <li>The Security pillar in Architecture Hub moves from static checklist compliance to dynamic, observable health</li>
+      </ul>
+    </div>
+
+    <!-- ── CTO / Executive Tab ── -->
+    <div class="tab-panel" id="tab-executive">
+      <h3>📊 For the CTO — Strategic Investment Rationale</h3>
+      <p><em>Bottom line: Upwind is a force-multiplier that lets a lean team achieve enterprise-grade cloud security without proportional headcount growth — while accelerating engineering velocity rather than constraining it.</em></p>
+
+      <h3>What We're Looking At</h3>
+      <p>A runtime-intelligent cloud-native application protection platform (CNAPP) that provides continuous, context-rich security visibility across the entire software development life cycle — from code commit through production runtime.</p>
+
+      <h3>Why It Matters Now</h3>
+      <ul>
+        <li><strong>The gap:</strong> Our current tooling identifies that vulnerabilities <em>exist</em> but cannot determine which are <em>actively exploitable</em> in production. This leads to alert fatigue, misprioritized remediation, and engineering cycles burned on false positives.</li>
+        <li><strong>The risk:</strong> Between periodic scans, active threats go undetected. With increasing API-driven architectures and AI workloads, the attack surface is growing faster than our visibility.</li>
+        <li><strong>The timing:</strong> We are actively building the Architecture Hub and platform foundation. Integrating runtime security intelligence now means we build it in from day one rather than retrofitting later at higher cost.</li>
+      </ul>
+
+      <h3>What It Buys Us</h3>
+      <div class="kpi-row">
+        <div class="kpi"><div class="label">Alert Noise Reduction</div><div class="value">~90%</div></div>
+        <div class="kpi"><div class="label">Mean-Time-to-Detect</div><div class="value">Minutes</div></div>
+        <div class="kpi"><div class="label">Eng Velocity Impact</div><div class="value">Positive</div></div>
+        <div class="kpi"><div class="label">Additional Headcount</div><div class="value">0</div></div>
+      </div>
+      <ul>
+        <li><strong>Dramatically reduced MTTR</strong> for genuine threats — AI agents draft remediation, workflows open tickets with full context</li>
+        <li><strong>Engineering velocity preserved</strong> — developers get fast, contextualized PR feedback instead of lengthy remediation backlogs</li>
+        <li><strong>Single platform</strong> spanning code → build → deploy → runtime — eliminates tool sprawl for cloud-native security</li>
+        <li><strong>Continuous pen-test posture</strong> — Red Agent validates attack surface daily, reducing surprise findings in periodic assessments</li>
+      </ul>
+
+      <h3>How It's a Good Investment</h3>
+      <ul>
+        <li><strong>Force-multiplier, not headcount:</strong> AI agents (triage, remediation, pen testing) automate work that would otherwise require dedicated security engineers we don't have</li>
+        <li><strong>Integration-first:</strong> Value flows through Slack, Jira, ServiceNow, SIEM — no new "pane of glass" requiring dedicated monitoring staff</li>
+        <li><strong>Platform alignment:</strong> Feeds directly into Architecture Hub's Security pillar scoring — one investment strengthens two strategic initiatives</li>
+        <li><strong>AWS partnership:</strong> Deep integration with our primary cloud provider; designed for EKS-native workloads</li>
+      </ul>
+
+      <h3>Competitive Positioning in Our Stack</h3>
+      <table class="diff-table">
+        <thead><tr><th>Current Tool</th><th>Coverage</th><th>Upwind Fills</th></tr></thead>
+        <tbody>
+          <tr><td>CrowdStrike</td><td>Endpoint/EDR (desktops, servers)</td><td>Cloud-native workloads (containers, K8s) — runtime layer</td></tr>
+          <tr><td>Rapid7</td><td>Periodic pen testing</td><td>Continuous automated attack-surface validation</td></tr>
+          <tr><td>GitHub Advanced Security</td><td>Static code scanning in CI</td><td>Runtime exploitability context + deploy intelligence</td></tr>
+        </tbody>
+      </table>
+      <p>This is <strong>additive and complementary</strong> — not a rip-and-replace. It fills the specific gap of cloud-native runtime security that no current tool in our stack addresses with depth.</p>
+
+      <h3>Ask</h3>
+      <ul>
+        <li>Approve a deeper technical session with Chief Architect and InfoSec engineering present</li>
+        <li>Consider a scoped proof-of-concept on a small set of production EKS workloads to validate signal quality and overhead claims</li>
+        <li>Participate in a roadmap feedback session — Upwind builds customer-driven; our input shapes the platform</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<section>
+  <h2>Relationship to Existing Tools</h2>
+  <table class="diff-table">
+    <thead>
+      <tr><th>Tool</th><th>Role</th><th>Upwind Relationship</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>CrowdStrike</td><td>Endpoint Detection &amp; Response</td><td>Complementary — CrowdStrike covers endpoints; Upwind covers cloud-native workloads at runtime</td></tr>
+      <tr><td>Rapid7</td><td>Pen Testing / Vuln Management</td><td>Complementary — Upwind's red agent provides continuous attack-surface validation between periodic pen tests</td></tr>
+      <tr><td>GitHub Advanced Security</td><td>SAST / SCA in CI</td><td>Complementary — GHAS scans code statically; Upwind adds runtime exploitability context and deploy recommendations</td></tr>
+      <tr><td>Architecture Hub</td><td>Service compliance scoring</td><td>Synergistic — Upwind runtime data can feed the Security pillar scoring for each service</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<section>
+  <h2>Recommended Next Steps</h2>
+  <ul>
+    <li>Schedule a deeper technical session with Chris (Chief Architect) and Dan's security engineer present</li>
+    <li>Request a focused demo on Code-to-Cloud integration and Architecture Hub alignment</li>
+    <li>Explore a roadmap session with Upwind's product team to provide feedback on our needs</li>
+    <li>Evaluate a proof-of-concept scope: target a small set of production EKS workloads to validate signal quality and overhead</li>
+  </ul>
+</section>
+
+<footer>
+  <p>Internal Use Only — Prepared from introductory meeting with Upwind (Kendall, Ben, Thomas) on May 27, 2026</p>
+</footer>
+
+</div>
+
+<script>
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tabId = btn.dataset.tab;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + tabId).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
