@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub Copilot Premium Request Usage — Team Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<style>
+  :root {
+    --bg: #1a1a2e; --surface: #16213e; --card: #0f3460;
+    --accent: #e94560; --text: #eaeaea; --muted: #a0a0b0;
+    --green: #4ade80; --blue: #60a5fa; --purple: #a78bfa; --orange: #fb923c;
+    --red: #f87171;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 2rem; }
+  h1 { text-align: center; margin-bottom: .25rem; font-size: 1.8rem; }
+  .subtitle { text-align: center; color: var(--muted); margin-bottom: .25rem; font-size: .9rem; }
+  .date-range { text-align: center; color: var(--orange); margin-bottom: 1rem; font-size: .8rem; font-style: italic; }
+  .pricing-note { text-align: center; color: var(--muted); margin-bottom: 2rem; font-size: .75rem; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.5; background: var(--surface); padding: 1rem; border-radius: 8px; border: 1px solid #ffffff10; }
+  .pricing-note strong { color: var(--orange); }
+  .team-section { margin-bottom: 3rem; }
+  .team-title { font-size: 1.4rem; border-left: 4px solid var(--accent); padding-left: .75rem; margin-bottom: 1rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+  .card { background: var(--surface); border-radius: 10px; padding: 1.25rem; border: 1px solid #ffffff10; }
+  .card h3 { font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: .5rem; }
+  .card .value { font-size: 1.7rem; font-weight: 700; }
+  .card .detail { font-size: .78rem; color: var(--muted); margin-top: .25rem; }
+  .card .date-note2 { font-size: .7rem; color: var(--orange); margin-top: .2rem; }
+  .card .aic-value { font-size: 1.4rem; font-weight: 700; color: var(--red); }
+  .card .delta { font-size: .78rem; margin-top: .2rem; }
+  .delta-up { color: var(--red); }
+  .delta-down { color: var(--green); }
+  table { width: 100%; border-collapse: collapse; background: var(--surface); border-radius: 10px; overflow: hidden; margin-bottom: 1rem; font-size: .82rem; }
+  th, td { padding: .45rem .65rem; text-align: left; border-bottom: 1px solid #ffffff08; }
+  th { background: var(--card); font-size: .68rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  .chart-container { background: var(--surface); border-radius: 10px; padding: 1.25rem; border: 1px solid #ffffff10; margin-bottom: 1.5rem; max-width: 850px; }
+  .tab-bar { display: flex; gap: .5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .tab { padding: .4rem 1rem; border-radius: 6px; background: var(--surface); border: 1px solid #ffffff15; cursor: pointer; font-size: .85rem; }
+  .tab.active { background: var(--accent); border-color: var(--accent); font-weight: 600; }
+  .team-panel { display: none; }
+  .team-panel.active { display: block; }
+  .badge { display: inline-block; padding: .15rem .5rem; border-radius: 4px; font-size: .65rem; font-weight: 600; }
+  .badge-fte { background: #4ade8030; color: var(--green); }
+  .badge-contractor { background: #fb923c30; color: var(--orange); }
+  .badge-mgr { background: #60a5fa30; color: var(--blue); }
+  .warn { color: var(--red); font-weight: 600; }
+  .ok { color: var(--green); }
+  .section-label { font-size: .9rem; color: var(--muted); margin: 1.5rem 0 .5rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+  .aic-info { background: var(--card); border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; border: 1px solid var(--accent); font-size: .8rem; line-height: 1.6; }
+  .aic-info h4 { color: var(--accent); margin-bottom: .5rem; }
+  .alert-box { background: #f8717120; border: 1px solid var(--red); border-radius: 8px; padding: .75rem 1rem; margin-bottom: 1rem; font-size: .8rem; }
+</style>
+</head>
+<body>
+
+<h1>GitHub Copilot Premium Request Usage</h1>
+<p class="subtitle">April & May 2026 — by Team · PRU vs AI Credits Comparison</p>
+<p class="date-range">April: Full month (Apr 1–30) · May: Partial month (May 1–26)</p>
+
+<div class="pricing-note">
+  <strong>⚡ AI Credits (AIC) transition — June 1, 2026</strong><br>
+  Copilot Business: $19/user/month includes <strong>$19 in pooled AI Credits</strong> (promo: $30/mo Jun–Aug).<br>
+  Under AIC, cost = tokens consumed × model rate. 1 AI Credit = $0.01 USD. Code completions remain free.<br>
+  Estimates use typical interaction sizes: Chat ~4K in/1.2K out · Agent/Opus ~8K in/2K out tokens.
+</div>
+
+<div class="tab-bar">
+  <div class="tab active" onclick="showTeam('pegasus')">PEgasus</div>
+  <div class="tab" onclick="showTeam('montana')">AIS (Montana)</div>
+  <div class="tab" onclick="showTeam('radpack')">RadPack (OnePacs)</div>
+  <div class="tab" onclick="showTeam('team429')">Team 429</div>
+  <div class="tab" onclick="showTeam('bedrock')">Team Bedrock</div>
+</div>
+
+<!-- ========== PEgasus ========== -->
+<div id="pegasus" class="team-panel active">
+  <div class="team-section">
+    <h2 class="team-title">PEgasus</h2>
+    <div class="aic-info">
+      <h4>AIC Budget Context (Copilot Business)</h4>
+      4 users × $19/mo = <strong>$76 pooled monthly</strong> (promo Jun–Aug: $120/mo). Heavy Opus usage drives significant overage risk.
+    </div>
+    <div class="grid">
+      <div class="card"><h3>April PRU Cost</h3><div class="value">$149.54</div><div class="detail">3,986 requests</div><div class="date-note2">Full month</div></div>
+      <div class="card"><h3>April Est. AIC</h3><div class="aic-value">$279.48</div><div class="delta delta-up">▲ +87% vs PRU</div></div>
+      <div class="card"><h3>May MTD PRU</h3><div class="value">$148.42</div><div class="detail">3,711 requests</div><div class="date-note2">May 1–26</div></div>
+      <div class="card"><h3>May Est. AIC</h3><div class="aic-value">$291.70</div><div class="delta delta-up">▲ +97%</div></div>
+      <div class="card"><h3>Combined AIC</h3><div class="aic-value">$571.18</div><div class="delta delta-up">vs $297.96 PRU (+92%)</div></div>
+      <div class="card"><h3>Budget Gap</h3><div class="aic-value warn">−$419</div><div class="detail">Over 2-mo $152 pool</div></div>
+    </div>
+    <table>
+      <tr><th>Member</th><th>Username</th><th>Month</th><th>Req</th><th>PRU $</th><th>AIC Est.</th><th>Δ</th><th>Primary Models</th></tr>
+      <tr><td>Varun</td><td>varun-experity</td><td>Apr</td><td>1,575</td><td>$57.74</td><td class="warn">$116.42</td><td class="warn">+102%</td><td>Opus 4.7 (1444), Opus 4.6 (123)</td></tr>
+      <tr><td>Varun</td><td>varun-experity</td><td>May</td><td>1,965</td><td>$78.60</td><td class="warn">$147.10</td><td class="warn">+87%</td><td>Opus 4.7 (1935), Opus 4.6 (27)</td></tr>
+      <tr><td>Navdeep</td><td>nkaur24</td><td>Apr</td><td>1,418</td><td>$52.28</td><td class="warn">$103.66</td><td class="warn">+98%</td><td>Opus 4.6 (1245), Sonnet 4.6 (166)</td></tr>
+      <tr><td>Navdeep</td><td>nkaur24</td><td>May</td><td>698</td><td>$27.92</td><td class="warn">$54.00</td><td class="warn">+93%</td><td>Opus 4.6 (441), Opus 4.7 (255)</td></tr>
+      <tr><td>Mike</td><td>mikepedz</td><td>Apr</td><td>993</td><td>$39.52</td><td class="warn">$59.41</td><td class="warn">+50%</td><td>Opus 4.6 (985)</td></tr>
+      <tr><td>Mike</td><td>mikepedz</td><td>May</td><td>948</td><td>$37.92</td><td class="warn">$69.58</td><td class="warn">+83%</td><td>Opus 4.6 (492), Opus 4.7 (435)</td></tr>
+      <tr><td>Roman</td><td>rboparai-experityhealth</td><td>May</td><td>100</td><td>$3.98</td><td class="ok">$3.02</td><td class="ok">−24%</td><td>GPT-5.3-Codex (75), Sonnet 4.6 (13)</td></tr>
+    </table>
+    <div class="chart-container"><canvas id="chartPegasus"></canvas></div>
+  </div>
+</div>
+
+<!-- ========== AIS / Team Montana ========== -->
+<div id="montana" class="team-panel">
+  <div class="team-section">
+    <h2 class="team-title">AIS — Team Montana</h2>
+    <div class="alert-box">
+      ⚠️ <strong>Isaac Blatter:</strong> 12,480 Opus 4.7 requests in May (26 days). Under AIC this would cost ~$1,123 for one user in one month.
+    </div>
+    <div class="aic-info">
+      <h4>AIC Budget Context (Copilot Business)</h4>
+      5 users × $19/mo = <strong>$95 pooled monthly</strong> (promo Jun–Aug: $150/mo).<br>
+      ⚠️ This team's Opus-heavy pattern would <strong>massively exceed</strong> any pooled budget.
+    </div>
+    <div class="grid">
+      <div class="card"><h3>April PRU Cost</h3><div class="value">$207.01</div><div class="detail">5,892 requests</div><div class="date-note2">Full month</div></div>
+      <div class="card"><h3>April Est. AIC</h3><div class="aic-value">$497.57</div><div class="delta delta-up">▲ +140% vs PRU</div></div>
+      <div class="card"><h3>May MTD PRU</h3><div class="value">$585.73</div><div class="detail">14,643 requests</div><div class="date-note2">May 1–26</div></div>
+      <div class="card"><h3>May Est. AIC</h3><div class="aic-value">$1,260.90</div><div class="delta delta-up">▲ +115%</div></div>
+      <div class="card"><h3>Combined AIC</h3><div class="aic-value">$1,758.47</div><div class="delta delta-up">vs $792.74 PRU (+122%)</div></div>
+      <div class="card"><h3>Budget Gap</h3><div class="aic-value warn">−$1,568</div><div class="detail">Over 2-mo $190 pool</div></div>
+    </div>
+    <table>
+      <tr><th>Member</th><th>Username</th><th>Month</th><th>Req</th><th>PRU $</th><th>AIC Est.</th><th>Δ</th><th>Primary Models</th></tr>
+      <tr><td>Isaac Blatter</td><td>iblatter-experity</td><td>Apr</td><td>3,762</td><td>$140.68</td><td class="warn">$331.47</td><td class="warn">+136%</td><td>Opus 4.6 (1849), Opus 4.7 (1818)</td></tr>
+      <tr><td>Isaac Blatter</td><td>iblatter-experity</td><td>May</td><td>13,039</td><td>$521.56</td><td class="warn">$1,123.02</td><td class="warn">+115%</td><td>Opus 4.7 (12480), Opus 4.6 (399), Sonnet (88)</td></tr>
+      <tr><td>Sam Harris</td><td>sam-harris-experity</td><td>Apr</td><td>1,282</td><td>$41.52</td><td class="warn">$53.95</td><td class="warn">+30%</td><td>Sonnet 4.6 (464), Opus 4.6 (443), Sonnet 4.5 (315)</td></tr>
+      <tr><td>Sam Harris</td><td>sam-harris-experity</td><td>May</td><td>750</td><td>$30.00</td><td class="warn">$33.97</td><td class="warn">+13%</td><td>Sonnet 4.6 (527), Opus 4.6 (90)</td></tr>
+      <tr><td>Zach Pollard</td><td>zacharypollard</td><td>Apr</td><td>458</td><td>$14.56</td><td class="warn">$25.14</td><td class="warn">+73%</td><td>Sonnet 4.6 (218), Opus 4.6 (203)</td></tr>
+      <tr><td>Zach Pollard</td><td>zacharypollard</td><td>May</td><td>180</td><td>$7.20</td><td class="ok">$4.95</td><td class="ok">−31%</td><td>Sonnet 4.6 (112), Sonnet 4.5 (39)</td></tr>
+      <tr><td>Tyler Wilson</td><td>twilson-eh</td><td>Apr</td><td>248</td><td>$9.69</td><td class="warn">$21.13</td><td class="warn">+118%</td><td>Opus 4.6 (233)</td></tr>
+      <tr><td>Tyler Wilson</td><td>twilson-eh</td><td>May</td><td>236</td><td>$9.45</td><td class="warn">$20.16</td><td class="warn">+113%</td><td>Opus 4.6 (222), Sonnet 4.6 (8)</td></tr>
+      <tr><td>Max Ma</td><td>mma-exp</td><td>Apr</td><td>142</td><td>$2.56</td><td class="ok">$3.85</td><td class="warn">+50%</td><td>Sonnet 4.6 (97), Sonnet 4.5 (16)</td></tr>
+      <tr><td>Max Ma</td><td>mma-exp</td><td>May</td><td>438</td><td>$17.52</td><td class="warn">$15.88</td><td class="ok">−9%</td><td>Sonnet 4.6 (383), Opus 4.7 (45)</td></tr>
+    </table>
+    <div class="chart-container"><canvas id="chartMontana"></canvas></div>
+  </div>
+</div>
+
+<!-- ========== RadPack (OnePacs) ========== -->
+<div id="radpack" class="team-panel">
+  <div class="team-section">
+    <h2 class="team-title">RadPack (OnePacs)</h2>
+    <div class="aic-info">
+      <h4>AIC Budget Context (Copilot Business)</h4>
+      12 users × $19/mo = <strong>$228 pooled monthly</strong> (promo Jun–Aug: $360/mo).<br>
+      Mixed usage patterns — heavy Sonnet users save money, but Opus users push costs up.
+    </div>
+    <div class="grid">
+      <div class="card"><h3>April PRU Cost</h3><div class="value">$146.71</div><div class="detail">5,120 requests</div><div class="date-note2">Full month</div></div>
+      <div class="card"><h3>April Est. AIC</h3><div class="aic-value">$156.35</div><div class="delta delta-up">▲ +7% vs PRU</div></div>
+      <div class="card"><h3>May MTD PRU</h3><div class="value">$170.69</div><div class="detail">4,232 requests</div><div class="date-note2">May 1–26</div></div>
+      <div class="card"><h3>May Est. AIC</h3><div class="aic-value">$159.24</div><div class="delta delta-down">▼ −7% vs PRU</div></div>
+      <div class="card"><h3>Combined AIC</h3><div class="aic-value">$315.59</div><div class="delta delta-up">vs $317.40 PRU (−1%)</div></div>
+      <div class="card"><h3>Budget Status</h3><div class="aic-value ok">Under promo</div><div class="detail">$316 vs $720 promo pool (2-mo)</div></div>
+    </div>
+    <table>
+      <tr><th>Member</th><th>Username</th><th>Role</th><th>Month</th><th>Req</th><th>PRU $</th><th>AIC Est.</th><th>Δ</th><th>Primary Models</th></tr>
+      <tr><td>Damien Evans</td><td>cilantrosoftware</td><td><span class="badge badge-mgr">Mgr</span></td><td>Apr</td><td>545</td><td>$12.97</td><td class="warn">$17.13</td><td class="warn">+32%</td><td>Sonnet 4.6 (387), Opus 4.6 (51)</td></tr>
+      <tr><td>Damien Evans</td><td>cilantrosoftware</td><td><span class="badge badge-mgr">Mgr</span></td><td>May</td><td>692</td><td>$27.67</td><td class="warn">$46.35</td><td class="warn">+68%</td><td>Opus 4.6 (429), Sonnet 4.6 (248)</td></tr>
+      <tr><td>Saurabh Sevak</td><td>sausevak</td><td><span class="badge badge-contractor">Dev CTR</span></td><td>Apr</td><td>1,322</td><td>$38.51</td><td class="ok">$38.85</td><td>~0%</td><td>Sonnet 4.6 (1206), GPT-5.3 (39)</td></tr>
+      <tr><td>Saurabh Sevak</td><td>sausevak</td><td><span class="badge badge-contractor">Dev CTR</span></td><td>May</td><td>1,210</td><td>$48.40</td><td class="ok">$35.91</td><td class="ok">−26%</td><td>Sonnet 4.6 (1186)</td></tr>
+      <tr><td>Bryce Stock</td><td>bstock21</td><td><span class="badge badge-fte">Dev</span></td><td>Apr</td><td>1,203</td><td>$41.16</td><td class="warn">$47.82</td><td class="warn">+16%</td><td>Sonnet 4.6 (941), Opus 4.6 (123), Opus 4.7 (78)</td></tr>
+      <tr><td>Bryce Stock</td><td>bstock21</td><td><span class="badge badge-fte">Dev</span></td><td>May</td><td>851</td><td>$34.03</td><td class="warn">$50.73</td><td class="warn">+49%</td><td>Sonnet 4.6 (392), Opus 4.6 (246), Opus 4.7 (180)</td></tr>
+      <tr><td>Lei Ma</td><td>leima2010</td><td><span class="badge badge-fte">Dev</span></td><td>Apr</td><td>438</td><td>$14.40</td><td class="ok">$12.57</td><td class="ok">−13%</td><td>Sonnet 4.6 (402), Opus 4.6 (3)</td></tr>
+      <tr><td>Lei Ma</td><td>leima2010</td><td><span class="badge badge-fte">Dev</span></td><td>May</td><td>766</td><td>$30.64</td><td class="ok">$22.89</td><td class="ok">−25%</td><td>Sonnet 4.6 (760)</td></tr>
+      <tr><td>Carlos Monterroso</td><td>cmonterroso-exp</td><td><span class="badge badge-fte">DevOps</span></td><td>Apr</td><td>413</td><td>$14.54</td><td class="ok">$12.18</td><td class="ok">−16%</td><td>GPT-5.3-Codex (285), GPT-5.4 (90)</td></tr>
+      <tr><td>Carlos Monterroso</td><td>cmonterroso-exp</td><td><span class="badge badge-fte">DevOps</span></td><td>May</td><td>186</td><td>$7.44</td><td class="ok">$6.40</td><td class="ok">−14%</td><td>GPT-5.4 (181), Sonnet 4.6 (1)</td></tr>
+      <tr><td>Tim Leibovich</td><td>tleibovich</td><td><span class="badge badge-fte">DevOps</span></td><td>Apr</td><td>371</td><td>$11.59</td><td class="ok">$10.48</td><td class="ok">−10%</td><td>Sonnet 4.6 (325), Code Review (28)</td></tr>
+      <tr><td>Tim Leibovich</td><td>tleibovich</td><td><span class="badge badge-fte">DevOps</span></td><td>May</td><td>147</td><td>$5.88</td><td class="ok">$5.12</td><td class="ok">−13%</td><td>Sonnet 4.6 (114), Opus 4.6 (15)</td></tr>
+      <tr><td>Ricardo Rodriguez</td><td>rroman-encora</td><td><span class="badge badge-contractor">Dev CTR</span></td><td>Apr</td><td>323</td><td>$8.76</td><td class="ok">$8.32</td><td class="ok">−5%</td><td>Sonnet 4.6 (238), Sonnet 4.5 (35)</td></tr>
+      <tr><td>Ricardo Rodriguez</td><td>rroman-encora</td><td><span class="badge badge-contractor">Dev CTR</span></td><td>May</td><td>40</td><td>$1.60</td><td class="ok">$1.01</td><td class="ok">−37%</td><td>Sonnet 4.6 (24), Sonnet 4.5 (3)</td></tr>
+      <tr><td>Ben White</td><td>bwhiteOP</td><td><span class="badge badge-fte">Dev</span></td><td>Apr</td><td>320</td><td>$12.17</td><td class="warn">$24.37</td><td class="warn">+100%</td><td>Opus 4.5 (174), Opus 4.6 (82)</td></tr>
+      <tr><td>Ben White</td><td>bwhiteOP</td><td><span class="badge badge-fte">Dev</span></td><td>May</td><td>82</td><td>$3.28</td><td class="warn">$5.70</td><td class="warn">+74%</td><td>Opus 4.6 (60), Code Review (20)</td></tr>
+      <tr><td>Naren De Avila</td><td>NorJull</td><td><span class="badge badge-contractor">Dev CTR</span></td><td>Apr</td><td>65</td><td>$2.48</td><td class="ok">$1.76</td><td class="ok">−29%</td><td>Sonnet 4.6 (53)</td></tr>
+      <tr><td>Naren De Avila</td><td>NorJull</td><td><span class="badge badge-contractor">Dev CTR</span></td><td>May</td><td>134</td><td>$5.36</td><td class="ok">$3.90</td><td class="ok">−27%</td><td>Sonnet 4.6 (126)</td></tr>
+      <tr><td>Gulay Gencer</td><td>GulayGencer</td><td><span class="badge badge-fte">QA</span></td><td>Apr</td><td>48</td><td>$1.84</td><td class="ok">$1.41</td><td class="ok">−23%</td><td>GPT-5.2 (47)</td></tr>
+      <tr><td>Gulay Gencer</td><td>GulayGencer</td><td><span class="badge badge-fte">QA</span></td><td>May</td><td>38</td><td>$1.52</td><td class="ok">$1.32</td><td class="ok">−13%</td><td>GPT-5.4 (35), GPT-5.2 (3)</td></tr>
+      <tr><td>Sanket Tambadkar</td><td>Sanket-EXP</td><td><span class="badge badge-contractor">QA CTR</span></td><td>May</td><td>112</td><td>$4.48</td><td class="ok">$3.06</td><td class="ok">−32%</td><td>Sonnet 4.6 (98), GPT-5.3-Codex (10)</td></tr>
+      <tr><td>Proxima Samal</td><td>ProximaSamal</td><td><span class="badge badge-contractor">QA CTR</span></td><td>May</td><td>47</td><td>$1.89</td><td class="ok">$0.47</td><td class="ok">−75%</td><td>Haiku 4.5 (47)</td></tr>
+    </table>
+    <div class="chart-container"><canvas id="chartRadpack"></canvas></div>
+  </div>
+</div>
+
+<!-- ========== Team 429 ========== -->
+<div id="team429" class="team-panel">
+  <div class="team-section">
+    <h2 class="team-title">Team 429</h2>
+    <div class="aic-info">
+      <h4>AIC Budget Context (Copilot Business)</h4>
+      6 users × $19/mo = <strong>$114 pooled monthly</strong> (promo Jun–Aug: $180/mo).
+    </div>
+    <div class="grid">
+      <div class="card"><h3>April PRU Cost</h3><div class="value">$62.90</div><div class="detail">1,890 requests</div><div class="date-note2">Full month</div></div>
+      <div class="card"><h3>April Est. AIC</h3><div class="aic-value">$73.44</div><div class="delta delta-up">▲ +17%</div></div>
+      <div class="card"><h3>May MTD PRU</h3><div class="value">$43.77</div><div class="detail">1,094 requests</div><div class="date-note2">May 1–26</div></div>
+      <div class="card"><h3>May Est. AIC</h3><div class="aic-value">$56.68</div><div class="delta delta-up">▲ +29%</div></div>
+      <div class="card"><h3>Combined AIC</h3><div class="aic-value">$130.12</div><div class="delta delta-up">vs $106.67 PRU (+22%)</div></div>
+      <div class="card"><h3>Budget Status</h3><div class="aic-value ok">Within pool</div><div class="detail">$130 vs $228 (2-mo pool)</div></div>
+    </div>
+    <table>
+      <tr><th>Member</th><th>Username</th><th>Type</th><th>Month</th><th>Req</th><th>PRU $</th><th>AIC Est.</th><th>Δ</th><th>Primary Models</th></tr>
+      <tr><td>Sam Harris</td><td>sam-harris-experity</td><td><span class="badge badge-fte">FTE</span></td><td>Apr</td><td>1,282</td><td>$41.52</td><td class="warn">$53.95</td><td class="warn">+30%</td><td>Sonnet 4.6 (464), Opus 4.6 (443)</td></tr>
+      <tr><td>Sam Harris</td><td>sam-harris-experity</td><td><span class="badge badge-fte">FTE</span></td><td>May</td><td>750</td><td>$30.00</td><td class="warn">$33.97</td><td class="warn">+13%</td><td>Sonnet 4.6 (527), Opus 4.6 (90)</td></tr>
+      <tr><td>David Karl</td><td>dkarl</td><td><span class="badge badge-fte">FTE</span></td><td>Apr</td><td>199</td><td>$7.67</td><td class="warn">$11.56</td><td class="warn">+51%</td><td>Opus 4.6 (177)</td></tr>
+      <tr><td>David Karl</td><td>dkarl</td><td><span class="badge badge-fte">FTE</span></td><td>May</td><td>66</td><td>$2.65</td><td>$3.15</td><td class="warn">+19%</td><td>Sonnet 4.6 (48), GPT-5.4 (10)</td></tr>
+      <tr><td>Brandon Ortuno</td><td>BrandonOrtuno</td><td><span class="badge badge-contractor">CTR</span></td><td>Apr</td><td>177</td><td>$5.64</td><td class="ok">$4.49</td><td class="ok">−20%</td><td>Sonnet 4.5 (152)</td></tr>
+      <tr><td>Brandon Ortuno</td><td>BrandonOrtuno</td><td><span class="badge badge-contractor">CTR</span></td><td>May</td><td>161</td><td>$6.45</td><td class="warn">$10.73</td><td class="warn">+66%</td><td>Opus 4.6 (120), Opus 4.7 (30)</td></tr>
+      <tr><td>Ayush Ojha</td><td>Ayushojha1110</td><td><span class="badge badge-contractor">CTR</span></td><td>Apr</td><td>111</td><td>$3.60</td><td class="ok">$2.60</td><td class="ok">−28%</td><td>Sonnet 4.6 (49), Sonnet 4.5 (16)</td></tr>
+      <tr><td>Ayush Ojha</td><td>Ayushojha1110</td><td><span class="badge badge-contractor">CTR</span></td><td>May</td><td>74</td><td>$2.97</td><td>$2.74</td><td class="ok">−8%</td><td>GPT-5.4 (54), Sonnet 4.5 (11)</td></tr>
+      <tr><td>Rob Giordano</td><td>rgiordano66</td><td><span class="badge badge-fte">FTE</span></td><td>Apr</td><td>62</td><td>$2.40</td><td>$3.23</td><td class="warn">+35%</td><td>Opus 4.6 (49)</td></tr>
+      <tr><td>Rob Giordano</td><td>rgiordano66</td><td><span class="badge badge-fte">FTE</span></td><td>May</td><td>41</td><td>$1.63</td><td class="ok">$1.29</td><td class="ok">−21%</td><td>Sonnet 4.6 (33)</td></tr>
+      <tr><td>Rafael Dresch</td><td>RafaelDresch*</td><td><span class="badge badge-contractor">CTR</span></td><td>Apr</td><td>59</td><td>$2.07</td><td class="ok">$1.61</td><td class="ok">−22%</td><td>Sonnet 4.5 (15), Opus 4.7 (9)</td></tr>
+      <tr><td>Rafael Dresch</td><td>RafaelDresch*</td><td><span class="badge badge-contractor">CTR</span></td><td>May</td><td>102</td><td>$4.07</td><td class="warn">$5.80</td><td class="warn">+42%</td><td>Opus 4.7 (75), Opus 4.6 (9)</td></tr>
+    </table>
+    <div class="chart-container"><canvas id="chartTeam429"></canvas></div>
+  </div>
+</div>
+
+<!-- ========== Team Bedrock ========== -->
+<div id="bedrock" class="team-panel">
+  <div class="team-section">
+    <h2 class="team-title">Team Bedrock</h2>
+    <div class="aic-info">
+      <h4>AIC Budget Context (Copilot Business)</h4>
+      4 users × $19/mo = <strong>$76 pooled monthly</strong>. Low usage — well within budget under either model.
+    </div>
+    <div class="grid">
+      <div class="card"><h3>April PRU</h3><div class="value">$4.92</div><div class="detail">140 requests</div><div class="date-note2">Full month</div></div>
+      <div class="card"><h3>April Est. AIC</h3><div class="aic-value ok">$3.03</div><div class="delta delta-down">▼ −38%</div></div>
+      <div class="card"><h3>May MTD PRU</h3><div class="value">$0.88</div><div class="detail">22 requests</div><div class="date-note2">May 1–26</div></div>
+      <div class="card"><h3>May Est. AIC</h3><div class="aic-value ok">$0.47</div><div class="delta delta-down">▼ −47%</div></div>
+      <div class="card"><h3>Combined AIC</h3><div class="aic-value ok">$3.50</div><div class="delta delta-down">vs $5.80 PRU (−40%)</div></div>
+      <div class="card"><h3>Budget</h3><div class="aic-value ok">Well under</div><div class="detail">$3.50 vs $152 pool</div></div>
+    </div>
+    <table>
+      <tr><th>Member</th><th>Username</th><th>Type</th><th>Month</th><th>Req</th><th>PRU $</th><th>AIC Est.</th><th>Δ</th><th>Primary Models</th></tr>
+      <tr><td>Ratnesh Patel</td><td>rp-ans</td><td><span class="badge badge-contractor">CTR</span></td><td>Apr</td><td>92</td><td>$3.69</td><td class="ok">$2.37</td><td class="ok">−36%</td><td>Sonnet 4.5 (73), Sonnet 4.6 (11)</td></tr>
+      <tr><td>Ratnesh Patel</td><td>rp-ans</td><td><span class="badge badge-contractor">CTR</span></td><td>May</td><td>12</td><td>$0.48</td><td class="ok">$0.28</td><td class="ok">−42%</td><td>Sonnet 4.5 (7)</td></tr>
+      <tr><td>Alok Verma</td><td>av-ans</td><td><span class="badge badge-contractor">CTR</span></td><td>Apr</td><td>29</td><td>$0.76</td><td class="ok">$0.46</td><td class="ok">−39%</td><td>GPT-4.1 (8), Sonnet 4.5 (8)</td></tr>
+      <tr><td>Alok Verma</td><td>av-ans</td><td><span class="badge badge-contractor">CTR</span></td><td>May</td><td>4</td><td>$0.16</td><td class="ok">$0.09</td><td class="ok">−44%</td><td>Sonnet 4.5 (3)</td></tr>
+      <tr><td>Scott Seely</td><td>sseely-experity</td><td><span class="badge badge-fte">FTE</span></td><td>Apr</td><td>18</td><td>$0.47</td><td class="ok">$0.20</td><td class="ok">−57%</td><td>Code Review (9), Haiku (3)</td></tr>
+      <tr><td>Scott Seely</td><td>sseely-experity</td><td><span class="badge badge-fte">FTE</span></td><td>May</td><td>6</td><td>$0.24</td><td class="ok">$0.10</td><td class="ok">−58%</td><td>Code Review (6)</td></tr>
+      <tr><td>Arjun N</td><td>arjun-n-murthy</td><td><span class="badge badge-contractor">CTR</span></td><td>Apr</td><td>1</td><td>$0.00</td><td>$0.01</td><td>—</td><td>GPT-4.1 (1)</td></tr>
+    </table>
+    <div class="chart-container"><canvas id="chartBedrock"></canvas></div>
+  </div>
+</div>
+
+<!-- ========== AIC Methodology ========== -->
+<div style="max-width:850px; margin: 2rem auto; background:var(--surface); border-radius:10px; padding:1.5rem; border:1px solid #ffffff10;">
+  <h3 style="color:var(--accent); margin-bottom:1rem;">📊 AIC Estimation Methodology</h3>
+  <table style="font-size:.78rem;">
+    <tr><th>Model</th><th>Input $/1M tok</th><th>Output $/1M tok</th><th>Est. In/Req</th><th>Est. Out/Req</th><th>Est. $/Request</th></tr>
+    <tr><td>Claude Opus 4.5/4.6/4.7</td><td>$5.00</td><td>$25.00</td><td>8,000</td><td>2,000</td><td><strong>$0.090</strong></td></tr>
+    <tr><td>Claude Sonnet 4/4.5/4.6</td><td>$3.00</td><td>$15.00</td><td>4,000</td><td>1,200</td><td><strong>$0.030</strong></td></tr>
+    <tr><td>Claude Haiku 4.5</td><td>$1.00</td><td>$5.00</td><td>4,000</td><td>1,200</td><td><strong>$0.010</strong></td></tr>
+    <tr><td>GPT-5.2/5.3-Codex</td><td>$1.75</td><td>$14.00</td><td>5,000</td><td>1,500</td><td><strong>$0.030</strong></td></tr>
+    <tr><td>GPT-5.4</td><td>$2.50</td><td>$15.00</td><td>5,000</td><td>1,500</td><td><strong>$0.035</strong></td></tr>
+    <tr><td>GPT-4.1</td><td>$2.00</td><td>$8.00</td><td>4,000</td><td>1,200</td><td><strong>$0.018</strong></td></tr>
+    <tr><td>GPT-5 mini</td><td>$0.25</td><td>$2.00</td><td>4,000</td><td>1,200</td><td><strong>$0.003</strong></td></tr>
+    <tr><td>Gemini 2.5/3.1 Pro</td><td>$1.25–2.00</td><td>$10–12.00</td><td>5,000</td><td>1,500</td><td><strong>$0.025</strong></td></tr>
+    <tr><td>Code Review model</td><td colspan="4"><em>Undisclosed model; estimated Sonnet-tier</em></td><td><strong>$0.015</strong></td></tr>
+    <tr><td>Coding Agent model</td><td colspan="4"><em>Estimated Sonnet-tier agent</em></td><td><strong>$0.030</strong></td></tr>
+  </table>
+  <p style="margin-top:1rem; font-size:.73rem; color:var(--muted); line-height:1.5;">
+    <strong>Key assumptions:</strong> Agent/Opus sessions use larger context (8K in, 2K out). Chat/Sonnet uses standard (4K in, 1.2K out).
+    Cache hits would reduce actual costs — estimates represent worst-case. Actual may be 10–30% lower with caching.<br>
+    <strong>Business plan:</strong> $19/user/month pooled. Promo: $30/user/month Jun–Aug 2026. Unused credits offset heavy users in pool.<br>
+    <strong>⚠️ Key risk:</strong> Teams with heavy Opus/agent usage (PEgasus, Montana) face 2–3× cost increases. Teams using Sonnet/GPT-tier (Bedrock, RadPack majority) may actually pay less.
+  </p>
+</div>
+
+<script>
+function showTeam(id) {
+  document.querySelectorAll('.team-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+const chartOpts = {
+  responsive: true,
+  plugins: { legend: { labels: { color: '#eaeaea', font: { size: 11 } } } },
+  scales: {
+    x: { ticks: { color: '#a0a0b0', font: { size: 10 } }, grid: { color: '#ffffff08' } },
+    y: { ticks: { color: '#a0a0b0' }, grid: { color: '#ffffff08' }, title: { display: true, text: 'Cost ($)', color: '#a0a0b0' } }
+  }
+};
+
+// PEgasus
+new Chart(document.getElementById('chartPegasus'), {
+  type: 'bar',
+  data: {
+    labels: ['Varun (Apr)', 'Varun (May)', 'Navdeep (Apr)', 'Navdeep (May)', 'Mike (Apr)', 'Mike (May)', 'Roman (May)'],
+    datasets: [
+      { label: 'PRU Cost', data: [57.74, 78.60, 52.28, 27.92, 39.52, 37.92, 3.98], backgroundColor: '#60a5fa' },
+      { label: 'Est. AIC Cost', data: [116.42, 147.10, 103.66, 54.00, 59.41, 69.58, 3.02], backgroundColor: '#f87171' }
+    ]
+  },
+  options: chartOpts
+});
+
+// Montana
+new Chart(document.getElementById('chartMontana'), {
+  type: 'bar',
+  data: {
+    labels: ['Isaac (Apr)', 'Isaac (May)', 'Sam (Apr)', 'Sam (May)', 'Zach (Apr)', 'Zach (May)', 'Tyler (Apr)', 'Tyler (May)', 'Max (Apr)', 'Max (May)'],
+    datasets: [
+      { label: 'PRU Cost', data: [140.68, 521.56, 41.52, 30.00, 14.56, 7.20, 9.69, 9.45, 2.56, 17.52], backgroundColor: '#60a5fa' },
+      { label: 'Est. AIC Cost', data: [331.47, 1123.02, 53.95, 33.97, 25.14, 4.95, 21.13, 20.16, 3.85, 15.88], backgroundColor: '#f87171' }
+    ]
+  },
+  options: chartOpts
+});
+
+// RadPack
+new Chart(document.getElementById('chartRadpack'), {
+  type: 'bar',
+  data: {
+    labels: ['Damien (A)', 'Damien (M)', 'Saurabh (A)', 'Saurabh (M)', 'Bryce (A)', 'Bryce (M)', 'Lei (A)', 'Lei (M)', 'Carlos (A)', 'Carlos (M)', 'Tim (A)', 'Tim (M)', 'Ricardo (A)', 'Ben (A)', 'Ben (M)'],
+    datasets: [
+      { label: 'PRU Cost', data: [12.97, 27.67, 38.51, 48.40, 41.16, 34.03, 14.40, 30.64, 14.54, 7.44, 11.59, 5.88, 8.76, 12.17, 3.28], backgroundColor: '#60a5fa' },
+      { label: 'Est. AIC Cost', data: [17.13, 46.35, 38.85, 35.91, 47.82, 50.73, 12.57, 22.89, 12.18, 6.40, 10.48, 5.12, 8.32, 24.37, 5.70], backgroundColor: '#f87171' }
+    ]
+  },
+  options: chartOpts
+});
+
+// Team 429
+new Chart(document.getElementById('chartTeam429'), {
+  type: 'bar',
+  data: {
+    labels: ['Sam (Apr)', 'Sam (May)', 'David (Apr)', 'David (May)', 'Brandon (Apr)', 'Brandon (May)', 'Ayush (Apr)', 'Ayush (May)', 'Rob (Apr)', 'Rob (May)', 'Rafael (Apr)', 'Rafael (May)'],
+    datasets: [
+      { label: 'PRU Cost', data: [41.52, 30.00, 7.67, 2.65, 5.64, 6.45, 3.60, 2.97, 2.40, 1.63, 2.07, 4.07], backgroundColor: '#60a5fa' },
+      { label: 'Est. AIC Cost', data: [53.95, 33.97, 11.56, 3.15, 4.49, 10.73, 2.60, 2.74, 3.23, 1.29, 1.61, 5.80], backgroundColor: '#f87171' }
+    ]
+  },
+  options: chartOpts
+});
+
+// Bedrock
+new Chart(document.getElementById('chartBedrock'), {
+  type: 'bar',
+  data: {
+    labels: ['Ratnesh (Apr)', 'Ratnesh (May)', 'Alok (Apr)', 'Alok (May)', 'Scott (Apr)', 'Scott (May)'],
+    datasets: [
+      { label: 'PRU Cost', data: [3.69, 0.48, 0.76, 0.16, 0.47, 0.24], backgroundColor: '#60a5fa' },
+      { label: 'Est. AIC Cost', data: [2.37, 0.28, 0.46, 0.09, 0.20, 0.10], backgroundColor: '#f87171' }
+    ]
+  },
+  options: chartOpts
+});
+</script>
+</body>
+</html>
