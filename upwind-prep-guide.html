@@ -1,0 +1,981 @@
+---
+title: Whistling Straits — CISO Event Prep Guide — May 7, 2026
+tags:
+  - golf-strategy
+  - cybersecurity-briefing
+  - networking
+date: 2026-05-06
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Whistling Straits — May 7 Field Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=IBM+Plex+Mono:wght@300;400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #1a4a2e;
+    --green-light: #2d7a4f;
+    --green-pale: #e8f2ec;
+    --gold: #b8953f;
+    --gold-light: #d4af68;
+    --cream: #f9f5ef;
+    --paper: #f3ede3;
+    --ink: #1c1a16;
+    --ink2: #4a4540;
+    --ink3: #7a7268;
+    --red: #8b2020;
+    --blue: #1a3a5c;
+    --blue-light: #2a5a8c;
+    --border: #d4c8b0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Libre Baskerville', Georgia, serif;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--green);
+    color: var(--cream);
+    padding: 3rem 2rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 60px,
+        rgba(255,255,255,0.02) 60px,
+        rgba(255,255,255,0.02) 61px
+      );
+  }
+  .hero-inner { max-width: 860px; margin: 0 auto; position: relative; }
+  .hero-badge {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    border: 1px solid var(--gold);
+    padding: 0.3rem 0.8rem;
+    margin-bottom: 1.2rem;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+  .hero-sub {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    color: rgba(249,245,239,0.6);
+    letter-spacing: 0.08em;
+    margin-top: 1rem;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .hero-meta-item {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--gold-light);
+    letter-spacing: 0.05em;
+  }
+  .hero-meta-item span { color: rgba(249,245,239,0.5); margin-right: 0.4rem; }
+
+  /* ── NAV TABS ── */
+  .nav-tabs {
+    background: var(--green);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 0 2rem;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    max-width: 100%;
+  }
+  .tab-btn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(249,245,239,0.5);
+    border: none;
+    background: none;
+    padding: 0.9rem 1.2rem;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .tab-btn:hover { color: var(--gold-light); }
+  .tab-btn.active {
+    color: var(--gold-light);
+    border-bottom-color: var(--gold);
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .main { max-width: 860px; margin: 0 auto; padding: 2.5rem 2rem; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ── SECTION TITLES ── */
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--green);
+    margin-bottom: 0.4rem;
+  }
+  .section-lead {
+    font-size: 0.9rem;
+    color: var(--ink3);
+    margin-bottom: 2rem;
+    font-style: italic;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--green);
+    padding: 1.4rem 1.5rem;
+    margin-bottom: 1.2rem;
+    position: relative;
+  }
+  .card.gold { border-left-color: var(--gold); }
+  .card.red { border-left-color: var(--red); }
+  .card.blue { border-left-color: var(--blue-light); }
+
+  .card-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 0.5rem;
+  }
+  .card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--ink);
+    margin-bottom: 0.6rem;
+  }
+  .card p { font-size: 0.88rem; color: var(--ink2); margin-bottom: 0.5rem; }
+  .card p:last-child { margin-bottom: 0; }
+  .card strong { color: var(--ink); }
+
+  /* ── TOPIC GRID ── */
+  .topic-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  @media(max-width:600px) { .topic-grid { grid-template-columns: 1fr; } }
+
+  .topic-pill {
+    background: var(--green-pale);
+    border: 1px solid #b8d4c0;
+    padding: 0.9rem 1rem;
+    font-size: 0.82rem;
+  }
+  .topic-pill .pill-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--green-light);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+  .topic-pill .pill-title { font-weight: 700; font-size: 0.85rem; color: var(--ink); }
+  .topic-pill .pill-desc { font-size: 0.78rem; color: var(--ink2); margin-top: 0.2rem; }
+
+  /* ── TALKING POINTS BOX ── */
+  .talking-box {
+    background: #1c1a16;
+    color: var(--cream);
+    padding: 1.5rem;
+    margin: 1.2rem 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    line-height: 1.8;
+    border-left: 3px solid var(--gold);
+  }
+  .talking-box .talking-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--gold-light);
+    margin-bottom: 0.7rem;
+    text-transform: uppercase;
+  }
+  .talking-box p { color: rgba(249,245,239,0.85); margin-bottom: 0.3rem; }
+  .talking-box p::before { content: '→ '; color: var(--gold-light); }
+
+  /* ── GLOSSARY TABLE ── */
+  .glossary { margin-bottom: 2rem; }
+  .glossary-row {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 1rem;
+    border-bottom: 1px solid var(--border);
+    padding: 0.85rem 0;
+    font-size: 0.86rem;
+    align-items: start;
+  }
+  .glossary-term {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--green-light);
+    letter-spacing: 0.03em;
+    padding-top: 0.1rem;
+  }
+  .glossary-def { color: var(--ink2); }
+  .glossary-def strong { color: var(--ink); }
+
+  /* ── HOLE CARDS ── */
+  .hole-card {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    margin-bottom: 1rem;
+    overflow: hidden;
+  }
+  .hole-header {
+    background: var(--green);
+    color: var(--cream);
+    padding: 0.8rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: space-between;
+  }
+  .hole-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: var(--gold-light);
+    min-width: 2rem;
+  }
+  .hole-name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: rgba(249,245,239,0.7);
+    text-transform: uppercase;
+    flex: 1;
+  }
+  .hole-stats {
+    display: flex;
+    gap: 1.2rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--gold-light);
+    text-align: right;
+  }
+  .hole-stat-item { display: flex; flex-direction: column; align-items: flex-end; }
+  .hole-stat-label { font-size: 0.55rem; color: rgba(249,245,239,0.4); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  .hole-body { padding: 1.1rem 1.2rem; }
+  .hole-body .danger { color: var(--red); font-size: 0.78rem; font-family: 'IBM Plex Mono', monospace; margin-bottom: 0.5rem; }
+  .hole-body .danger::before { content: '⚠ '; }
+  .hole-strategy {
+    font-size: 0.85rem;
+    color: var(--ink2);
+    line-height: 1.6;
+  }
+  .hole-strategy strong { color: var(--ink); }
+
+  .difficulty-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    padding: 0.2rem 0.5rem;
+    text-transform: uppercase;
+  }
+  .diff-manageable { background: #d4edda; color: #1a4a2e; }
+  .diff-tricky { background: #fff3cd; color: #7a5a00; }
+  .diff-brutal { background: #f8d7da; color: #6b1414; }
+
+  /* ── POSITIONING BOX ── */
+  .position-box {
+    background: var(--blue);
+    color: var(--cream);
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    border-left: 4px solid var(--gold);
+  }
+  .position-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--gold-light);
+    margin-bottom: 0.8rem;
+  }
+  .position-box p { font-size: 0.87rem; color: rgba(249,245,239,0.85); margin-bottom: 0.5rem; }
+  .position-box p:last-child { margin-bottom: 0; }
+
+  /* ── ALERT BOX ── */
+  .alert-box {
+    border: 1px solid var(--gold);
+    background: #fdf8ee;
+    padding: 1rem 1.2rem;
+    margin: 1.2rem 0;
+    font-size: 0.84rem;
+    color: var(--ink2);
+  }
+  .alert-box strong { color: var(--gold); }
+
+  /* ── MINDSET SECTION ── */
+  .mindset-item {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .mindset-item:last-child { border-bottom: none; }
+  .mindset-icon {
+    font-size: 1.4rem;
+    min-width: 2rem;
+    padding-top: 0.1rem;
+  }
+  .mindset-content h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+    color: var(--ink);
+  }
+  .mindset-content p { font-size: 0.85rem; color: var(--ink2); }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--ink3);
+    padding: 2rem;
+    border-top: 1px solid var(--border);
+    letter-spacing: 0.08em;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Field Briefing — Confidential</div>
+    <h1>Whistling Straits<br>May 7, 2026</h1>
+    <p style="font-family:'Libre Baskerville',serif; font-size:0.95rem; color:rgba(249,245,239,0.7); margin-top:0.8rem; font-style:italic;">
+      A practical guide for playing The Straits and navigating a CISO/cybersecurity audience — as yourself.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><span>Event:</span>Upwind Security CXO Golf Outing</div>
+      <div class="hero-meta-item"><span>Venue:</span>The Straits, Kohler WI</div>
+      <div class="hero-meta-item"><span>Attendees:</span>~8 incl. hosts</div>
+      <div class="hero-meta-item"><span>Your role:</span>VP Engineering, Invited Guest</div>
+    </div>
+  </div>
+</div>
+
+<div class="nav-tabs">
+  <button class="tab-btn active" onclick="showTab('cyber')">☁ Cyber Brief</button>
+  <button class="tab-btn" onclick="showTab('upwind')">🛡 About Upwind</button>
+  <button class="tab-btn" onclick="showTab('convo')">💬 Convo Strategy</button>
+  <button class="tab-btn" onclick="showTab('golf')">⛳ Course Guide</button>
+  <button class="tab-btn" onclick="showTab('mindset')">🧠 Day-Of Mindset</button>
+</div>
+
+<div class="main">
+
+  <!-- ── TAB: CYBER BRIEF ── -->
+  <div id="tab-cyber" class="section active">
+    <h2 class="section-title">Cloud Security Landscape Briefing</h2>
+    <p class="section-lead">You don't need to be a CISO to have a real conversation here. You need enough context to ask intelligent questions, share a grounded perspective, and bridge from security to engineering — which is precisely your lane.</p>
+
+    <div class="card gold">
+      <div class="card-label">The Big Picture</div>
+      <h3>Why everyone in that room cares about CNAPP right now</h3>
+      <p>Cloud security is in a consolidation moment. Organizations spent years buying disconnected tools — one for misconfigurations (CSPM), one for runtime workload protection (CWPP), one for identity permissions (CIEM). CISOs are now being asked to do more with less and to show the board a unified risk story, not a stack of dashboards.</p>
+      <p><strong>CNAPP (Cloud-Native Application Protection Platform)</strong> is the category that ties this together — one platform covering the full lifecycle from code commit to production runtime. This is exactly what Upwind is selling, and exactly what every CISO at this event is evaluating in their budget.</p>
+    </div>
+
+    <h3 style="font-family:'Playfair Display',serif; font-size:1.1rem; margin:1.5rem 0 0.8rem; color:var(--ink);">Acronym Decoder — Know These Cold</h3>
+    <div class="glossary">
+      <div class="glossary-row">
+        <div class="glossary-term">CNAPP</div>
+        <div class="glossary-def"><strong>Cloud-Native Application Protection Platform.</strong> The unified category. Combines CSPM + CWPP + CIEM + more into one platform. The hot category right now.</div>
+      </div>
+      <div class="glossary-row">
+        <div class="glossary-term">CSPM</div>
+        <div class="glossary-def"><strong>Cloud Security Posture Management.</strong> Scans for misconfigurations — think "did someone leave an S3 bucket public?" Continuous compliance scanning.</div>
+      </div>
+      <div class="glossary-row">
+        <div class="glossary-term">CWPP</div>
+        <div class="glossary-def"><strong>Cloud Workload Protection Platform.</strong> Protects what's running — VMs, containers, serverless. Runtime defense. Upwind's core differentiator is eBPF-based runtime intelligence here.</div>
+      </div>
+      <div class="glossary-row">
+        <div class="glossary-term">CIEM</div>
+        <div class="glossary-def"><strong>Cloud Infrastructure Entitlement Management.</strong> Who has access to what, and are those permissions appropriate? Identity and privilege abuse prevention.</div>
+      </div>
+      <div class="glossary-row">
+        <div class="glossary-term">eBPF</div>
+        <div class="glossary-def"><strong>Extended Berkeley Packet Filter.</strong> A Linux kernel tech that lets you observe running systems at very low overhead. Upwind uses this for real-time runtime telemetry — big technical differentiator.</div>
+      </div>
+      <div class="glossary-row">
+        <div class="glossary-term">DSPM</div>
+        <div class="glossary-def"><strong>Data Security Posture Management.</strong> Where is sensitive data, and is it properly protected? Growing area as data sprawl increases.</div>
+      </div>
+      <div class="glossary-row">
+        <div class="glossary-term">CADR / CDR</div>
+        <div class="glossary-def"><strong>Cloud Application/Detection & Response.</strong> Real-time threat detection and incident response for cloud environments. Upwind was named a leader here by Latio in 2025.</div>
+      </div>
+      <div class="glossary-row">
+        <div class="glossary-term">Shift Left</div>
+        <div class="glossary-def">Moving security earlier in the SDLC — catching vulnerabilities at code commit time rather than in production. Engineers hear this constantly. You can speak to this fluently.</div>
+      </div>
+      <div class="glossary-row">
+        <div class="glossary-term">DevSecOps</div>
+        <div class="glossary-def">Embedding security into DevOps workflows so it's not a gate at the end. Security as a shared responsibility, not a final approval step.</div>
+      </div>
+      <div class="glossary-row">
+        <div class="glossary-term">Zero Trust</div>
+        <div class="glossary-def">Never assume trust by network location. Verify everything, continuously. Increasingly tied to cloud security posture.</div>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Playfair Display',serif; font-size:1.1rem; margin:1.5rem 0 0.8rem; color:var(--ink);">Hot Topics of 2025-2026</h3>
+    <div class="topic-grid">
+      <div class="topic-pill">
+        <div class="pill-label">Top Trend</div>
+        <div class="pill-title">Alert Fatigue & Noise Reduction</div>
+        <div class="pill-desc">Security teams drowning in low-fidelity alerts. Runtime context (what's actually running vs. dormant) cuts noise by up to 95%.</div>
+      </div>
+      <div class="topic-pill">
+        <div class="pill-label">Board-Level</div>
+        <div class="pill-title">AI Workload Security</div>
+        <div class="pill-desc">New attack surfaces from LLM APIs, GPU infrastructure, agentic workflows. Every CISO is being asked "are our AI deployments secure?"</div>
+      </div>
+      <div class="topic-pill">
+        <div class="pill-label">Budget Pressure</div>
+        <div class="pill-title">Tool Consolidation</div>
+        <div class="pill-desc">CISOs are cutting point-solution sprawl and consolidating on unified platforms. Fewer dashboards, shared data model, lower overhead.</div>
+      </div>
+      <div class="topic-pill">
+        <div class="pill-label">Regulatory</div>
+        <div class="pill-title">Compliance Automation</div>
+        <div class="pill-desc">SOC 2, HIPAA, PCI-DSS demands are rising. Automated continuous compliance vs. point-in-time audits is a major buying criterion.</div>
+      </div>
+      <div class="topic-pill">
+        <div class="pill-label">Architecture Shift</div>
+        <div class="pill-title">Runtime-First vs. Static</div>
+        <div class="pill-desc">Legacy tools scan snapshots. New approach: live telemetry from inside running workloads. Upwind's core thesis. Gartner validates this shift.</div>
+      </div>
+      <div class="topic-pill">
+        <div class="pill-label">Engineering Tension</div>
+        <div class="pill-title">Security vs. Velocity</div>
+        <div class="pill-desc">The perennial war. CISOs want control. Engineers want to ship. The best platforms solve this — security loved by DevOps.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TAB: ABOUT UPWIND ── -->
+  <div id="tab-upwind" class="section">
+    <h2 class="section-title">Know Your Hosts: Upwind Security</h2>
+    <p class="section-lead">They invited you because you bring a VP Engineering perspective to a security conversation. Understand what they built so you can speak to it credibly — and ask smart questions.</p>
+
+    <div class="card">
+      <div class="card-label">Company Profile</div>
+      <h3>Who They Are</h3>
+      <p>Founded in 2022 by <strong>Amiram Shachar</strong> and the team behind <strong>Spot.io</strong> (acquired by NetApp for $450M). That pedigree matters — these are infrastructure-native operators, not pure security academics.</p>
+      <p>January 2026: raised a <strong>$250M Series B</strong> led by Bessemer Venture Partners with Salesforce Ventures. Total funding: $430M. <strong>4,000%+ YoY growth</strong> between 2024-2025. 200+ enterprise customers including Peloton, Bill, Agoda, Boomi.</p>
+    </div>
+
+    <div class="card blue">
+      <div class="card-label">Core Technology</div>
+      <h3>What Makes Upwind Different</h3>
+      <p><strong>Runtime-first architecture.</strong> Instead of scanning static configurations and hoping nothing changes, Upwind uses <strong>eBPF</strong> (a Linux kernel technology) to observe what is actually happening inside running workloads in real time.</p>
+      <p>This gives them a key capability: they can distinguish between a vulnerability in <strong>active, running code</strong> vs. one in <strong>dormant code that can't actually be exploited</strong>. That's how they claim up to 95% alert noise reduction. For DevOps teams, this is transformative — fewer false positives, faster triage.</p>
+      <p>They also integrate from <strong>CI/CD to runtime</strong> — catching issues at code commit AND monitoring what happens post-deployment.</p>
+    </div>
+
+    <div class="card gold">
+      <div class="card-label">Recent Recognition</div>
+      <h3>Analyst Validation (2025-2026)</h3>
+      <p>• Named in <strong>Gartner 2025 Market Guide for CNAPP</strong> and three Gartner Hype Cycles</p>
+      <p>• <strong>Frost & Sullivan 2025 Company of the Year</strong> in CNADR market</p>
+      <p>• Two-time Leader in <strong>Latio 2025 Cloud Security Report</strong> (Cloud Security + CADR)</p>
+      <p>• Named to <strong>Fortune's Cyber 60</strong></p>
+      <p>• 4.9/5.0 on <strong>Gartner Peer Insights</strong> in CNAPP category</p>
+    </div>
+
+    <div class="talking-box">
+      <div class="talking-label">Smart questions you can ask Upwind reps</div>
+      <p>How does your eBPF approach hold up on Windows-based workloads?</p>
+      <p>Where does Upwind sit vs. Wiz (post-Google acquisition) in your customers' minds?</p>
+      <p>How does your CI/CD integration work for teams using GitHub Actions vs. Jenkins?</p>
+      <p>What's the DevOps adoption story — how do engineers actually experience your agent?</p>
+      <p>How are you handling AI workload security specifically — LLM APIs, GPU infra?</p>
+    </div>
+  </div>
+
+  <!-- ── TAB: CONVO STRATEGY ── -->
+  <div id="tab-convo" class="section">
+    <h2 class="section-title">Conversation & Networking Strategy</h2>
+    <p class="section-lead">You are not pretending to be a CISO. You showed up honest, got invited anyway, and that makes you the most authentic person in the room. Play to that.</p>
+
+    <div class="position-box">
+      <h3>Your Positioning in One Sentence</h3>
+      <p><em>"I lead engineering at a healthcare SaaS company — I live on the other side of the security conversation, the person responsible for building the systems CISOs are trying to protect."</em></p>
+      <p style="margin-top:0.8rem; font-size:0.82rem; color:rgba(249,245,239,0.6);">This is genuinely interesting to the room. CISOs often feel like they're fighting against engineering teams. You're an engineering leader who understands their language and actively embedded security into your SDLC. That's rare.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Your Authentic Advantages</div>
+      <h3>What You Bring That No CISO Can</h3>
+      <p><strong>You drove AI adoption across the SDLC at Experity</strong> — Copilot, automated PR reviews, security scanning, AI in product features. You understand agentic architecture and its security implications from first principles.</p>
+      <p><strong>You understand the engineering side of "shift left."</strong> You know what it actually takes to get a development team to care about security at commit time. Most CISOs only see the failure modes.</p>
+      <p><strong>You've navigated the security vs. velocity tension</strong> from the engineering side. You can describe what makes a security tool succeed or fail at developer adoption.</p>
+    </div>
+
+    <h3 style="font-family:'Playfair Display',serif; font-size:1.1rem; margin:1.5rem 0 0.8rem; color:var(--ink);">Conversation Starters — On the Course</h3>
+
+    <div class="card gold">
+      <div class="card-label">Opening Move</div>
+      <h3>Ask Before You Tell</h3>
+      <p>Between holes, before offering your view: <em>"What's the biggest change in your security posture over the last 12 months?"</em> or <em>"Where are your engineers actually pushing back on security tooling right now?"</em></p>
+      <p>Listening first will tell you exactly which threads to pull on. And it signals intellectual humility — which is memorable in a room full of people used to performing authority.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Bridge Topics</div>
+      <h3>Where Engineering and Security Intersect Naturally</h3>
+      <p>• <strong>AI in the SDLC:</strong> How are teams using Copilot without introducing supply chain risk? What policies exist around AI-generated code?</p>
+      <p>• <strong>Developer experience of security tools:</strong> Which tools your engineers actually use vs. route around.</p>
+      <p>• <strong>Alert fatigue from the engineering side:</strong> Your teams receive security scanner output — what makes it actionable vs. noise?</p>
+      <p>• <strong>Incident response culture:</strong> How do security and engineering share ownership when something breaks in prod?</p>
+    </div>
+
+    <div class="talking-box">
+      <div class="talking-label">Lines that land well — use sparingly, naturally</div>
+      <p>We embedded automated security scanning directly into our PR workflow — changed the culture more than any policy did.</p>
+      <p>The hardest part of security isn't the tooling — it's getting developers to see it as their problem too.</p>
+      <p>When I look at a CNAPP, I'm thinking about the friction it creates for my engineers. The best security is the one they don't have to think about.</p>
+      <p>We don't have a formal CISO — so security posture lives with engineering and leadership. Which means I think about this stuff more than a typical VP Eng.</p>
+    </div>
+
+    <div class="alert-box">
+      <strong>On the post-event intro ask:</strong> Upwind will likely circle back to the question of connecting them to Experity's Governance team. You've already been honest. If the conversation today is genuinely valuable, offering a warm intro to the Director of Governance & Compliance is a reasonable reciprocity. No pressure to force it — let the day earn it.
+    </div>
+  </div>
+
+  <!-- ── TAB: GOLF ── -->
+  <div id="tab-golf" class="section">
+    <h2 class="section-title">The Straits — Hole-by-Hole Strategy</h2>
+    <p class="section-lead">Your profile: ~230yd driver with a controlled slice, less than 50% fairways hit. The strategic principle on this course: <strong>manage misses, not maximums.</strong> Pete Dye punishes aggressive misses more than conservative ones. Play the course from your irons, not your ego.</p>
+
+    <div class="card gold">
+      <div class="card-label">Course Overview</div>
+      <h3>What You're Walking Into</h3>
+      <p><strong>Par 72 | ~7,200 yards from guest tees | Lake Michigan wind is the real hazard.</strong> This is a links-style course: sheep-mown rough, 960+ bunkers, exposed terrain, dramatic elevation changes along Lake Michigan bluffs. The rough is playable; the bunkers and cliff edges are not.</p>
+      <p><strong>Your strategic edge:</strong> A controlled slice is actually useful on several holes that dogleg right. Identify those early and use your natural shape. On holes that demand a straight or draw, go with a fairway wood or long iron instead of driver.</p>
+    </div>
+
+    <div class="card red">
+      <div class="card-label">Universal Rule on This Course</div>
+      <h3>Never miss right toward the lake bluffs</h3>
+      <p>Holes 12, 13, and portions of 7, 8, 15, 17 have cliff edges along Lake Michigan. A miss right on those holes isn't a penalty stroke — it can be a lost ball and a rough walk. Always bias your miss left, toward the interior of the property.</p>
+    </div>
+
+    <!-- FRONT NINE -->
+    <h3 style="font-family:'Playfair Display',serif; color:var(--green); margin: 1.5rem 0 0.8rem; font-size:1.2rem;">Front Nine</h3>
+
+    <div class="hole-card">
+      <div class="hole-header">
+        <div class="hole-num">1</div>
+        <div class="hole-name">"Outward Bound"</div>
+        <div class="hole-stats">
+          <div class="hole-stat-item"><span class="hole-stat-label">Par</span>4</div>
+          <div class="hole-stat-item"><span class="hole-stat-label">Yds</span>~364</div>
+          <div class="hole-stat-item"><span class="difficulty-badge diff-manageable">Manageable</span></div>
+        </div>
+      </div>
+      <div class="hole-body">
+        <div class="hole-strategy">
+          <strong>Slight dogleg left.</strong> Deep bunkers left and long protect the green. <strong>Strategy:</strong> Take a 3-wood or hybrid off the tee — avoid the fairway bunker down the right side. A mid-iron approach is ideal. The green slopes right to left, so play for that when choosing your landing spot. Good scoring hole — start steady.</div>
+      </div>
+    </div>
+
+    <div class="hole-card">
+      <div class="hole-header">
+        <div class="hole-num">2</div>
+        <div class="hole-name">"Snake" (Par 5)</div>
+        <div class="hole-stats">
+          <div class="hole-stat-item"><span class="hole-stat-label">Par</span>5</div>
+          <div class="hole-stat-item"><span class="hole-stat-label">Yds</span>~593</div>
+          <div class="hole-stat-item"><span class="difficulty-badge diff-tricky">3-Shot Hole</span></div>
+        </div>
+      </div>
+      <div class="hole-body">
+        <div class="hole-strategy">
+          Meanders through marsh and waste areas. <strong>Three-shot hole for you — embrace it.</strong> Tee shot: aim left side of fairway (straight or draw aim line — your slice brings it to center). Second shot: lay up to 80-100 yards, avoid the deep pot bunker 35 yards short. Narrow green is slightly uphill; don't come up short. Birdie opportunity if you execute the wedge.</div>
+      </div>
+    </div>
+
+    <div class="hole-card">
+      <div class="hole-header">
+        <div class="hole-num">3</div>
+        <div class="hole-name">Par 3</div>
+        <div class="hole-stats">
+          <div class="hole-stat-item"><span class="hole-stat-label">Par</span>3</div>
+          <div class="hole-stat-item"><span class="hole-stat-label">Yds</span>~188</div>
+          <div class="hole-stat-item"><span class="difficulty-badge diff-tricky">Wind Dependent</span></div>
+        </div>
+      </div>
+      <div class="hole-body">
+        <div class="hole-strategy">
+          One of the most picturesque on the property. <strong>Club up if wind is off the lake.</strong> Take one extra club and play for the center of the green — avoid the aggressive pin hunt. Par is a win here. Don't let the scenery rush your pre-shot routine.</div>
+      </div>
+    </div>
+
+    <div class="hole-card">
+      <div class="hole-header">
+        <div class="hole-num">4</div>
+        <div class="hole-name">Par 4</div>
+        <div class="hole-stats">
+          <div class="hole-stat-item"><span class="hole-stat-label">Par</span>4</div>
+          <div class="hole-stat-item"><span class="difficulty-badge diff-manageable">Manageable</span></div>
+        </div>
+      </div>
+      <div class="hole-body">
+        <div class="hole-strategy">
+          <strong>3-wood or hybrid off the tee</strong> to keep it in play. Position for a mid-iron approach. Play to the fat part of the green. Don't be seduced by aggressive pin positions on these Pete Dye greens — they're designed to punish greed.</div>
+      </div>
+    </div>
+
+    <div class="hole-card">
+      <div class="hole-header">
+        <div class="hole-num">5</div>
+        <div class="hole-name">"Snake" (Par 5)</div>
+        <div class="hole-stats">
+          <div class="hole-stat-item"><span class="hole-stat-label">Par</span>5</div>
+          <div class="hole-stat-item"><span class="hole-stat-label">Yds</span>~603</div>
+          <div class="hole-stat-item"><span class="difficulty-badge diff-tricky">Birdie Chance</span></div>
+        </div>
+      </div>
+      <div class="hole-body">
+        <div class="hole-strategy">
+          Shortest par 5 on the course. <strong>Risk/reward temptation — resist it for your first time here.</strong> Three solid shots beats two aggressive ones. Lay up to your comfortable wedge distance. The green is reachable in two but water lurks short-left — not worth it on an unfamiliar course.</div>
+      </div>
+    </div>
+
+    <div class="hole-card">
+      <div class="hole-header">
+        <div class="hole-num">6</div>
+        <div class="hole-name">"Gremlin's Ear"</div>
+        <div class="hole-stats">
+          <div class="hole-stat-item"><span class="hole-stat-label">Par</span>4</div>
+          <div class="hole-stat-item"><span class="hole-stat-label">Yds</span>~409</div>
+          <div class="hole-stat-item"><span class="difficulty-badge diff-tricky">Fun Hole</span></div>
+        </div>
+      </div>
+      <div class="hole-body">
+        <div class="hole-strategy">
+          Short par 4 — one of the more accessible. <strong>Commit to your tee line.</strong> Avoid tugging left (hill, awkward lie) or pushing right (bunkering). Aim down the left-center of the fairway — your controlled slice will work with this. Left-center of the fairway gives the best approach angle. Short iron in; attack this one.</div>
+      </div>
+    </div>
+
+    <div class="hole-card">
+      <div class="hole-header">
+        <div class="hole-num">7</div>
+        <div class="hole-name">"Shipwreck"</div>
+        <div class="hole-stats">
+          <div class="hole-stat-item"><span class="hole-stat-label">Par</span>4</div>
+          <div class="hole-stat-item"><span class="difficulty-badge diff-brutal">Signature Hole</span></div>
+        </div>
+      </div>
+      <div class="hole-body">
+        <div class="danger">Lake Michigan is in play right. Miss left, always.</div>
+        <div class="hole-strategy">
+          The signature hole. Stunning and punishing. <strong>Tee shot: aim left and let your slice bring it toward center.</strong> This is one of the holes where your natural shape is an asset. Do not flirt with the right side. Bogey is a completely respectable score here. Take your medicine, enjoy the view, move on.</div>
+      </div>
+    </div>
+
+    <div class="hole-card">
+      <div class="hole-header">
+        <div class="hole-num">8</div>
+        <div class="hole-name">"On the Rocks"</div>
+        <div class="hole-stats">
+          <div class="hole-stat-item"><span class="hole-stat-label">Par</span>3</div>
+          <div class="hole-stat-item"><span class="difficulty-badge diff-brutal">Cliff Edge Green</span></div>
+        </div>
+      </div>
+      <div class="hole-body">
+        <div class="danger">Green sits on the cliff edge. Short or right = Lake Michigan.</div>
+        <div class="hole-strategy">
+          "Cliff Hanger" describes this perfectly. <strong>Club up. Aim for the middle-left of the green.</strong> A miss long is recoverable. A miss short-right is likely in the lake. Let the wind reading guide your club selection, but always err on the side of more club. Par = great score. Bogey = totally fine.</div>
+      </div>
+    </div>
+
+    <div class="hole-card">
+      <div class="hole-header">
+        <div class="hole-num">9</div>
+        <div class="hole-name">Par 4</div>
+        <div class="hole-stats">
+          <div class="hole-stat-item"><span class="hole-stat-label">Par</span>4</div>
+          <div class="hole-stat-item"><span class="difficulty-badge diff-tricky">Dogleg Left</span></div>
+        </div>
+      </div>
+      <div class="hole-body">
+        <div class="hole-strategy">
+          Short but tricky dogleg left. The corner is blocked by a large bunker — <strong>don't try to cut it.</strong> Tee shot with a fairway wood, played to the right of the bunker. That creates a slightly blind approach, but a full wedge from the fairway beats a bunker recovery. Finish the front nine with a clean card, not heroics.</div>
+      </div>
+    </div>
+
+    <!-- BACK NINE -->
+    <h3 style="font-family:'Playfair Display',serif; color:var(--green); margin: 2rem 0 0.8rem; font-size:1.2rem;">Back Nine — The Gauntlet</h3>
+
+    <div class="card red" style="margin-bottom:1rem;">
+      <div class="card-label">Critical Note</div>
+      <p style="font-size:0.86rem;">Holes 10-14 are considered among the most difficult stretches in championship golf. The course itself says "strap on your seatbelt." Your goal through this section: <strong>limit big numbers, not make pars.</strong> A string of bogeys through 10-15 is a great result.</p>
+    </div>
+
+    <div class="hole-card">
+      <div class="hole-header">
+        <div class="hole-num">10</div>
+        <div class="hole-name">"Voyageur"</div>
+        <div class="hole-stats">
+          <div class="hole-stat-item"><span class="hole-stat-label">Par</span>4</div>
+          <div class="hole-stat-item"><span class="difficulty-badge diff-tricky">Short Par 4</span></div>
+        </div>
+      </div>
+      <div class="hole-body">
+        <div class="hole-strategy">
+          Short par 4 — potentially driveable for long hitters. <strong>Don't try to drive it.</strong> The deep bunker on the right requires a 240-yard carry to clear. Play a controlled shot left of center. Wedge in to the elevated green. Deep bunkers short and left punish underhitting. Take enough club.</div>
+      </div>
+    </div>
+
+    <div class="hole-card">
+      <div class="hole-header">
+        <div class="hole-num">11</div>
+        <div class="hole-name">"Sand Box"</div>
+        <div class="hole-stats">
+          <div class="hole-stat-item"><span class="hole-stat-label">Par</span>4</div>
+          <div class="hole-stat-item"><span class="hole-stat-label">Yds</span>~519</div>
+          <div class="hole-stat-item"><span class="difficulty-badge diff-brutal">Brutal</span></div>
+        </div>
+      </div>
+      <div class="hole-body">
+        <div class="danger">Massive 16-foot deep bunker left extends 100 yards from the green. Blind shot if you're in it.</div>
+        <div class="hole-strategy">
+          Long and relentless. <strong>Stay right of the fairway center</strong> — anything right of the fairway finds sand dunes, but anything left of center near the green gets swallowed by that enormous bunker. The elevated green is small and anything long catches another bunker. Par here is a birdie-equivalent achievement. Bogey+ is expected.</div>
+      </div>
+    </div>
+
+    <div class="hole-card">
+      <div class="hole-header">
+        <div class="hole-num">12</div>
+        <div class="hole-name">Par 3</div>
+        <div class="hole-stats">
+          <div class="hole-stat-item"><span class="hole-stat-label">Par</span>3</div>
+          <div class="hole-stat-item"><span class="hole-stat-label">Yds</span>~143</div>
+          <div class="hole-stat-item"><span class="difficulty-badge diff-brutal">Cliff Edge</span></div>
+        </div>
+      </div>
+      <div class="hole-body">
+        <div class="danger">Short or right drops 40 feet into the dunes and lake.</div>
+        <div class="hole-strategy">
+          Shortest hole on the course — but the green is the hardest to manage with the putter. <strong>This hole plays deceptively downhill</strong> — club down from what you'd normally hit. But never go short or right. Aim left-center. Once on the green, read the subtle breaks carefully — three-putts are extremely common here.</div>
+      </div>
+    </div>
+
+    <div class="hole-card">
+      <div class="hole-header">
+        <div class="hole-num">13</div>
+        <div class="hole-name">"Blind Man's Bluff"</div>
+        <div class="hole-stats">
+          <div class="hole-stat-item"><span class="hole-stat-label">Par</span>4</div>
+          <div class="hole-stat-item"><span class="hole-stat-label">Yds</span>~404</div>
+          <div class="hole-stat-item"><span class="difficulty-badge diff-brutal">Cliff Approach</span></div>
+        </div>
+      </div>
+      <div class="hole-body">
+        <div class="danger">Anything right off the tee: sand dunes. Approach green hangs on cliff — right is lost over the bluffs.</div>
+        <div class="hole-strategy">
+          <strong>Tee shot: left side only.</strong> Miss right and you're in dunes with an awkward lie. The approach is downhill to a narrow green hanging over Lake Michigan. Bunkers guard short-right and left. Take enough club to clear the bunkers, but don't go long either. Aim middle of the green. Bogey is a win.</div>
+      </div>
+    </div>
+
+    <div class="hole-card">
+      <div class="hole-header">
+        <div class="hole-num">14</div>
+        <div class="hole-name">"Widow Maker"</div>
+        <div class="hole-stats">
+          <div class="hole-stat-item"><span class="hole-stat-label">Par</span>4</div>
+          <div class="hole-stat-item"><span class="hole-stat-label">Yds</span>~396</div>
+          <div class="hole-stat-item"><span class="difficulty-badge diff-tricky">Strategic</span></div>
+        </div>
+      </div>
+      <div class="hole-body">
+        <div class="hole-strategy">
+          <strong>Long iron off the tee, right side of fairway.</strong> Anything left risks a blind approach or bunker at the corner. The approach is only a wedge, but deep bunkers guard the right side of the undulating green — more bunkers long and left. This is actually one of the more manageable holes in this stretch if your tee shot is disciplined.</div>
+      </div>
+    </div>
+
+    <div class="hole-card">
+      <div class="hole-header">
+        <div class="hole-num">15</div>
+        <div class="hole-name">Par 4</div>
+        <div class="hole-stats">
+          <div class="hole-stat-item"><span class="hole-stat-label">Par</span>4</div>
+          <div class="hole-stat-item"><span class="difficulty-badge diff-brutal">Hardest Hole</span></div>
+        </div>
+      </div>
+      <div class="hole-body">
+        <div class="hole-strategy">
+          Consistently rated the most demanding hole on The Straits. <strong>Survive. That's the only goal.</strong> Play conservatively off the tee, take your medicine on any bad lie, and walk off with a double at worst. Don't let this hole ruin your mental game for 16, 17, and 18.</div>
+      </div>
+    </div>
+
+    <div class="hole-card">
+      <div class="hole-header">
+        <div class="hole-num">16</div>
+        <div class="hole-name">Par 4</div>
+        <div class="hole-stats">
+          <div class="hole-stat-item"><span class="hole-stat-label">Par</span>4</div>
+          <div class="hole-stat-item"><span class="difficulty-badge diff-tricky">Precision</span></div>
+        </div>
+      </div>
+      <div class="hole-body">
+        <div class="hole-strategy">
+          Demands precision off the tee. <strong>Fairway wood, controlled.</strong> After surviving 15, reset mentally here. Commit to your target, trust the swing, and play for a comfortable approach yardage. The back nine scoring window is now — put together a clean 16.</div>
+      </div>
+    </div>
+
+    <div class="hole-card">
+      <div class="hole-header">
+        <div class="hole-num">17</div>
+        <div class="hole-name">Par 3 — "Stiff Neck"</div>
+        <div class="hole-stats">
+          <div class="hole-stat-item"><span class="hole-stat-label">Par</span>3</div>
+          <div class="hole-stat-item"><span class="difficulty-badge diff-brutal">Iconic Par 3</span></div>
+        </div>
+      </div>
+      <div class="hole-body">
+        <div class="danger">Tough par 3 — tough finishing stretch.</div>
+        <div class="hole-strategy">
+          The name tells you something: intimidation is real standing on this tee. <strong>Pick your club for the wind, aim for the fat of the green, and commit.</strong> Do not short-side yourself. Pars here are finishing-hole currency — take a bogey cleanly over a double from a hero shot gone wrong.</div>
+      </div>
+    </div>
+
+    <div class="hole-card">
+      <div class="hole-header">
+        <div class="hole-num">18</div>
+        <div class="hole-name">"Dyeabolical"</div>
+        <div class="hole-stats">
+          <div class="hole-stat-item"><span class="hole-stat-label">Par</span>4</div>
+          <div class="hole-stat-item"><span class="difficulty-badge diff-brutal">Iconic Closer</span></div>
+        </div>
+      </div>
+      <div class="hole-body">
+        <div class="danger">Seven Mile Creek crosses the fairway and fronts the green. Aggressive left tee requires 270yd carry over dunes.</div>
+        <div class="hole-strategy">
+          The "Dyeabolical" finale. Massive green (18,000+ sq ft), multiple undulations, creek in play. <strong>Play right side of the fairway</strong> — safer tee shot, avoids the creek carry. Your approach must carry the creek regardless. Don't go left off the tee. Pick a mid-iron that gives you a full carry yardage to clear the water, and land it anywhere on that enormous green. Soak in the moment — this is one of the most scenic finishing holes in American golf.</div>
+      </div>
+    </div>
+
+    <div class="card gold" style="margin-top:1.5rem;">
+      <div class="card-label">Slice Management — Your Asset Holes</div>
+      <h3>Where Your Natural Shape Helps</h3>
+      <p>Your controlled left-to-right shape is genuinely useful on <strong>holes 1, 7, 13, and 16</strong> where aiming left and fading toward center works with the fairway design. On holes 9 (dogleg left) and 2, aim well left of your target — your slice will bring it back.</p>
+      <p>On par 3s: aim at the left edge of the green when wind allows. Your slice will track toward center. When it's into a left wind, take extra club — it'll fight your shape.</p>
+    </div>
+  </div>
+
+  <!-- ── TAB: MINDSET ── -->
+  <div id="tab-mindset" class="section">
+    <h2 class="section-title">Day-Of Mindset</h2>
+    <p class="section-lead">You walked in honest. You got invited anyway. Now walk the course like you belong — because you do.</p>
+
+    <div class="mindset-item">
+      <div class="mindset-icon">🎯</div>
+      <div class="mindset-content">
+        <h4>You are not a CISO. Say it confidently.</h4>
+        <p>You've already established this. Repeating it when it comes up naturally ("as the engineering leader, I'm on the other side of this equation...") is not a limitation — it's a differentiating frame. You're the one person in the group who can say "here's what your security tooling actually feels like to engineers who are supposed to use it."</p>
+      </div>
+    </div>
+
+    <div class="mindset-item">
+      <div class="mindset-icon">🏌️</div>
+      <div class="mindset-content">
+        <h4>Golf is not the scorecard — it's the context.</h4>
+        <p>Nobody at this outing is counting your strokes against your credibility. What they'll remember is how you carried yourself — calm, curious, self-aware, good conversation between shots. Play each hole for fun and manage your misses. A three-putt you laugh off tells more about your character than a par.</p>
+      </div>
+    </div>
+
+    <div class="mindset-item">
+      <div class="mindset-icon">🎙️</div>
+      <div class="mindset-content">
+        <h4>Ask more than you tell — especially early.</h4>
+        <p>The instinct in rooms like this is to establish credentials fast. Resist it. Ask about their problems first. The most influential people in any networking setting are the ones who made others feel heard, not the ones who delivered the best monologue. You can share your perspective in the second half of every conversation — after you've actually listened.</p>
+      </div>
+    </div>
+
+    <div class="mindset-item">
+      <div class="mindset-icon">🤝</div>
+      <div class="mindset-content">
+        <h4>The job search is a subtext, not the text.</h4>
+        <p>You're in a room with CISOs and cybersecurity leaders from growth-stage orgs — people who work with or report to exactly the kind of CTO/VP Eng profile you're targeting. Don't pitch yourself. Be interesting, be useful in conversation, and exchange contact info naturally. Let the follow-up be the pitch.</p>
+      </div>
+    </div>
+
+    <div class="mindset-item">
+      <div class="mindset-icon">🌊</div>
+      <div class="mindset-content">
+        <h4>Enjoy the absurdity of it all.</h4>
+        <p>You're playing one of the top public courses in the United States, on a bluff over Lake Michigan, in an intimate group, as a guest of a startup that just raised $250M — because you were honest about not being a CISO. Lean into that story. It's genuinely great. And it will be a great story to tell later.</p>
+      </div>
+    </div>
+
+    <div class="position-box" style="margin-top:1.5rem;">
+      <h3>The Morning Reminder</h3>
+      <p>You lead 41 people. You drove AI adoption into an engineering org that didn't want it and made it stick. You understand security from the inside of the SDLC. You are in an active executive job search targeting exactly the people who will be in your cart today.</p>
+      <p style="margin-top:0.8rem;">You were invited because of who you are, not despite it. Act accordingly.</p>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<footer>
+  Generated May 6, 2026 &middot; Whistling Straits Field Brief — Upwind Security Event &middot; For personal preparation only
+</footer>
+
+<script>
+  function showTab(name) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    event.target.classList.add('active');
+  }
+</script>
+</body>
+</html>
